@@ -10,18 +10,17 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.direction = 'up';
 
     // enable physics
-    this.scene.physics.world.enable(this);
+    //this.scene.physics.world.enable(this);
     //this.setScale(.5);
     // this.body.allowGravity = false;
     // this.body.immovable = true;
     // this.body.acceleration = 0;
 
     // add our player to the scene
-    //this.scene.add.existing(this);
+    this.scene.add.existing(this);
     // create the player sprite    
     // this.setBounce(0.2); // our player will bounce from items
     //this.setCollideWorldBounds(true); // don't go out of the map        
-    this.add.rectangle(0, 0, 70, 70, 0x6666ff);
 
     // player walk animation
     this.anims.animationManager.create({
