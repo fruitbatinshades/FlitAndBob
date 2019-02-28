@@ -1,6 +1,7 @@
 /// <reference path="../../defs/phaser.d.ts" />
 import Player from '../Sprites/Player.js';
 import Flit from '../Sprites/Flit.js';
+import PlayerContainer from '../Groups/PlayerContainer.js';
 //import Coins from '../Groups/Coins.js';
 
 export default class GameScene extends Phaser.Scene {
@@ -57,8 +58,14 @@ export default class GameScene extends Phaser.Scene {
             fill: false
         }
     });
+    this.notes = this.add.text(20, 60, '0', {
+      fontSize: '20px',
+      strokeThickness: 1,
+      fill: '#ffffff'
+  });
     // fix the text to the camera
     this.text.setScrollFactor(0);
+    this.notes.setScrollFactor(0);
   }
   switchCharacter(){
     //stop current player activity
@@ -88,6 +95,8 @@ export default class GameScene extends Phaser.Scene {
     this.banana.children.entries.forEach(function(b){
       b.body.setVelocityX(0);
     });
+    this.notes.setText(this._ActivePlayer.player.anims.currentFrame.textureFrame);
+    
   }
 
   addCollisions () {
@@ -112,7 +121,7 @@ export default class GameScene extends Phaser.Scene {
       if (this._NEWGAME && this._LEVEL === 1) {
           if (obj.type === 'StartPosition') {
             if(obj.name === 'Bob')
-              this.player = new Player(this, obj.x, obj.y);
+              this.player = new PlayerContainer(this, obj.x, obj.y, new Player(this, 0,0));
             if(obj.name === 'Flit')
               this.flit = new Flit(this, obj.x, obj.y);
         }
