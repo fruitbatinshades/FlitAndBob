@@ -1,5 +1,9 @@
 /// <reference path="../../defs/phaser.d.ts" />
-
+//TODO
+//Impliment jump height of one block
+//Implement strength of three
+//Implement lift
+//Implement push
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
@@ -9,12 +13,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.hitDelay = false;
     this.direction = 'up';
     this.carrying = null;
+    this.currently = null;
     // enable physics
     this.scene.physics.world.enable(this);
     this.setScale(.5);
-    // this.body.allowGravity = false;
-    // this.body.immovable = true;
-    // this.body.acceleration = 0;
+    this.debugText = ''; 
 
     // add our player to the scene
     this.scene.add.existing(this);
@@ -43,20 +46,44 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     //this.body.setVelocityX(0);
     this.anims.play('idle', true);
   }
-  update(cursors, space) {
-    this.body.setVelocityX(0);
+  overBox(item) {
+    if (this.carrying == null) {
+      this.carrying = item;
+      try {
+        item.body.allowGravity = false;
+        //item.body.checkCollision.none = true;
+      } catch (e) {
 
-    //pick up drop a box
-    if (space.isDown) {
-      if (this.carrying) {
-        //drop the box
-        this.carrying.body.checkCollision = true;
-        this.carrying = null;
       }
+    }
+  }
+  drop(item) {
+    //item.body.checkCollision.none = false;
+    item.body.allowGravity = true;
+    this.carrying = null;
+    //item.body.checkCollision.top = true;
+  }
+  update(cursors, space) {
+    //get the direction from the velocity
+    this.direction = {
+      left: this.body.velocity.x < -2 ? Phaser.Physics.Arcade.FACING_LEFT : 0,
+      right: this.body.velocity.x > 2 ? Phaser.Physics.Arcade.FACING_RIGHT : 0,
+      up: this.body.velocity.y < -2 ? Phaser.Physics.Arcade.FACING_UP : 0,
+      down: this.body.velocity.y > 2 ? Phaser.Physics.Arcade.FACING_DOWN : 0
+     }; 
+
+   this.body.setVelocityX(0);
+    //drop a box
+    if (this.carrying != null && Phaser.Input.Keyboard.JustDown(space)) {
+      this.drop(this.carrying);
     }
     //if we are carrying a box move it to match our position
     if (this.carrying) {
-      this.carrying.x = this.body.x + 64;
+      if(this.direction.left > 0){
+        this.carrying.x = this.body.x - (this.carrying.width);
+      }else if(this.direction.right > 0){
+        this.carrying.x = this.body.x + (this.carrying.width);
+      }
       this.carrying.y = this.body.y - 16;
     }
     if (cursors.left.isDown) {

@@ -15,7 +15,19 @@ export default class Settings {
                 stroke: true,
                 fill: false
             }
-        }
+        };
+        this.debugFont = {
+            fontSize: '16px',
+            fill: '#000',
+            shadow: {
+                offsetX: 0,
+                offsetY: 0,
+                color: '#aaa',
+                blur: 2,
+                stroke: true,
+                fill: true
+            }
+        };
     }
     init() {
         

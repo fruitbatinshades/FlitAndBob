@@ -48,8 +48,20 @@
                  "type":"pushable",
                  "visible":true,
                  "width":70,
-                 "x":281,
-                 "y":763
+                 "x":209,
+                 "y":746
+                }, 
+                {
+                 "gid":4,
+                 "height":70,
+                 "id":48,
+                 "name":"Box",
+                 "rotation":0,
+                 "type":"pushable",
+                 "visible":true,
+                 "width":70,
+                 "x":1047,
+                 "y":457
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -115,7 +127,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":48,
+ "nextobjectid":49,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.1.5",

@@ -22,6 +22,9 @@ export default class GameScene extends Phaser.Scene {
     this._Settings = new Settings(); //shared settings objects
 
     if (this._NEWGAME) this.events.emit('newGame');
+
+    //used for different code workouts
+    this.workout = 'boxOverlap';
   }
 
   create() {
@@ -45,11 +48,7 @@ export default class GameScene extends Phaser.Scene {
 
     // this text will show the score
     this.score = this.add.text(20, 20, '0', this._Settings.HUDFont);
-    this.notes = this.add.text(20, 60, '0', {
-      fontSize: '20px',
-      strokeThickness: 1,
-      fill: '#ffffff'
-    });
+    this.notes = this.add.text(20, 60, '0', this._Settings.debugFont);
     // fix the text to the camera
     this.score.setScrollFactor(0);
     this.notes.setScrollFactor(0);
@@ -63,7 +62,7 @@ export default class GameScene extends Phaser.Scene {
     this._ChangingPlayer = true;
     //pan the camera 
     this.cameras.main.stopFollow();
-    this.cameras.main.pan(this._ActivePlayer.x, this._ActivePlayer.y, 1000, 'Sine.easeInOut', true, (cam, complete, x, y) => {
+    this.cameras.main.pan(this._ActivePlayer.x, this._ActivePlayer.y, 500, 'Sine.easeInOut', true, (cam, complete, x, y) => {
       if (complete === 1) {
         this.cameras.main.startFollow(this._ActivePlayer, true, .1, .1);
         this._ChangingPlayer = false;
@@ -71,6 +70,8 @@ export default class GameScene extends Phaser.Scene {
     });
   }
   update() {
+    //if player has debug text render it
+    if(this.player.debugText) this.notes.setText(this.player.debugText);
     //Switch characters
     if (Phaser.Input.Keyboard.JustDown(this.shiftKey)) {
       this.switchCharacter();
@@ -93,10 +94,27 @@ export default class GameScene extends Phaser.Scene {
     // will be called    
     this.physics.add.overlap(this.player, this.coinLayer);
     this.physics.add.overlap(this.flit, this.coinLayer);
-    this.physics.add.collider(this.boxTiles, this.player, this.collideObjects, null, this);
+
+    //set up interactive boxes
+    this.physics.add.collider(this.player, this.boxTiles, this.overBox, null,  this);
     this.physics.add.collider(this.groundLayer, this.boxTiles);
+    this.physics.add.collider(this.boxTiles, this.boxTiles); //get boxes to collide so you can stack them
+   
   }
 
+  overBox(player, box){
+    //WHy is touching never true :(
+    this.player.debugText =  `ticks: ${new Date().getTime()}`
+    + '\nply-touching:' + JSON.stringify(player.body.blocked) 
+    + '\nbox-touching:' + JSON.stringify(box.body.touching) 
+    ;
+
+    if(Phaser.Input.Keyboard.JustDown(this.spaceKey)){
+      console.log('pick up box');
+      this.player.overBox(box);
+    }
+    return true;
+  }
   collectStar(player, star) {
     star.disableBody(true, true);
   }
@@ -113,32 +131,7 @@ export default class GameScene extends Phaser.Scene {
       }
     });
   }
-  pushBox(sprite, tile) {
 
-  }
-
-  collideObjects(sprite, tile) {
-    if (!tile.body.touching.none || !sprite.body.touching.none) {
-      console.log('touch');
-    }
-
-    switch (sprite.body.facing) {
-      case Phaser.Physics.Arcade.FACING_RIGHT:
-        tile.body.x += 5;
-        //tile.body.setVelocityX(sprite.body.velocityX);
-        tile.body.PUSHING = Phaser.Physics.Arcade.FACING_RIGHT;
-        tile.body.checkCollision.none = true;
-        this.player.carrying = tile;
-        break;
-      case Phaser.Physics.Arcade.FACING_LEFT:
-        tile.body.x = sprite.body.x - 50;
-        //tile.body.setVelocityX(sprite.body.velocityX);
-        tile.body.PUSHING = Phaser.Physics.Arcade.FACING_LEFT;
-        tile.body.checkCollision.none = true;
-        break;
-    }
-    this.notes.setText(tile.body.PUSHING);
-  }
   // this function will be called when the player touches a coin
   collectCoin(sprite, tile) {
     this.coinLayer.removeTileAt(tile.x, tile.y); // remove the tile/coin
@@ -164,18 +157,20 @@ export default class GameScene extends Phaser.Scene {
     this.coinLayer = this.map.createDynamicLayer('Coins', this.coinTiles, 0, 0);
 
     //get the boxes from the map
-    var b1 = this.map.createDynamicLayer('boxTiles', this.groundTiles, 0, 0);
+    //var b1 = this.map.createDynamicLayer('boxTiles', this.groundTiles, 0, 0);
+    var b1 = this.map.createFromObjects('Pushable', 'Box', { key: 'tiles', frame: 3});
 
     //get an array of the box tiles and create group from them
     var b2 = this.map.createFromTiles(7, null, { key: 'tiles', frame: 3 });
-    this.boxTiles = new Phaser.Physics.Arcade.Group(this.world, this, b2, { bounceX: 1 });
+    this.boxTiles = new Phaser.Physics.Arcade.Group(this.world, this, b1, { bounceX: 1 });
     //set the group to respond to physics
     this.physics.world.enable(this.boxTiles);
     this.boxTiles.children.entries.forEach((x) => {
       x.body.setCollideWorldBounds(true); // don't go out of the map   
       x.setOrigin(0, 0);
+      //x.body.onCollide = true;
     });
-
+    console.log('built boxTiles');
     // set the boundaries of our game world
     this.physics.world.bounds.width = this.groundLayer.width;
     this.physics.world.bounds.height = this.groundLayer.height;
