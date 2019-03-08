@@ -98,22 +98,28 @@ export default class GameScene extends Phaser.Scene {
     //set up interactive boxes
     this.physics.add.collider(this.player, this.boxTiles, this.overBox, null,  this);
     this.physics.add.collider(this.groundLayer, this.boxTiles);
-    this.physics.add.collider(this.boxTiles, this.boxTiles); //get boxes to collide so you can stack them
+    this.physics.add.collider(this.boxTiles, this.boxTiles, this.logCollide, null, this); //get boxes to collide so you can stack them
    
   }
-
+  logCollide(a,b){
+    a.scene.player.debugText =  `ticks: ${new Date().getTime()}`
+    + '\nA-touching:' + JSON.stringify(a.body.touching) 
+    + '\nB-touching:' + JSON.stringify(b.body.touching) 
+    ;
+    return true;
+  }
   overBox(player, box){
     //WHy is touching never true :(
-    this.player.debugText =  `ticks: ${new Date().getTime()}`
-    + '\nply-touching:' + JSON.stringify(player.body.blocked) 
-    + '\nbox-touching:' + JSON.stringify(box.body.touching) 
-    ;
+    // this.player.debugText =  `ticks: ${new Date().getTime()}`
+    // + '\nply-touching:' + JSON.stringify(player.body.blocked) 
+    // + '\nbox-touching:' + JSON.stringify(box.body.touching) 
+    // ;
 
     if(Phaser.Input.Keyboard.JustDown(this.spaceKey)){
       console.log('pick up box');
       this.player.overBox(box);
     }
-    return true;
+
   }
   collectStar(player, star) {
     star.disableBody(true, true);
@@ -166,9 +172,9 @@ export default class GameScene extends Phaser.Scene {
     //set the group to respond to physics
     this.physics.world.enable(this.boxTiles);
     this.boxTiles.children.entries.forEach((x) => {
-      x.body.setCollideWorldBounds(true); // don't go out of the map   
+      x.body.setCollideWorldBounds(true); // don't go out of the map
       x.setOrigin(0, 0);
-      //x.body.onCollide = true;
+      x.body.overlapX = 10;
     });
     console.log('built boxTiles');
     // set the boundaries of our game world

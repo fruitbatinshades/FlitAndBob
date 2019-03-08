@@ -25,6 +25,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     // create the player sprite    
     this.setBounce(0.2); // our player will bounce from items
     this.setCollideWorldBounds(true); // don't go out of the map        
+    //this.setGravityY(400); //set gravity to control jump height to 1 block
 
     // player walk animation
     this.anims.animationManager.create({
@@ -40,7 +41,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       frameRate: 10,
     });
     this.idle();
-    console.log(this.willRender(this.scene.cameras.main));
   }
   idle() {
     //this.body.setVelocityX(0);
@@ -49,12 +49,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   overBox(item) {
     if (this.carrying == null) {
       this.carrying = item;
-      try {
-        item.body.allowGravity = false;
-        //item.body.checkCollision.none = true;
-      } catch (e) {
-
-      }
+       item.body.allowGravity = false;
+       console.log('drop box')
     }
   }
   drop(item) {
@@ -80,9 +76,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     //if we are carrying a box move it to match our position
     if (this.carrying) {
       if(this.direction.left > 0){
-        this.carrying.x = this.body.x - (this.carrying.width);
+        this.carrying.x = this.body.left - (this.carrying.width + 3);
       }else if(this.direction.right > 0){
-        this.carrying.x = this.body.x + (this.carrying.width);
+        this.carrying.x = this.body.right + 3;//(this.carrying.width);
       }
       this.carrying.y = this.body.y - 16;
     }
@@ -99,8 +95,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.idle();
     }
     // jump 
-    if (cursors.up.isDown && this.body.onFloor()) {
-      this.body.setVelocityY(-500);
+    if (cursors.up.isDown){
+      if(this.body.touching.down || this.body.onFloor()) {
+        this.body.setVelocityY(-500);
+      }
     }
   }
 
