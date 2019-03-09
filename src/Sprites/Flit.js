@@ -14,6 +14,7 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     this.scene.add.existing(this);
    // create the player sprite    
    this.setScale(.5);
+   this.setCircle(this.width * this.scaleX);
     this.setBounce(0.1,0.1); // our player will bounce from items
     this.body.setAllowGravity(false);
     this.setCollideWorldBounds(true); // don't go out of the map        
@@ -40,7 +41,31 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     this.anims.play('flit_idle', true);
   }
 
-  update (cursors) {
+  overBox(item) {
+    if (this.carrying == null) {
+      this.carrying = item;
+       item.body.allowGravity = false;
+       console.log('pickup box');
+    }
+  }
+  drop(item) {
+    //item.body.checkCollision.none = false;
+    item.body.allowGravity = true;
+    this.carrying = null;
+    console.log('drop box');
+  }
+
+  update (cursors, space) {
+
+    if (this.carrying != null && Phaser.Input.Keyboard.JustDown(space)) {
+      this.drop(this.carrying);
+    }
+    //if we are carrying a box move it to match our position
+    if (this.carrying) {
+      this.carrying.x = this.body.x;
+      this.carrying.y = this.body.bottom + 3;
+    }
+
     if (cursors.left.isDown)
     {
         this.body.setVelocityX(-200);

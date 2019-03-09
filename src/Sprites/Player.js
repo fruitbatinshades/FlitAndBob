@@ -25,7 +25,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     // create the player sprite    
     this.setBounce(0.2); // our player will bounce from items
     this.setCollideWorldBounds(true); // don't go out of the map        
-    //this.setGravityY(400); //set gravity to control jump height to 1 block
+    this.setGravityY(400); //set gravity to control jump height to 1 block
 
     // player walk animation
     this.anims.animationManager.create({
@@ -50,14 +50,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     if (this.carrying == null) {
       this.carrying = item;
        item.body.allowGravity = false;
-       console.log('drop box')
+       console.log('pickup box')
     }
   }
   drop(item) {
     //item.body.checkCollision.none = false;
     item.body.allowGravity = true;
     this.carrying = null;
-    //item.body.checkCollision.top = true;
+    console.log('drop box');
   }
   update(cursors, space) {
     //get the direction from the velocity

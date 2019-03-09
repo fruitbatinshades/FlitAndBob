@@ -33,9 +33,12 @@ export default class GameScene extends Phaser.Scene {
     this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     this.shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
 
+    
     this.createMap();
     this.createPlayer();
     this.addCollisions();
+
+
 
     // set bounds so the camera won't go outside the game world
     this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
@@ -45,7 +48,6 @@ export default class GameScene extends Phaser.Scene {
     this._ActivePlayer = this.player;
     // set background color, so the sky is not black    
     this.cameras.main.setBackgroundColor('#ccccff');
-
     // this text will show the score
     this.score = this.add.text(20, 20, '0', this._Settings.HUDFont);
     this.notes = this.add.text(20, 60, '0', this._Settings.debugFont);
@@ -82,6 +84,11 @@ export default class GameScene extends Phaser.Scene {
     this.boxTiles.children.entries.forEach(function (b) {
       b.body.setVelocityX(0);
     });
+    //sync the background to the camera
+    Phaser.Actions.Call(this.background.getChildren(), function(layer) {
+      layer.x = this.cameras.main.scrollX;
+      //layer.tilePositionX += Math.sign(this._ActivePlayer.body.velocity.x);
+    }, this);
     //this.notes.setText(this._ActivePlayer.player.anims.currentFrame.textureFrame);
   }
 
@@ -97,6 +104,7 @@ export default class GameScene extends Phaser.Scene {
 
     //set up interactive boxes
     this.physics.add.collider(this.player, this.boxTiles, this.overBox, null,  this);
+    this.physics.add.collider(this.flit, this.boxTiles, this.overBox, null,  this);
     this.physics.add.collider(this.groundLayer, this.boxTiles);
     this.physics.add.collider(this.boxTiles, this.boxTiles, this.logCollide, null, this); //get boxes to collide so you can stack them
    
@@ -116,10 +124,8 @@ export default class GameScene extends Phaser.Scene {
     // ;
 
     if(Phaser.Input.Keyboard.JustDown(this.spaceKey)){
-      console.log('pick up box');
-      this.player.overBox(box);
+      this._ActivePlayer.overBox(box);
     }
-
   }
   collectStar(player, star) {
     star.disableBody(true, true);
@@ -150,6 +156,15 @@ export default class GameScene extends Phaser.Scene {
     // load the map 
     this.map = this.make.tilemap({ key: 'map' });
 
+    //set up the background
+    this.background = this.add.group('background');
+    this.background.add(this.add.tileSprite(0, this.game.canvas.clientHeight - 80, this.game.canvas.clientWidth, 256, 'mountains'));
+    this.background.add(this.add.tileSprite(0, this.game.canvas.clientHeight - 80, this.game.canvas.clientWidth, 256, 'trees'));
+
+    Phaser.Actions.Call(this.background.getChildren(), function(layer) {
+      layer.setOrigin(0,0);
+    }, this);
+
     // tiles for the ground layer
     this.groundTiles = this.map.addTilesetImage('tiles');
     // create the ground layer
@@ -163,18 +178,17 @@ export default class GameScene extends Phaser.Scene {
     this.coinLayer = this.map.createDynamicLayer('Coins', this.coinTiles, 0, 0);
 
     //get the boxes from the map
-    //var b1 = this.map.createDynamicLayer('boxTiles', this.groundTiles, 0, 0);
-    var b1 = this.map.createFromObjects('Pushable', 'Box', { key: 'tiles', frame: 3});
-
+    var pushableBoxes = this.map.createFromObjects('Pushable', 'Box', { key: 'tiles', frame: 3});
     //get an array of the box tiles and create group from them
-    var b2 = this.map.createFromTiles(7, null, { key: 'tiles', frame: 3 });
-    this.boxTiles = new Phaser.Physics.Arcade.Group(this.world, this, b1, { bounceX: 1 });
+    this.boxTiles = new Phaser.Physics.Arcade.Group(this.world, this, pushableBoxes, { bounceX: 1 });
+    
     //set the group to respond to physics
     this.physics.world.enable(this.boxTiles);
     this.boxTiles.children.entries.forEach((x) => {
       x.body.setCollideWorldBounds(true); // don't go out of the map
       x.setOrigin(0, 0);
-      x.body.overlapX = 10;
+      //x.body.mass = 2;
+      //x.body.overlapX = 10;
     });
     console.log('built boxTiles');
     // set the boundaries of our game world

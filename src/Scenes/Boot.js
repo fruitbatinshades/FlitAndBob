@@ -14,6 +14,8 @@ export default class BootScene extends Phaser.Scene {
    this.load.tilemapTiledJSON('map', 'assets/map.json');
    // tiles in spritesheet 
    this.load.spritesheet('tiles', 'assets/tiles.png', {frameWidth: 70, frameHeight: 70});
+   this.load.image('trees', 'assets/trees.png');
+   this.load.image('mountains', 'assets/snowymountains.png');
    // simple coin image
    this.load.image('coin', 'assets/coinGold.png');
    // player animations
