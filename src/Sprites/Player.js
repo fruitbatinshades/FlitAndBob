@@ -49,14 +49,25 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   overBox(item) {
     if (this.carrying == null) {
       this.carrying = item;
-       item.body.allowGravity = false;
-       console.log('pickup box')
+      item.body.enable = false;
+      item.body.checkCollision.none = true;
+      console.log('pickup box');
     }
   }
   drop(item) {
     //item.body.checkCollision.none = false;
-    item.body.allowGravity = true;
     this.carrying = null;
+    this.body.setGravity(1, 1);
+    item.body.enable = true;
+    item.scene.physics.world.enable(item);
+    item.body.immovable = false;
+    item.body.moves = true;
+    item.body.allowGravity = true;
+    item.body.checkCollision.none = false;
+    item.body.checkCollision.left = true;
+    item.body.checkCollision.right = true;
+    item.body.checkCollision.top = true;
+    item.body.checkCollision.bottom = true;
     console.log('drop box');
   }
   update(cursors, space) {
@@ -75,12 +86,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
     //if we are carrying a box move it to match our position
     if (this.carrying) {
+//       //Why are body and this at different positions?
+//       this.debugText = `body.x:${this.body.x} body.left:${this.body.x}
+// this.x:${this.x} this.left:${this.left}`;
       if(this.direction.left > 0){
-        this.carrying.x = this.body.left - (this.carrying.width + 3);
+        this.carrying.x = this.body.left - ((this.carrying.width * this.carrying.originX)+ 16);
       }else if(this.direction.right > 0){
-        this.carrying.x = this.body.right + 3;//(this.carrying.width);
+        this.carrying.x = this.body.right + (this.carrying.width * this.carrying.originX) + 16;//(this.carrying.width);
       }
-      this.carrying.y = this.body.y - 16;
+      this.carrying.y = (this.body.top) + 16;
     }
     if (cursors.left.isDown) {
       this.body.setVelocityX(-200);

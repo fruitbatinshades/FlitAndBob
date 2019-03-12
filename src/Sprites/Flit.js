@@ -44,14 +44,25 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
   overBox(item) {
     if (this.carrying == null) {
       this.carrying = item;
-       item.body.allowGravity = false;
+       item.body.enable = false;
+       item.body.checkCollision.none = true;
        console.log('pickup box');
     }
   }
   drop(item) {
     //item.body.checkCollision.none = false;
-    item.body.allowGravity = true;
     this.carrying = null;
+    this.body.setGravity(1,1);
+    item.body.enable = true;
+    item.scene.physics.world.enable(item);
+    item.body.immovable = false;
+    item.body.moves = true;
+    item.body.allowGravity = true;
+    item.body.checkCollision.none = false;
+    item.body.checkCollision.left = true;
+    item.body.checkCollision.right = true;
+    item.body.checkCollision.top = true;
+    item.body.checkCollision.bottom = true;
     console.log('drop box');
   }
 
@@ -62,8 +73,8 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     }
     //if we are carrying a box move it to match our position
     if (this.carrying) {
-      this.carrying.x = this.body.x;
-      this.carrying.y = this.body.bottom + 3;
+      this.carrying.x = this.body.x + (this.carrying.width / 2);
+      this.carrying.y = this.body.y + this.carrying.height + 30;
     }
 
     if (cursors.left.isDown)
