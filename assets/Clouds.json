@@ -1,0 +1,30 @@
+{
+"frames": {
+	"cloud01.png": {
+		"frame": {"x":0, "y":190, "w":341, "h":145},
+		"spriteSourceSize": {"x":0,"y":0,"w":341,"h":145},
+		"sourceSize": {"w":341,"h":145}
+	},
+	"cloud02.png": {
+		"frame": {"x":0, "y":468, "w":271, "h":107},
+		"spriteSourceSize": {"x":0,"y":0,"w":271,"h":107},
+		"sourceSize": {"w":271,"h":107}
+	},
+	"cloud03.png": {
+		"frame": {"x":0, "y":336, "w":332, "h":131},
+		"spriteSourceSize": {"x":0,"y":0,"w":332,"h":131},
+		"sourceSize": {"w":332,"h":131}
+	},
+	"cloud04.png": {
+		"frame": {"x":0, "y":0, "w":384, "h":189},
+		"spriteSourceSize": {"x":0,"y":0,"w":384,"h":189},
+		"sourceSize": {"w":384,"h":189}
+	}
+
+},
+"meta": {
+	"image": "Clouds.png",
+	"size": {"w": 385, "h": 576},
+	"scale": "1"
+}
+}

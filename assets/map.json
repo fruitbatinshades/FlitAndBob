@@ -117,6 +117,52 @@
         }, 
         {
          "draworder":"topdown",
+         "name":"Boxes",
+         "objects":[
+                {
+                 "gid":7,
+                 "height":70,
+                 "id":52,
+                 "name":"Box",
+                 "rotation":0,
+                 "type":"Box",
+                 "visible":true,
+                 "width":70,
+                 "x":1260,
+                 "y":280
+                }, 
+                {
+                 "gid":7,
+                 "height":70,
+                 "id":54,
+                 "name":"Box",
+                 "rotation":0,
+                 "type":"Box",
+                 "visible":true,
+                 "width":70,
+                 "x":280,
+                 "y":490
+                }, 
+                {
+                 "gid":7,
+                 "height":70,
+                 "id":55,
+                 "name":"Box",
+                 "rotation":0,
+                 "type":"Box",
+                 "visible":true,
+                 "width":70,
+                 "x":280,
+                 "y":280
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "name":"Player",
          "objects":[
                 {
@@ -161,7 +207,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":51,
+ "nextobjectid":56,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.1.5",

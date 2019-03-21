@@ -17,18 +17,18 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
    this.setCircle(this.width * this.scaleX);
     this.setBounce(0.1,0.1); // our player will bounce from items
     this.body.setAllowGravity(false);
-    this.setCollideWorldBounds(true); // don't go out of the map        
+    this.setCollideWorldBounds(true); // don't go out of the map 
 
     // player walk animation
     this.anims.animationManager.create({
         key: 'flit_fly',
-        frames: this.anims.animationManager.generateFrameNames('flit', {prefix: 'fly', start: 1, end: 2, zeroPad: 2, suffix:'.png'}),
+      frames: this.anims.animationManager.generateFrameNames('flit', { prefix: 'Fly', start: 1, end: 3, zeroPad: 2, suffix: '.png', yoyo: true}),
         frameRate: 12,
-        repeat: -1
+      repeat: -1
     });
     this.anims.animationManager.create({
         key: 'flit_idle',
-        frames: this.anims.animationManager.generateFrameNames('flit', {prefix: 'fly', start: 1, end: 2, zeroPad: 2, suffix:'.png'}),
+      frames: this.anims.animationManager.generateFrameNames('flit', { prefix: 'Fly', start: 1, end: 3, zeroPad: 2, suffix: '.png', yoyo: true}),
         frameRate: 6,
         repeat: -1
     });
@@ -41,53 +41,40 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     this.anims.play('flit_idle', true);
   }
 
-  overBox(item) {
+  overBox(item, player) {
     if (this.carrying == null) {
-      this.carrying = item;
-       item.body.enable = false;
-       item.body.checkCollision.none = true;
-       console.log('pickup box');
+      console.log('before pickup', item.body);
+      //this.carrying = item;
+       //item.body.enable = false;
+       //item.body.checkCollision.none = true;
+      this.scene.events.emit('pickup_box', item, this);
     }
   }
   drop(item) {
-    //item.body.checkCollision.none = false;
-    this.carrying = null;
-    this.body.setGravity(1,1);
-    item.body.enable = true;
-    item.scene.physics.world.enable(item);
-    item.body.immovable = false;
-    item.body.moves = true;
-    item.body.allowGravity = true;
-    item.body.checkCollision.none = false;
-    item.body.checkCollision.left = true;
-    item.body.checkCollision.right = true;
-    item.body.checkCollision.top = true;
-    item.body.checkCollision.bottom = true;
-    console.log('drop box');
+    this.scene.events.emit('drop_box', item, this);
   }
 
   update (cursors, space) {
-
     if (this.carrying != null && Phaser.Input.Keyboard.JustDown(space)) {
       this.drop(this.carrying);
     }
     //if we are carrying a box move it to match our position
     if (this.carrying) {
-      this.carrying.x = this.body.x + (this.carrying.width / 2);
-      this.carrying.y = this.body.y + this.carrying.height + 30;
+      this.carrying.x = this.body.x;
+      this.carrying.y = this.body.bottom + 5;
     }
 
     if (cursors.left.isDown)
     {
         this.body.setVelocityX(-200);
         this.anims.play('flit_fly', true); // walk left
-        this.flipX = false; // flip the sprite to the left
+        this.flipX = true; // flip the sprite to the left
     }
     if (cursors.right.isDown)
     {
         this.body.setVelocityX(200);
         this.anims.play('flit_fly', true);
-        this.flipX = true; // use the original sprite looking to the right
+        this.flipX = false; // use the original sprite looking to the right
       }
       if (cursors.up.isDown)
       {
@@ -99,9 +86,6 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     } 
     //no keys so stop
     if(!cursors.left.isDown && !cursors.right.isDown && !cursors.up.isDown && !cursors.down.isDown) {
-        // this.body.setVelocityX(0);
-        // this.body.setVelocityY(0);
-        // this.anims.play('flit_idle', true);
         this.idle();
     }
    

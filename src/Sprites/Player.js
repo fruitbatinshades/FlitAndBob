@@ -16,7 +16,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.currently = null;
     // enable physics
     this.scene.physics.world.enable(this);
-    this.setScale(.5);
+    this.setScale(.75);
     this.debugText = ''; 
 
     // add our player to the scene
@@ -30,15 +30,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     // player walk animation
     this.anims.animationManager.create({
       key: 'walk',
-      frames: this.anims.animationManager.generateFrameNames('bob', { prefix: 'w', start: 1, end: 6, zeroPad: 2, suffix: '.png' }),
-      frameRate: 10,
+      frames: this.anims.animationManager.generateFrameNames('bob', { prefix: 'Bob', start: 1, end: 3, zeroPad: 2, suffix: '.png', yoyo: true }),
+      frameRate: 6,
       repeat: -1
     });
     // idle with only one frame, so repeat is not neaded
     this.anims.animationManager.create({
       key: 'idle',
-      frames: this.anims.animationManager.generateFrameNames('bob', { prefix: 's', start: 1, end: 6, zeroPad: 2, suffix: '.png' }),
-      frameRate: 10,
+      frames: this.anims.animationManager.generateFrameNames('bob', { prefix: 'Bob', start: 1, end: 1, zeroPad: 2, suffix: '.png' }),
+      frameRate: 6,
     });
     this.idle();
   }
@@ -48,26 +48,25 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   }
   overBox(item) {
     if (this.carrying == null) {
-      this.carrying = item;
-      item.body.enable = false;
-      item.body.checkCollision.none = true;
+      this.scene.events.emit('pickup_box', item, this);
       console.log('pickup box');
     }
   }
   drop(item) {
+    this.scene.events.emit('drop_box', item, this);
     //item.body.checkCollision.none = false;
-    this.carrying = null;
-    this.body.setGravity(1, 1);
-    item.body.enable = true;
-    item.scene.physics.world.enable(item);
-    item.body.immovable = false;
-    item.body.moves = true;
-    item.body.allowGravity = true;
-    item.body.checkCollision.none = false;
-    item.body.checkCollision.left = true;
-    item.body.checkCollision.right = true;
-    item.body.checkCollision.top = true;
-    item.body.checkCollision.bottom = true;
+    // this.carrying = null;
+    // //this.body.setGravity(1, 1);
+    // item.body.enable = true;
+    // item.scene.physics.world.enable(item);
+    // item.body.immovable = false;
+    // item.body.moves = true;
+    // item.body.allowGravity = true;
+    // item.body.checkCollision.none = false;
+    // item.body.checkCollision.left = true;
+    // item.body.checkCollision.right = true;
+    // item.body.checkCollision.top = true;
+    // item.body.checkCollision.bottom = true;
     console.log('drop box');
   }
   update(cursors, space) {
@@ -86,15 +85,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
     //if we are carrying a box move it to match our position
     if (this.carrying) {
-//       //Why are body and this at different positions?
-//       this.debugText = `body.x:${this.body.x} body.left:${this.body.x}
-// this.x:${this.x} this.left:${this.left}`;
       if(this.direction.left > 0){
-        this.carrying.x = this.body.left - ((this.carrying.width * this.carrying.originX)+ 16);
+        this.carrying.x = this.body.left - (this.carrying.width + 5);
       }else if(this.direction.right > 0){
-        this.carrying.x = this.body.right + (this.carrying.width * this.carrying.originX) + 16;//(this.carrying.width);
+        this.carrying.x = this.body.right + 5;//(this.carrying.width);
       }
-      this.carrying.y = (this.body.top) + 16;
+      this.carrying.y = (this.body.top) - 16;
     }
     if (cursors.left.isDown) {
       this.body.setVelocityX(-200);

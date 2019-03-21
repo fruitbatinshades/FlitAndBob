@@ -5,6 +5,7 @@ import Flit from '../Sprites/Flit.js';
 import Settings from '../settings.js';
 import Utils from '../Utils/Debug.js';
 import fbisUtils from '../Utils/Debug.js';
+import Boxes from '../Sprites/boxes.js';
 //import Coins from '../Groups/Coins.js';
 
 export default class GameScene extends Phaser.Scene {
@@ -19,8 +20,6 @@ export default class GameScene extends Phaser.Scene {
     this.loadingLevel = false;
     this._SCORE = 0;
     
-    this._ActivePlayer = null; //Currently selected character
-    this._ChangingPlayer = false; //Camera is transitioning between player
     this._Settings = new Settings(); //shared settings objects
 
     if (this._NEWGAME) this.events.emit('newGame');
@@ -44,7 +43,7 @@ export default class GameScene extends Phaser.Scene {
 
     // update our camera
     this.cameras.main.startFollow(this.player);
-    this._ActivePlayer = this.player;
+    this.game.ActivePlayer = this.player;
     // set background color, so the sky is not black    
     this.cameras.main.setBackgroundColor('#ccccff');
     // this text will show the score
@@ -54,23 +53,26 @@ export default class GameScene extends Phaser.Scene {
     this.score.setScrollFactor(0);
     this.notes.setScrollFactor(0);
 
-    this.graphics = this.add.graphics();
+    //set the debug graphic to this scene, re-create it for a different scene
+    this.game.DebugG = this.add.graphics();
     this.physics.collide(this.boxTiles, this.boxTiles);
     this.physics.collide(this.boxTiles, this.groundLayer);
   }
   switchCharacter() {
     //stop current player activity
-    this._ActivePlayer.idle();
-    this._ActivePlayer.body.setVelocityX(0);
+    this.game.ActivePlayer.idle();
+    this.game.ActivePlayer.body.setVelocityX(0);
     //get the other character
-    this._ActivePlayer = this._ActivePlayer.constructor.name === 'Player' ? this.flit : this.player;
-    this._ChangingPlayer = true;
+    this.game.ActivePlayer = this.game.ActivePlayer.constructor.name === 'Player' ? this.flit : this.player;
+    this.game.ActivePlayer = this.game.ActivePlayer;
+
+    this.game._ChangingPlayer = true;
     //pan the camera 
     this.cameras.main.stopFollow();
-    this.cameras.main.pan(this._ActivePlayer.x, this._ActivePlayer.y, 500, 'Sine.easeInOut', true, (cam, complete, x, y) => {
+    this.cameras.main.pan(this.game.ActivePlayer.x, this.game.ActivePlayer.y, 500, 'Sine.easeInOut', true, (cam, complete, x, y) => {
       if (complete === 1) {
-        this.cameras.main.startFollow(this._ActivePlayer, true, .1, .1);
-        this._ChangingPlayer = false;
+        this.cameras.main.startFollow(this.game.ActivePlayer, true, .1, .1);
+        this.game._ChangingPlayer = false;
       }
     });
   }
@@ -81,8 +83,8 @@ export default class GameScene extends Phaser.Scene {
     if (Phaser.Input.Keyboard.JustDown(this.shiftKey)) {
       this.switchCharacter();
     }
-    if (!this._ChangingPlayer) {
-      this._ActivePlayer.update(this.cursors, this.spaceKey);
+    if (!this.game._ChangingPlayer) {
+      this.game.ActivePlayer.update(this.cursors, this.spaceKey);
     }
     //this.physics.collide(this.boxTiles, this.boxTiles);
     // this.boxTiles.children.entries.forEach(function (b) {
@@ -112,22 +114,21 @@ export default class GameScene extends Phaser.Scene {
     Phaser.Actions.Call(this.background.getChildren(), function(layer) {
       layer.x = this.cameras.main.scrollX;
       ////Scroll background
-      //layer.tilePositionX += Math.sign(this._ActivePlayer.body.velocity.x);
+      //layer.tilePositionX += Math.round(this.game.ActivePlayer.body.velocity.x / 100);
     }, this);
-    this.graphics.clear();
-    Phaser.Actions.Call(this.boxTiles.getChildren(), function(a){
-      this.drawCollision(a);
-    }, this);
-    this.drawCollision(this.player);
-    this.drawCollision(this.flit);
-    //this.notes.setText(this._ActivePlayer.player.anims.currentFrame.textureFrame);
+     this.game.DebugG.clear();
+    // this.game.drawCollision(this.player);
+    // this.game.drawCollision(this.flit);
+     this.game.drawCollision(this.box2.getChildren());
+    // this.game.drawCollision(this.boxTiles.getChildren());
+    //this.notes.setText(this.game.ActivePlayer.player.anims.currentFrame.textureFrame);
   }
 
   addCollisions() {
     // player will collide with the level tiles 
     this.physics.add.collider(this.groundLayer, this.player);
     this.physics.add.collider(this.groundLayer, this.flit);
-    this.coinLayer.setTileIndexCallback(17, this.collectCoin, this);
+    this.coinLayer.setTileIndexCallback(1, this.collectCoin, this);
     // when the player overlaps with a tile with index 17, collectCoin 
     // will be called    
     this.physics.add.overlap(this.player, this.coinLayer);
@@ -138,10 +139,12 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.flit, this.boxTiles, this.overBox, null,  this);
     this.physics.add.collider(this.groundLayer, this.boxTiles, this.stopOnGround);
     this.physics.add.collider(this.boxTiles, this.boxTiles, this.stopOnBox, null, this); //get boxes to collide so you can stack them
+
+    this.box2.addCollisions();
    
   }
   stopOnGround(box, ground){
-    box.allowGravity = false;
+    // box.allowGravity = false;
     box.immovable = true;
     box.moves = false;
     box.enabled = false;
@@ -149,7 +152,7 @@ export default class GameScene extends Phaser.Scene {
     //ground.tint = 0xFF00FF;
   }
   stopOnBox(a,b){
-    console.log('box hit');
+    //console.log('box hit');
     a.body.immovable = true;
     a.body.moves = false;
     a.body.enabled = false;
@@ -158,7 +161,7 @@ export default class GameScene extends Phaser.Scene {
   }
   overBox(player, box){
     if(Phaser.Input.Keyboard.JustDown(this.spaceKey)){
-      this._ActivePlayer.overBox(box);
+      this.game.ActivePlayer.overBox(box);
     }
   }
   collectStar(player, star) {
@@ -168,11 +171,15 @@ export default class GameScene extends Phaser.Scene {
     this.map.findObject('Player', (obj) => {
       if (this._NEWGAME && this._LEVEL === 1) {
         if (obj.type === 'StartPosition') {
-          if (obj.name === 'Bob')
+          if (obj.name === 'Bob') {
             //this.player = new PlayerContainer(this, obj.x, obj.y, new Player(this, 0,0));
             this.player = new Player(this, obj.x, obj.y);
-          if (obj.name === 'Flit')
+            this.game.Bob = this.player;
+          }
+          if (obj.name === 'Flit') {
             this.flit = new Flit(this, obj.x, obj.y);
+            this.game.Flit = this.flit;
+          }
         }
       }
     });
@@ -192,9 +199,10 @@ export default class GameScene extends Phaser.Scene {
 
     //set up the background
     this.background = this.add.group('background');
-    this.background.add(this.add.tileSprite(0, this.game.canvas.clientHeight - 80, this.game.canvas.clientWidth, 256, 'mountains'));
-    this.background.add(this.add.tileSprite(0, this.game.canvas.clientHeight - 80, this.game.canvas.clientWidth, 256, 'trees'));
-
+    
+    //this.background.add(this.add.tileSprite(0, this.map.heightInPixels - 500, this.game.canvas.clientWidth, 256, 'mountains'));
+    this.background.add(this.add.tileSprite(0, this.map.heightInPixels - 346, this.game.canvas.clientWidth, 256, 'largegrass'));
+    // this.background.add(this.add.tileSprite(0, this.game.canvas.clientHeight - 80, this.game.canvas.clientWidth, 256, 'clouds', 1));
     Phaser.Actions.Call(this.background.getChildren(), function(layer) {
       layer.setOrigin(0,0);
     }, this);
@@ -211,8 +219,11 @@ export default class GameScene extends Phaser.Scene {
     // add coins as tiles
     this.coinLayer = this.map.createDynamicLayer('Coins', this.coinTiles, 0, 0);
 
+    var newBoxes = this.map.createFromObjects('Boxes', 'Box', { key: 'tiles', frame: 28 });
+    this.box2 = new Boxes(this, [], newBoxes);
+
     //get the boxes from the map
-    var pushableBoxes = this.map.createFromObjects('Pushable', 'Box', { key: 'tiles', frame: 3});
+    var pushableBoxes = this.map.createFromObjects('Pushable', 'Box', { key: 'tiles', frame: 29});
     //get an array of the box tiles and create group from them
     this.boxTiles = new Phaser.Physics.Arcade.Group(this.world, this, pushableBoxes, { bounceX: 1, originX:0, originY:1 });
     
@@ -225,9 +236,10 @@ export default class GameScene extends Phaser.Scene {
 
       let x = this.boxTiles.children.entries[i];
       x.body.immovable = true;
-      x.body.checkCollision.left = true;
-      x.body.checkCollision.right = true;
-      x.body.moves = false;
+      //x.body.setGravityX(1);
+      // x.body.checkCollision.left = true;
+      // x.body.checkCollision.right = true;
+      // x.body.moves = false;
       x.name = 'Box_' + i;
     }
     //   //x.body.mass = 2;
@@ -236,81 +248,6 @@ export default class GameScene extends Phaser.Scene {
     // set the boundaries of our game world
     this.physics.world.bounds.width = this.groundLayer.width;
     this.physics.world.bounds.height = this.groundLayer.height;
-  }
-
-  drawCollision(a) {
-    var b = a.body;
-    let midW = b.left + (b.width / 2); // center of body
-    let midH = b.top + (b.height / 2); // center of body
-    this.graphics.depth = 100;
-    this.graphics.blendMode = 4;
-    //width of collision check line
-    let collisionW = 3;
-    //shorten collision check line by this amount * 2, just to keep the display a bit cleaner
-    let collisionTrim = 10;
-
-    //color of collision check lines
-    let collisionC = 0xFFFFFF;
-    //colour of touching triangle
-    let touchingC = 0xFFFFFF;
-    //colour of blocked triangle
-    let blockedC = 0xFFFFFF;
-
-    //Show lines for collision checks
-    if (b.checkCollision.none === false) {
-      if (b.checkCollision.left) {
-        this.graphics.lineStyle(collisionW, collisionC, 1);
-        this.graphics.lineBetween(b.left - collisionW, b.top + collisionTrim, b.left - collisionW, b.bottom - collisionTrim);
-      }
-      if (b.checkCollision.right) {
-        this.graphics.lineStyle(collisionW, collisionC, 1);
-        this.graphics.lineBetween(b.right + collisionW, b.top + collisionTrim, b.right + collisionW, b.bottom - collisionTrim);
-      }
-      if (b.checkCollision.up) {
-        this.graphics.lineStyle(collisionW, collisionC, 1);
-        this.graphics.lineBetween(b.left + collisionTrim, b.top - collisionW, (b.left + b.width) - collisionTrim, b.top - collisionW);
-      }
-      if (b.checkCollision.down) {
-        this.graphics.lineStyle(collisionW, collisionC, 1);
-        this.graphics.lineBetween(b.left + collisionTrim, b.bottom + collisionW, (b.left + b.width) - collisionTrim, b.bottom + collisionW);
-      }
-    }
-    //Show a large arrow for touching
-    if (b.touching.none === false) {
-      this.graphics.lineStyle(3, touchingC);
-      if (b.touching.down) {
-        this.graphics.strokeTriangle(midW - 15, b.bottom - 15, midW + 15, b.bottom - 15, midW, b.bottom)
-      }
-      if (b.touching.up) {
-        this.graphics.strokeTriangle(midW - 15, b.top + 15, midW + 15, b.top + 15, midW, b.top)
-      }
-      if (b.touching.left) {
-        this.graphics.strokeTriangle(b.left, midH - 15, b.left + 15, midH, b.left, midH + 15);
-      }
-      if (b.touching.right) {
-        this.graphics.strokeTriangle(b.right, midH - 15, b.right - 15, midH, b.right, midH + 15);
-      }
-    }
-
-    //Show a small arrow for blocked
-    if (b.blocked.none === false) {
-      this.graphics.lineStyle(3, blockedC);
-      if (b.blocked.up) {
-        this.graphics.strokeTriangle(midW - 10, b.top + 10, midW + 10, b.top + 10, midW, b.top)
-      }
-      if (b.blocked.down) {
-        this.graphics.strokeTriangle(midW - 10, b.bottom - 10, midW + 10, b.bottom - 10, midW, b.bottom)
-      }
-      if (b.blocked.left) {
-        this.graphics.strokeTriangle(b.left, midH - 10, b.left + 10, midH, b.left, midH + 10);
-      }
-      if (b.blocked.right) {
-        this.graphics.strokeTriangle(b.right, midH - 10, b.right - 10, midH, b.right, midH + 10);
-      }
-    }
-    //Show the origin point
-    this.graphics.fillStyle(0xFF0000);
-    this.graphics.fillCircle(b.left + (b.width * a.originX), b.top + (b.height * a.originY), 4);
   }
   //   loadNextLevel (endGame) {
   //     if (!this.loadingLevel) {

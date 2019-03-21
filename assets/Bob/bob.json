@@ -1,0 +1,25 @@
+{
+"frames": {
+	"Bob01.png": {
+		"frame": {"x":0, "y":88, "w":137, "h":87},
+		"spriteSourceSize": {"x":0,"y":0,"w":137,"h":87},
+		"sourceSize": {"w":137,"h":87}
+	},
+	"Bob02.png": {
+		"frame": {"x":0, "y":0, "w":137, "h":87},
+		"spriteSourceSize": {"x":0,"y":0,"w":137,"h":87},
+		"sourceSize": {"w":137,"h":87}
+	},
+	"Bob03.png": {
+		"frame": {"x":0, "y":176, "w":137, "h":87},
+		"spriteSourceSize": {"x":0,"y":0,"w":137,"h":87},
+		"sourceSize": {"w":137,"h":87}
+	}
+
+},
+"meta": {
+	"image": "bob.png",
+	"size": {"w": 138, "h": 264},
+	"scale": "1"
+}
+}

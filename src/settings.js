@@ -20,10 +20,10 @@ export default class Settings {
             fontSize: '16px',
             fill: '#000',
             shadow: {
-                offsetX: 0,
-                offsetY: 0,
-                color: '#aaa',
-                blur: 2,
+                offsetX: 1,
+                offsetY: 1,
+                color: '#FFF',
+                blur: 1,
                 stroke: true,
                 fill: true
             }
