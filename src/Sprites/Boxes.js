@@ -37,9 +37,9 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
 
             b.note.setText(n);
 
-            if (box.player) {
+            // if (box.player) {
                 
-            }
+            // }
         });
     }
     init() { 
