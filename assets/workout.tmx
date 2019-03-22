@@ -28,7 +28,6 @@
   </data>
  </layer>
  <objectgroup name="Boxes">
-  <object id="7" name="Box" gid="31" x="704" y="1472" width="64" height="64"/>
   <object id="11" name="Box" gid="31" x="768" y="1408" width="64" height="64"/>
   <object id="13" name="Box" gid="31" x="768" y="1280" width="64" height="64"/>
   <object id="14" name="Box" gid="31" x="768" y="1088" width="64" height="64"/>

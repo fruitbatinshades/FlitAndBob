@@ -67,18 +67,6 @@
                 {
                  "gid":31,
                  "height":64,
-                 "id":7,
-                 "name":"Box",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":64,
-                 "x":704,
-                 "y":1472
-                }, 
-                {
-                 "gid":31,
-                 "height":64,
                  "id":11,
                  "name":"Box",
                  "rotation":0,

@@ -25,7 +25,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     // create the player sprite    
     this.setBounce(0.2); // our player will bounce from items
     this.setCollideWorldBounds(true); // don't go out of the map        
-    this.setGravityY(400); //set gravity to control jump height to 1 block
+    this.setGravityY(800); //set gravity to control jump height to 1 block
 
     // player walk animation
     this.anims.animationManager.create({

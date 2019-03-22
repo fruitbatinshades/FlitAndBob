@@ -220,7 +220,7 @@ export default class GameScene extends Phaser.Scene {
     this.coinLayer = this.map.createDynamicLayer('Coins', this.coinTiles, 0, 0);
 
     var newBoxes = this.map.createFromObjects('Boxes', 'Box', { key: 'tiles', frame: 28 });
-    this.box2 = new Boxes(this, [], newBoxes);
+     this.box2 = new Boxes(this, [], newBoxes);
 
     //get the boxes from the map
     var pushableBoxes = this.map.createFromObjects('Pushable', 'Box', { key: 'tiles', frame: 29});
