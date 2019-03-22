@@ -6,7 +6,7 @@ is that they need to work together to escape the level by using their different 
 
 I am not an artist but meet flit and bob
 
-![Meet Flit and Bob](https://github.com/fruitbatinshades/flitandbob/blob/master/fltandbob.png)
+![Meet Flit and Bob](https://github.com/fruitbatinshades/flitandbob/blob/master/FltAndBob.png)
 
 Major debugging code in the render but here a screenie
 
