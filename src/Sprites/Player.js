@@ -54,19 +54,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   }
   drop(item) {
     this.scene.events.emit('drop_box', item, this);
-    //item.body.checkCollision.none = false;
-    // this.carrying = null;
-    // //this.body.setGravity(1, 1);
-    // item.body.enable = true;
-    // item.scene.physics.world.enable(item);
-    // item.body.immovable = false;
-    // item.body.moves = true;
-    // item.body.allowGravity = true;
-    // item.body.checkCollision.none = false;
-    // item.body.checkCollision.left = true;
-    // item.body.checkCollision.right = true;
-    // item.body.checkCollision.top = true;
-    // item.body.checkCollision.bottom = true;
     console.log('drop box');
   }
   update(cursors, space) {

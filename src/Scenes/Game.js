@@ -86,28 +86,9 @@ export default class GameScene extends Phaser.Scene {
     if (!this.game._ChangingPlayer) {
       this.game.ActivePlayer.update(this.cursors, this.spaceKey);
     }
-    //this.physics.collide(this.boxTiles, this.boxTiles);
-    // this.boxTiles.children.entries.forEach(function (b) {
-    //   b.body.setVelocityX(0);
-    //   //THe boxes drop through each other unles we manually check and make them make immovable
-    //   if (b.body.moves && (b.body.blocked.down || b.body.touching.down || b.body.blocked.up || b.body.touching.up) && Math.abs(b.body.deltaY()) < 1)
-    //   {
-    //     b.body.immovable = true;
-    //     b.body.moves = false;
-    //     b.body.speed = 0;
-    //     b.tint = 0x00FF00;
-    //   }else{
-    //     b.body.immovable = false;
-    //     b.body.moves = true;
-    //   }
-    // });
     this.boxTiles.children.entries.forEach(function (b) {
       //if (b.body.touching.none && b.body.blocked.none) b.tint = 0xFF0000;
       b.body.setVelocityX(0);
-      // if (b.body.onFloor())
-      //   b.tint = 0xFF0000;
-      // else
-      //   b.tint = 0xFFFFFF;
     });
 
     //sync the background to the camera

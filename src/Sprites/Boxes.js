@@ -131,6 +131,9 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         bottom.underneath = top;
         top.onTopOf = bottom;
 
+        top.body.stop();
+        bottom.body.stop();
+
         bottom.tint = 0x00FF00;
         bottom.body.immovable = true;
         bottom.body.moves = false;
@@ -142,6 +145,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         top.body.moves = false;
         top.body.enable = true;
         top.body.allowGravity = false;
+
         
         //force gap else it is irregular
         top.y = (bottom.body.top - top.body.height) - 1;
