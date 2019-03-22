@@ -1,0 +1,5 @@
+# FlitAndBob
+Learning phaser 3 with a platform game
+
+Trying to learn Phaser 3 by creating a puzzle platform game called Flit and Bob where the concept 
+is that they need to work together to escape the level by using their different abilties.
