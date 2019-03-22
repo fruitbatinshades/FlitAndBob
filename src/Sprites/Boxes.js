@@ -75,7 +75,9 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         //if (a.boxstatus === Boxes.State.None) {
         if (box.lastContact !== tile) {
             box.body.immovable = true;
-            box.lastContact = tile;
+            box.body.allowGravity = false;
+            box.body.stop();
+            // box.lastContact = tile;
             box.status = Boxes.State.Tile;
         }
     }
