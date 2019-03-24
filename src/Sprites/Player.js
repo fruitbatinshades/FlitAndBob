@@ -80,12 +80,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.carrying.y = (this.body.top) - 16;
     }
     if (cursors.left.isDown) {
-      this.body.setVelocityX(-200);
+      this.body.setVelocityX(cursors.up.isDown ? - 100 : -200);
       this.anims.play('walk', true); // walk left
       this.flipX = true; // flip the sprite to the left
     }
     else if (cursors.right.isDown) {
-      this.body.setVelocityX(200);
+      this.body.setVelocityX(cursors.up.isDown ? 100 : 200);
       this.anims.play('walk', true);
       this.flipX = false; // use the original sprite looking to the right
     } else {

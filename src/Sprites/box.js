@@ -14,6 +14,8 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
         this.note = '';
         this.underneath = null;
         this.onTopOf = null;
+        this.debug = false;
+        this.flipX = Math.random() > 0.5;
         this.init();
     }
     init() { 
@@ -21,15 +23,17 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
         console.log(`Box Create: ${this.x}, ${this.y}, ${this.width}, ${this.height}`);
     }
     preUpdate(a, b) {
-        //Debug notes
-        this.note.x = this.x + 10;
-        this.note.y = this.y + 10;
+        if (this.debug) {
+            //Debug notes
+            this.note.x = this.x + 10;
+            this.note.y = this.y + 10;
 
-        let n = this.name;
-        if (this.onTopOf) n += `\nA${this.onTopOf.name}`;
-        if (this.underneath) n += `\nB${this.underneath.name}`;
+            let n = this.name;
+            if (this.onTopOf) n += `\nA${this.onTopOf.name}`;
+            if (this.underneath) n += `\nB${this.underneath.name}`;
 
-        this.note.setText(n);
+            this.note.setText(n);
+        }
     }
     /**
      * Reset this box and update any boxes under or over it
@@ -42,7 +46,7 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.overlapRect(this.x - 10, this.y - 10, this.width + 20, this.height + 20).forEach((o) => {
             let box = o.gameObject;
              if (box.constructor.name === 'Box') {
-                 box.alpha = 0.5;
+                 //box.alpha = 0.5;
                  if (box.onTopOf && box.onTopOf.name == this.name) box.onTopOf = null;
                  if (box.underneath && box.underneath.name == this.name) box.underneath = null;
             }

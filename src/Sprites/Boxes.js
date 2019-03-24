@@ -9,6 +9,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         Player: 2,
         Tile: 3
     }
+    static tileWidth = 64;
     constructor(scene, children, spriteArray) {
         super(scene, children);
 
@@ -20,11 +21,12 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         // add boxes to our group
         spriteArray.forEach((box) => {
             var b = new Box(box);
-            //b.setOrigin(0, 0);
+            b.setOrigin(0, 0);
             this.add(b, true);
             this.scene.physics.world.enable(b);
-            b.note = this.scene.add.text(b.x, b.y, 'X', this._Settings.debugFont);
             box.destroy(); //destroy original tile
+            //b.x = Math.round(b.x / Boxes.tileWidth) * Boxes.tileWidth;
+
         }, this);
 
         this.spaceKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -108,6 +110,11 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
     //when a box is dropped by a character
     onDropBox(box, player) {
         player.carrying = null;
+
+        //move to tile grid
+        
+        box.x = Math.round(box.x / Boxes.tileWidth) * Boxes.tileWidth;
+
         box.body.enable = true;
         box.body.immovable = false;
         box.body.moves = true;
@@ -134,13 +141,13 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         top.body.stop();
         bottom.body.stop();
 
-        bottom.tint = 0x00FF00;
+        //bottom.tint = 0x00FF00;
         bottom.body.immovable = true;
         bottom.body.moves = false;
         bottom.body.enable = true;
         bottom.body.allowGravity = false;
 
-        top.tint = 0xFF0000;
+        //top.tint = 0xFF0000;
         top.body.immovable = true;
         top.body.moves = false;
         top.body.enable = true;

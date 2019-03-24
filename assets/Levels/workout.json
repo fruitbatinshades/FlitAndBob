@@ -123,6 +123,18 @@
                  "width":64,
                  "x":576,
                  "y":1472
+                }, 
+                {
+                 "gid":31,
+                 "height":64,
+                 "id":17,
+                 "name":"Box",
+                 "rotation":0,
+                 "type":"BigStone",
+                 "visible":true,
+                 "width":64,
+                 "x":1408,
+                 "y":1536
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -152,7 +164,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":17,
+ "nextobjectid":18,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.1.5",

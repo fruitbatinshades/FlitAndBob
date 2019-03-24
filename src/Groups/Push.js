@@ -7,7 +7,7 @@ export default class Push extends Phaser.Physics.Arcade.StaticGroup {
   
       // add coins to our group
       spriteArray.forEach((coin) => {
-        coin.setScale(0.2);
+        coin.setScale(1);
         this.add(coin);
       });
       this.refresh();

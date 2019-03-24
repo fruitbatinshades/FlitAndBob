@@ -100,7 +100,7 @@ export default class GameScene extends Phaser.Scene {
      this.game.DebugG.clear();
     // this.game.drawCollision(this.player);
     // this.game.drawCollision(this.flit);
-     this.game.drawCollision(this.box2.getChildren());
+     //this.game.drawCollision(this.box2.getChildren());
     // this.game.drawCollision(this.boxTiles.getChildren());
     //this.notes.setText(this.game.ActivePlayer.player.anims.currentFrame.textureFrame);
   }
@@ -200,7 +200,7 @@ export default class GameScene extends Phaser.Scene {
     // add coins as tiles
     this.coinLayer = this.map.createDynamicLayer('Coins', this.coinTiles, 0, 0);
 
-    var newBoxes = this.map.createFromObjects('Boxes', 'Box', { key: 'tiles', frame: 28 });
+    var newBoxes = this.map.createFromObjects('Boxes', 'Box', { key: 'tiles', frame: [27,26], origin: 0});
      this.box2 = new Boxes(this, [], newBoxes);
 
     //get the boxes from the map
