@@ -104,7 +104,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
             box.player = player;
             box.body.enable = false;
             box.body.allowGravity = false;
-            console.log('event pickup_box', box);
+            if(this.debug) console.log('event pickup_box', box);
         }
     }
     //when a box is dropped by a character
@@ -119,7 +119,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         box.body.immovable = false;
         box.body.moves = true;
         box.body.allowGravity = true;
-        console.log('event drop_box', box);
+        if (this.debug) console.log('event drop_box', box);
     }
     playerCollide(player, box) {
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
@@ -156,6 +156,6 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         
         //force gap else it is irregular
         top.y = (bottom.body.top - top.body.height) - 1;
-        console.log('box colliding');
+        if (this.debug) console.log('box colliding');
     }
 }

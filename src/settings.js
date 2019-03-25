@@ -4,7 +4,7 @@ export default class Settings {
         this.Both = true;
         //Font setting for HUD font
         this.HUDFont = {
-            fontSize: '30px',
+            fontSize: '24px',
             strokeThickness: 1,
             fill: '#ffffff',
             shadow: {

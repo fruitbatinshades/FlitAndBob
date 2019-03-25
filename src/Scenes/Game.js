@@ -4,7 +4,7 @@ import Flit from '../Sprites/Flit.js';
 //import PlayerContainer from '../Groups/PlayerContainer.js';
 import Settings from '../settings.js';
 import Utils from '../Utils/Debug.js';
-import fbisUtils from '../Utils/Debug.js';
+import MapLoader from '../Utils/MapLoader.js';
 import Boxes from '../Sprites/boxes.js';
 //import Coins from '../Groups/Coins.js';
 
@@ -41,14 +41,19 @@ export default class GameScene extends Phaser.Scene {
     // set bounds so the camera won't go outside the game world
     this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
+    this.header = this.add.image(11, 0, 'header');
+    this.header.setOrigin(0, 0);
+    this.header.setScrollFactor(0);
+    this.add.image(50, 44, 'coin').setScrollFactor(0).setScale(.5);
+
     // update our camera
     this.cameras.main.startFollow(this.player);
     this.game.ActivePlayer = this.player;
     // set background color, so the sky is not black    
     this.cameras.main.setBackgroundColor('#ccccff');
     // this text will show the score
-    this.score = this.add.text(20, 20, '0', this._Settings.HUDFont);
-    this.notes = this.add.text(20, 60, '0', this._Settings.debugFont);
+    this.score = this.add.text(70, 32, '0', this._Settings.HUDFont);
+    this.notes = this.add.text(50, 52, '0', this._Settings.debugFont);
     // fix the text to the camera
     this.score.setScrollFactor(0);
     this.notes.setScrollFactor(0);
@@ -94,15 +99,11 @@ export default class GameScene extends Phaser.Scene {
     //sync the background to the camera
     Phaser.Actions.Call(this.background.getChildren(), function(layer) {
       layer.x = this.cameras.main.scrollX;
+      layer.tilePositionX = this.cameras.main.scrollX * 0.1;
       ////Scroll background
       //layer.tilePositionX += Math.round(this.game.ActivePlayer.body.velocity.x / 100);
     }, this);
      this.game.DebugG.clear();
-    // this.game.drawCollision(this.player);
-    // this.game.drawCollision(this.flit);
-     //this.game.drawCollision(this.box2.getChildren());
-    // this.game.drawCollision(this.boxTiles.getChildren());
-    //this.notes.setText(this.game.ActivePlayer.player.anims.currentFrame.textureFrame);
   }
 
   addCollisions() {
@@ -175,74 +176,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   createMap() {
-    // load the map 
-    this.map = this.make.tilemap({ key: 'map' });
-
-    //set up the background
-    this.background = this.add.group('background');
-    
-    //this.background.add(this.add.tileSprite(0, this.map.heightInPixels - 500, this.game.canvas.clientWidth, 256, 'mountains'));
-    this.background.add(this.add.tileSprite(0, this.map.heightInPixels - 346, this.game.canvas.clientWidth, 256, 'largegrass'));
-    // this.background.add(this.add.tileSprite(0, this.game.canvas.clientHeight - 80, this.game.canvas.clientWidth, 256, 'clouds', 1));
-    Phaser.Actions.Call(this.background.getChildren(), function(layer) {
-      layer.setOrigin(0,0);
-    }, this);
-
-    // tiles for the ground layer
-    this.groundTiles = this.map.addTilesetImage('tiles');
-    // create the ground layer
-    this.groundLayer = this.map.createDynamicLayer('World', this.groundTiles, 0, 0);
-    // the player will collide with this layer
-    this.groundLayer.setCollisionByExclusion([-1]);
-
-    // coin image used as tileset
-    this.coinTiles = this.map.addTilesetImage('coin');
-    // add coins as tiles
-    this.coinLayer = this.map.createDynamicLayer('Coins', this.coinTiles, 0, 0);
-
-    var newBoxes = this.map.createFromObjects('Boxes', 'Box', { key: 'tiles', frame: [27,26], origin: 0});
-     this.box2 = new Boxes(this, [], newBoxes);
-
-    //get the boxes from the map
-    var pushableBoxes = this.map.createFromObjects('Pushable', 'Box', { key: 'tiles', frame: 29});
-    //get an array of the box tiles and create group from them
-    this.boxTiles = new Phaser.Physics.Arcade.Group(this.world, this, pushableBoxes, { bounceX: 1, originX:0, originY:1 });
-    
-    //set the group to respond to physics
-    this.physics.world.enable(this.boxTiles);
-    for (let i = 0; i < this.boxTiles.children.entries.length; i++) {
-      //   x.body.setCollideWorldBounds(true); // don't go out of the map
-      //x.setOrigin(0, 0);
-      //   x.body.allowGravity = false;
-
-      let x = this.boxTiles.children.entries[i];
-      x.body.immovable = true;
-      //x.body.setGravityX(1);
-      // x.body.checkCollision.left = true;
-      // x.body.checkCollision.right = true;
-      // x.body.moves = false;
-      x.name = 'Box_' + i;
-    }
-    //   //x.body.mass = 2;
-    //   //x.body.overlapX = 10;
-    console.log('built boxTiles');
-    // set the boundaries of our game world
-    this.physics.world.bounds.width = this.groundLayer.width;
-    this.physics.world.bounds.height = this.groundLayer.height;
+    MapLoader.BuildScene(this, 'map');
   }
-  //   loadNextLevel (endGame) {
-  //     if (!this.loadingLevel) {
-  //       this.cameras.main.fade(500, 0, 0, 0);
-  //       this.cameras.main.on('camerafadeoutcomplete', () => {
-  //         if (endGame) {
-  //           this.scene.restart({ level: 1, levels: this._LEVELS, newGame: true });
-  //         } else if (this._LEVEL === 1) {
-  //           this.scene.restart({ level: 2, levels: this._LEVELS, newGame: false });
-  //         } else if (this._LEVEL === 2) {
-  //           this.scene.restart({ level: 1, levels: this._LEVELS, newGame: false });
-  //         }
-  //       });
-  //       this.loadingLevel = true;
-  //     }
-  //   }
 };
