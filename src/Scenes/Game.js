@@ -44,7 +44,13 @@ export default class GameScene extends Phaser.Scene {
     this.header = this.add.image(11, 0, 'header');
     this.header.setOrigin(0, 0);
     this.header.setScrollFactor(0);
-    this.add.image(50, 44, 'coin').setScrollFactor(0).setScale(.5);
+    //flies
+    this.add.image(60, 54, 'tiles', 47).setScrollFactor(0).setScale(.5);
+    this.fliesCollected = this.add.text(80, 42, '0', this._Settings.HUDFont);
+    //shrooms
+    this.add.image(60, 80, 'tiles', 37).setScrollFactor(0).setScale(.5);
+    this.shroomsCollected = this.add.text(80, 70, '0', this._Settings.HUDFont);
+    this.updateHeader();
 
     // update our camera
     this.cameras.main.startFollow(this.player);
@@ -52,16 +58,18 @@ export default class GameScene extends Phaser.Scene {
     // set background color, so the sky is not black    
     this.cameras.main.setBackgroundColor('#ccccff');
     // this text will show the score
-    this.score = this.add.text(70, 32, '0', this._Settings.HUDFont);
+
     this.notes = this.add.text(50, 52, '0', this._Settings.debugFont);
     // fix the text to the camera
-    this.score.setScrollFactor(0);
+    this.fliesCollected.setScrollFactor(0);
+    this.shroomsCollected.setScrollFactor(0);
     this.notes.setScrollFactor(0);
 
     //set the debug graphic to this scene, re-create it for a different scene
     this.game.DebugG = this.add.graphics();
     this.physics.collide(this.boxTiles, this.boxTiles);
     this.physics.collide(this.boxTiles, this.groundLayer);
+
   }
   switchCharacter() {
     //stop current player activity
@@ -110,12 +118,13 @@ export default class GameScene extends Phaser.Scene {
     // player will collide with the level tiles 
     this.physics.add.collider(this.groundLayer, this.player);
     this.physics.add.collider(this.groundLayer, this.flit);
-    this.coinLayer.setTileIndexCallback(1, this.collectCoin, this);
     // when the player overlaps with a tile with index 17, collectCoin 
     // will be called    
     this.physics.add.overlap(this.player, this.coinLayer);
     this.physics.add.overlap(this.flit, this.coinLayer);
-
+    this.coinLayer.setTileIndexCallback(48, this.collectCoin, this); //fly
+    this.coinLayer.setTileIndexCallback(38, this.collectCoin, this);//shroom
+    
     //set up interactive boxes
     this.physics.add.collider(this.player, this.boxTiles, this.overBox, null,  this);
     this.physics.add.collider(this.flit, this.boxTiles, this.overBox, null,  this);
@@ -169,13 +178,26 @@ export default class GameScene extends Phaser.Scene {
 
   // this function will be called when the player touches a coin
   collectCoin(sprite, tile) {
-    this.coinLayer.removeTileAt(tile.x, tile.y); // remove the tile/coin
-    this._SCORE++; // add 10 points to the score
-    this.score.setText(this._SCORE); // set the text to show the current score
+    let isFlit = sprite === this.flit;
+    if (tile.index == 48 && isFlit) {
+      this.coinLayer.removeTileAt(tile.x, tile.y); // remove the tile/coin
+      this.info.fliesCollected++; // add 10 points to the score
+    }
+    if (tile.index === 38 && !isFlit) {
+      this.coinLayer.removeTileAt(tile.x, tile.y); // remove the tile/coin
+      this.info.shroomsCollected++; // add 10 points to the score
+    }
+    this.updateHeader();
     return false;
   }
 
+  updateHeader() { 
+    this.fliesCollected.setText(`${this.info.fliesCollected}/${this.info.flies}`); // set the text to show the current score
+    this.shroomsCollected.setText(`${this.info.shroomsCollected}/${this.info.shrooms}`); // set the text to show the current score
+  }
+
   createMap() {
-    MapLoader.BuildScene(this, 'map');
+    this.info = MapLoader.BuildScene(this, 'map');
+    console.log(this.info);
   }
 };

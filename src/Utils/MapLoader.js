@@ -8,22 +8,27 @@ export default class MapLoader{
      * @param {string} mapKey Key for the map to add 
      */
     static BuildScene(scene, mapKey) {
+        let info = {
+            flies: 0,
+            shrooms: 0,
+            fliesCollected: 0,
+            shroomsCollected:0
+        };
         // load the map 
         scene.map = scene.make.tilemap({ key: 'map' });
 
         //set up the background
         scene.background = scene.add.group('background');
 
-        scene.add.image(1100, scene.map.heightInPixels - 366, 'gnome');
+        scene.add.image(1100, scene.map.heightInPixels - 350, 'gnome');
         //this.background.add(this.add.tileSprite(0, this.map.heightInPixels - 500, this.game.canvas.clientWidth, 256, 'mountains'));
-        scene.background.add(scene.add.tileSprite(0, scene.map.heightInPixels - 346, scene.game.canvas.clientWidth, 256, 'largegrass'));
+        //scene.background.add(scene.add.tileSprite(0, scene.map.heightInPixels - 346, scene.game.canvas.clientWidth, 256, 'largegrass'));
         // scene.background.add(scene.add.tileSprite(0, scene.game.canvas.clientHeight - 80, scene.game.canvas.clientWidth, 256, 'clouds', 1));
         Phaser.Actions.Call(scene.background.getChildren(), function (layer) {
             layer.setOrigin(0, 0);
             layer.alpha = .9;
             layer.fixedToCamera = true;
         }, scene);
-
 
         // tiles for the ground layer
         scene.groundTiles = scene.map.addTilesetImage('tiles');
@@ -35,9 +40,18 @@ export default class MapLoader{
         scene.groundLayer.setCollisionByExclusion([-1]);
 
         // coin image used as tileset
-        scene.coinTiles = scene.map.addTilesetImage('coin');
+
         // add coins as tiles
-        scene.coinLayer = scene.map.createDynamicLayer('Coins', scene.coinTiles, 0, 0);
+        scene.coinLayer = scene.map.createDynamicLayer('Coins', scene.groundTiles, 0, 0);
+        //count occurances
+        let tiles = scene.coinLayer.layer.data;
+        for (var i = 0; i < tiles.length; i++) {
+            var tile = tiles[i];
+            for (var j = 0; j < tile.length; j++) {
+                if (tile[j].index === 48) info.flies++;
+                if (tile[j].index === 38) info.shrooms++;
+            }
+        }
 
         var newBoxes = scene.map.createFromObjects('Boxes', 'Box', { key: 'tiles', frame: [27, 26, 25, 24], origin: 0 });
         scene.box2 = new Boxes(scene, [], newBoxes);
@@ -50,16 +64,8 @@ export default class MapLoader{
         //set the group to respond to physics
         scene.physics.world.enable(scene.boxTiles);
         for (let i = 0; i < scene.boxTiles.children.entries.length; i++) {
-            //   x.body.setCollideWorldBounds(true); // don't go out of the map
-            //x.setOrigin(0, 0);
-            //   x.body.allowGravity = false;
-
             let x = scene.boxTiles.children.entries[i];
             x.body.immovable = true;
-            //x.body.setGravityX(1);
-            // x.body.checkCollision.left = true;
-            // x.body.checkCollision.right = true;
-            // x.body.moves = false;
             x.name = 'Box_' + i;
         }
         //   //x.body.mass = 2;
@@ -68,5 +74,7 @@ export default class MapLoader{
         // set the boundaries of our game world
         scene.physics.world.bounds.width = scene.groundLayer.width;
         scene.physics.world.bounds.height = scene.groundLayer.height;
+
+        return info;
     }
 }

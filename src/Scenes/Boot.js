@@ -22,8 +22,6 @@ export default class BootScene extends Phaser.Scene {
     this.load.image('header', 'assets/header.png');
     this.load.svg('gnome', 'assets/gnome.svg');
     //this.load.image('grassground', 'assets/grassground.png');
-   // simple coin image
-    this.load.image('coin', 'assets/coinGold.png');
     this.load.image('bigStone', 'assets/bigStone.png');
     this.load.image('blob', 'assets/blob.png');
    // player animations
