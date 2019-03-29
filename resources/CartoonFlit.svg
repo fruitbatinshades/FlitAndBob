@@ -386,9 +386,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.9804167"
-     inkscape:cx="170.25153"
-     inkscape:cy="511.64057"
+     inkscape:zoom="1.4003661"
+     inkscape:cx="301.12959"
+     inkscape:cy="795.99938"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -1679,6 +1679,32 @@
          id="path8066"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
+    </g>
+    <g
+       id="g7745"
+       transform="translate(33.47339,-76.31933)">
+      <path
+         sodipodi:nodetypes="ccccccccc"
+         inkscape:connector-curvature="0"
+         id="path7703"
+         d="m 734.69387,109.37884 h 160.95097 l -20.35557,111.24553 h 23.80792 v 27.45635 H 726.64631 v -27.45635 h 24.61603 z"
+         style="fill:#333333;fill-rule:evenodd;stroke:#000000;stroke-width:0.9375px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         id="path7703-2"
+         d="m 737.97316,196.14285 3.91244,23.37145 h 139.44397 l 4.80538,-23.37145 z"
+         style="display:inline;fill:#d40000;fill-rule:evenodd;stroke:#000000;stroke-width:0.99137598px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         inkscape:connector-curvature="0" />
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path7737"
+         d="m 851.02828,116.953 c 11.91353,-0.81698 23.82706,-5.81258 35.74059,-0.11834 l -12.54471,64.73543 c -1.28385,-23.10411 8.40775,-48.87216 -23.19588,-64.61709 z"
+         style="fill:#666666;fill-rule:evenodd;stroke:none;stroke-width:0.9375px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path7739"
+         d="m 789.60655,225.12153 103.90806,0.23669 -0.23669,15.8584 z"
+         style="fill:#808080;fill-rule:evenodd;stroke:none;stroke-width:0.9375px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     </g>
   </g>
   <g

@@ -6,7 +6,7 @@ import Settings from '../settings.js';
 import Utils from '../Utils/Debug.js';
 import MapLoader from '../Utils/MapLoader.js';
 import Boxes from '../Sprites/boxes.js';
-//import Coins from '../Groups/Coins.js';
+import Enums from '../Levels/Tilemaps.js';
 
 export default class GameScene extends Phaser.Scene {
   constructor(key) {
@@ -118,21 +118,34 @@ export default class GameScene extends Phaser.Scene {
     // player will collide with the level tiles 
     this.physics.add.collider(this.groundLayer, this.player);
     this.physics.add.collider(this.groundLayer, this.flit);
-    // when the player overlaps with a tile with index 17, collectCoin 
-    // will be called    
+
+    //Set up the coin layer with verlap and callback
     this.physics.add.overlap(this.player, this.coinLayer);
     this.physics.add.overlap(this.flit, this.coinLayer);
-    this.coinLayer.setTileIndexCallback(48, this.collectCoin, this); //fly
-    this.coinLayer.setTileIndexCallback(38, this.collectCoin, this);//shroom
+    this.coinLayer.setTileIndexCallback([48, 38], this.collectCoin, this);
+
+    //Set up the components layer with overlap and callback
+    this.physics.add.overlap(this.player, this.switchLayer);
+    this.physics.add.overlap(this.flit, this.switchLayer);
+    //this.switchLayer.setCollisionBetween(1, 12, true);
+    
+    this.switchLayer.setTileIndexCallback(this.info.switchIds.ComponentTilesSwitches(), this.logTileIndex, this);//shroom
+    //this.switchLayer.setTileLocationCallback(27, 23, 1, 1, this.logTileIndex); 
     
     //set up interactive boxes
+    //player hits boxe
     this.physics.add.collider(this.player, this.boxTiles, this.overBox, null,  this);
-    this.physics.add.collider(this.flit, this.boxTiles, this.overBox, null,  this);
+    this.physics.add.collider(this.flit, this.boxTiles, this.overBox, null, this);
+    //box hits ground
     this.physics.add.collider(this.groundLayer, this.boxTiles, this.stopOnGround);
-    this.physics.add.collider(this.boxTiles, this.boxTiles, this.stopOnBox, null, this); //get boxes to collide so you can stack them
+    //get boxes to collide so you can stack them
+    this.physics.add.collider(this.boxTiles, this.boxTiles, this.stopOnBox, null, this); 
 
     this.box2.addCollisions();
    
+  }
+  logTileIndex(sprite, tile) { 
+    console.log(tile);
   }
   stopOnGround(box, ground){
     // box.allowGravity = false;

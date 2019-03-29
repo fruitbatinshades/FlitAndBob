@@ -17,6 +17,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     // enable physics
     this.scene.physics.world.enable(this);
     this.setScale(.75);
+
     this.debugText = ''; 
 
     // add our player to the scene

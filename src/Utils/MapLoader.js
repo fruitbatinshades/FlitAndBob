@@ -1,5 +1,6 @@
 /// <reference path="../../defs/phaser.d.ts" />
 import Boxes from '../Sprites/boxes.js';
+import Enums from '../Levels/Tilemaps.js';
 
 export default class MapLoader{
     /**
@@ -20,21 +21,22 @@ export default class MapLoader{
         //set up the background
         scene.background = scene.add.group('background');
 
-        scene.add.image(1100, scene.map.heightInPixels - 350, 'gnome');
-        //this.background.add(this.add.tileSprite(0, this.map.heightInPixels - 500, this.game.canvas.clientWidth, 256, 'mountains'));
+        scene.background.add(scene.add.tileSprite(0, scene.map.heightInPixels - 700, scene.game.canvas.clientWidth, 512, 'bricktile'));
+        scene.add.image(900, scene.map.heightInPixels - 350, 'gnome');
         //scene.background.add(scene.add.tileSprite(0, scene.map.heightInPixels - 346, scene.game.canvas.clientWidth, 256, 'largegrass'));
         // scene.background.add(scene.add.tileSprite(0, scene.game.canvas.clientHeight - 80, scene.game.canvas.clientWidth, 256, 'clouds', 1));
         Phaser.Actions.Call(scene.background.getChildren(), function (layer) {
             layer.setOrigin(0, 0);
-            layer.alpha = .9;
+            layer.alpha = 1;
             layer.fixedToCamera = true;
         }, scene);
 
         // tiles for the ground layer
         scene.groundTiles = scene.map.addTilesetImage('tiles');
+        scene.componentTiles = scene.map.addTilesetImage('components');
         // create the ground layer
         let back = scene.map.createStaticLayer('Background', scene.groundTiles, 0, 0);
-        back.setCollision([38, 39], false);//ignore grass tiles
+        //back.setCollision([38, 39], false);//ignore grass tiles
         scene.groundLayer = scene.map.createStaticLayer('World', scene.groundTiles, 0, 0);
         // the player will collide with this layer
         scene.groundLayer.setCollisionByExclusion([-1]);
@@ -52,6 +54,12 @@ export default class MapLoader{
                 if (tile[j].index === 38) info.shrooms++;
             }
         }
+
+        scene.switchLayer = scene.map.createDynamicLayer('Switches', scene.componentTiles, 0, 0);
+        //update the ids of the tiles with the gid
+        info.switchIds = new Enums(scene.switchLayer.tileset[0].firstgid);
+
+        //scene.interactionLayer = scene.map.getObjectLayer('Interaction');
 
         var newBoxes = scene.map.createFromObjects('Boxes', 'Box', { key: 'tiles', frame: [27, 26, 25, 24], origin: 0 });
         scene.box2 = new Boxes(scene, [], newBoxes);
@@ -77,4 +85,13 @@ export default class MapLoader{
 
         return info;
     }
+    static createInteraction(scene, map) {
+        
+    }
 }
+/*
+
+//create layer
+//set collision callbacks
+
+*/
