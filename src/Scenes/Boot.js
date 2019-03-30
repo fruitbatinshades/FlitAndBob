@@ -11,25 +11,25 @@ export default class BootScene extends Phaser.Scene {
 
   preload () {
     this.levels = {
-      1: 'level1',
-      2: 'level2'
+      1: 'L1',
+      2: 'L2'
     };
-   // map made with Tiled in JSON format
-   this.load.tilemapTiledJSON('map', 'assets/Levels/workout.json');
-   // tiles in spritesheet 
-    this.load.spritesheet('tiles', 'assets/Grass_Platform2.png', {frameWidth: 64, frameHeight: 64});
-    this.load.image('largegrass', 'assets/largegrass.png');
-    this.load.image('header', 'assets/header.png');
-    this.load.svg('gnome', 'assets/gnome.svg');
-    this.load.image('walltile', 'assets/wallTile.svg'); 
-    this.load.image('bricktile', 'assets/BrickTile.svg'); 
-    this.load.image('components', 'assets/levels/components.png'); 
-    this.load.image('bigStone', 'assets/bigStone.png');
-    this.load.image('blob', 'assets/blob.png');
-   // player animations
+  //  // map made with Tiled in JSON format
+  //  this.load.tilemapTiledJSON('map', 'assets/Levels/workout.json');
+  //  // tiles in spritesheet 
+  this.load.spritesheet('tiles', 'assets/levels/Grass_Platform2.png', {frameWidth: 64, frameHeight: 64});
+  //   this.load.image('largegrass', 'assets/largegrass.png');
+  //   this.load.image('header', 'assets/header.png');
+  //   this.load.svg('gnome', 'assets/levels/backgrounds/gnome.svg');
+  //   this.load.image('walltile', 'assets/levels/backgrounds/wallTile.svg'); 
+  //   this.load.image('bricktile', 'assets/levels/backgrounds/BrickTile.svg'); 
+  //   this.load.image('components', 'assets/levels/components.png'); 
+  //   this.load.image('bigStone', 'assets/bigStone.png');
+  //   this.load.image('blob', 'assets/blob.png');
+  //  // player animations
     this.load.atlas('flit', 'assets/Flit/Flit2.png', 'assets/flit/flit2.json');
     this.load.atlas('bob', 'assets/bob/bob.png', 'assets/bob/bob.json');
-    this.load.atlas('clouds', 'assets/clouds.png', 'assets/clouds.json');
+  //   this.load.atlas('clouds', 'assets/clouds.png', 'assets/clouds.json');
   }
 
   create() {
@@ -38,6 +38,6 @@ export default class BootScene extends Phaser.Scene {
     let s = getQueryStringValue('scene');
     if (s !== '') startScene = s;
 
-    this.scene.start(startScene, { level: 1, newGame: true, levels: this.levels });
+    this.scene.start(startScene, { level: 'L1', newGame: true, levels: this.levels });
   }
 };

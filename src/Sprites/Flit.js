@@ -27,6 +27,12 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
       repeat: -1
     });
     this.anims.animationManager.create({
+      key: 'flit_rush',
+      frames: this.anims.animationManager.generateFrameNames('flit', { prefix: 'Fly', start: 1, end: 3, zeroPad: 2, suffix: '.png', yoyo: true }),
+      frameRate: 20,
+      repeat: -1
+    });
+    this.anims.animationManager.create({
         key: 'flit_idle',
       frames: this.anims.animationManager.generateFrameNames('flit', { prefix: 'Fly', start: 1, end: 3, zeroPad: 2, suffix: '.png', yoyo: true}),
         frameRate: 6,

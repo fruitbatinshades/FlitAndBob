@@ -3,6 +3,7 @@ import config from './config.js';
 import GameScene from './Scenes/Game.js';
 import BootScene from './Scenes/Boot.js';
 import WorkoutScene from './Scenes/workout.js';
+import LevelLoaderScene from './Scenes/LevelLoaderScene.js';
 // import UIScene from './Scenes/UI';
 
 class Game extends Phaser.Game {
@@ -17,8 +18,9 @@ class Game extends Phaser.Game {
     this._ChangingPlayer = false; //Whether we are currenty changing between players
 
     this.scene.add('Boot', BootScene);
-    this.scene.add('Game', GameScene);
+    //this.scene.add('Game', GameScene);
     this.scene.add('Workout', WorkoutScene);
+    this.scene.add('LevelLoader', LevelLoaderScene);
     //this.scene.add('UI', UIScene);
     this.scene.start('Boot');
   }

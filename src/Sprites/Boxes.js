@@ -63,12 +63,14 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         //bind when a box is picked up
         this.scene.events.on('pickup_box', this.onPickupBox, this);
         this.scene.events.on('drop_box', this.onDropBox, this);
+
+        this.addCollisions();
     }
     //ensure map and players exist
     addCollisions() {
         //collider for when boxes hit each other
         this.scene.physics.add.collider(this, this, this.boxCollide, null, this);
-        this.scene.physics.add.collider(this, this.scene.groundLayer, this.tileCollide, null, this);
+        this.scene.physics.add.collider(this, this.scene.mapLayers.World , this.tileCollide, null, this);
         this.scene.physics.add.collider(this.scene.game.Bob, this, this.playerCollide, null, this);
         this.scene.physics.add.collider(this.scene.game.Flit, this, this.playerCollide, null, this);
     }

@@ -1,6 +1,7 @@
 /// <reference path="../../defs/phaser.d.ts" />
 import Boxes from '../Sprites/boxes.js';
 import Enums from '../Levels/Tilemaps.js';
+import Level from '../Levels/Level.js';
 
 export default class MapLoader{
     /**
@@ -20,6 +21,8 @@ export default class MapLoader{
 
         //set up the background
         scene.background = scene.add.group('background');
+
+        let lvl = new Level(scene);
 
         scene.background.add(scene.add.tileSprite(0, scene.map.heightInPixels - 700, scene.game.canvas.clientWidth, 512, 'bricktile'));
         scene.add.image(900, scene.map.heightInPixels - 350, 'gnome');
@@ -59,7 +62,19 @@ export default class MapLoader{
         //update the ids of the tiles with the gid
         info.switchIds = new Enums(scene.switchLayer.tileset[0].firstgid);
 
-        //scene.interactionLayer = scene.map.getObjectLayer('Interaction');
+        //Get the rectangles from the map
+        scene.interactionLayer = scene.map.getObjectLayer('Interaction');
+        scene.interactionZones = [];
+        for (let i = 0; i < scene.interactionLayer.objects.length; i++) {
+            let current = scene.interactionLayer.objects[i];
+            let zone = scene.add.zone(current.x, current.y).setSize(current.width, current.height);
+            scene.physics.world.enable(zone);
+            zone.body.setAllowGravity(false);
+            zone.body.moves = false;
+            zone.tintFill = 0xaa000000;
+            zone.properties = current.properties;
+            scene.interactionZones.push(zone);
+        }
 
         var newBoxes = scene.map.createFromObjects('Boxes', 'Box', { key: 'tiles', frame: [27, 26, 25, 24], origin: 0 });
         scene.box2 = new Boxes(scene, [], newBoxes);
