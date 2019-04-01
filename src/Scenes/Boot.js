@@ -33,7 +33,7 @@ export default class BootScene extends Phaser.Scene {
   }
 
   create() {
-    let startScene = 'Game';
+    let startScene = 'LevelLoader';
     //get the name of the scene to start from the querystring
     let s = getQueryStringValue('scene');
     if (s !== '') startScene = s;

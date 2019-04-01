@@ -114,7 +114,6 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         player.carrying = null;
 
         //move to tile grid
-        
         box.x = Math.round(box.x / Boxes.tileWidth) * Boxes.tileWidth;
 
         box.body.enable = true;
@@ -123,13 +122,23 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         box.body.allowGravity = true;
         if (this.debug) console.log('event drop_box', box);
     }
+    /**
+     * Handle player colliding with box and pick up
+     * @param {Phaser.GameObjects.Sprite} player The active player
+     * @param {Box} box The box they are colliding with
+     */
     playerCollide(player, box) {
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
             this.deActivate(box);
             player.overBox(box, player);
         }
     }
-    //Collide when boxes collide with other
+
+    /**
+     * Change the physics so boxes become static when they collide
+     * @param {Box} a First Box
+     * @param {Box} b Second Box
+     */
     boxCollide(a, b) {
         a.setVelocityX(0);
         b.setVelocityX(0);

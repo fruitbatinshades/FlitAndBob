@@ -59,19 +59,19 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8090922"
-     inkscape:cx="210.0803"
-     inkscape:cy="955.56852"
+     inkscape:zoom="5.6181844"
+     inkscape:cx="45.694384"
+     inkscape:cy="953.44167"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
      units="px"
      objecttolerance="2"
      guidetolerance="2"
-     inkscape:window-width="2736"
-     inkscape:window-height="1744"
-     inkscape:window-x="-11"
-     inkscape:window-y="-11"
+     inkscape:window-width="1920"
+     inkscape:window-height="1147"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1">
     <inkscape:grid
        type="xygrid"
@@ -86,7 +86,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -144,23 +144,23 @@
        width="100%"
        height="100%" />
     <use
-       style=""
        x="0"
        y="0"
        xlink:href="#use6505"
        id="use6507"
        transform="translate(6.73353,4.279253)"
        width="100%"
-       height="100%" />
+       height="100%"
+       style="" />
     <use
-       style=""
        x="0"
        y="0"
        xlink:href="#use6507"
        id="use6509"
        transform="translate(4.3421829,5.978368)"
        width="100%"
-       height="100%" />
+       height="100%"
+       style="" />
     <use
        style=""
        x="0"
@@ -273,34 +273,32 @@
        y="0"
        x="0" />
     <use
-       style=""
        height="100%"
        width="100%"
        transform="translate(44.554573,11.390364)"
        id="use6543"
        xlink:href="#path6503"
        y="0"
-       x="0" />
+       x="0"
+       style="" />
     <g
-       style=""
-       id="g6563"
-       transform="translate(0,28.362161)">
+       id="g19115">
       <path
          style="fill:#b3b3b3;fill-rule:evenodd;stroke:#000000;stroke-width:1.00553775px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="M 108.93198,40.995438 120.05668,22.999544 115,21 106.9093,39.995666 Z"
+         d="M 108.93198,69.357599 120.05668,51.361705 115,49.362161 106.9093,68.357827 Z"
          id="path6523"
          inkscape:connector-curvature="0" />
       <ellipse
          transform="scale(-1,1)"
-         style="opacity:1;fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2.0110755;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+         style="opacity:1;fill:#55d400;fill-opacity:1;stroke:#000000;stroke-width:2.0110755;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
          id="ellipse6525"
          cx="-118.6058"
-         cy="19.747581"
+         cy="48.109741"
          rx="4.0453477"
          ry="3.9990876" />
       <path
-         style="fill:#aa0000;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="m 116.51173,17.422734 c -0.13301,3.176663 0.60869,4.160938 4.79976,3.709548 C 119.55836,23.696568 117.2416,23.534211 116,22 c -1.73468,-1.729188 -0.35658,-3.44208 0.51173,-4.577266 z"
+         style="fill:#44aa00;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
+         d="m 116.51173,45.784895 c -0.13301,3.176663 0.60869,4.160938 4.79976,3.709548 -1.75313,2.564286 -4.06989,2.401929 -5.31149,0.867718 -1.73468,-1.729188 -0.35658,-3.44208 0.51173,-4.577266 z"
          id="path6545"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
@@ -309,7 +307,7 @@
          style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.5;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
          id="circle6547"
          cx="-118.11525"
-         cy="17.995956"
+         cy="46.358116"
          r="1" />
     </g>
     <use
@@ -678,6 +676,61 @@
        xlink:href="#use6820"
        y="0"
        x="0" />
+    <circle
+       transform="translate(0,28.362161)"
+       style="opacity:1;fill:#55d400;fill-opacity:1;stroke:#000000;stroke-width:0.5;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+       id="circle19119"
+       cx="96"
+       cy="43.755161"
+       r="2" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#circle19119"
+       id="use19121"
+       transform="translate(-19.456225,11.431045)"
+       width="100%"
+       height="100%" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#circle19119"
+       id="use19123"
+       transform="translate(-14.595463,5.4955476)"
+       width="100%"
+       height="100%" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#circle19119"
+       id="use19125"
+       transform="translate(-7.9207084,1.601941)"
+       width="100%"
+       height="100%" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#circle19119"
+       id="use19127"
+       transform="translate(8.2321969,1.2014558)"
+       width="100%"
+       height="100%" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#circle19119"
+       id="use19129"
+       transform="translate(14.973699,5.4955476)"
+       width="100%"
+       height="100%" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#circle19119"
+       id="use19131"
+       transform="translate(19.267791,11.41383)"
+       width="100%"
+       height="100%" />
   </g>
   <g
      inkscape:groupmode="layer"

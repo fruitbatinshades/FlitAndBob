@@ -1,10 +1,14 @@
 /// <reference path="../../defs/phaser.d.ts" />
 import Level from '../Levels/Level.js';
-import GameScene from '../Scenes/Game.js';
+//import GameScene from '../Scenes/Game.js';
+import Enums from '../Levels/Tilemaps.js';
 /**
  * Scene that loads a level with a progress bar.
  */
 export default class LevelLoaderScene extends Phaser.Scene {
+
+    switchIds;
+    
     constructor(key) {
         super(key);
     }

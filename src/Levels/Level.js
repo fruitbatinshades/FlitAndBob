@@ -2,6 +2,9 @@
 import Player from '../Sprites/Player.js';
 import Flit from '../Sprites/Flit.js';
 import Boxes from '../Sprites/boxes.js';
+
+import Enums from '../Levels/Tilemaps.js';
+import Interaction from '../sprites/Interaction.js';
 /**
  * Class that hold the level specific data and operations
  */
@@ -16,6 +19,7 @@ export default class Level{
     backgrounds;
     ActivePlayer = null;
     _ChangingPlayer = true;
+    switchIds;
 
     //NB: Call from preload
     constructor(scene) { 
@@ -76,9 +80,13 @@ export default class Level{
             switch (l.properties.LayerType.toLowerCase()) {
                 case 'static':
                     scene.mapLayers[l.name] = scene.map.createStaticLayer(l.name, sets, 0, 0).setCollisionByExclusion([-1]);
-                    break;
+                      break;
                 case 'dynamic':
                     scene.mapLayers[l.name] = scene.map.createDynamicLayer(l.name, sets, 0, 0);
+                    if (l.name === 'Switches') {
+                        //update the ids of the tiles with the gid
+                        scene.switchIds = new Enums(scene.mapLayers[l.name].tileset[1].firstgid);
+                    }
                     break;
             }
         });
@@ -89,6 +97,12 @@ export default class Level{
                 case 'Boxes':
                     var newBoxes = scene.map.createFromObjects('Boxes', 'Box', { key: 'tiles', frame: [27, 26, 25, 24], origin: 0 });
                     scene.mapLayers[l.name] = new Boxes(scene, [], newBoxes);
+                    break;
+                case 'Interaction':
+                    //Get the rectangles from the map
+                    scene.mapLayers[l.name]= scene.map.getObjectLayer('Interaction');
+                    scene.interactionZones = new Interaction(scene, [], l, scene.mapLayers[l.name]);
+                    break;
             }
         });
         scene.cameras.main.setBackgroundColor('#ccccff');

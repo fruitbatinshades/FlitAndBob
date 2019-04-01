@@ -3,7 +3,9 @@
  */
 
 export default class Enums {
+    isPopulated = false;
     constructor(firstgid) {
+        if (firstgid) this.isPopulated = true;
         /**
  * The tiles in the component set
  */
@@ -56,5 +58,18 @@ export default class Enums {
     }
     ComponentTilesSwitches() {
         return this.Switches;
+    }
+    /** 
+     * Get the next state for the switch
+     */
+    switchState(index) {
+        //handle switches
+        if (this.Switches.includes(index)) {
+            if (index === this.Component.SwitchOff || index === this.Component.SwitchOn)
+                return index === this.Component.SwitchOff ? this.Component.SwitchOn : this.Component.SwitchOff;
+            if (index === this.Component.StateOff || index === this.Component.StateOn)
+                return index === this.Component.StateOff ? this.Component.StateOn : this.Component.StateOff;
+        }
+
     }
 }
