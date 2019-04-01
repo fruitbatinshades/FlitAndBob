@@ -93,20 +93,14 @@ export default class LevelLoaderScene extends Phaser.Scene {
         if (!this.level._ChangingPlayer) {
             this.level.ActivePlayer.update(this.cursors, this.spaceKey);
         }
-
-        // this.boxTiles.children.entries.forEach(function (b) {
-        //     //if (b.body.touching.none && b.body.blocked.none) b.tint = 0xFF0000;
-        //     b.body.setVelocityX(0);
-        // });
-
-        // //sync the background to the camera
-        // Phaser.Actions.Call(this.background.getChildren(), function (layer) {
-        //     layer.x = this.cameras.main.scrollX;
-        //     layer.tilePositionX = this.cameras.main.scrollX * 0.1;
-        //     ////Scroll background
-        //     //layer.tilePositionX += Math.round(this.game.ActivePlayer.body.velocity.x / 100);
-        // }, this);
-        // //this.game.DebugG.clear();
+        //sync the background to the camera
+        Phaser.Actions.Call(this.level.sky.getChildren(), function (layer) {
+            layer.x = this.cameras.main.scrollX;
+            layer.tilePositionX = this.cameras.main.scrollX ;
+            ////Scroll background
+            //layer.tilePositionX += Math.round(this.game.ActivePlayer.body.velocity.x / 100);
+        }, this);
+        //this.game.DebugG.clear();
     }
     switchCharacter() {
         //stop current player activity

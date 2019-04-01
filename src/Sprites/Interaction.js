@@ -59,24 +59,32 @@ export default class Interaction extends Phaser.Physics.Arcade.Group
         }
         if (t.Action === 'ShowHide') {
             Object.entries(this.lookup).forEach((z) => {
+                let found = [];
                 //switch state on the activating object 
                 if (z[1].Name === t.Name) {
-                    let found = t.getVisibleTiles(this.scene, this.tileLayer);
-                    found.forEach((x) => {
+                    let activator = t.getVisibleTiles(this.scene, this.tileLayer);
+                    activator.forEach((x) => {
                         x.index = this.scene.switchIds.switchState(x.index);
                     });
+                } else if (z[1].Name === t.Target) {
+                        //Get target tiles
+                        z[1].Zone.active = !z[1].Zone.active;
+                        //find related objects switch their state as well
+                        found = z[1].getVisibleTiles(this.scene, this.tileLayer);
+                } else if (t.GroupKey !== null && z[1].GroupKey === t.GroupKey) {
+                    //get group tiles
+                    found = z[1].getVisibleTiles(this.scene, this.tileLayer);
                 }
-                //show/hide related tiles
-                if (z[1].Name !== t.Name && (z[1].GroupKey === t.GroupKey || z[1].Target === t.Target)) {
-                    //find related objects switch their state as well
-                    let found = z[1].getVisibleTiles(this.scene, this.tileLayer);
+                if (found.length > 0) {
                     found.forEach((x) => {
                         x.visible = !x.visible;
                     });
                 }
             });
         }
-     
+        //if object has a group, get those
+        //if object has a target, get that
+
     }
 }
 class InteractionObject{

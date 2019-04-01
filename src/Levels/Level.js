@@ -20,6 +20,7 @@ export default class Level{
     ActivePlayer = null;
     _ChangingPlayer = true;
     switchIds;
+    sky;
 
     //NB: Call from preload
     constructor(scene) { 
@@ -55,16 +56,6 @@ export default class Level{
      * @param {PhaserScene} scene The scene to populate
      */
     buildLevel(scene) {
-        //Add backgrounds
-        scene.background = scene.add.group('background');
-        scene.map.properties["Backgrounds"].split('|').forEach((b) => {
-            //TODO: position tilesprite from properties
-            let name = b.substr(0, b.lastIndexOf('.'));
-            let layer =  scene.add.tileSprite(0, 0, scene.game.canvas.clientWidth, 512, name);
-            layer.setOrigin(0, 0);
-            layer.alpha = 1;
-            layer.fixedToCamera = true;
-        });
         let sets = [];
         scene.map.tilesets.forEach((b) => {
             //console.log(`Added tilesetImage ${b.name}`);
@@ -74,15 +65,18 @@ export default class Level{
         
         this.createPlayer(scene);
         scene.mapLayers = {};
+        let layerDepth = 1;
         //Tile layers
         scene.map.layers.forEach((l) => {
             //console.log(`Created static layer ${l.name}`, l);
             switch (l.properties.LayerType.toLowerCase()) {
                 case 'static':
                     scene.mapLayers[l.name] = scene.map.createStaticLayer(l.name, sets, 0, 0).setCollisionByExclusion([-1]);
+                    scene.mapLayers[l.name].setDepth(l.properties.depth || 1);
                       break;
                 case 'dynamic':
                     scene.mapLayers[l.name] = scene.map.createDynamicLayer(l.name, sets, 0, 0);
+                    scene.mapLayers[l.name].depth = l.properties.depth || 1;
                     if (l.name === 'Switches') {
                         //update the ids of the tiles with the gid
                         scene.switchIds = new Enums(scene.mapLayers[l.name].tileset[1].firstgid);
@@ -97,11 +91,40 @@ export default class Level{
                 case 'Boxes':
                     var newBoxes = scene.map.createFromObjects('Boxes', 'Box', { key: 'tiles', frame: [27, 26, 25, 24], origin: 0 });
                     scene.mapLayers[l.name] = new Boxes(scene, [], newBoxes);
+                    scene.mapLayers[l.name].setDepth(l.properties.depth || 1);
                     break;
                 case 'Interaction':
                     //Get the rectangles from the map
                     scene.mapLayers[l.name]= scene.map.getObjectLayer('Interaction');
                     scene.interactionZones = new Interaction(scene, [], l, scene.mapLayers[l.name]);
+                    //scene.mapLayers[l.name].setDepth(l.properties.depth || 1);
+                    break;
+                case 'Sky':
+                    //Add backgrounds
+                    if (!this.sky) this.sky = new Phaser.GameObjects.Group(this.scene);
+                    scene.mapLayers[l.name] = scene.map.getObjectLayer('Sky');
+                    scene.mapLayers[l.name].objects.forEach((b) => {
+                        //NB: Theimages are loaded from the Tiled Map.Properties.Backgrounds, pipe seperated
+                        let name = b.name.substr(0, b.name.lastIndexOf('.'));
+                        if (name !== '') {
+                            let img = scene.game.textures.get(name).source[0];
+                            if (img !== null) {
+                                if (b.type == 'TileSprite') {
+                                    let o = scene.add.tileSprite(b.x, b.y - img.height, scene.game.canvas.clientWidth, img.width, name);
+                                    this.sky.add(o);
+                                    o.setOrigin(0, 0);
+                                    o.fixedToCamera = true;
+                                    o.setDepth(l.properties.depth || 1);
+                                }
+                                if (b.type == 'Image') {
+                                    let o = scene.add.image(b.x, b.y - img.height, name);
+                                    o.setOrigin(0, 0);
+                                    o.setDepth(l.properties.depth || 1);
+                                }
+                            }
+                        }
+                    });
+                    
                     break;
             }
         });
