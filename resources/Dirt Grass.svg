@@ -26,6 +26,18 @@
      id="defs4204">
     <linearGradient
        inkscape:collect="always"
+       id="linearGradient21386">
+      <stop
+         style="stop-color:#333333;stop-opacity:1;"
+         offset="0"
+         id="stop21382" />
+      <stop
+         style="stop-color:#333333;stop-opacity:0;"
+         offset="1"
+         id="stop21384" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
        id="linearGradient8463">
       <stop
          style="stop-color:#f5df2e;stop-opacity:1"
@@ -1487,6 +1499,15 @@
          id="rect7094"
          style="opacity:1;fill:#deaa87;fill-opacity:1;stroke:none;stroke-width:1.05273294;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
     </clipPath>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient21386"
+       id="linearGradient21388"
+       x1="128"
+       y1="1008"
+       x2="128"
+       y2="1024"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -1495,16 +1516,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2"
-     inkscape:cx="461.98063"
-     inkscape:cy="3.9013571"
+     inkscape:zoom="1"
+     inkscape:cx="415.49256"
+     inkscape:cy="38.124287"
      inkscape:document-units="px"
      inkscape:current-layer="layer3"
      showgrid="true"
-     inkscape:window-width="2736"
-     inkscape:window-height="1744"
-     inkscape:window-x="-11"
-     inkscape:window-y="-11"
+     inkscape:window-width="1920"
+     inkscape:window-height="1147"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      objecttolerance="8"
      inkscape:snap-bbox="true"
@@ -4241,45 +4262,45 @@
     <g
        transform="translate(199.91439,-51.277449)"
        id="g12487"
-       style="display:inline;shape-rendering:crispEdges;opacity:1">
+       style="display:inline;opacity:1;shape-rendering:crispEdges">
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"
          id="path11779"
          d="m 110.54391,687.63954 c -4.58294,-19.32167 4.69759,-31.21197 11.98548,-44.47905 -3.90787,15.7004 -8.98985,31.31921 -2.20142,44.47905 z"
-         style="fill:url(#linearGradient4945-127);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4945-127);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"
          id="path11781"
          d="m 119.49633,687.63954 c -2.93984,-40.0938 14.4163,-50.9602 23.23715,-53.96053 -28.73376,42.22274 -9.47698,37.83548 -12.47469,53.96053 z"
-         style="fill:url(#linearGradient4937-805);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4937-805);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"
          id="path11783"
          d="m 107.60868,687.63954 c 20.87101,-14.92417 21.43201,-36.42748 13.94229,-56.9235 17.23209,27.77026 10.29388,44.24215 -2.44601,56.9235 z"
-         style="fill:url(#linearGradient4860-246);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4860-246);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"
          id="path11785"
          d="m 112.25612,624 c -23.237068,24.93277 2.21137,48.30949 -9.53946,63.63954 h 9.53946 c 10.03878,-16.29733 -13.908785,-28.14625 0,-63.63954 z"
-         style="fill:url(#linearGradient4937-183);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4937-183);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"
          id="path11787"
          d="m 95.623207,649.87654 c 3.306979,13.1213 11.749243,27.95567 6.848843,37.763 h 7.58265 c 2.08244,-13.99239 -8.98163,-25.17433 -14.431493,-37.763 z"
-         style="fill:url(#linearGradient4860-506);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4860-506);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
-         style="fill:url(#linearGradient4945-252);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4945-252);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 110.54391,687.63954 c -4.58294,-19.32167 4.69759,-31.21197 11.98548,-44.47905 -3.90787,15.7004 -8.98985,31.31921 -2.20142,44.47905 z"
          id="path11789"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
       <path
-         style="fill:url(#linearGradient4937-786);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4937-786);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 119.49633,687.63954 c -2.93984,-40.0938 14.4163,-50.9602 23.23715,-53.96053 -28.73376,42.22274 -9.47698,37.83548 -12.47469,53.96053 z"
          id="path11791"
          inkscape:connector-curvature="0"
@@ -4289,21 +4310,21 @@
          inkscape:connector-curvature="0"
          id="path11793"
          d="m 135.49577,687.63954 c 4.58294,-19.32167 -4.69759,-31.21197 -11.98547,-44.47905 3.90786,15.70039 8.98984,31.31921 2.20141,44.47905 z"
-         style="fill:url(#linearGradient4945-102);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4945-102);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
-         style="fill:url(#linearGradient4860-137);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4860-137);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 107.60868,687.63954 c 20.87101,-14.92417 21.43201,-36.42748 13.94229,-56.9235 17.23209,27.77026 10.29388,44.24215 -2.44601,56.9235 z"
          id="path11795"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
       <path
-         style="fill:url(#linearGradient4937-582);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4937-582);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 112.25612,624 c -23.237068,24.93277 2.21137,48.30949 -9.53946,63.63954 h 9.53946 c 10.03878,-16.29733 -13.908785,-28.14625 0,-63.63954 z"
          id="path11797"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
       <path
-         style="fill:url(#linearGradient4860-596);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4860-596);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 95.623207,649.87654 c 3.306979,13.1213 11.749243,27.95567 6.848843,37.763 h 7.58265 c 2.08244,-13.99239 -8.98163,-25.17433 -14.431493,-37.763 z"
          id="path11799"
          inkscape:connector-curvature="0"
@@ -4313,45 +4334,45 @@
          inkscape:connector-curvature="0"
          id="path11801"
          d="m 157.61176,687.63954 c -18.24824,-16.66339 10.17947,-32.6055 -6.75304,-57.6494 6.5132,22.85065 -17.8239,41.89464 -2.55521,57.6494 z"
-         style="fill:url(#linearGradient11986-853);fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient11988-999);stroke-width:0.53207135px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient11986-853);fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient11988-999);stroke-width:0.53207135px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"
          id="path11803"
          d="m 138.35621,687.63954 c 0.6855,-0.67351 -2.84623,-52.10395 0.17381,-52.18685 2.86804,21.23128 6.65032,44.63279 11.71611,52.18685 z"
-         style="fill:url(#linearGradient11990-328);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient11990-328);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"
          id="path11805"
          d="m 147.98096,649.87654 c -3.30698,13.1213 -11.74924,27.95567 -6.84885,37.763 h -7.58265 c -2.08244,-13.99239 8.98164,-25.17433 14.4315,-37.763 z"
-         style="fill:url(#linearGradient4860-970);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4860-970);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
-         style="fill:url(#linearGradient4945-272);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4945-272);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 110.54391,687.63954 c -4.58294,-19.32167 4.69759,-31.21197 11.98548,-44.47905 -3.90787,15.7004 -8.98985,31.31921 -2.20142,44.47905 z"
          id="path11809"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
       <path
-         style="fill:url(#linearGradient4937-120);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4937-120);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 119.49633,687.63954 c -2.93984,-40.0938 14.4163,-50.9602 23.23715,-53.96053 -28.73376,42.22274 -9.47698,37.83548 -12.47469,53.96053 z"
          id="path11811"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
       <path
-         style="fill:url(#linearGradient4860-413);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4860-413);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 107.60868,687.63954 c 20.87101,-14.92417 21.43201,-36.42748 13.94229,-56.9235 17.23209,27.77026 10.29388,44.24215 -2.44601,56.9235 z"
          id="path11813"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
       <path
-         style="fill:url(#linearGradient4937-724);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4937-724);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 112.25612,624 c -23.237068,24.93277 2.21137,48.30949 -9.53946,63.63954 h 9.53946 c 10.03878,-16.29733 -13.908785,-28.14625 0,-63.63954 z"
          id="path11815"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
       <path
-         style="fill:url(#linearGradient4860-542);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4860-542);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 95.623207,649.87654 c 3.306979,13.1213 11.749243,27.95567 6.848843,37.763 h 7.58265 c 2.08244,-13.99239 -8.98163,-25.17433 -14.431493,-37.763 z"
          id="path11817"
          inkscape:connector-curvature="0"
@@ -4361,15 +4382,15 @@
          inkscape:connector-curvature="0"
          id="path11819"
          d="m 110.54391,687.63954 c -4.58294,-19.32167 4.69759,-31.21197 11.98548,-44.47905 -3.90787,15.7004 -8.98985,31.31921 -2.20142,44.47905 z"
-         style="fill:url(#linearGradient4945-643);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4945-643);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"
          id="path11821"
          d="m 119,688 c -2.93984,-40.0938 14.91263,-51.32066 23.73348,-54.32099 C 113.99972,675.90175 132.99771,671.87495 130,688 Z"
-         style="fill:url(#linearGradient4937-856);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4937-856);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
-         style="fill:url(#linearGradient4945-890);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4945-890);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 135,688 c 4.58294,-19.32167 -4.20182,-31.57243 -11.4897,-44.83951 3.90786,15.70039 9.27813,31.67967 2.4897,44.83951 z"
          id="path11823"
          inkscape:connector-curvature="0"
@@ -4379,63 +4400,63 @@
          inkscape:connector-curvature="0"
          id="path11825"
          d="m 108,688 c 20.87101,-14.92417 21.04069,-36.78794 13.55097,-57.28396 C 138.78306,658.4863 131.73989,675.31865 119,688 Z"
-         style="fill:url(#linearGradient4860-65);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4860-65);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"
          id="path11827"
          d="M 112.25612,624 C 89.019052,648.93277 114.75083,672.66995 103,688 h 9 c 10.03878,-16.29733 -13.652665,-28.50671 0.25612,-64 z"
-         style="fill:url(#linearGradient4937-206);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4937-206);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"
          id="path11829"
          d="M 95.623207,649.87654 C 98.930186,662.99784 107.9004,678.19267 103,688 h 7 c 2.08244,-13.99239 -8.92693,-25.53479 -14.376793,-38.12346 z"
-         style="fill:url(#linearGradient4860-568);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4860-568);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
-         style="fill:url(#linearGradient11994-866);fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient11996-401);stroke-width:0.53207135px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient11994-866);fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient11996-401);stroke-width:0.53207135px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 157.61176,687.63954 c -18.24824,-16.66339 10.17947,-32.6055 -6.75304,-57.6494 6.5132,22.85065 -17.8239,41.89464 -2.55521,57.6494 z"
          id="path11831"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
       <path
-         style="fill:url(#linearGradient11998-795);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient11998-795);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 138,688 c 0.6855,-0.67351 -2.49002,-52.46441 0.53002,-52.54731 C 141.39806,656.68397 144.93421,680.44594 150,688 Z"
          id="path11833"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
       <path
-         style="fill:url(#linearGradient4860-292);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4860-292);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="M 147.98096,649.87654 C 144.67398,662.99784 136.09961,678.19267 141,688 h -8 c -2.08244,-13.99239 9.5311,-25.53479 14.98096,-38.12346 z"
          id="path11835"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
       <path
-         style="fill:url(#linearGradient12000-85);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient12000-85);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 150,688 c 6.28897,-10.38374 0.72905,-22.46029 0.65857,-33.77778 C 155.80034,665.30713 160.63335,675.9203 159,688 Z"
          id="path11837"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
       <path
-         style="fill:url(#linearGradient4945-435);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4945-435);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 46.9207,687.63954 c -4.582939,-19.32167 4.697595,-31.21196 11.985477,-44.47905 -3.907861,15.7004 -8.989841,31.31921 -2.20141,44.47905 z"
          id="path11839"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
       <path
-         style="fill:url(#linearGradient4937-170);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4937-170);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 55.873118,687.63954 c -2.939832,-40.0938 14.416304,-50.96019 23.237149,-53.96052 -28.733757,42.22273 -9.476978,37.83547 -12.474683,53.96052 z"
          id="path11841"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
       <path
-         style="fill:url(#linearGradient4860-382);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4860-382);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 43.985477,687.63954 c 20.871003,-14.92417 21.432006,-36.42748 13.942288,-56.92349 17.232082,27.77026 10.293874,44.24214 -2.44601,56.92349 z"
          id="path11843"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
       <path
-         style="fill:url(#linearGradient4937-883);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4937-883);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 48.632911,624 c -23.237068,24.93277 2.211368,48.30949 -9.539462,63.63954 h 9.539462 c 10.038782,-16.29733 -13.908784,-28.14625 0,-63.63954 z"
          id="path11845"
          inkscape:connector-curvature="0"
@@ -4445,15 +4466,15 @@
          inkscape:connector-curvature="0"
          id="path11849"
          d="m 46.9207,687.63954 c -4.582939,-19.32167 4.697595,-31.21196 11.985477,-44.47905 -3.907861,15.7004 -8.989841,31.31921 -2.20141,44.47905 z"
-         style="fill:url(#linearGradient4945-123);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4945-123);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"
          id="path11851"
          d="m 55.873118,687.63954 c -2.939832,-40.0938 14.416304,-50.96019 23.237149,-53.96052 -28.733757,42.22273 -9.476978,37.83547 -12.474683,53.96052 z"
-         style="fill:url(#linearGradient4937-584);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4937-584);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
-         style="fill:url(#linearGradient4945-771);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4945-771);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 71.872566,687.63954 c 4.582939,-19.32167 -4.697594,-31.21196 -11.985477,-44.47905 3.907861,15.7004 8.989841,31.31921 2.20141,44.47905 z"
          id="path11853"
          inkscape:connector-curvature="0"
@@ -4463,33 +4484,33 @@
          inkscape:connector-curvature="0"
          id="path11855"
          d="m 43.985477,687.63954 c 20.871003,-14.92417 21.432006,-36.42748 13.942288,-56.92349 17.232082,27.77026 10.293874,44.24214 -2.44601,56.92349 z"
-         style="fill:url(#linearGradient4860-681);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4860-681);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"
          id="path11857"
          d="m 48.632911,624 c -23.237068,24.93277 2.211368,48.30949 -9.539462,63.63954 h 9.539462 c 10.038782,-16.29733 -13.908784,-28.14625 0,-63.63954 z"
-         style="fill:url(#linearGradient4937-840);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4937-840);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"
          id="path11861"
          d="M 76.83828,688 C 81.421218,668.52175 72.140685,656.5351 64.852802,643.16049 68.760664,658.98813 73.842643,674.73351 67.054213,688 Z"
-         style="fill:url(#linearGradient4945-222);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61795634px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4945-222);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61795634px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
-         style="fill:url(#linearGradient12002-856);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient12002-856);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 85,688 c -0.685501,-0.67351 3.402368,-52.4644 0.382322,-52.5473 C 82.514287,656.68397 78.065789,680.44594 73,688 Z"
          id="path11863"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
       <path
-         style="fill:url(#linearGradient4860-215);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4860-215);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="M 69.668643,649.87655 C 72.975621,662.99785 80.900396,678.19267 76,688 h 8 c 2.082439,-13.99239 -8.881499,-25.53479 -14.331357,-38.12345 z"
          id="path11865"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
       <path
-         style="fill:url(#linearGradient12004-815);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient12004-815);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 86.056954,687.63954 c 6.288972,-10.38374 1.048887,-22.09983 0.978406,-33.41732 5.141776,11.08492 10.683601,21.33762 9.050254,33.41732 z"
          id="path11867"
          inkscape:connector-curvature="0"
@@ -4499,51 +4520,51 @@
          inkscape:connector-curvature="0"
          id="path11869"
          d="m 46.9207,687.63954 c -4.582939,-19.32167 4.697595,-31.21196 11.985477,-44.47905 -3.907861,15.7004 -8.989841,31.31921 -2.20141,44.47905 z"
-         style="fill:url(#linearGradient4945-407);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4945-407);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"
          id="path11871"
          d="m 55.873118,687.63954 c -2.939832,-40.0938 14.416304,-50.96019 23.237149,-53.96052 -28.733757,42.22273 -9.476978,37.83547 -12.474683,53.96052 z"
-         style="fill:url(#linearGradient4937-702);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4937-702);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"
          id="path11873"
          d="m 43.985477,687.63954 c 20.871003,-14.92417 21.432006,-36.42748 13.942288,-56.92349 17.232082,27.77026 10.293874,44.24214 -2.44601,56.92349 z"
-         style="fill:url(#linearGradient4860-516);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4860-516);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"
          id="path11875"
          d="M 48.632911,624 C 25.395843,648.93277 50.75083,672.66995 39,688 H 49 C 59.038782,671.70267 34.724127,659.49329 48.632911,624 Z"
-         style="fill:url(#linearGradient4937-465);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4937-465);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
-         style="fill:url(#linearGradient4945-697);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4945-697);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="M 47,688 C 42.417061,668.67833 51.618295,656.42758 58.906177,643.16049 54.998316,658.86089 50.211569,674.84016 57,688 Z"
          id="path11879"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
       <path
-         style="fill:url(#linearGradient4937-870);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4937-870);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="M 56,688 C 53.060168,647.9062 70.289422,636.67935 79.110267,633.67902 50.37651,675.90175 69.997705,671.87495 67,688 Z"
          id="path11881"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
       <path
-         style="fill:url(#linearGradient4937-307);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4937-307);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 60.373877,624 c 23.237067,24.93277 -2.211368,48.30949 9.539461,63.63954 h -9.539461 c -10.038782,-16.29733 13.908784,-28.14625 0,-63.63954 z"
          id="path11883"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
       <path
-         style="fill:url(#linearGradient4860-938);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4860-938);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="M 73,688 C 52.128996,673.07583 51.590002,651.21206 59.07972,630.71605 41.847637,658.48631 48.260115,675.31865 61,688 Z"
          id="path11885"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
       <path
-         style="fill:url(#linearGradient4860-28);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1"
+         style="opacity:1;fill:url(#linearGradient4860-28);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
          d="M 31.999999,649.87654 C 35.306977,662.99785 43.900397,678.19267 39,688 h 7 c 2.082439,-13.99239 -8.550143,-25.53479 -14.000001,-38.12346 z"
          id="path11887"
          inkscape:connector-curvature="0"
@@ -4553,25 +4574,25 @@
          inkscape:connector-curvature="0"
          id="path11889"
          d="M 83,688 C 101.24825,671.33661 72.838493,655.03405 89.771007,629.99015 83.257804,652.84079 107.26869,672.24524 92,688 Z"
-         style="fill:url(#linearGradient12006-637);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.53207135px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient12006-637);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.53207135px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"
          id="path11891"
          d="m 97,688 c 0.685501,-0.67351 -2.146801,-52.46441 0.873245,-52.54731 C 100.74128,656.68397 103.93421,680.44594 109,688 Z"
-         style="fill:url(#linearGradient12010-178);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient12010-178);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"
          id="path11893"
          d="M 105.77239,649.87655 C 102.46542,662.99785 94.099604,678.19267 99,688 h -8 c -2.082439,-13.99239 9.32254,-25.53479 14.77239,-38.12345 z"
-         style="fill:url(#linearGradient4860-14);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient4860-14);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
       <path
          sodipodi:nodetypes="cccc"
          inkscape:connector-curvature="0"
          id="path11895"
          d="m 86,688 c 6.288972,-10.38374 1.105841,-22.46029 1.03536,-33.77778 C 92.177136,665.30714 97.633347,675.9203 96,688 Z"
-         style="fill:url(#linearGradient12012-451);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges;opacity:1" />
+         style="opacity:1;fill:url(#linearGradient12012-451);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.61546749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
     </g>
     <path
        inkscape:connector-curvature="0"
@@ -6242,7 +6263,7 @@
        height="64"
        width="64"
        id="rect8204"
-       style="opacity:1;fill:#ff0000;fill-opacity:0.01831502;stroke:none;stroke-width:3.14754081;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke" />
+       style="opacity:1;fill:#ff0000;fill-opacity:0.01831503;stroke:none;stroke-width:3.14754081;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke" />
     <path
        inkscape:connector-curvature="0"
        id="path8144"
@@ -8329,7 +8350,7 @@
          inkscape:export-ydpi="95.999969"
          inkscape:export-xdpi="95.999969"
          inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
-         style="fill:#809f46;fill-opacity:1;fill-rule:evenodd;stroke:#026c3a;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+         style="fill:#809f46;fill-opacity:1;fill-rule:evenodd;stroke:#026c3a;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m 395.98955,989.9284 c 1.05702,5.1379 7.31339,10.7809 20.09975,11.9537 11.41777,-0.4624 24.26074,-10.25728 20.96852,-11.82524 0,0 -15.10318,-4.76853 -22.12297,-4.73317 -7.0198,0.036 -18.9453,4.60471 -18.9453,4.60471 z"
          id="path3610"
          inkscape:connector-curvature="0"
@@ -8342,7 +8363,7 @@
          inkscape:connector-curvature="0"
          id="path7598"
          d="m 425.53391,988.8813 c 1.82038,1.21737 3.49728,3.96526 5.62897,1.86223 3.64318,-9.37155 11.20078,-23.91384 19.4211,-29.48975 l -1.03378,-1.56812 c -7.3566,6.39386 -18.64864,18.93441 -24.01629,29.19564 z"
-         style="fill:#d2ee99;fill-opacity:1;fill-rule:evenodd;stroke:#026c3a;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="fill:#d2ee99;fill-opacity:1;fill-rule:evenodd;stroke:#026c3a;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <path
          inkscape:export-ydpi="95.999969"
          inkscape:export-xdpi="95.999969"
@@ -8351,7 +8372,7 @@
          inkscape:connector-curvature="0"
          id="path7596"
          d="m 402.55948,991.29841 c -0.42489,-13.06199 -1.99261,-27.1177 -11.61728,-37.42126 l 2.1066,-3.20628 c 10.16492,11.66921 10.81,26.79521 16.77789,39.31944 -1.98559,1.61802 -3.47013,4.59173 -7.26721,1.3081 z"
-         style="fill:#d2ee99;fill-opacity:1;fill-rule:evenodd;stroke:#026c3a;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="fill:#d2ee99;fill-opacity:1;fill-rule:evenodd;stroke:#026c3a;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <path
          inkscape:export-ydpi="95.999969"
          inkscape:export-xdpi="95.999969"
@@ -8360,7 +8381,7 @@
          inkscape:connector-curvature="0"
          id="path7600"
          d="m 426.78034,989.60816 c 5.63097,-14.0013 2.34212,-32.26064 19.08773,-44.01606 l -4.06299,-2.79335 c -12.68829,11.63654 -15.71367,31.98768 -22.18683,46.23063 2.43736,1.64295 4.83728,2.20021 7.16209,0.57878 z"
-         style="fill:#d2ee99;fill-opacity:1;fill-rule:evenodd;stroke:#026c3a;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="fill:#d2ee99;fill-opacity:1;fill-rule:evenodd;stroke:#026c3a;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <path
          inkscape:export-ydpi="95.999969"
          inkscape:export-xdpi="95.999969"
@@ -8393,7 +8414,7 @@
          inkscape:connector-curvature="0"
          id="path7602"
          d="m 416.06906,987.95004 c -6.41855,-12.3435 -2.84817,-29.84766 -0.82764,-42.40754 l -3.37807,1.22012 c -3.05613,13.38778 -6.82036,31.52461 -2.46803,41.32043 1.91439,2.37521 4.19628,1.88384 6.67374,-0.13292 z"
-         style="fill:#d2ee99;fill-opacity:1;fill-rule:evenodd;stroke:#026c3a;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="fill:#d2ee99;fill-opacity:1;fill-rule:evenodd;stroke:#026c3a;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <path
          inkscape:export-ydpi="95.999969"
          inkscape:export-xdpi="95.999969"
@@ -8410,7 +8431,7 @@
          inkscape:connector-curvature="0"
          id="path7604"
          d="m 414.39759,988.7206 c 4.54392,-13.40457 7.50474,-39.65519 15.89559,-46.17578 l 3.47048,1.43899 c -13.15674,12.53296 -9.33512,31.91429 -12.89027,45.51409 -1.93747,0.97297 -3.77787,2.4867 -6.4758,-0.7773 z"
-         style="fill:#d2ee99;fill-opacity:1;fill-rule:evenodd;stroke:#026c3a;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="fill:#d2ee99;fill-opacity:1;fill-rule:evenodd;stroke:#026c3a;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <path
          inkscape:export-ydpi="95.999969"
          inkscape:export-xdpi="95.999969"
@@ -9531,7 +9552,7 @@
          inkscape:export-ydpi="95.999969" />
     </g>
     <path
-       style="fill:#efebe0;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#efebe0;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 511.47792,943.89213 21.04138,-0.22624 c 9.2888,-0.80671 8.21676,-10.56799 6.93834,-13.49966 -2.04832,-5.75936 -4.6582,-8.77202 -13.19798,-11.9159 -11.08566,-2.4713 -21.87204,-2.69808 -31.82599,3.31835 -4.76794,3.34647 -6.32953,5.15939 -8.63875,10.1059 -1.72269,4.59755 -1.64138,17.05414 10.24135,15.40393 4.59516,-1.84661 9.50455,-3.2467 15.44165,-3.18638 z"
        id="path9626"
        inkscape:connector-curvature="0"
@@ -9660,7 +9681,7 @@
        inkscape:export-xdpi="95.999969"
        inkscape:export-ydpi="95.999969" />
     <path
-       style="fill:#efebe0;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#efebe0;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 497.50955,971.9636 c 6.69692,-5.65123 4.47526,-17.16324 6.61267,-25.81072 0.32452,-2.78908 -2.14179,-1.98993 -3.6263,-2.45308 9.47771,-4.00593 16.87449,-2.3915 25.06412,-1.49319 -1.70448,1.14548 -5.02802,1.05283 -4.5862,3.8396 2.4976,8.71588 0.84798,19.23956 8.26582,25.81072 -11.09881,0.0885 -22.91131,-0.0311 -31.73011,0.10667 z"
        id="path9628"
        inkscape:connector-curvature="0"
@@ -9786,7 +9807,8 @@
        id="g2984"
        inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Levels\Grass_Platform2.png"
        inkscape:export-xdpi="95.999969"
-       inkscape:export-ydpi="95.999969">
+       inkscape:export-ydpi="95.999969"
+       transform="translate(0,-2)">
       <g
          inkscape:export-ydpi="95.999969"
          inkscape:export-xdpi="95.999969"
@@ -10000,7 +10022,7 @@
     </g>
     <g
        id="g8837"
-       transform="translate(-118,606)"
+       transform="translate(-118,602)"
        inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Levels\Grass_Platform2.png"
        inkscape:export-xdpi="95.999969"
        inkscape:export-ydpi="95.999969">
@@ -10204,7 +10226,7 @@
     </g>
     <g
        id="g8759"
-       transform="translate(-118,606)"
+       transform="translate(-118,602)"
        inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Levels\Grass_Platform2.png"
        inkscape:export-xdpi="95.999969"
        inkscape:export-ydpi="95.999969">
@@ -10555,7 +10577,7 @@
     </g>
     <g
        id="g8580"
-       transform="translate(-114,606)"
+       transform="translate(-114,602)"
        inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Levels\Grass_Platform2.png"
        inkscape:export-xdpi="95.999969"
        inkscape:export-ydpi="95.999969">
@@ -10716,7 +10738,7 @@
     </g>
     <g
        id="g8674"
-       transform="translate(-118,606)"
+       transform="translate(-118,602)"
        inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Levels\Grass_Platform2.png"
        inkscape:export-xdpi="95.999969"
        inkscape:export-ydpi="95.999969">
@@ -10883,12 +10905,758 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="Stones"
-     style="display:inline" />
+     style="display:inline">
+    <rect
+       style="opacity:1;fill:url(#linearGradient21388);fill-opacity:1;stroke:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+       id="rect21372"
+       width="64"
+       height="40"
+       x="96"
+       y="1008"
+       inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Levels\Grass_Platform2.png"
+       inkscape:export-xdpi="95.999969"
+       inkscape:export-ydpi="95.999969" />
+    <g
+       transform="translate(-767.99999,-197.92016)"
+       style="display:inline"
+       id="g18198">
+      <path
+         sodipodi:nodetypes="cccccccscccccccccc"
+         inkscape:connector-curvature="0"
+         id="path18057"
+         d="m 767.99999,209.321 c 5.00038,-3.79921 5.98485,-3.79091 6.85714,-1.89277 2.37766,-4.28076 1.92894,-8.53119 12.34286,-4.88965 4.94166,-4.84488 4.78679,-0.89732 6.4,0 2.97143,-2.06254 5.94286,-3.33978 8.91428,0 1.4062,-2.87106 2.2989,-6.20278 9.6,-3.78554 5.96928,0.69821 6.45638,3.01776 8.45715,4.88965 -4.99816,-3.16166 7.58405,-4.76454 10.97143,-5.36285 4.11305,-0.7265 13.22977,2.81147 8.68571,4.25874 8.12863,-0.6683 6.60617,2.90156 8.68571,4.88965 1.46001,-1.82017 -0.70348,-5.94847 8.00001,-3.15461 6.52919,-3.73195 7.22475,0.14007 8.45714,3.31234 1.78612,-3.3007 -0.47912,-7.99928 10.28571,-8.202 4.74337,0.26513 9.84879,0.26043 9.37143,4.41646 8.71556,-1.04716 9.86861,2.52671 10.97143,5.52058 v 11.04116 h -128 z"
+         style="fill:#744224;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.75431085px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         sodipodi:nodetypes="cccccc"
+         inkscape:connector-curvature="0"
+         id="path18091"
+         d="m 786.08525,203.50741 c 0.45135,-1.7223 1.11992,-2.20715 2.10549,-0.88946 -0.60256,1.54668 0.22748,2.2868 0.80206,3.17105 4.48452,1.856 4.01148,3.76424 6.01578,5.64643 -2.53458,-1.90764 -3.11278,-4.97238 -8.32181,-5.29831 -0.36073,-0.85892 -0.90343,-1.69783 -0.60152,-2.62971 z"
+         style="fill:#472e1f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.39483511px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-ydpi="95.999969" />
+      <use
+         height="100%"
+         width="100%"
+         transform="matrix(-1,0,0,1,1606.7201,0.50343885)"
+         id="use18093"
+         xlink:href="#path18091"
+         y="0"
+         x="0" />
+      <use
+         height="100%"
+         width="100%"
+         transform="translate(62.171427,4.5309494)"
+         id="use18095"
+         xlink:href="#path18091"
+         y="0"
+         x="0" />
+      <use
+         height="100%"
+         width="100%"
+         transform="matrix(-1,0,0,1,1672.7771,1.6361762)"
+         id="use18097"
+         xlink:href="#path18091"
+         y="0"
+         x="0" />
+      <path
+         sodipodi:nodetypes="cccccc"
+         inkscape:connector-curvature="0"
+         id="path18099"
+         d="m 869.56355,213.94345 c -0.318,1.72232 -0.78903,2.20716 -1.48339,0.88946 0.42452,-1.54666 -0.16026,-2.28692 -0.56508,-3.17115 -3.15949,-1.85588 -0.27275,-3.22414 -1.68468,-5.10621 2.09786,2.22208 -0.37931,3.87165 3.28436,4.53263 0.25414,0.85892 0.6615,1.9234 0.44879,2.85527 z"
+         style="fill:#472e1f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.17077494px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-ydpi="95.999969" />
+      <use
+         height="100%"
+         width="100%"
+         transform="matrix(-1,0,0,1,1706.9962,-4.9085285)"
+         id="use18101"
+         xlink:href="#path18099"
+         y="0"
+         x="0" />
+      <use
+         height="100%"
+         width="100%"
+         transform="translate(-65.371428,5.2861077)"
+         id="use18103"
+         xlink:href="#use18101"
+         y="0"
+         x="0" />
+      <path
+         sodipodi:nodetypes="cccccc"
+         inkscape:connector-curvature="0"
+         id="path18105"
+         d="m 799.67921,207.58429 c -0.32971,1.05067 -0.81725,1.34643 -1.53648,0.54256 0.43962,-0.94353 -0.16624,-1.39505 -0.58547,-1.93443 -3.27254,-1.13214 -2.92732,-2.29625 -4.38999,-3.44451 1.84965,1.16377 2.2716,3.03335 6.07281,3.23226 0.26351,0.52387 0.65945,1.03564 0.43893,1.60412 z"
+         style="fill:#472e1f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.93064833px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-ydpi="95.999969" />
+      <use
+         height="100%"
+         width="100%"
+         transform="translate(9.0285711,-0.12585972)"
+         id="use18107"
+         xlink:href="#path18105"
+         y="0"
+         x="0" />
+      <use
+         height="100%"
+         width="100%"
+         transform="matrix(-1,0,0,1,1660.5678,1.1327374)"
+         id="use18109"
+         xlink:href="#use18107"
+         y="0"
+         x="0" />
+      <path
+         sodipodi:nodetypes="cccccccccc"
+         inkscape:connector-curvature="0"
+         id="path18111"
+         d="m 840.9515,204.77666 c 0,0 1.8263,-3.08405 3.80124,-0.58946 1.20669,0.0685 2.64221,1.67061 2.90365,3.86475 0.6465,-0.67416 3.75087,3.24339 3.23128,3.62382 0.95603,0.50088 1.37788,4.65473 0.93957,4.45569 -0.40297,-1.39689 -2.38051,-6.33085 -5.65248,-6.81462 0.20529,-2.11246 -1.07367,-0.64566 -2.169,0.37741 0.83265,-1.32651 1.158,-2.57357 -0.22979,-3.55296 1.79882,-1.70798 -1.26404,-2.01188 -2.82458,-1.36442 z"
+         style="fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.48738909px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-ydpi="95.999969" />
+      <path
+         inkscape:export-ydpi="95.999969"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         sodipodi:nodetypes="ccccccccc"
+         inkscape:connector-curvature="0"
+         id="use18113"
+         d="m 786.11741,175.21302 -3.39918,-1.93346 c -1.29426,-0.20751 -2.58859,-0.34969 -3.88285,0.56037 0,0 -1.94792,2.38 -1.79808,2.44098 0.14968,0.0606 -1.7381,2.19697 -1.7381,2.19697 1.12986,-0.71115 2.41012,-0.40146 3.32638,-2.56304 0.91348,-1.41055 1.38832,0.0364 1.91791,1.12897 -0.11317,-1.17515 0.22683,-2.09188 2.09773,-2.13601 -0.85506,-1.81188 2.20462,0.0958 3.47619,0.30547 z"
+         style="display:inline;fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.35470402px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
+      <path
+         inkscape:export-ydpi="95.999969"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         sodipodi:nodetypes="cccccccccc"
+         inkscape:connector-curvature="0"
+         id="use18115"
+         d="m 841.33493,174.52067 c 0,0 0.17191,-3.86695 -3.08879,-3.11081 -1.13163,-0.77149 -3.37717,-0.39762 -4.91058,1.2784 -0.18603,-1.01504 -5.30935,0.1704 -5.06443,0.84964 -1.16049,-0.23431 -3.99796,2.99613 -3.48394,3.12865 1.19027,-0.90634 5.8956,-3.72715 9.14028,-1.88871 1.0633,-1.93033 1.35263,0.19062 1.73821,1.80981 0.0314,-1.69571 0.47444,-2.97549 2.30841,-2.85165 -0.61679,-2.68253 2.3325,-0.83557 3.36081,0.78503 z"
+         style="display:inline;fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.61034226px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="use18117"
+         d="m 795.31118,186.57557 c 0.56072,-1.22551 -0.29946,-3.82976 3.41794,-1.99107 1.9113,-2.71768 4.55066,3.77568 6.83608,5.79251 -3.41603,-1.29906 -6.58098,-6.65942 -10.25402,-3.80144 z"
+         style="display:inline;fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.57003379px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-ydpi="95.999969" />
+      <use
+         height="100%"
+         width="100%"
+         transform="matrix(-1.1746762,-0.29836122,-0.29596374,0.97641056,1827.7388,261.84613)"
+         id="use18121"
+         xlink:href="#use18115"
+         y="0"
+         x="0" />
+      <use
+         height="100%"
+         width="100%"
+         transform="matrix(-1.9857526,0,0,1.4702559,2373.0159,-87.324779)"
+         id="use18123"
+         xlink:href="#use18113"
+         y="0"
+         x="0" />
+      <path
+         inkscape:export-ydpi="95.999969"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         sodipodi:nodetypes="cccccc"
+         inkscape:connector-curvature="0"
+         id="use18125"
+         d="m 804.11066,190.0029 c -0.19791,1.0708 -0.49054,1.37225 -0.92225,0.55309 0.26387,-0.96169 -0.0998,-1.42182 -0.35141,-1.97164 -1.96428,-1.1537 -1.75707,-2.34012 -2.63499,-3.51031 1.1102,1.18606 1.36347,3.0914 3.64507,3.29395 0.15815,0.53406 0.39581,1.05552 0.26345,1.63491 z"
+         style="display:inline;fill:#472e1f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.72788292px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
+      <use
+         inkscape:transform-center-y="1.5103245"
+         inkscape:transform-center-x="3.5240904"
+         height="100%"
+         width="100%"
+         transform="matrix(0.99690406,0.08659015,-0.07139683,0.99690408,112.91707,-74.144107)"
+         id="use18127"
+         xlink:href="#use18121"
+         y="0"
+         x="0" />
+      <use
+         height="100%"
+         width="100%"
+         transform="translate(41.946565,-5.1602363)"
+         id="use18129"
+         xlink:href="#use18123"
+         y="0"
+         x="0" />
+      <use
+         x="0"
+         y="0"
+         xlink:href="#use18115"
+         id="use18131"
+         transform="matrix(-1.1410664,-0.29444502,-0.28749564,0.96359449,1883.8124,263.64288)"
+         width="100%"
+         height="100%" />
+    </g>
+    <g
+       transform="translate(-767.99999,-197.92016)"
+       style="display:inline"
+       id="g21502">
+      <g
+         id="g18198-1">
+        <path
+           style="fill:#744224;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.75431085px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 767.99999,209.321 c 5.00038,-3.79921 5.98485,-3.79091 6.85714,-1.89277 2.37766,-4.28076 1.92894,-8.53119 12.34286,-4.88965 4.94166,-4.84488 4.78679,-0.89732 6.4,0 2.97143,-2.06254 5.94286,-3.33978 8.91428,0 1.4062,-2.87106 2.2989,-6.20278 9.6,-3.78554 5.96928,0.69821 6.45638,3.01776 8.45715,4.88965 -4.99816,-3.16166 7.58405,-4.76454 10.97143,-5.36285 4.11305,-0.7265 13.22977,2.81147 8.68571,4.25874 8.12863,-0.6683 6.60617,2.90156 8.68571,4.88965 1.46001,-1.82017 -0.70348,-5.94847 8.00001,-3.15461 6.52919,-3.73195 7.22475,0.14007 8.45714,3.31234 1.78612,-3.3007 -0.47912,-7.99928 10.28571,-8.202 4.74337,0.26513 9.84879,0.26043 9.37143,4.41646 8.71556,-1.04716 9.86861,2.52671 10.97143,5.52058 v 11.04116 h -128 z"
+           id="path18057-9"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccccccscccccccccc" />
+        <path
+           inkscape:export-ydpi="95.999969"
+           inkscape:export-xdpi="95.999969"
+           inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+           style="fill:#472e1f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.39483511px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+           d="m 786.08525,203.50741 c 0.45135,-1.7223 1.11992,-2.20715 2.10549,-0.88946 -0.60256,1.54668 0.22748,2.2868 0.80206,3.17105 4.48452,1.856 4.01148,3.76424 6.01578,5.64643 -2.53458,-1.90764 -3.11278,-4.97238 -8.32181,-5.29831 -0.36073,-0.85892 -0.90343,-1.69783 -0.60152,-2.62971 z"
+           id="path18091-4"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccccc" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#path18091-4"
+           id="use18093-5"
+           transform="matrix(-1,0,0,1,1606.7201,0.50343885)"
+           width="100%"
+           height="100%" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#path18091-4"
+           id="use18095-6"
+           transform="translate(62.171427,4.5309494)"
+           width="100%"
+           height="100%" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#path18091-4"
+           id="use18097-4"
+           transform="matrix(-1,0,0,1,1672.7771,1.6361762)"
+           width="100%"
+           height="100%" />
+        <path
+           inkscape:export-ydpi="95.999969"
+           inkscape:export-xdpi="95.999969"
+           inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+           style="fill:#472e1f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.17077494px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+           d="m 869.56355,213.94345 c -0.318,1.72232 -0.78903,2.20716 -1.48339,0.88946 0.42452,-1.54666 -0.16026,-2.28692 -0.56508,-3.17115 -3.15949,-1.85588 -0.27275,-3.22414 -1.68468,-5.10621 2.09786,2.22208 -0.37931,3.87165 3.28436,4.53263 0.25414,0.85892 0.6615,1.9234 0.44879,2.85527 z"
+           id="path18099-9"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccccc" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#path18099-9"
+           id="use18101-2"
+           transform="matrix(-1,0,0,1,1706.9962,-4.9085285)"
+           width="100%"
+           height="100%" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#use18101-2"
+           id="use18103-2"
+           transform="translate(-65.371428,5.2861077)"
+           width="100%"
+           height="100%" />
+        <path
+           inkscape:export-ydpi="95.999969"
+           inkscape:export-xdpi="95.999969"
+           inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+           style="fill:#472e1f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.93064833px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+           d="m 799.67921,207.58429 c -0.32971,1.05067 -0.81725,1.34643 -1.53648,0.54256 0.43962,-0.94353 -0.16624,-1.39505 -0.58547,-1.93443 -3.27254,-1.13214 -2.92732,-2.29625 -4.38999,-3.44451 1.84965,1.16377 2.2716,3.03335 6.07281,3.23226 0.26351,0.52387 0.65945,1.03564 0.43893,1.60412 z"
+           id="path18105-2"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccccc" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#path18105-2"
+           id="use18107-4"
+           transform="translate(9.0285711,-0.12585972)"
+           width="100%"
+           height="100%" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#use18107-4"
+           id="use18109-0"
+           transform="matrix(-1,0,0,1,1660.5678,1.1327374)"
+           width="100%"
+           height="100%" />
+        <path
+           inkscape:export-ydpi="95.999969"
+           inkscape:export-xdpi="95.999969"
+           inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+           style="fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.48738909px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+           d="m 840.9515,204.77666 c 0,0 1.8263,-3.08405 3.80124,-0.58946 1.20669,0.0685 2.64221,1.67061 2.90365,3.86475 0.6465,-0.67416 3.75087,3.24339 3.23128,3.62382 0.95603,0.50088 1.37788,4.65473 0.93957,4.45569 -0.40297,-1.39689 -2.38051,-6.33085 -5.65248,-6.81462 0.20529,-2.11246 -1.07367,-0.64566 -2.169,0.37741 0.83265,-1.32651 1.158,-2.57357 -0.22979,-3.55296 1.79882,-1.70798 -1.26404,-2.01188 -2.82458,-1.36442 z"
+           id="path18111-0"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccccccccc" />
+        <path
+           inkscape:export-ydpi="95.999969"
+           inkscape:export-xdpi="95.999969"
+           inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+           sodipodi:nodetypes="ccccccccc"
+           inkscape:connector-curvature="0"
+           id="use18113-5"
+           d="m 786.11741,175.21302 -3.39918,-1.93346 c -1.29426,-0.20751 -2.58859,-0.34969 -3.88285,0.56037 0,0 -1.94792,2.38 -1.79808,2.44098 0.14968,0.0606 -1.7381,2.19697 -1.7381,2.19697 1.12986,-0.71115 2.41012,-0.40146 3.32638,-2.56304 0.91348,-1.41055 1.38832,0.0364 1.91791,1.12897 -0.11317,-1.17515 0.22683,-2.09188 2.09773,-2.13601 -0.85506,-1.81188 2.20462,0.0958 3.47619,0.30547 z"
+           style="display:inline;fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.35470402px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
+        <path
+           inkscape:export-ydpi="95.999969"
+           inkscape:export-xdpi="95.999969"
+           inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+           sodipodi:nodetypes="cccccccccc"
+           inkscape:connector-curvature="0"
+           id="use18115-7"
+           d="m 841.33493,174.52067 c 0,0 0.17191,-3.86695 -3.08879,-3.11081 -1.13163,-0.77149 -3.37717,-0.39762 -4.91058,1.2784 -0.18603,-1.01504 -5.30935,0.1704 -5.06443,0.84964 -1.16049,-0.23431 -3.99796,2.99613 -3.48394,3.12865 1.19027,-0.90634 5.8956,-3.72715 9.14028,-1.88871 1.0633,-1.93033 1.35263,0.19062 1.73821,1.80981 0.0314,-1.69571 0.47444,-2.97549 2.30841,-2.85165 -0.61679,-2.68253 2.3325,-0.83557 3.36081,0.78503 z"
+           style="display:inline;fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.61034226px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
+        <path
+           sodipodi:nodetypes="cccc"
+           inkscape:connector-curvature="0"
+           id="use18117-3"
+           d="m 795.31118,186.57557 c 0.56072,-1.22551 -0.29946,-3.82976 3.41794,-1.99107 1.9113,-2.71768 4.55066,3.77568 6.83608,5.79251 -3.41603,-1.29906 -6.58098,-6.65942 -10.25402,-3.80144 z"
+           style="display:inline;fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.57003379px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+           inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+           inkscape:export-xdpi="95.999969"
+           inkscape:export-ydpi="95.999969" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#use18115-7"
+           id="use18121-3"
+           transform="matrix(-1.1746762,-0.29836122,-0.29596374,0.97641056,1827.7388,261.84613)"
+           width="100%"
+           height="100%" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#use18113-5"
+           id="use18123-2"
+           transform="matrix(-1.9857526,0,0,1.4702559,2373.0159,-87.324779)"
+           width="100%"
+           height="100%" />
+        <path
+           inkscape:export-ydpi="95.999969"
+           inkscape:export-xdpi="95.999969"
+           inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+           sodipodi:nodetypes="cccccc"
+           inkscape:connector-curvature="0"
+           id="use18125-8"
+           d="m 804.11066,190.0029 c -0.19791,1.0708 -0.49054,1.37225 -0.92225,0.55309 0.26387,-0.96169 -0.0998,-1.42182 -0.35141,-1.97164 -1.96428,-1.1537 -1.75707,-2.34012 -2.63499,-3.51031 1.1102,1.18606 1.36347,3.0914 3.64507,3.29395 0.15815,0.53406 0.39581,1.05552 0.26345,1.63491 z"
+           style="display:inline;fill:#472e1f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.72788292px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#use18121-3"
+           id="use18127-4"
+           transform="matrix(0.99690406,0.08659015,-0.07139683,0.99690408,112.91707,-74.144107)"
+           width="100%"
+           height="100%"
+           inkscape:transform-center-x="3.5240904"
+           inkscape:transform-center-y="1.5103245" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#use18123-2"
+           id="use18129-4"
+           transform="translate(41.946565,-5.1602363)"
+           width="100%"
+           height="100%" />
+        <use
+           height="100%"
+           width="100%"
+           transform="matrix(-1.1410664,-0.29444502,-0.28749564,0.96359449,1883.8124,263.64288)"
+           id="use18131-6"
+           xlink:href="#use18115-7"
+           y="0"
+           x="0" />
+      </g>
+    </g>
+    <g
+       transform="translate(-767.99999,-197.92016)"
+       style="display:inline"
+       id="g21502-9">
+      <g
+         id="g18198-6">
+        <path
+           style="fill:#744224;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.75431085px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 767.99999,209.321 c 5.00038,-3.79921 5.98485,-3.79091 6.85714,-1.89277 2.37766,-4.28076 1.92894,-8.53119 12.34286,-4.88965 4.94166,-4.84488 4.78679,-0.89732 6.4,0 2.97143,-2.06254 5.94286,-3.33978 8.91428,0 1.4062,-2.87106 2.2989,-6.20278 9.6,-3.78554 5.96928,0.69821 6.45638,3.01776 8.45715,4.88965 -4.99816,-3.16166 7.58405,-4.76454 10.97143,-5.36285 4.11305,-0.7265 13.22977,2.81147 8.68571,4.25874 8.12863,-0.6683 6.60617,2.90156 8.68571,4.88965 1.46001,-1.82017 -0.70348,-5.94847 8.00001,-3.15461 6.52919,-3.73195 7.22475,0.14007 8.45714,3.31234 1.78612,-3.3007 -0.47912,-7.99928 10.28571,-8.202 4.74337,0.26513 9.84879,0.26043 9.37143,4.41646 8.71556,-1.04716 9.86861,2.52671 10.97143,5.52058 v 11.04116 h -128 z"
+           id="path18057-6"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccccccscccccccccc" />
+        <path
+           inkscape:export-ydpi="95.999969"
+           inkscape:export-xdpi="95.999969"
+           inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+           style="fill:#472e1f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.39483511px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+           d="m 786.08525,203.50741 c 0.45135,-1.7223 1.11992,-2.20715 2.10549,-0.88946 -0.60256,1.54668 0.22748,2.2868 0.80206,3.17105 4.48452,1.856 4.01148,3.76424 6.01578,5.64643 -2.53458,-1.90764 -3.11278,-4.97238 -8.32181,-5.29831 -0.36073,-0.85892 -0.90343,-1.69783 -0.60152,-2.62971 z"
+           id="path18091-0"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccccc" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#path18091-0"
+           id="use18093-4"
+           transform="matrix(-1,0,0,1,1606.7201,0.50343885)"
+           width="100%"
+           height="100%" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#path18091-0"
+           id="use18095-3"
+           transform="translate(62.171427,4.5309494)"
+           width="100%"
+           height="100%" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#path18091-0"
+           id="use18097-2"
+           transform="matrix(-1,0,0,1,1672.7771,1.6361762)"
+           width="100%"
+           height="100%" />
+        <path
+           inkscape:export-ydpi="95.999969"
+           inkscape:export-xdpi="95.999969"
+           inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+           style="fill:#472e1f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.17077494px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+           d="m 869.56355,213.94345 c -0.318,1.72232 -0.78903,2.20716 -1.48339,0.88946 0.42452,-1.54666 -0.16026,-2.28692 -0.56508,-3.17115 -3.15949,-1.85588 -0.27275,-3.22414 -1.68468,-5.10621 2.09786,2.22208 -0.37931,3.87165 3.28436,4.53263 0.25414,0.85892 0.6615,1.9234 0.44879,2.85527 z"
+           id="path18099-0"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccccc" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#path18099-0"
+           id="use18101-6"
+           transform="matrix(-1,0,0,1,1706.9962,-4.9085285)"
+           width="100%"
+           height="100%" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#use18101-6"
+           id="use18103-6"
+           transform="translate(-65.371428,5.2861077)"
+           width="100%"
+           height="100%" />
+        <path
+           inkscape:export-ydpi="95.999969"
+           inkscape:export-xdpi="95.999969"
+           inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+           style="fill:#472e1f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.93064833px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+           d="m 799.67921,207.58429 c -0.32971,1.05067 -0.81725,1.34643 -1.53648,0.54256 0.43962,-0.94353 -0.16624,-1.39505 -0.58547,-1.93443 -3.27254,-1.13214 -2.92732,-2.29625 -4.38999,-3.44451 1.84965,1.16377 2.2716,3.03335 6.07281,3.23226 0.26351,0.52387 0.65945,1.03564 0.43893,1.60412 z"
+           id="path18105-4"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccccc" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#path18105-4"
+           id="use18107-8"
+           transform="translate(9.0285711,-0.12585972)"
+           width="100%"
+           height="100%" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#use18107-8"
+           id="use18109-4"
+           transform="matrix(-1,0,0,1,1660.5678,1.1327374)"
+           width="100%"
+           height="100%" />
+        <path
+           inkscape:export-ydpi="95.999969"
+           inkscape:export-xdpi="95.999969"
+           inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+           style="fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.48738909px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+           d="m 840.9515,204.77666 c 0,0 1.8263,-3.08405 3.80124,-0.58946 1.20669,0.0685 2.64221,1.67061 2.90365,3.86475 0.6465,-0.67416 3.75087,3.24339 3.23128,3.62382 0.95603,0.50088 1.37788,4.65473 0.93957,4.45569 -0.40297,-1.39689 -2.38051,-6.33085 -5.65248,-6.81462 0.20529,-2.11246 -1.07367,-0.64566 -2.169,0.37741 0.83265,-1.32651 1.158,-2.57357 -0.22979,-3.55296 1.79882,-1.70798 -1.26404,-2.01188 -2.82458,-1.36442 z"
+           id="path18111-5"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccccccccc" />
+        <path
+           inkscape:export-ydpi="95.999969"
+           inkscape:export-xdpi="95.999969"
+           inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+           sodipodi:nodetypes="ccccccccc"
+           inkscape:connector-curvature="0"
+           id="use18113-7"
+           d="m 786.11741,175.21302 -3.39918,-1.93346 c -1.29426,-0.20751 -2.58859,-0.34969 -3.88285,0.56037 0,0 -1.94792,2.38 -1.79808,2.44098 0.14968,0.0606 -1.7381,2.19697 -1.7381,2.19697 1.12986,-0.71115 2.41012,-0.40146 3.32638,-2.56304 0.91348,-1.41055 1.38832,0.0364 1.91791,1.12897 -0.11317,-1.17515 0.22683,-2.09188 2.09773,-2.13601 -0.85506,-1.81188 2.20462,0.0958 3.47619,0.30547 z"
+           style="display:inline;fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.35470402px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
+        <path
+           inkscape:export-ydpi="95.999969"
+           inkscape:export-xdpi="95.999969"
+           inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+           sodipodi:nodetypes="cccccccccc"
+           inkscape:connector-curvature="0"
+           id="use18115-3"
+           d="m 841.33493,174.52067 c 0,0 0.17191,-3.86695 -3.08879,-3.11081 -1.13163,-0.77149 -3.37717,-0.39762 -4.91058,1.2784 -0.18603,-1.01504 -5.30935,0.1704 -5.06443,0.84964 -1.16049,-0.23431 -3.99796,2.99613 -3.48394,3.12865 1.19027,-0.90634 5.8956,-3.72715 9.14028,-1.88871 1.0633,-1.93033 1.35263,0.19062 1.73821,1.80981 0.0314,-1.69571 0.47444,-2.97549 2.30841,-2.85165 -0.61679,-2.68253 2.3325,-0.83557 3.36081,0.78503 z"
+           style="display:inline;fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.61034226px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
+        <path
+           sodipodi:nodetypes="cccc"
+           inkscape:connector-curvature="0"
+           id="use18117-2"
+           d="m 795.31118,186.57557 c 0.56072,-1.22551 -0.29946,-3.82976 3.41794,-1.99107 1.9113,-2.71768 4.55066,3.77568 6.83608,5.79251 -3.41603,-1.29906 -6.58098,-6.65942 -10.25402,-3.80144 z"
+           style="display:inline;fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.57003379px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+           inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+           inkscape:export-xdpi="95.999969"
+           inkscape:export-ydpi="95.999969" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#use18115-3"
+           id="use18121-6"
+           transform="matrix(-1.1746762,-0.29836122,-0.29596374,0.97641056,1827.7388,261.84613)"
+           width="100%"
+           height="100%" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#use18113-7"
+           id="use18123-3"
+           transform="matrix(-1.9857526,0,0,1.4702559,2373.0159,-87.324779)"
+           width="100%"
+           height="100%" />
+        <path
+           inkscape:export-ydpi="95.999969"
+           inkscape:export-xdpi="95.999969"
+           inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+           sodipodi:nodetypes="cccccc"
+           inkscape:connector-curvature="0"
+           id="use18125-3"
+           d="m 804.11066,190.0029 c -0.19791,1.0708 -0.49054,1.37225 -0.92225,0.55309 0.26387,-0.96169 -0.0998,-1.42182 -0.35141,-1.97164 -1.96428,-1.1537 -1.75707,-2.34012 -2.63499,-3.51031 1.1102,1.18606 1.36347,3.0914 3.64507,3.29395 0.15815,0.53406 0.39581,1.05552 0.26345,1.63491 z"
+           style="display:inline;fill:#472e1f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.72788292px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#use18121-6"
+           id="use18127-3"
+           transform="matrix(0.99690406,0.08659015,-0.07139683,0.99690408,112.91707,-74.144107)"
+           width="100%"
+           height="100%"
+           inkscape:transform-center-x="3.5240904"
+           inkscape:transform-center-y="1.5103245" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#use18123-3"
+           id="use18129-1"
+           transform="translate(41.946565,-5.1602363)"
+           width="100%"
+           height="100%" />
+        <use
+           height="100%"
+           width="100%"
+           transform="matrix(-1.1410664,-0.29444502,-0.28749564,0.96359449,1883.8124,263.64288)"
+           id="use18131-0"
+           xlink:href="#use18115-3"
+           y="0"
+           x="0" />
+      </g>
+    </g>
+    <g
+       id="g21993"
+       transform="translate(40.00001,11.25)"
+       inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Levels\Grass_Platform2.png"
+       inkscape:export-xdpi="95.999969"
+       inkscape:export-ydpi="95.999969">
+      <path
+         sodipodi:nodetypes="cccccccscccccccccc"
+         inkscape:connector-curvature="0"
+         id="path18057-91"
+         d="m 119.99999,1049.805 c 5.00038,-3.7992 5.98485,-3.7909 6.85714,-1.8928 2.37766,-4.2808 1.92894,-8.5312 12.34286,-4.8897 4.94166,-4.8448 4.78679,-0.8973 6.4,0 2.97143,-2.0625 5.94286,-3.3397 8.91428,0 1.4062,-2.871 2.2989,-6.2027 9.6,-3.7855 5.96928,0.6982 6.45638,3.0178 8.45715,4.8897 -4.99816,-3.1617 7.58405,-4.7646 10.97143,-5.3629 4.11305,-0.7265 13.22977,2.8115 8.68571,4.2587 8.12863,-0.6683 6.60617,2.9016 8.68571,4.8897 1.46001,-1.8202 -0.70348,-5.9485 8.00001,-3.1546 6.52919,-3.732 7.22475,0.14 8.45714,3.3123 1.78612,-3.3007 -0.47912,-7.9993 10.28571,-8.202 4.74337,0.2652 9.84879,0.2605 9.37143,4.4165 8.71556,-1.0472 9.86861,2.5267 10.97143,5.5206 v 11.0411 h -128 z"
+         style="fill:#744224;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.75431085px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         sodipodi:nodetypes="cccccc"
+         inkscape:connector-curvature="0"
+         id="path18091-3"
+         d="m 138.08525,1043.9914 c 0.45135,-1.7223 1.11992,-2.2072 2.10549,-0.8895 -0.60256,1.5467 0.22748,2.2868 0.80206,3.1711 4.48452,1.856 4.01148,3.7642 6.01578,5.6464 -2.53458,-1.9076 -3.11278,-4.9724 -8.32181,-5.2983 -0.36073,-0.8589 -0.90343,-1.6978 -0.60152,-2.6297 z"
+         style="fill:#472e1f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.39483511px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-ydpi="95.999969" />
+      <use
+         height="100%"
+         width="100%"
+         transform="matrix(-1,0,0,1,310.7201,0.50344)"
+         id="use18093-0"
+         xlink:href="#path18091-3"
+         y="0"
+         x="0" />
+      <use
+         height="100%"
+         width="100%"
+         transform="translate(62.17143,4.53095)"
+         id="use18095-4"
+         xlink:href="#path18091-3"
+         y="0"
+         x="0" />
+      <use
+         height="100%"
+         width="100%"
+         transform="matrix(-1,0,0,1,376.7771,1.63618)"
+         id="use18097-5"
+         xlink:href="#path18091-3"
+         y="0"
+         x="0" />
+      <path
+         sodipodi:nodetypes="cccccc"
+         inkscape:connector-curvature="0"
+         id="path18099-91"
+         d="m 221.56355,1054.4274 c -0.318,1.7223 -0.78903,2.2072 -1.48339,0.8895 0.42452,-1.5467 -0.16026,-2.2869 -0.56508,-3.1712 -3.15949,-1.8559 -0.27275,-3.2241 -1.68468,-5.1062 2.09786,2.2221 -0.37931,3.8717 3.28436,4.5326 0.25414,0.859 0.6615,1.9234 0.44879,2.8553 z"
+         style="fill:#472e1f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.17077494px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-ydpi="95.999969" />
+      <use
+         height="100%"
+         width="100%"
+         transform="matrix(-1,0,0,1,410.9962,-4.90853)"
+         id="use18101-27"
+         xlink:href="#path18099-91"
+         y="0"
+         x="0" />
+      <use
+         height="100%"
+         width="100%"
+         transform="translate(-65.37143,5.28611)"
+         id="use18103-9"
+         xlink:href="#use18101-27"
+         y="0"
+         x="0" />
+      <path
+         sodipodi:nodetypes="cccccc"
+         inkscape:connector-curvature="0"
+         id="path18105-6"
+         d="m 151.67921,1048.0683 c -0.32971,1.0506 -0.81725,1.3464 -1.53648,0.5425 0.43962,-0.9435 -0.16624,-1.395 -0.58547,-1.9344 -3.27254,-1.1322 -2.92732,-2.2963 -4.38999,-3.4445 1.84965,1.1637 2.2716,3.0333 6.07281,3.2322 0.26351,0.5239 0.65945,1.0357 0.43893,1.6042 z"
+         style="fill:#472e1f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.93064833px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-ydpi="95.999969" />
+      <use
+         height="100%"
+         width="100%"
+         transform="translate(9.02857,-0.12586)"
+         id="use18107-0"
+         xlink:href="#path18105-6"
+         y="0"
+         x="0" />
+      <use
+         height="100%"
+         width="100%"
+         transform="matrix(-1,0,0,1,364.5678,1.13274)"
+         id="use18109-8"
+         xlink:href="#use18107-0"
+         y="0"
+         x="0" />
+      <path
+         sodipodi:nodetypes="cccccccccc"
+         inkscape:connector-curvature="0"
+         id="path18111-3"
+         d="m 192.9515,1045.2606 c 0,0 1.8263,-3.084 3.80124,-0.5894 1.20669,0.069 2.64221,1.6706 2.90365,3.8647 0.6465,-0.6741 3.75087,3.2434 3.23128,3.6238 0.95603,0.5009 1.37788,4.6548 0.93957,4.4557 -0.40297,-1.3969 -2.38051,-6.3308 -5.65248,-6.8146 0.20529,-2.1125 -1.07367,-0.6457 -2.169,0.3774 0.83265,-1.3265 1.158,-2.5736 -0.22979,-3.5529 1.79882,-1.708 -1.26404,-2.0119 -2.82458,-1.3645 z"
+         style="fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.48738909px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-ydpi="95.999969" />
+      <path
+         style="fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.35470402px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+         d="m 138.11741,1044.059 -3.39918,-1.9335 c -1.29426,-0.2075 -2.58859,-0.3497 -3.88285,0.5604 0,0 -1.94792,2.38 -1.79808,2.441 0.14968,0.061 -1.7381,2.197 -1.7381,2.197 1.12986,-0.7112 2.41012,-0.4015 3.32638,-2.5631 0.91348,-1.4105 1.38832,0.036 1.91791,1.129 -0.11317,-1.1752 0.22683,-2.0919 2.09773,-2.136 -0.85506,-1.8119 2.20462,0.096 3.47619,0.3054 z"
+         id="use18113-2"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccccccc"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-ydpi="95.999969" />
+      <path
+         style="fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.61034226px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+         d="m 190.95417,1043.2452 c 0,0 0.17191,-3.867 -3.0888,-3.1108 -1.13163,-0.7715 -3.37716,-0.3976 -4.91057,1.2784 -0.18603,-1.0151 -5.30936,0.1704 -5.06443,0.8496 -1.16049,-0.2343 -3.99797,2.9962 -3.48394,3.1287 1.19027,-0.9064 5.89559,-3.7272 9.14028,-1.8887 1.0633,-1.9304 1.35262,0.1906 1.7382,1.8098 0.0314,-1.6957 0.47445,-2.9755 2.30842,-2.8517 -0.61679,-2.6825 2.3325,-0.8355 3.36081,0.7851 z"
+         id="use18115-2"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccccccccc"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-ydpi="95.999969" />
+      <path
+         inkscape:export-ydpi="95.999969"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         style="fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.57003379px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+         d="m 147.31118,1044.7287 c 0.56072,-1.2255 -0.29946,-3.8297 3.41794,-1.9911 1.9113,-2.7176 4.55066,3.7757 6.83608,5.7926 -3.41603,-1.2991 -6.58098,-6.6595 -10.25402,-3.8015 z"
+         id="use18117-5"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccc" />
+      <path
+         inkscape:export-ydpi="95.999969"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         sodipodi:nodetypes="cccccccccc"
+         inkscape:connector-curvature="0"
+         id="use18121-36"
+         d="m 134.22933,1049.9969 c 0,0 0.94254,-3.827 4.54903,-2.1158 1.55763,-0.4157 4.08475,0.6193 5.38997,2.7133 0.51894,-0.9356 6.18634,1.7505 5.6976,2.3407 1.43255,0.1174 3.80958,4.1182 3.16653,4.0943 -1.12994,-1.2401 -5.8223,-5.3983 -10.17787,-4.5713 -0.67773,-2.202 -1.64531,-0.2174 -2.57746,1.2485 0.46498,-1.6651 0.32331,-3.0468 -1.86767,-3.4731 1.51846,-2.4352 -2.49263,-1.5118 -4.1802,-0.2362 z"
+         style="fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.78977811px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
+      <path
+         style="fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.31474662px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+         d="m 163.9812,1052.4666 6.74994,-2.8427 c 2.57008,-0.3051 5.14029,-0.5141 7.71037,0.8239 0,0 3.86809,3.4992 3.57056,3.5888 -0.29724,0.089 3.45143,3.2301 3.45143,3.2301 -2.24362,-1.0455 -4.78591,-0.5902 -6.60537,-3.7683 -1.81395,-2.0738 -2.75686,0.053 -3.8085,1.6599 0.22473,-1.7278 -0.45042,-3.0756 -4.16556,-3.1405 1.69793,-2.6639 -4.37783,0.1409 -6.90287,0.4491 z"
+         id="use18123-1"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccccccc"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-ydpi="95.999969" />
+      <path
+         inkscape:export-ydpi="95.999969"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         sodipodi:nodetypes="cccccc"
+         inkscape:connector-curvature="0"
+         id="use18125-7"
+         d="m 154.11066,1052.4869 c -0.19791,1.0708 -0.49054,1.3722 -0.92225,0.5531 0.26387,-0.9617 -0.0998,-1.4219 -0.35141,-1.9717 -1.96428,-1.1537 -1.75707,-2.3401 -2.63499,-3.5103 1.1102,1.1861 1.36347,3.0914 3.64507,3.294 0.15815,0.534 0.39581,1.0555 0.26345,1.6349 z"
+         style="display:inline;fill:#472e1f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.72788292px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges" />
+      <path
+         style="fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.78977811px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+         d="m 229.76611,1042.9375 c 0,0 1.21285,-3.7335 4.686,-1.7154 1.58248,-0.2795 4.02789,0.9712 5.17956,3.1717 0.58414,-0.8877 6.04221,2.2808 5.51285,2.8267 1.41972,0.2412 3.50375,4.4355 2.86441,4.3559 -1.0379,-1.3341 -5.41887,-5.8857 -9.81999,-5.4384 -0.51841,-2.2539 -1.62469,-0.3593 -2.65863,1.0214 0.58246,-1.6196 0.53986,-3.0094 -1.6139,-3.6241 1.68762,-2.2962 -2.37698,-1.7229 -4.1504,-0.5974 z"
+         id="use18127-2"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccccccccc"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-ydpi="95.999969" />
+      <path
+         style="fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.31474662px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+         d="m 205.92777,1047.3063 6.74993,-2.8426 c 2.57008,-0.3051 5.1403,-0.5142 7.71038,0.8238 0,0 3.86808,3.4993 3.57055,3.5889 -0.29724,0.089 3.45143,3.2301 3.45143,3.2301 -2.24362,-1.0456 -4.7859,-0.5902 -6.60536,-3.7683 -1.81395,-2.0739 -2.75687,0.053 -3.80851,1.6599 0.22474,-1.7278 -0.45041,-3.0756 -4.16556,-3.1405 1.69793,-2.6639 -4.37782,0.1408 -6.90286,0.4491 z"
+         id="use18129-7"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccccccc"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-ydpi="95.999969" />
+      <path
+         style="fill:#c48048;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.75237274px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;shape-rendering:crispEdges"
+         d="m 220.21702,1052.4806 c 0,0 0.91557,-3.7768 4.41886,-2.0881 1.51307,-0.4102 3.96789,0.6112 5.23576,2.6777 0.50409,-0.9233 6.00934,1.7276 5.53458,2.31 1.39156,0.1159 3.70057,4.0642 3.07594,4.0405 -1.09761,-1.2238 -5.65573,-5.3274 -9.88667,-4.5112 -0.65834,-2.1732 -1.59824,-0.2146 -2.50372,1.2321 0.45171,-1.6432 0.31407,-3.0069 -1.81422,-3.4275 1.47501,-2.4033 -2.42131,-1.492 -4.0606,-0.2332 z"
+         id="use18131-5"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccccccccc"
+         inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Grass_Platform2.png"
+         inkscape:export-xdpi="95.999969"
+         inkscape:export-ydpi="95.999969" />
+    </g>
+  </g>
   <g
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Grids"
-     style="display:none"
+     style="display:inline"
      sodipodi:insensitive="true">
     <g
        style="display:inline;shape-rendering:crispEdges"

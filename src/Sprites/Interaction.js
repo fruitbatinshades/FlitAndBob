@@ -28,23 +28,36 @@ export default class Interaction extends Phaser.Physics.Arcade.Group
             
             scene.physics.world.enable(zone);
             zone.body.setAllowGravity(false).moves = false;
-            
+
             zone.properties = current.properties;
             zone.name = current.name;
+            
             this.lookup[current.name] = new InteractionObject(this.scene, current, zone);
             
             this.add(zone);
+
+            // if (this.lookup[current.name].Effect === 'Block') {
+            //     scene.physics.add.collider(scene.flit, zone);
+            // }
         }
         scene.physics.add.overlap(scene.player, this, this.overTarget, null, this);
         scene.physics.add.overlap(scene.flit, this, this.overTarget, null, this);
     }
+    block(player, zone) {
+        return false;
+    }
     overTarget(player, zone) {
-        if (Phaser.Input.Keyboard.JustDown(this.scene.spaceKey)) {
-            this.action(zone);
+        let t = this.lookup[zone.name];
+        if (!t.Effect || t.Effect === null) {
+            if (Phaser.Input.Keyboard.JustDown(this.scene.spaceKey)) {
+                this.action(t,player);
+            }
+        } else {
+            this.action(t, player);
         }
     }
-    action(zone) {
-        let t = this.lookup[zone.name];
+    action(t, player) {
+        
         if (t.Action === 'Toggle') {
             //loop through the lookup finding the same groups
             Object.entries(this.lookup).forEach((z) => {
@@ -82,15 +95,33 @@ export default class Interaction extends Phaser.Physics.Arcade.Group
                 }
             });
         }
-        //if object has a group, get those
-        //if object has a target, get that
-
+        if (t.Effect === 'Injure') {
+            if (t.Target === null || player.is(t.Target)) {
+                player.injure(10);
+            }
+            // if (t.Target === 'Bob') console.log('injure bob');
+            // if (t.Target === 'Flit') console.log('injure flit');
+        }
+        
+        if (t.Effect === 'Slow') {
+            player.isSlow = true;
+        }
+        if (t.Effect === 'Fast') {
+            player.isFast = true;
+        }
+        if (t.Effect === 'Block') {
+            player.body.velocity.x = 0;
+        }
+        // if (t.Effect === 'Force') {
+        //     player.setGravity(0, 600);
+        // }
     }
 }
 class InteractionObject{
     GroupKey =  null;
     Target = null;
     Action = null;
+    Effect = null;
     Name = null;
     TileObj = null;
     Related;
@@ -103,6 +134,7 @@ class InteractionObject{
         if (zone.properties.GroupKey) this.GroupKey = zone.properties.GroupKey;
         if (zone.properties.Target) this.Target = zone.properties.Target;
         if (zone.properties.Action) this.Action = zone.properties.Action;
+        if (zone.properties.Effect) this.Effect = zone.properties.Effect;
     }
     /**
      * Get the tiles from the switch layer

@@ -107,7 +107,8 @@ export default class LevelLoaderScene extends Phaser.Scene {
         this.level.ActivePlayer.idle();
         this.level.ActivePlayer.body.setVelocityX(0);
         //get the other character
-        this.level.ActivePlayer = this.level.ActivePlayer.constructor.name === 'Player' ? this.flit : this.player;
+        //this.level.ActivePlayer = this.level.ActivePlayer.constructor.name === 'Player' ? this.flit : this.player;
+        this.level.ActivePlayer = this.level.ActivePlayer.is('Bob') ? this.flit : this.player;
 
         this.level._ChangingPlayer = true;
         //pan the camera 

@@ -1,12 +1,22 @@
 /// <reference path="../../defs/phaser.d.ts" />
 
 export default class Flit extends Phaser.Physics.Arcade.Sprite {
+  get activeSpeed() {
+    if (this.isSlow) return this.speed / 2;
+    if (this.isFast) return this.speed * 1.5;
+    return this.speed;
+  }
+
   constructor (scene, x, y) {
     super(scene, x, y, 'flit');
     this.scene = scene;
     this.health = 3;
     this.hitDelay = false;
     this.direction = 'up';
+    this.speed = 300;
+    this.IsSlow = false;
+    this.health = 75;
+    this.lastInjure = 0;
 
     // enable physics
     this.scene.physics.world.enable(this);
@@ -14,10 +24,12 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     this.scene.add.existing(this);
    // create the player sprite    
    this.setScale(.5);
-   this.setCircle(this.width * this.scaleX);
+   this.setCircle((this.width * this.scaleX) - 20);
     this.setBounce(0.1,0.1); // our player will bounce from items
     this.body.setAllowGravity(false);
     this.setCollideWorldBounds(true); // don't go out of the map 
+    this.body.setOffset((this.body.width * this.scaleX) / 2, (this.body.height * this.scaleY) / 2);
+
 
     // player walk animation
     this.anims.animationManager.create({
@@ -40,13 +52,39 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     });
     this.idle();
   }
+  injure(amount) {
+    if (this.lastInjure + 500 < this.scene.game.loop.lastTime) {
+      this.lastInjure = this.scene.game.loop.lastTime;
+      this.health -= amount;
+      this.scene.events.emit('loseHealth', this.health);
 
+      //tint for a brief period
+      if (!this.hitDelay) {
+        this.hitDelay = true;
+        this.tint = 0xFF6666;
+        this.scene.time.addEvent({
+          delay: 300,
+          callback: () => {
+            this.hitDelay = false;
+            this.tint = 0xffffff;
+          },
+          callbackScope: this
+        });
+      }
+      if (this.health <= 0) {
+        console.log('Flit died');
+        this.scene.events.emit('died', this.health);
+      }
+    }
+  }
   idle(){
     this.body.setVelocityX(0);
     this.body.setVelocityY(0);
     this.anims.play('flit_idle', true);
   }
-
+  is(name) {
+    return name == 'Flit';
+  }
   overBox(item, player) {
     if (this.carrying == null) {
       console.log('before pickup', item.body);
@@ -72,13 +110,13 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
 
     if (cursors.left.isDown)
     {
-        this.body.setVelocityX(-200);
+      this.body.setVelocityX(0 - this.activeSpeed);
         this.anims.play('flit_fly', true); // walk left
         this.flipX = true; // flip the sprite to the left
     }
     if (cursors.right.isDown)
     {
-        this.body.setVelocityX(200);
+      this.body.setVelocityX(this.activeSpeed);
         this.anims.play('flit_fly', true);
         this.flipX = false; // use the original sprite looking to the right
       }
@@ -94,7 +132,8 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     if(!cursors.left.isDown && !cursors.right.isDown && !cursors.up.isDown && !cursors.down.isDown) {
         this.idle();
     }
-   
+    this.isSlow = false;
+    this.isFast = false;
   }
 
 //   loseHealth () {

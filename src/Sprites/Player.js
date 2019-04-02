@@ -6,6 +6,12 @@
 //Implement push
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
+  get activeSpeed() {
+    if (this.isSlow) return this.speed / 2;
+    if (this.isFast) return this.speed * 1.5;
+    return this.speed;
+  }
+
   constructor(scene, x, y) {
     super(scene, x, y, 'bob');
     this.scene = scene;
@@ -14,9 +20,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.direction = 'up';
     this.carrying = null;
     this.currently = null;
+    this.speed = 200;
+    this.health = 100;
+    this.lastInjure = 0;
     // enable physics
     this.scene.physics.world.enable(this);
-    this.setScale(.75);
+    this.setScale(.7);
+    //this.body.setSize(this.body.width - 10, this.body.height - 20).setOffset(0, 20);
 
     this.debugText = ''; 
 
@@ -47,6 +57,31 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     //this.body.setVelocityX(0);
     this.anims.play('idle', true);
   }
+  injure(amount) {
+    if (this.lastInjure + 500 < this.scene.game.loop.lastTime) {
+      this.lastInjure = this.scene.game.loop.lastTime;
+      this.health -= amount;
+      this.scene.events.emit('loseHealth', this.health);
+
+      //tint for a brief period
+      if (!this.hitDelay) {
+        this.hitDelay = true;
+        this.tint = 0xFF6666;
+        this.scene.time.addEvent({
+          delay: 300,
+          callback: () => {
+            this.hitDelay = false;
+            this.tint = 0xffffff;
+          },
+          callbackScope: this
+        });
+      }
+      if (this.health <= 0) {
+        console.log('Bob died');
+        this.scene.events.emit('died', this.health);
+      }
+    }
+  }
   overBox(item) {
     if (this.carrying == null) {
       this.scene.events.emit('pickup_box', item, this);
@@ -56,6 +91,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   drop(item) {
     this.scene.events.emit('drop_box', item, this);
     console.log('drop box');
+  }
+  is(name) {
+    return name == 'Bob';
   }
   update(cursors, space) {
     //get the direction from the velocity
@@ -81,12 +119,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.carrying.y = (this.body.top) - 16;
     }
     if (cursors.left.isDown) {
-      this.body.setVelocityX(cursors.up.isDown ? - 100 : -200);
+      this.body.setVelocityX(cursors.up.isDown ? - 100 : 0 - this.activeSpeed);
       this.anims.play('walk', true); // walk left
       this.flipX = true; // flip the sprite to the left
     }
     else if (cursors.right.isDown) {
-      this.body.setVelocityX(cursors.up.isDown ? 100 : 200);
+      this.body.setVelocityX(cursors.up.isDown ? 100 : this.activeSpeed);
       this.anims.play('walk', true);
       this.flipX = false; // use the original sprite looking to the right
     } else {
@@ -98,6 +136,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.body.setVelocityY(-500);
       }
     }
+    //reset speed after update
+    this.isSlow = false;
   }
 
   //   loseHealth () {
