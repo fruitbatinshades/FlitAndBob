@@ -17,6 +17,7 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     this.IsSlow = false;
     this.health = 75;
     this.lastInjure = 0;
+    this.collected = 0;
 
     // enable physics
     this.scene.physics.world.enable(this);
@@ -56,7 +57,8 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     if (this.lastInjure + 500 < this.scene.game.loop.lastTime) {
       this.lastInjure = this.scene.game.loop.lastTime;
       this.health -= amount;
-      this.scene.events.emit('loseHealth', this.health);
+      this.scene.events.emit('loseHealth', this);
+      this.scene.events.emit('updateHUD', this);
 
       //tint for a brief period
       if (!this.hitDelay) {

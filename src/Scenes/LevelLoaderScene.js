@@ -2,6 +2,7 @@
 import Level from '../Levels/Level.js';
 //import GameScene from '../Scenes/Game.js';
 import Enums from '../Levels/Tilemaps.js';
+import HUD from './HUD.js';
 /**
  * Scene that loads a level with a progress bar.
  */
@@ -77,6 +78,7 @@ export default class LevelLoaderScene extends Phaser.Scene {
     }
     create() { 
         this.level.buildLevel(this);
+        this.scene.add('HUD', HUD, true, { x: 400, y: 300 });
     }
     mapLoaded() { 
         // load the map 

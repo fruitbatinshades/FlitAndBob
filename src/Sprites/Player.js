@@ -23,6 +23,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.speed = 200;
     this.health = 100;
     this.lastInjure = 0;
+    this.collected = 0;
     // enable physics
     this.scene.physics.world.enable(this);
     this.setScale(.7);
@@ -61,8 +62,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     if (this.lastInjure + 500 < this.scene.game.loop.lastTime) {
       this.lastInjure = this.scene.game.loop.lastTime;
       this.health -= amount;
-      this.scene.events.emit('loseHealth', this.health);
-
+      this.scene.events.emit('loseHealth', this);
+      this.scene.events.emit('updateHUD', this);
       //tint for a brief period
       if (!this.hitDelay) {
         this.hitDelay = true;
@@ -78,7 +79,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       }
       if (this.health <= 0) {
         console.log('Bob died');
-        this.scene.events.emit('died', this.health);
+        this.scene.events.emit('died', this);
       }
     }
   }

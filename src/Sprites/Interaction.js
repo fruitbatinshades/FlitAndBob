@@ -24,7 +24,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group
             let current = objectMap.objects[i];
             
             //create the zone so we can interact with it
-            let zone = scene.add.zone(current.x, current.y).setSize(current.width, current.height);
+            let zone = scene.add.zone(current.x + 2, current.y + 2).setSize(current.width - 4, current.height - 4);
             
             scene.physics.world.enable(zone);
             zone.body.setAllowGravity(false).moves = false;

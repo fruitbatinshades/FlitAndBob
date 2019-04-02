@@ -21,6 +21,14 @@ export default class Level{
     _ChangingPlayer = true;
     switchIds;
     sky;
+    totalShrooms= 0;
+    totalFlies= 0;
+    // info: {
+    //     shrooms: 0;
+    //     flies: 0;
+    //     totalShrooms: 0;
+    //     totalFlies: 0;
+    // }
 
     //NB: Call from preload
     constructor(scene) { 
@@ -134,10 +142,22 @@ export default class Level{
         scene.physics.add.collider(scene.mapLayers.World , scene.player);
         scene.physics.add.collider(scene.mapLayers.World, scene.flit);
 
-        //Set up the coin layer with verlap and callback
+        //Set up the coin layer with overlap and callback
         scene.physics.add.overlap(scene.player, scene.mapLayers.Coins);
         scene.physics.add.overlap(scene.flit, scene.mapLayers.Coins);
         scene.mapLayers.Coins.setTileIndexCallback([48, 38], this.collectCoin, scene);
+
+        //count the collectables
+        if (scene.mapLayers.Coins) {
+            let tiles = scene.mapLayers.Coins.layer.data;
+            for (var i = 0; i < tiles.length; i++) {
+                var tile = tiles[i];
+                for (var j = 0; j < tile.length; j++) {
+                    if (tile[j].index === 48) this.totalFlies++;
+                    if (tile[j].index === 38) this.totalShrooms++;
+                }
+            }
+        }
         
         //set changing player after loader has finished so player keyboard is used
         this._ChangingPlayer = false;
@@ -148,17 +168,16 @@ export default class Level{
      * @param {Phaser.GameObjects.Sprite} sprite The sprite that hit a coin
      * @param {Phaser.Tilemaps.Tile} tile The coin tile
      */
-    collectCoin(sprite, tile) {
-        let isFlit = sprite === this.flit;
-        if (tile.index == 48 && isFlit) {
+    collectCoin(player, tile) {
+        if (tile.index == 48 && player.is('Flit')) {
             this.mapLayers.Coins.removeTileAt(tile.x, tile.y); 
-            this.fliesCollected++; 
+            player.collected++; 
         }
-        if (tile.index === 38 && !isFlit) {
+        if (tile.index === 38 && player.is('Bob')) {
             this.mapLayers.Coins.removeTileAt(tile.x, tile.y);
-            this.shroomsCollected++;
+            player.collected++;
         }
-        //this.updateHeader();
+        this.events.emit('updateHUD', player);
         return false;
     }
     /**
