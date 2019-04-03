@@ -74,6 +74,8 @@ export default class LevelLoaderScene extends Phaser.Scene {
             assetText.destroy();
         });
         this.load.once('filecomplete', this.mapLoaded, this);
+
+        //Load the selected level
         this.load.tilemapTiledJSON('map', 'assets/Levels/L1.json');
     }
     create() { 
@@ -81,8 +83,9 @@ export default class LevelLoaderScene extends Phaser.Scene {
         this.scene.add('HUD', HUD, true, { x: 400, y: 300 });
     }
     mapLoaded() { 
-        // load the map 
+        // create the map in the scene
         this.map = this.make.tilemap({ key: 'map' });
+        //create the level 
         this.level = new Level(this);
         
     }
@@ -91,7 +94,7 @@ export default class LevelLoaderScene extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(this.shiftKey)) {
             this.switchCharacter();
         }
-
+        //only pass keyboard to player if not switching
         if (!this.level._ChangingPlayer) {
             this.level.ActivePlayer.update(this.cursors, this.spaceKey);
         }

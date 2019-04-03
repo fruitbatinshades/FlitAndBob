@@ -3,7 +3,7 @@
  * thE hEADS UP DISPLAY FOR HEALTH AND SCORE
  */
 export default class HUD extends Phaser.Scene {
-
+    containingScene = null;
     constructor() {
         super({ key: 'HUD', active: true });
     }
@@ -52,7 +52,8 @@ export default class HUD extends Phaser.Scene {
         }, this);
     }
     setStroke(txt) {
-        txt.setShadow(2, 2, '#333333', 2, true, false);
-        txt.setStroke('#0066AA', 3);
+        txt.setShadow(2, 2, '#333333', 2, true, false)
+            .setStroke('#0066AA', 3)
+            .setFontStyle('bold');
     }
 }
