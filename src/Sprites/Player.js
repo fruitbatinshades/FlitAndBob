@@ -24,6 +24,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.health = 100;
     this.lastInjure = 0;
     this.collected = 0;
+    this.isSlow = false;
+    this.isFast = false;
     // enable physics
     this.scene.physics.world.enable(this);
     this.setScale(.7);
@@ -54,6 +56,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     });
     this.idle();
   }
+  kill() {
+    //TODO:Add death animation
+    console.log('Flit died');
+    this.scene.events.emit('died', this);
+  }
   idle() {
     //this.body.setVelocityX(0);
     this.anims.play('idle', true);
@@ -77,10 +84,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
           callbackScope: this
         });
       }
-      if (this.health <= 0) {
-        console.log('Bob died');
-        this.scene.events.emit('died', this);
-      }
+      if (this.health <= 0) this.kill();
     }
   }
   overBox(item) {
@@ -139,6 +143,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
     //reset speed after update
     this.isSlow = false;
+    this.isFast = false;
   }
 
   //   loseHealth () {

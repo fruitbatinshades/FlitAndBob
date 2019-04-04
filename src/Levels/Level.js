@@ -4,7 +4,7 @@ import Flit from '../Sprites/Flit.js';
 import Boxes from '../Sprites/boxes.js';
 
 import Enums from '../Levels/Tilemaps.js';
-import Interaction from '../sprites/Interaction.js';
+import Interaction from '../Sprites/Interaction.js';
 /**
  * Class that hold the level specific data and operations
  */
@@ -22,7 +22,9 @@ export default class Level{
     switchIds;
     sky;
     totalShrooms= 0;
-    totalFlies= 0;
+    totalFlies = 0;
+    debug = false;
+    mapProperties;
     // info: {
     //     shrooms: 0;
     //     flies: 0;
@@ -31,13 +33,14 @@ export default class Level{
     // }
 
     //NB: Call from preload
-    constructor(scene) { 
+    constructor(scene, name) { 
+        this.mapProperties = scene.map.properties;
+        if (scene.map.properties["debug"]) this.debug = scene.map.properties["debug"];
         //load backgrounds from map.properties.Backgrounds (Pipe delimeted filename from tiled)
         scene.load.setPath('assets/levels/backgrounds/');
         scene.map.properties["Backgrounds"].split('|').forEach((b) => {
             let name = b.substr(0, b.lastIndexOf('.'));
             b.endsWith('.svg') ? scene.load.svg(name, b) : scene.load.image(name, b);
-            //console.log(name, b);
         });
 
         //load tilesets
@@ -58,6 +61,14 @@ export default class Level{
         scene.spaceKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         scene.shiftKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         scene.ctrlKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CONTROL);
+
+        if (this.debug) {
+            scene.input.on('gameobjectdown', function (pointer, gameObject) {
+                if (gameObject.toolInfo)
+                    gameObject.toolInfo.visible = !gameObject.toolInfo.visible;
+                console.log(gameObject.toolInfo.visible)
+            });
+        }
     }
     /**
      * Crete the maps, player and set up collisions
@@ -104,7 +115,7 @@ export default class Level{
                 case 'Interaction':
                     //Get the rectangles from the map
                     scene.mapLayers[l.name]= scene.map.getObjectLayer('Interaction');
-                    scene.interactionZones = new Interaction(scene, [], l, scene.mapLayers[l.name]);
+                    scene.interactionZones = new Interaction(scene, [], l, scene.mapLayers[l.name], this.debug );
                     //scene.mapLayers[l.name].setDepth(l.properties.depth || 1);
                     break;
                 case 'Sky':

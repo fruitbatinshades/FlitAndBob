@@ -15,6 +15,7 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     this.direction = 'up';
     this.speed = 300;
     this.IsSlow = false;
+    this.IsFast = false;
     this.health = 75;
     this.lastInjure = 0;
     this.collected = 0;
@@ -73,11 +74,13 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
           callbackScope: this
         });
       }
-      if (this.health <= 0) {
-        console.log('Flit died');
-        this.scene.events.emit('died', this.health);
-      }
+      if (this.health <= 0) this.kill();
     }
+  }
+  kill() {
+    //TODO:Add death animation
+    console.log('Flit died');
+    this.scene.events.emit('died', this);
   }
   idle(){
     this.body.setVelocityX(0);
