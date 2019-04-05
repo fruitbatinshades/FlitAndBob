@@ -49,6 +49,7 @@ export default class Level{
             scene.load.image(b.name); 
             //console.log(b.name);
         });
+        //this.buildLevel(scene);
 
         // set the boundaries of our game world
         scene.physics.world.bounds.width = scene.map.widthInPixels;

@@ -40,7 +40,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.setBounce(0.2); // our player will bounce from items
     this.setCollideWorldBounds(true); // don't go out of the map        
     this.setGravityY(800); //set gravity to control jump height to 1 block
-
+    this.splat = this.scene.add.image(0, 0, 'splat');
+    this.splat.setDepth(100).visible = false;
+    this.splat.setOrigin(0.5);
     // player walk animation
     this.anims.animationManager.create({
       key: 'walk',
@@ -59,7 +61,25 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   kill() {
     //TODO:Add death animation
     console.log('Flit died');
-    this.scene.events.emit('died', this);
+    this.splat.x = this.body.center.x;// - this.body.width / 2;
+    this.splat.y = this.body.center.y;// - this.body.height /2;
+    this.splat.depth = this.depth - 1;
+    this.splat.visible = true;
+    this.body.destroy();
+    //this.setOrigin(.5);
+    this.scene.tweens.add({
+      targets: [this, this.splat],
+      angle: 359,
+      alpha: 0,
+      scaleX: 2,
+      scaleY: 2,
+      ease: 'Power1',
+      duration: 1000,
+      onComplete: function (tween, targets, items) {
+        targets[0].scene.events.emit('died', this);
+      },
+      onCompleteParams: [this]
+    });
   }
   idle() {
     //this.body.setVelocityX(0);

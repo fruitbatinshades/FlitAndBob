@@ -18,15 +18,32 @@ export default class LevelLoaderScene extends Phaser.Scene {
         var progressBox = this.add.graphics();
         progressBox.fillStyle(0x222222, 0.8);
         progressBox.fillRect(240, 270, 320, 50);
-
+        let splash = this.add.image(0, 0, 'SplashBackground');
+        
         var width = this.cameras.main.width;
         var height = this.cameras.main.height;
+
+        this.add.image(width / 2, 100, 'Logo');
+        this.PlayButton = this.add.image(width / 2, 420, 'WoodButton');
+        let playtext = this.make.text({
+            x: this.PlayButton.x,
+            y: this.PlayButton.y,
+            text: 'Play',
+            style: {
+                font: '30px monospace',
+                fill: '#ffffff'
+            }
+        }).setOrigin(.5,.5);
+        this.setStroke(playtext);
+
+        splash.setScale(1.5, 1.5);
+
         var loadingText = this.make.text({
             x: width / 2,
             y: height / 2 - 50,
             text: 'Loading...',
             style: {
-                font: '20px monospace',
+                font: '30px monospace',
                 fill: '#ffffff'
             }
         });
@@ -37,7 +54,7 @@ export default class LevelLoaderScene extends Phaser.Scene {
             y: height / 2 - 5,
             text: '0%',
             style: {
-                font: '18px monospace',
+                font: '28px monospace',
                 fill: '#ffffff'
             }
         });
@@ -48,12 +65,16 @@ export default class LevelLoaderScene extends Phaser.Scene {
             y: height / 2 + 50,
             text: '',
             style: {
-                font: '18px monospace',
+                font: '28px monospace',
                 fill: '#ffffff'
             }
         });
 
         assetText.setOrigin(0.5, 0.5);
+
+        this.setStroke(loadingText);
+        this.setStroke(percentText);
+        this.setStroke(assetText);
 
         this.load.on('progress', function (value) {
             percentText.setText(parseInt(value * 100) + '%');
@@ -75,12 +96,18 @@ export default class LevelLoaderScene extends Phaser.Scene {
         });
         this.load.once('filecomplete', this.mapLoaded, this);
 
+        this.events.on('died', function (a) {
+            // this.scene.remove('HUD');
+            // this.scene.stop();
+            // this.scene.restart();
+        }, this);
         //Load the selected level
         this.load.tilemapTiledJSON('map', 'assets/Levels/L1.json');
     }
     create() { 
         this.level.buildLevel(this);
-        this.scene.add('HUD', HUD, true, { x: 400, y: 300 });
+        if(!this.scene.HUD)
+            this.scene.add('HUD', HUD, true, { x: 400, y: 300 });
     }
     mapLoaded() { 
         // create the map in the scene
@@ -102,17 +129,13 @@ export default class LevelLoaderScene extends Phaser.Scene {
         Phaser.Actions.Call(this.level.sky.getChildren(), function (layer) {
             layer.x = this.cameras.main.scrollX;
             layer.tilePositionX = this.cameras.main.scrollX ;
-            ////Scroll background
-            //layer.tilePositionX += Math.round(this.game.ActivePlayer.body.velocity.x / 100);
         }, this);
-        //this.game.DebugG.clear();
     }
     switchCharacter() {
         //stop current player activity
         this.level.ActivePlayer.idle();
         this.level.ActivePlayer.body.setVelocityX(0);
         //get the other character
-        //this.level.ActivePlayer = this.level.ActivePlayer.constructor.name === 'Player' ? this.flit : this.player;
         this.level.ActivePlayer = this.level.ActivePlayer.is('Bob') ? this.flit : this.player;
 
         this.level._ChangingPlayer = true;
@@ -124,5 +147,10 @@ export default class LevelLoaderScene extends Phaser.Scene {
                 this.level._ChangingPlayer = false;
             }
         });
+    }
+    setStroke(txt) {
+        txt.setShadow(2, 2, '#333333', 2, true, false)
+            .setStroke('#0066AA', 3)
+            .setFontStyle('bold');
     }
 }

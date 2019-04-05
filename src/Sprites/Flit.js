@@ -32,6 +32,9 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     this.setCollideWorldBounds(true); // don't go out of the map 
     this.body.setOffset((this.body.width * this.scaleX) / 2, (this.body.height * this.scaleY) / 2);
 
+    this.splat = this.scene.add.image(0, 0, 'splat');
+    this.splat.setDepth(100).visible = false;
+    this.splat.setOrigin(0.5);
 
     // player walk animation
     this.anims.animationManager.create({
@@ -80,7 +83,25 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
   kill() {
     //TODO:Add death animation
     console.log('Flit died');
-    this.scene.events.emit('died', this);
+    this.splat.x = this.body.center.x;// - this.body.width / 2;
+    this.splat.y = this.body.center.y;// - this.body.height /2;
+    this.splat.depth = this.depth - 1;
+    this.splat.visible = true;
+    this.body.destroy();
+    //this.setOrigin(.5);
+    this.scene.tweens.add({
+      targets: [this, this.splat],
+      angle: 359,
+      alpha: 0,
+      scaleX: 2,
+      scaleY: 2,
+      ease: 'Power1',
+      duration: 1000,
+      onComplete: function (tween, targets, items) {
+        targets[0].scene.events.emit('died', this);
+      },
+      onCompleteParams: [this]
+    });
   }
   idle(){
     this.body.setVelocityX(0);

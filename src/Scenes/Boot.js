@@ -17,7 +17,11 @@ export default class BootScene extends Phaser.Scene {
   //  // map made with Tiled in JSON format
   //  this.load.tilemapTiledJSON('map', 'assets/Levels/workout.json');
   //  // tiles in spritesheet 
-  this.load.spritesheet('tiles', 'assets/levels/Grass_Platform2.png', {frameWidth: 64, frameHeight: 64});
+    this.load.spritesheet('tiles', 'assets/levels/Grass_Platform2.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.image('SplashBackground', 'assets/TemporaryBackground-min.png');
+    this.load.image('Logo', 'assets/TemporaryLogo.png');
+    this.load.image('WoodButton', 'assets/TemporaryWoodButton.png');
+    this.load.image('splat', 'assets/splat.png');
   //   this.load.image('largegrass', 'assets/largegrass.png');
   //   this.load.image('header', 'assets/header.png');
   //   this.load.svg('gnome', 'assets/levels/backgrounds/gnome.svg');
