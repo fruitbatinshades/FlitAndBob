@@ -36,7 +36,7 @@ Add a point where the `Name` is the filename of the image and the type is `TileS
 | TileSprite | Name of image in the `Levels\Backgrounds\` folder | The image will scroll with the camera |
 | Image | Name of image in the `Levels\Backgrounds\` folder | The image stays at the point |
 
-#### Boxes (obkect Layer)
+#### Boxes (object Layer)
 Boxes block players and must be moved so that Flit or Bob can access areas by climbing on them. 
 
 You just need to add a tile and set the `Name:Box` and the type to

@@ -63,7 +63,7 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
       this.health -= amount;
       this.scene.events.emit('loseHealth', this);
       this.scene.events.emit('updateHUD', this);
-
+      this.scene.sound.playAudioSprite('sfx', 'Squeek');
       //tint for a brief period
       if (!this.hitDelay) {
         this.hitDelay = true;
@@ -88,6 +88,7 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     this.splat.depth = this.depth - 1;
     this.splat.visible = true;
     this.body.destroy();
+    this.scene.sound.playAudioSprite('sfx', 'squelch');
     //this.setOrigin(.5);
     this.scene.tweens.add({
       targets: [this, this.splat],

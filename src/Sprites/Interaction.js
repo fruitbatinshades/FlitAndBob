@@ -41,12 +41,25 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
         for (let i = 0; i < objectMap.objects.length; i++) {
             let current = objectMap.objects[i];
             //create zone and add to key lookup
-            this.lookup[current.name] = new InteractionZone(this.scene, current,debug);
-            this.add(this.lookup[current.name]);
+            let z = new InteractionZone(this.scene, current, debug);
+
+            if (z.Blocks && z.Blocks.key) {
+                z.body.static = true;
+                z.body.setImmovable(true);
+                scene.physics.add.collider(scene.player, z);
+                scene.physics.add.collider(scene.flit, z);
+                console.log('Collide on ' + z.name)
+            }
+            else {
+                scene.physics.add.overlap(scene.player, this, this.overTarget, null, this);
+                scene.physics.add.overlap(scene.flit, this, this.overTarget, null, this);
+                console.log('Overlap on ' + z.name)
+            }
+
+            this.add(z);
+            this.lookup[current.name] = z;
         }
-        scene.physics.add.overlap(scene.player, this, this.overTarget, null, this);
-        scene.physics.add.overlap(scene.flit, this, this.overTarget, null, this);
-    }
+   }
     /**
      * Fired when a player enters a zone
      * @param {Phaser.GameObjects.Sprite} player The player

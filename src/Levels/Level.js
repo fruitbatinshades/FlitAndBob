@@ -173,6 +173,8 @@ export default class Level{
         
         //set changing player after loader has finished so player keyboard is used
         this._ChangingPlayer = false;
+
+        //scene.sound.playAudioSprite('sfx', 'music_zapsplat_rascals_123', {volume:.5, repeat:true});
     }
 
     /**
@@ -183,10 +185,12 @@ export default class Level{
     collectCoin(player, tile) {
         if (tile.index == 48 && player.is('Flit')) {
             this.mapLayers.Coins.removeTileAt(tile.x, tile.y); 
+            this.sound.playAudioSprite('sfx', 'FlitMunch');
             player.collected++; 
         }
         if (tile.index === 38 && player.is('Bob')) {
             this.mapLayers.Coins.removeTileAt(tile.x, tile.y);
+            this.sound.playAudioSprite('sfx', 'BobMunch');
             player.collected++;
         }
         this.events.emit('updateHUD', player);

@@ -343,12 +343,14 @@
                  "name":"PaperA",
                  "properties":
                     {
+                     "Blocks":"TRBL",
                      "Effect":"Injure",
                      "Target":"",
                      "Transition":"fadeAndDisable"
                     },
                  "propertytypes":
                     {
+                     "Blocks":"string",
                      "Effect":"string",
                      "Target":"string",
                      "Transition":"string"

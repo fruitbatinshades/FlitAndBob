@@ -85,6 +85,7 @@ export default class LevelLoaderScene extends Phaser.Scene {
 
         this.load.on('fileprogress', function (file) {
             assetText.setText('Loading asset: ' + file.key);
+            console.log(file.key);
         });
 
         this.load.on('complete', function () {
@@ -102,10 +103,15 @@ export default class LevelLoaderScene extends Phaser.Scene {
             // this.scene.restart();
         }, this);
         //Load the selected level
-        this.load.tilemapTiledJSON('map', 'assets/Levels/L1.json');
+        this.load.tilemapTiledJSON('map', 'assets/Levels/Example.json');
+        this.load.audioSprite('sfx', 'assets/sound/FlitBob.json', [
+            'assets/sound/FlitBob.ogg',
+            'assets/sound/FlitBob.mp3'
+        ]);
     }
     create() { 
         this.level.buildLevel(this);
+        
         if(!this.scene.HUD)
             this.scene.add('HUD', HUD, true, { x: 400, y: 300 });
     }

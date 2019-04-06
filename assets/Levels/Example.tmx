@@ -122,6 +122,7 @@
   </object>
   <object id="53" name="PaperA" type="FlyPaper" x="1536" y="960" width="64" height="192">
    <properties>
+    <property name="Blocks" value="TRBL"/>
     <property name="Effect" value="Injure"/>
     <property name="Target" value=""/>
     <property name="Transition" value="fadeAndDisable"/>

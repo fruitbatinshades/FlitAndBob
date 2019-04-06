@@ -14,6 +14,7 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
     name = null;
     //Ref to the tile
     TileObj = null;
+    Blocks = null;
     Related;
     Implementation;
     //The visual effect to use (toggleVisibility, fadeAndDisable)
@@ -38,9 +39,13 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
             this.Effect = this.splitMapProperty(tileObj.properties.Effect);
         if (tileObj.properties.Transition)
             this.Transition = this.splitMapProperty(tileObj.properties.Transition);
-        if (tileObj.properties.Implementation) {
+        if (tileObj.properties.Implementation) 
             this.Implementation = this.splitMapProperty(tileObj.properties.Implementation);
+        if (tileObj.properties.Blocks) {
+            this.Blocks = this.splitMapProperty(tileObj.properties.Blocks);
+            
         }
+        
         //TODO: strip this out on build ???
         if (debug) {
             scene.add.text(tileObj.x, tileObj.y, tileObj.name, {
@@ -61,6 +66,14 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
             this.toolInfo = t;
             this.setInteractive();
         }
+    }
+    onBlocked(player, zone) {
+        console.log('blocked');
+        return true;
+    }
+    beforeBlock(player, zone) {
+        console.log('blocked');
+        return true;
     }
     /**
      * Get the tiles from the switch layer

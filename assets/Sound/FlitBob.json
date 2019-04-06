@@ -1,0 +1,33 @@
+{
+  "spritemap": {
+    "BobMunch": {
+      "start": 0,
+      "end": 0.648
+    },
+    "FlitMunch": {
+      "start": 0.837542,
+      "end": 1.103458
+    },
+    "Squeek": {
+      "start": 1.333146,
+      "end": 1.663396
+    },
+    "squelch": {
+      "start": 1.893083,
+      "end": 3.143083
+    },
+    "music_zapsplat_rascals_123": {
+      "start": 3.372771,
+      "end": 170.808375
+    },
+    "jump": {
+      "start": 171.038063,
+      "end": 172.875563
+    }
+  },
+  "resources": [
+    "FlitBob.wav",
+    "FlitBob.ogg",
+    "FlitBob.mp3"
+  ]
+}
