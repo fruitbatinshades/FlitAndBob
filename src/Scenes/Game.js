@@ -5,7 +5,7 @@
 // import Settings from '../settings.js';
 // import Utils from '../Utils/Debug.js';
 // import MapLoader from '../Utils/MapLoader.js';
-// import Boxes from '../Sprites/boxes.js';
+// import Boxes from '../Sprites/Boxes.js';
 // import Enums from '../Levels/Tilemaps.js';
 
 // export default class GameScene extends Phaser.Scene {

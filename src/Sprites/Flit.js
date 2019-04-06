@@ -125,40 +125,37 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     this.scene.events.emit('drop_box', item, this);
   }
 
-  update (cursors, space) {
-    if (this.carrying != null && Phaser.Input.Keyboard.JustDown(space)) {
-      this.drop(this.carrying);
-    }
-    //if we are carrying a box move it to match our position
-    if (this.carrying) {
-      this.carrying.x = this.body.x;
-      this.carrying.y = this.body.bottom + 5;
-    }
+  update(cursors, space) {
+      if (this.carrying != null && Phaser.Input.Keyboard.JustDown(space)) {
+        this.drop(this.carrying);
+      }
+      //if we are carrying a box move it to match our position
+      if (this.carrying) {
+        this.carrying.x = this.body.x;
+        this.carrying.y = this.body.bottom + 5;
+      }
 
-    if (cursors.left.isDown)
-    {
-      this.body.setVelocityX(0 - this.activeSpeed);
+      if (cursors.left.isDown) {
+        this.body.setVelocityX(0 - this.activeSpeed);
         this.anims.play('flit_fly', true); // walk left
         this.flipX = true; // flip the sprite to the left
-    }
-    if (cursors.right.isDown)
-    {
-      this.body.setVelocityX(this.activeSpeed);
+      }
+      if (cursors.right.isDown) {
+        this.body.setVelocityX(this.activeSpeed);
         this.anims.play('flit_fly', true);
         this.flipX = false; // use the original sprite looking to the right
       }
-      if (cursors.up.isDown)
-      {
+      if (cursors.up.isDown) {
         this.body.setVelocityY(-200);
       }
-      if (cursors.down.isDown)
-      {
+      if (cursors.down.isDown) {
         this.body.setVelocityY(200);
-    } 
-    //no keys so stop
-    if(!cursors.left.isDown && !cursors.right.isDown && !cursors.up.isDown && !cursors.down.isDown) {
+      }
+      //no keys so stop
+      if (!cursors.left.isDown && !cursors.right.isDown && !cursors.up.isDown && !cursors.down.isDown) {
         this.idle();
-    }
+      }
+
     this.isSlow = false;
     this.isFast = false;
   }

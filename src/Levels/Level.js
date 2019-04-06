@@ -1,9 +1,9 @@
 /// <reference path="../../defs/phaser.d.ts" />
 import Player from '../Sprites/Player.js';
 import Flit from '../Sprites/Flit.js';
-import Boxes from '../Sprites/boxes.js';
+import Boxes from '../Sprites/Boxes.js';
 
-import Enums from '../Levels/Tilemaps.js';
+import Enums from './Tilemaps.js';
 import Interaction from '../Sprites/Interaction.js';
 /**
  * Class that hold the level specific data and operations
@@ -37,14 +37,14 @@ export default class Level{
         this.mapProperties = scene.map.properties;
         if (scene.map.properties["debug"]) this.debug = scene.map.properties["debug"];
         //load backgrounds from map.properties.Backgrounds (Pipe delimeted filename from tiled)
-        scene.load.setPath('assets/levels/backgrounds/');
+        scene.load.setPath('assets/Levels/Backgrounds/');
         scene.map.properties["Backgrounds"].split('|').forEach((b) => {
             let name = b.substr(0, b.lastIndexOf('.'));
             b.endsWith('.svg') ? scene.load.svg(name, b) : scene.load.image(name, b);
         });
 
         //load tilesets
-        scene.load.setPath('assets/levels/');
+        scene.load.setPath('assets/Levels/');
         scene.map.tilesets.forEach((b) => {
             scene.load.image(b.name); 
             //console.log(b.name);

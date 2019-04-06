@@ -21,7 +21,7 @@
                 {
                  "height":0,
                  "id":47,
-                 "name":"Gnome.svg",
+                 "name":"gnome.svg",
                  "point":true,
                  "rotation":0,
                  "type":"Image",
@@ -568,7 +568,7 @@
  "orientation":"orthogonal",
  "properties":
     {
-     "Backgrounds":"BrickTile.svg|Gnome.svg|WallTile.svg|Clouds.svg",
+     "Backgrounds":"BrickTile.svg|gnome.svg|WallTile.svg|Clouds.svg",
      "debug":true
     },
  "propertytypes":

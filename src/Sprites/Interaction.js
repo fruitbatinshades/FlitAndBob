@@ -43,23 +43,31 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             //create zone and add to key lookup
             let z = new InteractionZone(this.scene, current, debug);
 
-            if (z.Blocks && z.Blocks.key) {
-                z.body.static = true;
-                z.body.setImmovable(true);
-                scene.physics.add.collider(scene.player, z);
-                scene.physics.add.collider(scene.flit, z);
-                console.log('Collide on ' + z.name)
+            //ADD TO THE GROUP BEFORE SETTING PHYSICS OR THEY WILL BE RESET!!!
+            this.add(z);
+            //If there is a blocks property set up collision
+            if (z.Blocks) {
+                z.body.setImmovable(true); //do this else you pass through
+                scene.physics.add.collider(scene.player, z, this.hitTarget, null, this);
+                scene.physics.add.collider(scene.flit, z, this.hitTarget, null, this);
+                //if properties provided set the relevant one
+                if (z.Blocks.key) {
+                    z.body.checkCollision.top = z.Blocks.key.indexOf('T') !== -1;
+                    z.body.checkCollision.right = z.Blocks.key.indexOf('R') !== -1;
+                    z.body.checkCollision.bottom = z.Blocks.key.indexOf('B') !== -1;
+                    z.body.checkCollision.left = z.Blocks.key.indexOf('L') !== -1;
+                }
             }
             else {
-                scene.physics.add.overlap(scene.player, this, this.overTarget, null, this);
-                scene.physics.add.overlap(scene.flit, this, this.overTarget, null, this);
-                console.log('Overlap on ' + z.name)
+                //set up overlap for callback
+                scene.physics.add.overlap(scene.player, z, this.overTarget, null, this);
+                scene.physics.add.overlap(scene.flit, z, this.overTarget, null, this);
             }
-
-            this.add(z);
             this.lookup[current.name] = z;
         }
-   }
+    }
+    hitTarget(player, zone) {
+    }
     /**
      * Fired when a player enters a zone
      * @param {Phaser.GameObjects.Sprite} player The player

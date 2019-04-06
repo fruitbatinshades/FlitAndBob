@@ -104,9 +104,9 @@ export default class LevelLoaderScene extends Phaser.Scene {
         }, this);
         //Load the selected level
         this.load.tilemapTiledJSON('map', 'assets/Levels/Example.json');
-        this.load.audioSprite('sfx', 'assets/sound/FlitBob.json', [
-            'assets/sound/FlitBob.ogg',
-            'assets/sound/FlitBob.mp3'
+        this.load.audioSprite('sfx', 'assets/Sound/FlitBob.json', [
+            'assets/Sound/FlitBob.ogg',
+            'assets/Sound/FlitBob.mp3'
         ]);
     }
     create() { 
@@ -123,6 +123,7 @@ export default class LevelLoaderScene extends Phaser.Scene {
         
     }
     update() {
+        
         //Switch characters
         if (Phaser.Input.Keyboard.JustDown(this.shiftKey)) {
             this.switchCharacter();

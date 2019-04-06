@@ -343,8 +343,8 @@
                  "name":"PaperA",
                  "properties":
                     {
-                     "Blocks":"TRBL",
-                     "Effect":"Injure",
+                     "Blocks":"L",
+                     "Effect":"",
                      "Target":"",
                      "Transition":"fadeAndDisable"
                     },
@@ -583,7 +583,7 @@
  "orientation":"orthogonal",
  "properties":
     {
-     "Backgrounds":"BrickTile.svg|Gnome.svg|WallTile.svg|Clouds.svg",
+     "Backgrounds":"BrickTile.svg|gnome.svg|WallTile.svg|Clouds.svg",
      "debug":true
     },
  "propertytypes":

@@ -17,7 +17,7 @@ export default class BootScene extends Phaser.Scene {
   //  // map made with Tiled in JSON format
   //  this.load.tilemapTiledJSON('map', 'assets/Levels/workout.json');
   //  // tiles in spritesheet 
-    this.load.spritesheet('tiles', 'assets/levels/Grass_Platform2.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('tiles', 'assets/Levels/Grass_Platform2.png', { frameWidth: 64, frameHeight: 64 });
     this.load.image('SplashBackground', 'assets/TemporaryBackground-min.png');
     this.load.image('Logo', 'assets/TemporaryLogo.png');
     this.load.image('WoodButton', 'assets/TemporaryWoodButton.png');
@@ -31,8 +31,8 @@ export default class BootScene extends Phaser.Scene {
   //   this.load.image('bigStone', 'assets/bigStone.png');
   //   this.load.image('blob', 'assets/blob.png');
   //  // player animations
-    this.load.atlas('flit', 'assets/Flit/Flit2.png', 'assets/flit/flit2.json');
-    this.load.atlas('bob', 'assets/bob/bob.png', 'assets/bob/bob.json');
+    this.load.atlas('flit', 'assets/Flit/flit2.png', 'assets/Flit/flit2.json');
+    this.load.atlas('bob', 'assets/Bob/bob.png', 'assets/Bob/bob.json');
   //   this.load.atlas('clouds', 'assets/clouds.png', 'assets/clouds.json');
   }
 
