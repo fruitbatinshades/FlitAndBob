@@ -103,7 +103,7 @@ export default class LevelLoaderScene extends Phaser.Scene {
             // this.scene.restart();
         }, this);
         //Load the selected level
-        this.load.tilemapTiledJSON('map', 'assets/Levels/Example.json');
+        this.load.tilemapTiledJSON('map', 'assets/Levels/L1.json');
         this.load.audioSprite('sfx', 'assets/Sound/FlitBob.json', [
             'assets/Sound/FlitBob.ogg',
             'assets/Sound/FlitBob.mp3'

@@ -29,21 +29,20 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
         this.properties = tileObj.properties;
         this.name = tileObj.name;
 
-        if (tileObj.properties.GroupKey)
+        if (typeof tileObj.properties.GroupKey !== 'undefined')
             this.GroupKey = this.splitMapProperty(tileObj.properties.GroupKey);
-        if (tileObj.properties.Target)
+        if (typeof tileObj.properties.Target !== 'undefined')
             this.Target = this.splitMapProperty(tileObj.properties.Target);
-        if (tileObj.properties.Action)
+        if (typeof tileObj.properties.Action !== 'undefined')
             this.Action = this.splitMapProperty(tileObj.properties.Action);
-        if (tileObj.properties.Effect)
+        if (typeof tileObj.properties.Effect !== 'undefined')
             this.Effect = this.splitMapProperty(tileObj.properties.Effect);
-        if (tileObj.properties.Transition)
+        if (typeof tileObj.properties.Transition !== 'undefined')
             this.Transition = this.splitMapProperty(tileObj.properties.Transition);
-        if (tileObj.properties.Implementation) 
+        if (typeof tileObj.properties.Implementation !== 'undefined') 
             this.Implementation = this.splitMapProperty(tileObj.properties.Implementation);
-        if (tileObj.properties.Blocks) {
+        if (typeof tileObj.properties.Blocks !== 'undefined') {
             this.Blocks = this.splitMapProperty(tileObj.properties.Blocks);
-            
         }
         
         //TODO: strip this out on build ???
