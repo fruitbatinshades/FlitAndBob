@@ -450,7 +450,7 @@
                  "properties":
                     {
                      "Effect":"Injure",
-                     "Target":""
+                     "Target":"Bob"
                     },
                  "propertytypes":
                     {

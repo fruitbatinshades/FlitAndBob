@@ -13,7 +13,6 @@ class Game extends Phaser.Game {
     this.Bob = null; //Bob Character
     this.Flit = null; //Flit Character
     this.DebugG = null; //Debug graphics object create in active scene as assigned here
-    this.ActivePlayer = null; //Flit or Bob
     this._ChangingPlayer = false; //Whether we are currenty changing between players
 
     this.scene.add('Boot', BootScene);

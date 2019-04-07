@@ -140,7 +140,7 @@
   <object id="54" name="SpikesA" x="1472" y="960" width="256" height="64">
    <properties>
     <property name="Effect" value="Injure"/>
-    <property name="Target" value=""/>
+    <property name="Target" value="Bob"/>
    </properties>
   </object>
   <object id="58" name="ForceA" x="1408" y="576" width="192" height="192">

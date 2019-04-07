@@ -22,7 +22,7 @@ export default class PlayLevelScene extends Phaser.Scene {
             this.switchCharacter();
         }
         //only pass keyboard to player if not switching
-        if (!this.level._ChangingPlayer) {
+        if (!this.game._ChangingPlayer) {
             this.level.ActivePlayer.update(this.cursors, this.spaceKey);
         }
         //sync the background to the camera
@@ -38,13 +38,13 @@ export default class PlayLevelScene extends Phaser.Scene {
         //get the other character
         this.level.ActivePlayer = this.level.ActivePlayer.is('Bob') ? this.flit : this.player;
 
-        this.level._ChangingPlayer = true;
+        this.game._ChangingPlayer = true;
         //pan the camera 
         this.cameras.main.stopFollow();
         this.cameras.main.pan(this.level.ActivePlayer.x, this.level.ActivePlayer.y, 500, 'Sine.easeInOut', true, (cam, complete, x, y) => {
             if (complete === 1) {
                 this.cameras.main.startFollow(this.level.ActivePlayer, true, .1, .1);
-                this.level._ChangingPlayer = false;
+                this.game._ChangingPlayer = false;
             }
         });
     }

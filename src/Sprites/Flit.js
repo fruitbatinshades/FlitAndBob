@@ -19,6 +19,7 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     this.health = 75;
     this.lastInjure = 0;
     this.collected = 0;
+    this.name = 'flit';
 
     // enable physics
     this.scene.physics.world.enable(this);
@@ -110,7 +111,7 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     this.anims.play('flit_idle', true);
   }
   is(name) {
-    return name == 'Flit';
+    return name.toLowerCase() == 'flit';
   }
   overBox(item, player) {
     if (this.carrying == null) {

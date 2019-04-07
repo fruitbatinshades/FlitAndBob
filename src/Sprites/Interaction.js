@@ -15,7 +15,8 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
         "Injure": this.injure,
         "Fast": this.fast,
         "Slow": this.slow,
-        "Kill": this.kill
+        "Kill": this.kill,
+        "Slippy": this.slippy
     };
     /** Lookup to transitions that process map key: Transition */
     transitions = {
@@ -36,6 +37,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
         this.scene = scene;
         this.tileLayer = interactionLayer;
         this.lookup = {};
+        this.spaceKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         //Create a zone from the tiled object rectangles
         for (let i = 0; i < objectMap.objects.length; i++) {
@@ -74,15 +76,17 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
      * @param {InteractionZone} zone The zone entered
      */
     overTarget(player, zone) {
-        let t = this.lookup[zone.name];
-        if (!t.Effect || t.Effect === null) {
-            //If its an effect require space key
-            if (Phaser.Input.Keyboard.JustDown(this.scene.spaceKey)) {
+        if (player.is(this.scene.registry.list.ActivePlayer.name)) {
+            let t = this.lookup[zone.name];
+            if (!t.Effect || t.Effect === null) {
+                //If its an effect require space key
+                if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
+                    this.action(t, player);
+                }
+            } else {
+                //else fire constantly
                 this.action(t, player);
             }
-        } else {
-            //else fire constantly
-            this.action(t, player);
         }
     }
     /**
@@ -159,6 +163,9 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
      */
     fast(triggerZone, player) {
         player.isFast = true;
+    }
+    slippy(triggerZone, player) {
+        player.effectSpeed = 500;
     }
     /**
      * Player slows down

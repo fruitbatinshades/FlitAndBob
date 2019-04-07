@@ -17,20 +17,12 @@ export default class Level{
     shroomsCollected = 0;
     mapIds;
     backgrounds;
-    ActivePlayer = null;
-    _ChangingPlayer = true;
     switchIds;
     sky;
     totalShrooms= 0;
     totalFlies = 0;
     debug = false;
     mapProperties;
-    // info: {
-    //     shrooms: 0;
-    //     flies: 0;
-    //     totalShrooms: 0;
-    //     totalFlies: 0;
-    // }
 
     //NB: Call from preload
     constructor(scene, name) { 
@@ -208,7 +200,6 @@ export default class Level{
                         scene.player = new Player(scene, obj.x, obj.y);
                         scene.player.depth = 100;
                         scene.game.Bob = scene.player;
-                        this.ActivePlayer = scene.player;
                     }
                     if (obj.name === 'Flit') {
                         scene.flit = new Flit(scene, obj.x, obj.y);
@@ -219,6 +210,6 @@ export default class Level{
             // }
         });
         scene.cameras.main.startFollow(scene.player);
-        scene.game.ActivePlayer = scene.player;
+        scene.registry.set('ActivePlayer', scene.player);
     }
 }

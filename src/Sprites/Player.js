@@ -9,6 +9,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   get activeSpeed() {
     if (this.isSlow) return this.speed / 2;
     if (this.isFast) return this.speed * 1.5;
+    if (this.effectSpeed) return this.effectSpeed;
     return this.speed;
   }
 
@@ -21,17 +22,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.carrying = null;
     this.currently = null;
     this.speed = 200;
+    this.effectSpeed = 0;
     this.health = 100;
     this.lastInjure = 0;
     this.collected = 0;
     this.isSlow = false;
     this.isFast = false;
+    this.name = 'bob';
     // enable physics
     this.scene.physics.world.enable(this);
     this.setScale(.7);
     //this.body.setSize(this.body.width - 10, this.body.height - 20).setOffset(0, 20);
 
-    this.debugText = ''; 
+    this.debugText = '';
 
     // add our player to the scene
     this.scene.add.existing(this);
@@ -120,7 +123,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     console.log('drop box');
   }
   is(name) {
-    return name == 'Bob';
+    return name.toLowerCase() == 'bob';
   }
   update(cursors, space) {
     //get the direction from the velocity
@@ -129,43 +132,55 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       right: this.body.velocity.x > 2 ? Phaser.Physics.Arcade.FACING_RIGHT : 0,
       up: this.body.velocity.y < -2 ? Phaser.Physics.Arcade.FACING_UP : 0,
       down: this.body.velocity.y > 2 ? Phaser.Physics.Arcade.FACING_DOWN : 0
-     }; 
-
-   this.body.setVelocityX(0);
+    };
+    if (space.isDown) console.log('Bob space');
     //drop a box
     if (this.carrying != null && Phaser.Input.Keyboard.JustDown(space)) {
       this.drop(this.carrying);
     }
+
     //if we are carrying a box move it to match our position
     if (this.carrying) {
-      if(this.direction.left > 0){
+      if (this.direction.left > 0) {
         this.carrying.x = this.body.left - (this.carrying.width + 5);
-      }else if(this.direction.right > 0){
+      } else if (this.direction.right > 0) {
         this.carrying.x = this.body.right + 5;//(this.carrying.width);
       }
       this.carrying.y = (this.body.top) - 16;
     }
-    if (cursors.left.isDown) {
-      this.body.setVelocityX(cursors.up.isDown ? - 100 : 0 - this.activeSpeed);
-      this.anims.play('walk', true); // walk left
-      this.flipX = true; // flip the sprite to the left
-    }
-    else if (cursors.right.isDown) {
-      this.body.setVelocityX(cursors.up.isDown ? 100 : this.activeSpeed);
-      this.anims.play('walk', true);
-      this.flipX = false; // use the original sprite looking to the right
+
+    //if a speed effect is active ignore keys
+    if (this.effectSpeed !== 0) {
+      this.body.setVelocityX(this.direction.left ? -this.effectSpeed : this.effectSpeed);
     } else {
-      this.idle();
+      //process keys
+      if (cursors.left.isDown) {
+        this.body.setVelocityX(cursors.up.isDown ? - 100 : 0 - this.activeSpeed);
+        this.anims.play('walk', true); // walk left
+        this.flipX = true; // flip the sprite to the left
+      }
+      else if (cursors.right.isDown) {
+        this.body.setVelocityX(cursors.up.isDown ? 100 : this.activeSpeed);
+        this.anims.play('walk', true);
+        this.flipX = false; // use the original sprite looking to the right
+      } else {
+        if (this.effectSpeed === 0)
+          this.body.setVelocityX(0);
+        this.idle();
+      }
     }
+
     // jump 
-    if (cursors.up.isDown){
-      if(this.body.touching.down || this.body.onFloor()) {
+    if (cursors.up.isDown) {
+      if (this.body.onFloor()) {
         this.body.setVelocityY(-500);
       }
     }
-    //reset speed after update
+
+    //reset Effects after update
     this.isSlow = false;
     this.isFast = false;
+    this.effectSpeed = 0;
   }
 
   //   loseHealth () {

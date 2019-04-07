@@ -129,8 +129,8 @@ export default class LevelLoaderScene extends Phaser.Scene {
             this.switchCharacter();
         }
         //only pass keyboard to player if not switching
-        if (!this.level._ChangingPlayer) {
-            this.level.ActivePlayer.update(this.cursors, this.spaceKey);
+        if (this.registry.list.ActivePlayer && !this.game._ChangingPlayer) {
+            this.registry.list.ActivePlayer.update(this.cursors, this.spaceKey);
         }
         //sync the background to the camera
         Phaser.Actions.Call(this.level.sky.getChildren(), function (layer) {
@@ -139,19 +139,21 @@ export default class LevelLoaderScene extends Phaser.Scene {
         }, this);
     }
     switchCharacter() {
+        let ap = this.registry.list.ActivePlayer;
         //stop current player activity
-        this.level.ActivePlayer.idle();
-        this.level.ActivePlayer.body.setVelocityX(0);
+        ap.idle();
+        ap.body.setVelocityX(0);
         //get the other character
-        this.level.ActivePlayer = this.level.ActivePlayer.is('Bob') ? this.flit : this.player;
+        this.registry.set('ActivePlayer', ap.is('Bob') ? this.flit : this.player);
+        ap = this.registry.list.ActivePlayer;
 
-        this.level._ChangingPlayer = true;
+        this.game._ChangingPlayer = true;
         //pan the camera 
         this.cameras.main.stopFollow();
-        this.cameras.main.pan(this.level.ActivePlayer.x, this.level.ActivePlayer.y, 500, 'Sine.easeInOut', true, (cam, complete, x, y) => {
+        this.cameras.main.pan(ap.x, ap.y, 500, 'Sine.easeInOut', true, (cam, complete, x, y) => {
             if (complete === 1) {
-                this.cameras.main.startFollow(this.level.ActivePlayer, true, .1, .1);
-                this.level._ChangingPlayer = false;
+                this.cameras.main.startFollow(ap, true, .1, .1);
+                this.game._ChangingPlayer = false;
             }
         });
     }
