@@ -8,7 +8,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
     /** Lookup to functions that process map key: Action */
     actions = {
         "ShowHide": this.showHide,
-        "ToggleZone": this.ToggleZone
+        "Toggle": this.toggleZone
     };
     /** Lookup to effects that process map key: Effect */
     effects = {
@@ -152,7 +152,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
 
     }
     kill(triggerZone, player) { 
-        if (triggerZone.Target === null || player.is(triggerZone.Target.key)) {
+        if (triggerZone.Target.key === null || player.is(triggerZone.Target.key)) {
             player.kill();
         }
     }
@@ -181,9 +181,12 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
      * @param {Phaser.GameObjects.Sprite} player
      */
     injure(triggerZone, player) {
-        if (triggerZone.Target === null || player.is(triggerZone.Target.key)) {
-            player.injure(5);
+        if (triggerZone.Target.key === null || player.is(triggerZone.Target.key)) {
+            player.injure(triggerZone.Effect.params.health || 5);
         }
+    }
+    getTargetZone(name) {
+        return this.lookup[name];
     }
     /**
      * Show/Hides target zone and disables it using a transition
@@ -197,6 +200,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                 //switch state on the activating object
                 if (targetZone[1].name === triggerZone.name) {
                     let activator = triggerZone.getVisibleTiles(this.scene, this.tileLayer);
+                    //switch state on this tile
                     activator.forEach((x) => {
                         x.index = this.scene.switchIds.switchState(x.index);
                     });
@@ -205,18 +209,26 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                     targetZone[1].body.enable = !targetZone[1].body.enable;
                     //find related objects switch their state as well
                     found = targetZone[1].getVisibleTiles(this.scene, this.tileLayer);
-                } else if (triggerZone.GroupKey !== null && targetZone[1].GroupKey === triggerZone.GroupKey) {
+                } else if (triggerZone.GroupKey !== null && triggerZone.GroupKey.key !== null && triggerZone.GroupKey !== null && targetZone[1].GroupKey.key === triggerZone.GroupKey.key) {
                     //get group tiles
                     found = targetZone[1].getVisibleTiles(this.scene, this.tileLayer);
                 }
                 if (found.length > 0) {
-                    this.runTransition(targetZone[1].Transition.key, [found, targetZone[1]]);
+                    //run transition on non Enum tiles
+                    this.runTransition(targetZone[1].Transition.key, [found.filter(x => !this.scene.switchIds.contains(x.index)), targetZone[1]]);
+                    //switch state on enum tiles
+                    found.filter(x => this.scene.switchIds.contains(x.index)).forEach((x) => {
+                        x.index = this.scene.switchIds.switchState(x.index);
+                    });
                 }
             });
         }
     }
     toggleZone(triggerZone, player) {
-        targetZone[1].Zone.body.enable = !targetZone[1].Zone.body.enable;
+        let targetZone = this.getTargetZone(triggerZone.Target.key);
+        if (targetZone) {
+            targetZone.active = !targetZone.active;
+        }
     }
     /**
      * Toggles tile visibilty

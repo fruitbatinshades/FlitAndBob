@@ -62,10 +62,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.idle();
   }
   kill() {
-    //TODO:Add death animation
     console.log('Flit died');
-    this.splat.x = this.body.center.x;// - this.body.width / 2;
-    this.splat.y = this.body.center.y;// - this.body.height /2;
+    this.splat.x = this.body.center.x;
+    this.splat.y = this.body.center.y;
     this.splat.depth = this.depth - 1;
     this.splat.visible = true;
     this.body.destroy();
@@ -133,7 +132,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       up: this.body.velocity.y < -2 ? Phaser.Physics.Arcade.FACING_UP : 0,
       down: this.body.velocity.y > 2 ? Phaser.Physics.Arcade.FACING_DOWN : 0
     };
-    if (space.isDown) console.log('Bob space');
     //drop a box
     if (this.carrying != null && Phaser.Input.Keyboard.JustDown(space)) {
       this.drop(this.carrying);
@@ -182,28 +180,4 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.isFast = false;
     this.effectSpeed = 0;
   }
-
-  //   loseHealth () {
-  //     this.health--;
-  //     this.scene.events.emit('loseHealth', this.health);
-  //     if (this.health === 0) {
-  //       this.scene.loadNextLevel(true);
-  //     }
-  //   }
-
-  //   enemyCollision (player, enemy) {
-  //     if (!this.hitDelay) {
-  //       this.loseHealth();
-  //       this.hitDelay = true;
-  //       this.tint = 0xff0000;
-  //       this.scene.time.addEvent({
-  //         delay: 1200,
-  //         callback: () => {
-  //           this.hitDelay = false;
-  //           this.tint = 0xffffff;
-  //         },
-  //         callbackScope: this
-  //       });
-  //     }
-  //   }
 }

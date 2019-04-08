@@ -53,6 +53,9 @@ export default class Enums {
         ];
      
     }
+    contains(value) {
+        return Object.keys(this.Component).find(key => this.Component[key] === value);
+    }
     ComponentTilesStops() {
         return this.Stops;
     }
@@ -71,7 +74,6 @@ export default class Enums {
                 return index === this.Component.StateOff ? this.Component.StateOn : this.Component.StateOff;
             if (index === this.Component.PressureOff || index === this.Component.PressureOn)
                 return index === this.Component.PressureOff ? this.Component.PressureOn : this.Component.PressureOff;
-            
         }
         return index;
     }

@@ -30,22 +30,23 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
         this.name = tileObj.name;
 
         if (typeof tileObj.properties.GroupKey !== 'undefined')
-            this.GroupKey = this.splitMapProperty(tileObj.properties.GroupKey);
+            this.GroupKey = new InteractionParams(tileObj.properties.GroupKey);
         if (typeof tileObj.properties.Target !== 'undefined')
-            this.Target = this.splitMapProperty(tileObj.properties.Target);
+            this.Target = new InteractionParams(tileObj.properties.Target);
         if (typeof tileObj.properties.Action !== 'undefined')
-            this.Action = this.splitMapProperty(tileObj.properties.Action);
+            this.Action = new InteractionParams(tileObj.properties.Action);
         if (typeof tileObj.properties.Effect !== 'undefined')
-            this.Effect = this.splitMapProperty(tileObj.properties.Effect);
+            this.Effect = new InteractionParams(tileObj.properties.Effect);
         if (typeof tileObj.properties.Transition !== 'undefined')
-            this.Transition = this.splitMapProperty(tileObj.properties.Transition);
+            this.Transition = new InteractionParams(tileObj.properties.Transition);
         if (typeof tileObj.properties.Implementation !== 'undefined') 
-            this.Implementation = this.splitMapProperty(tileObj.properties.Implementation);
+            this.Implementation = new InteractionParams(tileObj.properties.Implementation);
         if (typeof tileObj.properties.Blocks !== 'undefined') {
-            this.Blocks = this.splitMapProperty(tileObj.properties.Blocks);
+            this.Blocks = new InteractionParams(tileObj.properties.Blocks);
         }
         
         //TODO: strip this out on build ???
+        //Add tooltips on debug to show the properties from Tiled
         if (debug) {
             scene.add.text(tileObj.x, tileObj.y, tileObj.name, {
                 font: '10px monospace',
@@ -66,14 +67,6 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
             this.setInteractive();
         }
     }
-    onBlocked(player, zone) {
-        console.log('blocked');
-        return true;
-    }
-    beforeBlock(player, zone) {
-        console.log('blocked');
-        return true;
-    }
     /**
      * Get the tiles from the switch layer
      * @param {LevelLoaderScene} scene The scene to use
@@ -82,15 +75,32 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
         //TODO: look for offset tiles (conveyor)
         return scene.map.getTilesWithinWorldXY(this.x, this.y, this.width, this.height, (t) => { return true; }, scene.cameras.main, 'Switches');
     }
+}
+/** Converts the Tiled property to its value and properties (if supplied) */
+class InteractionParams{
+    key = null;
+    params = {}
+    constructor(value) { 
+        this.splitMapProperty(value);
+    }
+    has(name){
+        if(this.params === null) return false;
+        return this.params.hasOwnProperty(name);
+    }
     splitMapProperty(value) {
-        if (value.endsWith('}')) {
+        //if the property has a brace, extract json
+        if (!value.endsWith('}')) {
+            this.key = value;
+            if (this.key === '') this.key = null;
+        }else{
             //contains json properties
             let firstBrace = value.indexOf('{');
             let s = value.substring(firstBrace);
-            let json = JSON.parse(s);
-            let key = value.substring(0, firstBrace);
-            return { key: key, params: json };
+            this.params = JSON.parse(s);
+            value = value.substring(0, firstBrace);
+
+            if (value === '') value = null;
+            this.key = value;
         }
-        return { key: value };
     }
 }
