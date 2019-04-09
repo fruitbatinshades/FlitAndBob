@@ -53,7 +53,7 @@ export default class Level{
         scene.cursors = scene.input.keyboard.createCursorKeys();
         scene.spaceKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         scene.shiftKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
-        scene.ctrlKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CONTROL);
+        scene.ctrlKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
 
         if (this.debug) {
             scene.input.on('gameobjectdown', function (pointer, gameObject) {

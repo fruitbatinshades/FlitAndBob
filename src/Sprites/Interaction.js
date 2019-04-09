@@ -43,15 +43,15 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
         for (let i = 0; i < objectMap.objects.length; i++) {
             let current = objectMap.objects[i];
             //create zone and add to key lookup
-            let z = new InteractionZone(this.scene, current, debug);
+            let z = new InteractionZone(this.scene, current, this, debug);
 
-            //ADD TO THE GROUP BEFORE SETTING PHYSICS OR THEY WILL BE RESET!!!
+            //ADD TO THE GROUP BEFORE SETTING PHYSICS OR THEY WILL BE RESET AND YOU'LL GET A COLLSION BUT IT WON'T STOP YOU!!!
             this.add(z);
             //If there is a blocks property set up collision
             if (z.Blocks) {
                 z.body.setImmovable(true); //do this else you pass through
-                scene.physics.add.collider(scene.player, z, this.hitTarget, null, this);
-                scene.physics.add.collider(scene.flit, z, this.hitTarget, null, this);
+                scene.physics.add.collider(scene.player, z, this.blocks, this.preBlock, this);
+                scene.physics.add.collider(scene.flit, z, this.blocks, this.preBlock, this);
                 //if properties provided set the relevant one
                 if (z.Blocks.key) {
                     z.body.checkCollision.top = z.Blocks.key.indexOf('T') !== -1;
@@ -68,7 +68,23 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             this.lookup[current.name] = z;
         }
     }
-    hitTarget(player, zone) {
+    getByKey(name) {
+        let f = Object.keys(this.lookup).find(zName => zName === name);
+        return this.lookup[f] || null;
+    }
+    getGroup(name) {
+        if (name === null) return null;
+        return Object.entries(Object.filter(this.lookup, (z) => z.hasOwnProperty('GroupKey') && z.GroupKey !== null && z.GroupKey.key && z.GroupKey.key === name));
+    }
+    blocks(player, zone) {
+        //player is blocked
+    }
+    preBlock(player, zone) {
+        //Check if specific player set or block either
+        if (zone.Target === null || zone.Target.key === null || player.is(zone.Target.key)) {
+            return true;
+        }
+        return false;
     }
     /**
      * Fired when a player enters a zone
@@ -76,16 +92,20 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
      * @param {InteractionZone} zone The zone entered
      */
     overTarget(player, zone) {
+        
+        //check its the active player
         if (player.is(this.scene.registry.list.ActivePlayer.name)) {
             let t = this.lookup[zone.name];
+            //If its an effect require space key
             if (!t.Effect || t.Effect === null) {
-                //If its an effect require space key
                 if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
-                    this.action(t, player);
+                    //this.action(t, player);
+                    zone.process(player, true);
                 }
             } else {
                 //else fire constantly
-                this.action(t, player);
+                //this.action(t, player);
+                zone.process(player, true);
             }
         }
     }
@@ -108,15 +128,17 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
      * @param {Array} args Array of arguments
      */
     runAction(name, args) {
-        let instance = this.actions[name];
-        if (instance)
-            try {
-                return instance.apply(this, args);
-            } catch (e) {
-                console.error(e);
-            }
-        else
-            console.log(name + ` action not found`);
+        if (name !== null) {
+            let instance = this.actions[name];
+            if (instance)
+                try {
+                    return instance.apply(this, args);
+                } catch (e) {
+                    console.error(e);
+                }
+            else
+                console.log(name + ` action not found`);
+        }
     }
     /**
     * Run the effect defined in the zone
@@ -124,15 +146,17 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
     * @param {Array} args Array of arguments
     */
     runEffect(name, args) {
-        let instance = this.effects[name];
-        if (instance)
-            try {
-                return instance.apply(this, args);
-            } catch (e) {
-                console.error(e);
-            }
-        else
-            console.log(name + ` effect not found`);
+        if (name !== null) {
+            let instance = this.effects[name];
+            if (instance)
+                try {
+                    return instance.apply(this, args);
+                } catch (e) {
+                    console.error(e);
+                }
+            else
+                console.log(name + ` effect not found`);
+        }
     }
     /**
      * Run the transition defined in the zone
@@ -140,20 +164,24 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
      * @param {Array} args Array of arguments
      */
     runTransition(name, args) {
-        let instance = this.transitions[name];
-        if (instance)
-            try {
-                return instance.apply(this, args);
-            } catch (e) {
-                console.error(e);
-            }
-        else
-            console.log(name + ` transition not found`);
+        if (name !== null) {
+            let instance = this.transitions[name];
+            if (instance)
+                try {
+                    return instance.apply(this, args);
+                } catch (e) {
+                    console.error(e);
+                }
+            else
+                console.log(name + ` transition not found`);
+        }
 
     }
-    kill(triggerZone, player) { 
-        if (triggerZone.Target.key === null || player.is(triggerZone.Target.key)) {
-            player.kill();
+    kill(triggerZone, player) {
+        if (player !== null) {
+            if (triggerZone.Target.key === null || player.is(triggerZone.Target.key)) {
+                player.kill();
+            }
         }
     }
     /**
@@ -162,10 +190,14 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
      * @param {Phaser.GameObjects.Sprite} player
      */
     fast(triggerZone, player) {
-        player.isFast = true;
+        if (player !== null) {
+            player.isFast = true;
+        }
     }
     slippy(triggerZone, player) {
-        player.effectSpeed = 500;
+        if (player !== null) {
+            player.effectSpeed = 500;
+        }
     }
     /**
      * Player slows down
@@ -173,7 +205,9 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
      * @param {Phaser.GameObjects.Sprite} player
      */
     slow(triggerZone, player) {
-        player.isSlow = true;
+        if (player !== null) {
+            player.isSlow = true;
+        }
     }
     /**
      * Player is injured
@@ -181,8 +215,10 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
      * @param {Phaser.GameObjects.Sprite} player
      */
     injure(triggerZone, player) {
-        if (triggerZone.Target.key === null || player.is(triggerZone.Target.key)) {
-            player.injure(triggerZone.Effect.params.health || 5);
+        if (player !== null) {
+            if (triggerZone.Target.key === null || player.is(triggerZone.Target.key)) {
+                player.injure(triggerZone.Effect.params.health || 5);
+            }
         }
     }
     getTargetZone(name) {
@@ -195,33 +231,18 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
      */
     showHide(triggerZone, player) {
         if (triggerZone.Action.key === 'ShowHide') {
-            Object.entries(this.lookup).forEach((targetZone) => {
-                let found = [];
-                //switch state on the activating object
-                if (targetZone[1].name === triggerZone.name) {
-                    let activator = triggerZone.getVisibleTiles(this.scene, this.tileLayer);
-                    //switch state on this tile
-                    activator.forEach((x) => {
-                        x.index = this.scene.switchIds.switchState(x.index);
-                    });
-                } else if (targetZone[1].name === triggerZone.Target.key) {
-                    //toggle the zone so it doesn't react if hidden
-                    targetZone[1].body.enable = !targetZone[1].body.enable;
-                    //find related objects switch their state as well
-                    found = targetZone[1].getVisibleTiles(this.scene, this.tileLayer);
-                } else if (triggerZone.GroupKey !== null && triggerZone.GroupKey.key !== null && triggerZone.GroupKey !== null && targetZone[1].GroupKey.key === triggerZone.GroupKey.key) {
-                    //get group tiles
-                    found = targetZone[1].getVisibleTiles(this.scene, this.tileLayer);
-                }
+            let found = [];
+            let targetZone = this.getTargetZone(triggerZone.Target.key);
+            if (targetZone) {
+                found = targetZone.getVisibleTiles(this.scene);
                 if (found.length > 0) {
-                    //run transition on non Enum tiles
-                    this.runTransition(targetZone[1].Transition.key, [found.filter(x => !this.scene.switchIds.contains(x.index)), targetZone[1]]);
-                    //switch state on enum tiles
-                    found.filter(x => this.scene.switchIds.contains(x.index)).forEach((x) => {
-                        x.index = this.scene.switchIds.switchState(x.index);
+                    found.forEach((x) => {
+                        x.visible = !x.visible;
+                        x.flipY = !x.flipY;
                     });
+                    targetZone.body.enable = !targetZone.body.enable;
                 }
-            });
+            }
         }
     }
     toggleZone(triggerZone, player) {
@@ -241,11 +262,12 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
     }
     /**
      * Fades and disables tiles
-     * @param {Phaser.GameObjects.Tile[]} tiles
-     * @param {string} direction
+     * @param {Phaser.GameObjects.Tile[]} tiles Tiles that are affected
+     * @param {InteractionZone} zone Zone to process
      */
     fadeAndDisable(tiles, zone) {
         let alphaTarget = tiles[0].visible ? 0 : 1;
+        let targetZone = this.getTargetZone(zone.Target.key);
 
         //if showing, make them visible else they will pop in at the end
         if (alphaTarget === 1) {
@@ -254,7 +276,6 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             });
         } else {
             tiles.reverse();
-
         }
         this.scene.tweens.add({
             targets: tiles,
@@ -264,14 +285,17 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             delay: function (i, total, target) {
                 return i * 250;
             },
-            onComplete: function (tween, targets, items) {
-                items.forEach((x) => {
+            onComplete: function (tween, targets, zone) {
+                targets.forEach((x) => {
                     x.visible = x.alpha === 1;
                 });
+                zone.body.enable = !zone.body.enable;
             },
-            onCompleteParams: [tiles]
+            onCompleteParams: [targetZone]
         });
     }
+
+    
     // slideOut(tiles, zone) {
     //     let targetX, targetY;
     //     switch (zone.Transition.params.direction) {

@@ -62,6 +62,18 @@ export default class Enums {
     ComponentTilesSwitches() {
         return this.Switches;
     }
+    tileType(value) {
+        if (this.isSwitch(value)) return 'switch';
+        if (this.isStop(value)) return 'stop';
+        return null;
+        //if (this.isSwitch(value)) return 'switch';
+    }
+    isSwitch(value) {
+        return this.Switches.indexOf(value) !== -1;
+    }
+    isStop(index) {
+        return this.Stops.indexOf(index) !== -1;
+    }
     /** 
      * Get the next state for the switch
      */

@@ -5,6 +5,13 @@ import BootScene from './Scenes/Boot.js';
 import LevelLoaderScene from './Scenes/LevelLoaderScene.js';
 // import UIScene from './Scenes/UI';
 
+/**Add filter for object properties - ES6 */
+Object.filter = (obj, predicate) => {
+ return Object.assign(...Object.keys(obj)
+    .filter(key => predicate(obj[key]))
+    .map(key => ({ [key]: obj[key] })));
+}
+
 class Game extends Phaser.Game {
   constructor () {
     super(config);

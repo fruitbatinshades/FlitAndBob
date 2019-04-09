@@ -1,3 +1,5 @@
+import Enums from '../Levels/Tilemaps.js';
+
 /**
  * Class populated from the tilemap Interaction Layer rectangles
  */
@@ -10,6 +12,8 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
     Action = null;
     //The effect to use on the player (injure)
     Effect = null;
+    //The visual effect to use (toggleVisibility, fadeAndDisable)
+    Transition = null;
     //Unique name of the zone
     name = null;
     //Ref to the tile
@@ -17,18 +21,45 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
     Blocks = null;
     Related;
     Implementation;
-    //The visual effect to use (toggleVisibility, fadeAndDisable)
-    Transition = { key: 'toggleVisibility' };
-    constructor(scene, tileObj, debug) {
+    lookup;
+    Active = true;
+    State = false;
+    isSwitch = false;
+    isStop = false;
+    constructor(scene, tileObj, interaction, debug) {
         super(scene, tileObj.x + 2, tileObj.y + 2, tileObj.width - 4, tileObj.height - 4);
         
+        if (tileObj.name === null || tileObj.name === '')
+            throw `Zone at ${tileObj} does not have a name`;
+
+        this.interaction = interaction;
         this.setOrigin(0);
         scene.physics.world.enable(this);
         this.body.setAllowGravity(false).moves = false;
         this.tileObj = tileObj;
         this.properties = tileObj.properties;
         this.name = tileObj.name;
+        //if ZoneHeight is provided adjust the zone, used to make the zone smaller than the tile
+        if (this.properties.ZoneHeight) {
+            this.body.reset(this.body.x, this.body.bottom - this.properties.ZoneHeight);
+            this.body.height = this.properties.ZoneHeight;
+        }
 
+        //the tile on the switch layer to see what type it is
+        let a = scene.map.getTileAt(tileObj.x / 64, tileObj.y / 64, false, 'Switches');
+        if (a !== null) {
+            switch (this.scene.switchIds.tileType(a.index)) {
+                case 'switch':
+                    this.isSwitch = true;
+                    break
+                case 'stop':
+                    this.isStop = true;
+                    break;
+            }
+            console.log(this.name, this.isSwitch, this.isStop);
+        }
+        
+        
         if (typeof tileObj.properties.GroupKey !== 'undefined')
             this.GroupKey = new InteractionParams(tileObj.properties.GroupKey);
         if (typeof tileObj.properties.Target !== 'undefined')
@@ -68,12 +99,64 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
         }
     }
     /**
+     * Process this zone and its related ones
+     * @param {Player} player player in zone
+     * @param {bool} iterateGroup Only set this on the trigger zone else you'll get an endless loop and stack overflow
+     */
+    process(player, iterateGroup, parent) {
+        if (this.active) {
+            this.State = !this.State;
+            this.body.debugBodyColor = !this.State ? 0xFF0000 : 0x00FF00;
+
+            if (this.isSwitch) {
+                let switchTile = this.scene.map.getTileAt(this.tileObj.x / 64, this.tileObj.y / 64, false, 'Switches')
+                switchTile.index = this.interaction.scene.switchIds.switchState(switchTile.index);
+            }
+            let target;
+            if (this.Target !== null && this.Target.key !== null) {
+                console.log('I have a target');
+                //find the objects that have matching keys and convert to array
+                target = this.interaction.getByKey(this.Target.key);
+            }
+            if (this.isSwitch && iterateGroup) {
+                if (this.GroupKey !== null && this.GroupKey.key !== null) {
+                    //find the objects that have matching keys and convert to array
+                    let group = this.interaction.getGroup(this.GroupKey.key);
+                    if (group && group.length != 0) {
+                        for (let i = 0; i < group.length; i++) {
+                            if (group[i][1].name !== this.name) {
+                                //dont pass in the player for grouped actions
+                                group[i][1].process(null, false);
+                            }
+                        }
+                    }
+                } 
+            }
+            if (this.Action !== null || this.Effect !== null) {
+                this.interaction.action(parent || this, player);
+             }
+            if (target && this.Transition !== null && this.Transition.key !== null) {
+                let tiles = target.getVisibleTiles(this.interaction.scene);
+                if (tiles.length != 0) {
+                    this.interaction.runTransition(this.Transition.key,[tiles, this]);
+                }
+            }
+            // if (this.Implementation !== null) {
+            // }
+        }
+    }
+    /**
      * Get the tiles from the switch layer
      * @param {LevelLoaderScene} scene The scene to use
+     * @param {bool} includeSwitches Include the Enum.isSwitch tiles
      */
-    getVisibleTiles(scene) {
+    getVisibleTiles(scene, includeSwitches, tileLayer) {
         //TODO: look for offset tiles (conveyor)
-        return scene.map.getTilesWithinWorldXY(this.x, this.y, this.width, this.height, (t) => { return true; }, scene.cameras.main, 'Switches');
+        if (includeSwitches) {
+            return scene.map.getTilesWithinWorldXY(this.x, this.y, this.width, this.height, (t) => { return true; }, scene.cameras.main, tileLayer || 'Switches');
+        } else {
+            return scene.map.getTilesWithinWorldXY(this.x, this.y, this.width, this.height, (t) => { return x => !this.scene.switchIds.contains(t.index) }, scene.cameras.main, tileLayer || 'Switches');
+        }
     }
 }
 /** Converts the Tiled property to its value and properties (if supplied) */
