@@ -180,7 +180,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         let around = this.scene.physics.overlapRect(this.x, this.y + this.height, this.width + 20, this.y + this.height + 20);
         for (let i = 0; i < around.length; i++){
           let box = around[i].gameObject;
-          if (box.constructor.name === 'Box') {
+          if (box.constructor.name === 'Box' || (box.constructor.name === 'InteractionZone' && box.Blocks )) {
             this.body.setVelocityY(-500);
             break;
           }

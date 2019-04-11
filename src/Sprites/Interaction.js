@@ -69,8 +69,8 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                     let a = scene.physics.add.collider(scene.mapLayers['Boxes'], z, scene.mapLayers['Boxes'].tileCollide, null, scene.mapLayers['Boxes']);
                 } else {
                     //set up overlap for callback
-                    scene.physics.add.overlap(scene.player, z, this.overTarget, null, this);
-                    scene.physics.add.overlap(scene.flit, z, this.overTarget, null, this);
+                    scene.physics.add.overlap(scene.player, z, this.overZone, null, this);
+                    scene.physics.add.overlap(scene.flit, z, this.overZone, null, this);
                 }
             }
             this.lookup[current.name] = z;
@@ -80,9 +80,9 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
         let f = Object.keys(this.lookup).find(zName => zName === name);
         return this.lookup[f] || null;
     }
-    getGroup(name) {
+    getGroup(name, exclude) {
         if (name === null) return null;
-        return Object.entries(Object.filter(this.lookup, (z) => z.hasOwnProperty('GroupKey') && z.GroupKey !== null && z.GroupKey.key && z.GroupKey.key === name));
+        return Object.entries(Object.filter(this.lookup, (z) => z.hasOwnProperty('GroupKey') && z.GroupKey !== null && z.GroupKey.key && z.GroupKey.key === name && z.name != exclude));
     }
     blocks(player, zone) {
         //player is blocked
@@ -99,8 +99,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
      * @param {Phaser.GameObjects.Sprite} player The player
      * @param {InteractionZone} zone The zone entered
      */
-    overTarget(player, zone) {
-        
+    overZone(player, zone) {
         //check its the active player
         if (player.is(this.scene.registry.list.ActivePlayer.name)) {
             let t = this.lookup[zone.name];
@@ -114,6 +113,12 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                 //else fire constantly
                 //this.action(t, player);
                 zone.process(player, true);
+            }
+        }
+        if (zone.name === 'Exit') {
+            //check both Flit and Bob are here
+            if (zone.body.hitTest(this.scene.player.x, this.scene.player.y) && zone.body.hitTest(this.scene.flit.x, this.scene.flit.y)) {
+                //this.scene.sound.playAudioSprite('sfx', 'music_zapsplat_rascals_123', { volume: .5, repeat: true });
             }
         }
     }
@@ -240,21 +245,43 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
     showHide(triggerZone, player) {
         if (triggerZone.Action.key === 'ShowHide') {
             let found = [];
-            let targetZone = this.getTargetZone(triggerZone.Target.key);
+            let targetZone;
+            if (triggerZone.Target) {
+                targetZone = this.getTargetZone(triggerZone.Target.key);
+            }
             if (targetZone) {
                 found = targetZone.getVisibleTiles(this.scene);
                 if (found.length > 0) {
                     found.forEach((x) => {
                         x.visible = !x.visible;
-                        x.flipY = !x.flipY;
                     });
                     targetZone.body.enable = !targetZone.body.enable;
                     targetZone.active = !targetZone.active;
                     targetZone.adjustWorld();
                 }
             } 
+            else if (triggerZone.GroupKey){
+                //no target so check group
+                let group = this.getGroup(triggerZone.GroupKey.key, triggerZone.name)
+                if (group.length !== 0) {
+                    for (let i = 0; i < group.length; i++) {
+                        let g = group[i][1];
+                        let n = g.name;
+                        found = g.getVisibleTiles(this.scene);
+                        if (found.length > 0) {
+                            found.forEach((x) => {
+                                x.visible = !x.visible;
+                            });
+                            g.body.enable = !g.body.enable;
+                            g.active = !g.active;
+                            g.adjustWorld();
+                        }
+                    }
+                }
+            }
         }
     }
+    
     toggleZone(triggerZone, player) {
         let targetZone = this.getTargetZone(triggerZone.Target.key);
         if (targetZone) {
