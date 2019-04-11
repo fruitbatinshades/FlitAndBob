@@ -1,9 +1,5 @@
 //import Phaser from '../phaser.js';
 
-function getQueryStringValue(key) {
-  return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
-} 
-
 export default class BootScene extends Phaser.Scene {
   constructor (key) {
     super(key);
@@ -38,10 +34,13 @@ export default class BootScene extends Phaser.Scene {
 
   create() {
     let startScene = 'LevelLoader';
+    let startLevel = 'Example.json';
     //get the name of the scene to start from the querystring
     let s = getQueryStringValue('scene');
+    let l = getQueryStringValue('levelk');
     if (s !== '') startScene = s;
+    if (l !== '') startLevel = l;
 
-    this.scene.start(startScene, { level: 'L1', newGame: true, levels: this.levels });
+    this.scene.start(startScene, { level: startLevel, newGame: true, levels: this.levels });
   }
 };

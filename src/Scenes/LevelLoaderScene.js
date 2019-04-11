@@ -10,7 +10,7 @@ export default class LevelLoaderScene extends Phaser.Scene {
 
     switchIds;
     
-    constructor(key) {
+    constructor(key, level) {
         super(key);
     }
     preload() {
@@ -103,7 +103,15 @@ export default class LevelLoaderScene extends Phaser.Scene {
             // this.scene.restart();
         }, this);
         //Load the selected level
-        this.load.tilemapTiledJSON('map', 'assets/Levels/L1.json');
+        let startScene = 'LevelLoader';
+        let startLevel = 'Example';
+        //get the name of the scene to start from the querystring
+        let s = getQueryStringValue('scene');
+        let l = getQueryStringValue('level');
+        if (s !== '') startScene = s;
+        if (l !== '') startLevel = l;
+
+        this.load.tilemapTiledJSON('map', `assets/Levels/${startLevel}.json`);
         this.load.audioSprite('sfx', 'assets/Sound/FlitBob.json', [
             'assets/Sound/FlitBob.ogg',
             'assets/Sound/FlitBob.mp3'

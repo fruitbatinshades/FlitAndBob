@@ -22,6 +22,17 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
         var s = '';
         console.log(`Box Create: ${this.x}, ${this.y}, ${this.width}, ${this.height}`);
     }
+    /**
+     * Activate this box. Used to re=activate after its been on the ground or a zone
+     */
+    activate() {
+        this.body.enable = true;
+        this.body.immovable = false;
+        this.body.moves = true;
+        this.body.allowGravity = true;
+        this.lastContact = null;
+        this.body.setGravityY(1);
+    }
     preUpdate(a, b) {
         if (this.debug) {
             //Debug notes

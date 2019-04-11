@@ -249,6 +249,8 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                         x.flipY = !x.flipY;
                     });
                     targetZone.body.enable = !targetZone.body.enable;
+                    targetZone.active = !targetZone.active;
+                    targetZone.adjustWorld();
                 }
             } 
         }
@@ -298,7 +300,8 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                     x.visible = x.alpha === 1;
                 });
                 zone.body.enable = !zone.body.enable;
-                targetZone.active = !targetZone.active;
+                zone.active = !zone.active;
+                zone.adjustWorld();
             },
             onCompleteParams: [targetZone]
         });
