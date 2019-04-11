@@ -50,6 +50,12 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
                  if (box.onTopOf && box.onTopOf.name == this.name) box.onTopOf = null;
                  if (box.underneath && box.underneath.name == this.name) box.underneath = null;
             }
+            //
+            if (box.constructor.name === 'InteractionZone') {
+                if (box.tileType && box.tileType.isBlockActivated) {
+                    box.process();
+                }
+            }
         });
 
         if (this.underneath != null) {

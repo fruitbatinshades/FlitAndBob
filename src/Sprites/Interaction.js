@@ -53,7 +53,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                 scene.physics.add.collider(scene.flit, z, this.blocks, this.preBlock, this);
                 //if the zone blocks boxes
                 if (z.Blocks.key === 'Box') {
-                    scene.physics.add.collider(z, scene.mapLayers['Boxes'], scene.mapLayers['Boxes'].tileCollide,null, this);
+                    scene.physics.add.collider(scene.mapLayers['Boxes'], z, scene.mapLayers['Boxes'].tileCollide, null, scene.mapLayers['Boxes']);
                 }
                 //if properties provided set the relevant one
                 if (z.Blocks.key) {
@@ -66,7 +66,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             }
             else {
                 if (z.tileType && z.tileType.isBlockActivated) {
-                    let a = scene.physics.add.collider(z, scene.mapLayers['Boxes'], scene.mapLayers['Boxes'].tileCollide, null, this);
+                    let a = scene.physics.add.collider(scene.mapLayers['Boxes'], z, scene.mapLayers['Boxes'].tileCollide, null, scene.mapLayers['Boxes']);
                 } else {
                     //set up overlap for callback
                     scene.physics.add.overlap(scene.player, z, this.overTarget, null, this);
@@ -298,6 +298,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                     x.visible = x.alpha === 1;
                 });
                 zone.body.enable = !zone.body.enable;
+                targetZone.active = !targetZone.active;
             },
             onCompleteParams: [targetZone]
         });

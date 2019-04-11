@@ -21,8 +21,28 @@ export default class Enums {
             StopRightR: 9,
             StopLeftL: 10,
             StopLeftM: 11,
-            StopLeftR: 12
+            StopLeftR: 12,
+            PlantPot1: 25,
+            PlantPot2: 26,
+            Stone1: 27,
+            Stone2: 28,
+            Box1: 29,
+            Box2: 30,
+            Shroom: 31,
+            Fly: 32,
+            BigStoneA: 33,
+            BigStoneB: 34,
+            Honey: 35,
+            Fizz: 36
         };
+        //annoyinglly this has to come from the spritesheet so do not add firstGid :(
+        this.Boxes = [
+            this.Component.PlantPot1 - 1,
+            this.Component.PlantPot2 - 1,
+            this.Component.Stone1 -1,
+            this.Component.Stone2 -1,
+        ]
+
         //remove 1 from the firstgid so the first id matches when we +=
         firstgid--;
         //update the image indexes with the layer firstgid
@@ -51,7 +71,13 @@ export default class Enums {
             this.Component.PressureOff,
             this.Component.PressureOn
         ];
-     
+        /** Items that are collectable */
+        this.Collectables = [
+            this.Component.Fly,
+            this.Component.Shroom,
+            this.Component.Honey,
+            this.Component.Fizz
+        ];
     }
     contains(value) {
         return Object.keys(this.Component).find(key => this.Component[key] === value);

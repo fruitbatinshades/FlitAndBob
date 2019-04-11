@@ -18,12 +18,14 @@ export default class LevelLoaderScene extends Phaser.Scene {
         var progressBox = this.add.graphics();
         progressBox.fillStyle(0x222222, 0.8);
         progressBox.fillRect(240, 270, 320, 50);
-        let splash = this.add.image(0, 0, 'SplashBackground');
+        let splash = this.add.image(0, 0, 'SplashBackground').setOrigin(0, .15);
         
         var width = this.cameras.main.width;
         var height = this.cameras.main.height;
+        var scale = splash.width / width;
+        splash.setScale(scale , scale);
 
-        this.add.image(width / 2, 100, 'Logo');
+        //this.add.image(width / 2, 100, 'Logo');
         this.PlayButton = this.add.image(width / 2, 420, 'WoodButton');
         let playtext = this.make.text({
             x: this.PlayButton.x,
@@ -35,8 +37,6 @@ export default class LevelLoaderScene extends Phaser.Scene {
             }
         }).setOrigin(.5,.5);
         this.setStroke(playtext);
-
-        splash.setScale(1.5, 1.5);
 
         var loadingText = this.make.text({
             x: width / 2,
@@ -103,7 +103,7 @@ export default class LevelLoaderScene extends Phaser.Scene {
             // this.scene.restart();
         }, this);
         //Load the selected level
-        this.load.tilemapTiledJSON('map', 'assets/Levels/Example.json');
+        this.load.tilemapTiledJSON('map', 'assets/Levels/L1.json');
         this.load.audioSprite('sfx', 'assets/Sound/FlitBob.json', [
             'assets/Sound/FlitBob.ogg',
             'assets/Sound/FlitBob.mp3'

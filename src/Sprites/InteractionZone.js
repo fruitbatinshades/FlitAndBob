@@ -25,6 +25,7 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
     Active = true;
     State = false;
     tileType;
+
     constructor(scene, tileObj, interaction, debug) {
         super(scene, tileObj.x + 2, tileObj.y + 2, tileObj.width - 4, tileObj.height - 4);
         
@@ -38,10 +39,10 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
         this.tileObj = tileObj;
         this.properties = tileObj.properties;
         this.name = tileObj.name;
-        //if ZoneHeight is provided adjust the zone, used to make the zone smaller than the tile
+        //if ZoneHeight is provided adjust the zone, used to make the zone smaller than the tile (switches, injure)
         if (this.properties && this.properties.ZoneHeight) {
-            this.body.reset(this.body.x, this.body.bottom - this.properties.ZoneHeight);
-            this.body.height = this.properties.ZoneHeight;
+            this.body.reset(this.body.x, this.body.bottom - parseInt(this.properties.ZoneHeight));
+            this.body.height = parseInt(this.properties.ZoneHeight);
         }
         //hide tiles if the zone not visible
         if (!tileObj.visible) {
@@ -93,6 +94,7 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
             this.setInteractive();
         }
     }
+    
     /**
      * Process this zone and its related ones
      * @param {Player} player player in zone
@@ -144,7 +146,7 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
         }
     }
     /**
-     * Get the tiles from the switch layer
+     * Get the tiles from the InteractionTiles layer
      * @param {LevelLoaderScene} scene The scene to use
      * @param {bool} includeSwitches Include the Enum.isSwitch tiles
      */

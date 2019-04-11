@@ -170,8 +170,21 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     // jump 
     if (cursors.up.isDown) {
+      //on floor, just jump
       if (this.body.onFloor()) {
         this.body.setVelocityY(-500);
+      }
+      //check if we are on boxes
+      if (this.body.touching.down) {
+        //Check if Bob is on a box and allow jump
+        let around = this.scene.physics.overlapRect(this.x, this.y + this.height, this.width + 20, this.y + this.height + 20);
+        for (let i = 0; i < around.length; i++){
+          let box = around[i].gameObject;
+          if (box.constructor.name === 'Box') {
+            this.body.setVelocityY(-500);
+            break;
+          }
+        };
       }
     }
 

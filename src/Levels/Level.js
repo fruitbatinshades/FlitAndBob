@@ -101,7 +101,7 @@ export default class Level{
             //console.log(`Created static layer ${l.name}`, l);
             switch (l.name) {
                 case 'Boxes':
-                    var newBoxes = scene.map.createFromObjects('Boxes', 'Box', { key: 'tiles', frame: [27, 26, 25, 24], origin: 0 });
+                    var newBoxes = scene.map.createFromObjects('Boxes', 'Box', { key: 'ComponentSheet', frame: scene.switchIds.Boxes, origin: 0 });
                     scene.mapLayers[l.name] = new Boxes(scene, [], newBoxes);
                     scene.mapLayers[l.name].setDepth(l.properties.depth || 1);
                     break;
@@ -149,7 +149,7 @@ export default class Level{
         //Set up the coin layer with overlap and callback
         scene.physics.add.overlap(scene.player, scene.mapLayers.Coins);
         scene.physics.add.overlap(scene.flit, scene.mapLayers.Coins);
-        scene.mapLayers.Coins.setTileIndexCallback([48, 38], this.collectCoin, scene);
+        scene.mapLayers.Coins.setTileIndexCallback(scene.switchIds.Collectables, this.collectCoin, scene);
 
         //count the collectables
         if (scene.mapLayers.Coins) {
@@ -157,8 +157,8 @@ export default class Level{
             for (var i = 0; i < tiles.length; i++) {
                 var tile = tiles[i];
                 for (var j = 0; j < tile.length; j++) {
-                    if (tile[j].index === 48) this.totalFlies++;
-                    if (tile[j].index === 38) this.totalShrooms++;
+                    if (tile[j].index === scene.switchIds.Component.Fly) this.totalFlies++;
+                    if (tile[j].index === scene.switchIds.Component.Shroom) this.totalShrooms++;
                 }
             }
         }
@@ -167,6 +167,14 @@ export default class Level{
         this._ChangingPlayer = false;
 
         //scene.sound.playAudioSprite('sfx', 'music_zapsplat_rascals_123', {volume:.5, repeat:true});
+        //when a box hits a tile
+        scene.events.on('boxTileCollide', (box, tile) => { 
+            if (tile.constructor.name === 'InteractionZone') {
+                if (tile.tileType && tile.tileType.isBlockActivated) {
+                    tile.process();
+                }
+            }
+        });
     }
 
     /**
@@ -175,16 +183,34 @@ export default class Level{
      * @param {Phaser.Tilemaps.Tile} tile The coin tile
      */
     collectCoin(player, tile) {
-        if (tile.index == 48 && player.is('Flit')) {
-            this.mapLayers.Coins.removeTileAt(tile.x, tile.y); 
-            this.sound.playAudioSprite('sfx', 'FlitMunch');
-            player.collected++; 
+        let collected = false;
+        if (player.is('Flit')) {
+            switch (tile.index) {
+                case this.switchIds.Component.Fly:
+                    player.collected++;
+                    this.sound.playAudioSprite('sfx', 'FlitMunch');
+                    collected = true;
+                    break;
+                case this.switchIds.Component.Honey:
+                    //TODO: Add power up for flit
+                    collected = true;
+                    break;
+            }
         }
-        if (tile.index === 38 && player.is('Bob')) {
-            this.mapLayers.Coins.removeTileAt(tile.x, tile.y);
-            this.sound.playAudioSprite('sfx', 'BobMunch');
-            player.collected++;
+        if (player.is('Bob')) {
+            switch (tile.index) {
+                case this.switchIds.Component.Shroom:
+                    player.collected++;
+                    this.sound.playAudioSprite('sfx', 'BobMunch');
+                    collected = true;
+                    break;
+                case this.switchIds.Component.Fizz:
+                    //TODO: add power up for Bob
+                    collected = true;
+                    break;
+            }
         }
+        if (collected) this.mapLayers.Coins.removeTileAt(tile.x, tile.y);
         this.events.emit('updateHUD', player);
         return false;
     }

@@ -77,12 +77,22 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
     //fix the box in place, turn of physics
     tileCollide(box, tile) {
         //if (a.boxstatus === Boxes.State.None) {
+        
+        //TODO: Objects are passed back to front from zone/box collider, This is probably because I'm using unreleased 3.17 but check after release
+        if (box.constructor.name == 'InteractionZone') {
+            let tmp = box;
+            let tmp2 = tile;
+            box = tmp2;
+            tile = tmp;
+        }
         if (box.lastContact !== tile) {
             box.body.immovable = true;
             box.body.allowGravity = false;
             box.body.stop();
             // box.lastContact = tile;
             box.status = Boxes.State.Tile;
+            box.lastContact = tile;
+            this.scene.events.emit('boxTileCollide', box, tile);
         }
     }
     activate(box) {
@@ -106,6 +116,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
             box.player = player;
             box.body.enable = false;
             box.body.allowGravity = false;
+            box.lastContact = null;
             if(this.debug) console.log('event pickup_box', box);
         }
     }
@@ -120,6 +131,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         box.body.immovable = false;
         box.body.moves = true;
         box.body.allowGravity = true;
+        box.lastContact = null;
         if (this.debug) console.log('event drop_box', box);
     }
     /**
@@ -163,7 +175,6 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         top.body.moves = false;
         top.body.enable = true;
         top.body.allowGravity = false;
-
         
         //force gap else it is irregular
         top.y = (bottom.body.top - top.body.height) - 1;
