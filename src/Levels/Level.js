@@ -2,13 +2,13 @@
 import Player from '../Sprites/Player.js';
 import Flit from '../Sprites/Flit.js';
 import Boxes from '../Sprites/Boxes.js';
-
 import Enums from './Tilemaps.js';
 import Interaction from '../Sprites/Interaction.js';
+import HUD from '../Scenes/HUD.js';
 /**
  * Class that hold the level specific data and operations
  */
-export default class Level{
+export default class Level extends Phaser.Scene {
     /** The zones created from the maps interaction layer */
     zones;
     flies = 0;
@@ -23,113 +23,112 @@ export default class Level{
     totalFlies = 0;
     debug = false;
     mapProperties;
+    loader;
+    mapName;
 
+    constructor(handle, mapName) {
+        super(handle);
+        this.mapName = mapName;
+    }
     //NB: Call from preload
-    constructor(scene, name) { 
-        this.mapProperties = scene.map.properties;
-        if (scene.map.properties["debug"]) this.debug = scene.map.properties["debug"];
-        //load backgrounds from map.properties.Backgrounds (Pipe delimeted filename from tiled)
-        scene.load.setPath('assets/Levels/Backgrounds/');
-        scene.map.properties["Backgrounds"].split('|').forEach((b) => {
-            let name = b.substr(0, b.lastIndexOf('.'));
-            b.endsWith('.svg') ? scene.load.svg(name, b) : scene.load.image(name, b);
-        });
-
-        //load tilesets
-        scene.load.setPath('assets/Levels/');
-        scene.map.tilesets.forEach((b) => {
-            scene.load.image(b.name); 
-            //console.log(b.name);
-        });
-        //this.buildLevel(scene);
+    preload() {
+        this.load.tilemapTiledJSON('map', `assets/Levels/${this.mapName}.json`);
+        this.map = this.make.tilemap({ key: 'map' });
+        this.mapProperties = this.map.properties;
+        //this.map = this.map;
+        if (this.map.properties["debug"]) this.debug = this.map.properties["debug"];
 
         // set the boundaries of our game world
-        scene.physics.world.bounds.width = scene.map.widthInPixels;
-        scene.physics.world.bounds.height = scene.map.heightInPixels;
+        this.physics.world.bounds.width = this.map.widthInPixels;
+        this.physics.world.bounds.height = this.map.heightInPixels;
         // set bounds so the camera won't go outside the game world
-        scene.cameras.main.setBounds(0, 0, scene.map.widthInPixels, scene.map.heightInPixels);
+        this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
         // listen for player input
-        scene.cursors = scene.input.keyboard.createCursorKeys();
-        scene.spaceKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        scene.shiftKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
-        scene.ctrlKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
+        this.cursors = this.input.keyboard.createCursorKeys();
+        this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+        this.ctrlKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
 
         if (this.debug) {
-            scene.input.on('gameobjectdown', function (pointer, gameObject) {
+            this.input.on('gameobjectdown', function (pointer, gameObject) {
                 if (gameObject.toolInfo)
                     gameObject.toolInfo.visible = !gameObject.toolInfo.visible;
-                console.log(gameObject.toolInfo.visible)
+                console.log(gameObject.toolInfo.visible);
             });
         }
+    }
+    create() { 
+        this.buildLevel();
+        this.scene.add('HUD', HUD, true, { x: 400, y: 300 });
     }
     /**
      * Crete the maps, player and set up collisions
      * @param {PhaserScene} scene The scene to populate
      */
-    buildLevel(scene) {
+    buildLevel() {
         let sets = [];
-        scene.map.tilesets.forEach((b) => {
+        this.map.tilesets.forEach((b) => {
             //console.log(`Added tilesetImage ${b.name}`);
-            scene.map.addTilesetImage(b.name, b.name, b.tileWidth, b.tileHeight);
+            this.map.addTilesetImage(b.name, b.name, b.tileWidth, b.tileHeight);
             sets.push(b.name);
         });
         
-        this.createPlayer(scene);
-        scene.mapLayers = {};
+        this.createPlayer();
+        this.mapLayers = {};
         let layerDepth = 1;
         //Tile layers
-        scene.map.layers.forEach((l) => {
+        this.map.layers.forEach((l) => {
             //console.log(`Created static layer ${l.name}`, l);
             switch (l.properties.LayerType.toLowerCase()) {
                 case 'static':
-                    scene.mapLayers[l.name] = scene.map.createStaticLayer(l.name, sets, 0, 0).setCollisionByExclusion([-1]);
-                    scene.mapLayers[l.name].setDepth(l.properties.depth || 1);
+                    this.mapLayers[l.name] = this.map.createStaticLayer(l.name, sets, 0, 0).setCollisionByExclusion([-1]);
+                    this.mapLayers[l.name].setDepth(l.properties.depth || 1);
                       break;
                 case 'dynamic':
-                    scene.mapLayers[l.name] = scene.map.createDynamicLayer(l.name, sets, 0, 0);
-                    scene.mapLayers[l.name].depth = l.properties.depth || 1;
+                    this.mapLayers[l.name] = this.map.createDynamicLayer(l.name, sets, 0, 0);
+                    this.mapLayers[l.name].depth = l.properties.depth || 1;
                     if (l.name === 'InteractionTiles') {
                         //update the ids of the tiles with the gid
-                        scene.switchIds = new Enums(scene.mapLayers[l.name].tileset[1].firstgid);
+                        this.switchIds = new Enums(this.mapLayers[l.name].tileset[1].firstgid);
                     }
                     break;
             }
         });
         //object layers
-        scene.map.objects.forEach((l) => {
+        this.map.objects.forEach((l) => {
             //console.log(`Created static layer ${l.name}`, l);
             switch (l.name) {
                 case 'Boxes':
-                    var newBoxes = scene.map.createFromObjects('Boxes', 'Box', { key: 'ComponentSheet', frame: scene.switchIds.Boxes, origin: 0 });
-                    scene.mapLayers[l.name] = new Boxes(scene, [], newBoxes);
-                    scene.mapLayers[l.name].setDepth(l.properties.depth || 1);
+                    var newBoxes = this.map.createFromObjects('Boxes', 'Box', { key: 'ComponentSheet', frame: this.switchIds.Boxes, origin: 0 });
+                    this.mapLayers[l.name] = new Boxes(this, [], newBoxes);
+                    this.mapLayers[l.name].setDepth(l.properties.depth || 1);
                     break;
                 case 'Interaction':
                     //Get the rectangles from the map
-                    scene.mapLayers[l.name]= scene.map.getObjectLayer('Interaction');
-                    scene.interactionZones = new Interaction(scene, [], l, scene.mapLayers[l.name], this.debug );
+                    this.mapLayers[l.name]= this.map.getObjectLayer('Interaction');
+                    this.interactionZones = new Interaction(this, [], l, this.mapLayers[l.name], this.debug );
                     //scene.mapLayers[l.name].setDepth(l.properties.depth || 1);
                     break;
                 case 'Sky':
                     //Add backgrounds
-                    if (!this.sky) this.sky = new Phaser.GameObjects.Group(this.scene);
-                    scene.mapLayers[l.name] = scene.map.getObjectLayer('Sky');
-                    scene.mapLayers[l.name].objects.forEach((b) => {
+                    if (!this.sky) this.sky = new Phaser.GameObjects.Group(this);
+                    this.mapLayers[l.name] = this.map.getObjectLayer('Sky');
+                    this.mapLayers[l.name].objects.forEach((b) => {
                         //NB: Theimages are loaded from the Tiled Map.Properties.Backgrounds, pipe seperated
                         let name = b.name.substr(0, b.name.lastIndexOf('.'));
                         if (name !== '') {
-                            let img = scene.game.textures.get(name).source[0];
+                            let img = this.game.textures.get(name).source[0];
                             if (img !== null) {
                                 if (b.type == 'TileSprite') {
-                                    let o = scene.add.tileSprite(b.x, b.y - img.height, scene.game.canvas.clientWidth, img.width, name);
+                                    let o = this.add.tileSprite(b.x, b.y - img.height, this.game.canvas.clientWidth, img.width, name);
                                     this.sky.add(o);
                                     o.setOrigin(0, 0);
                                     o.fixedToCamera = true;
                                     o.setDepth(l.properties.depth || 1);
                                 }
                                 if (b.type == 'Image') {
-                                    let o = scene.add.image(b.x, b.y - img.height, name);
+                                    let o = this.add.image(b.x, b.y - img.height, name);
                                     o.setOrigin(0, 0);
                                     o.setDepth(l.properties.depth || 1);
                                 }
@@ -140,25 +139,25 @@ export default class Level{
                     break;
             }
         });
-        scene.cameras.main.setBackgroundColor('#ccccff');
+        this.cameras.main.setBackgroundColor('#ccccff');
 
         //create player collision
-        scene.physics.add.collider(scene.mapLayers.World , scene.player);
-        scene.physics.add.collider(scene.mapLayers.World, scene.flit);
+        this.physics.add.collider(this.mapLayers.World , this.player);
+        this.physics.add.collider(this.mapLayers.World, this.flit);
 
         //Set up the coin layer with overlap and callback
-        scene.physics.add.overlap(scene.player, scene.mapLayers.Coins);
-        scene.physics.add.overlap(scene.flit, scene.mapLayers.Coins);
-        scene.mapLayers.Coins.setTileIndexCallback(scene.switchIds.Collectables, this.collectCoin, scene);
+        this.physics.add.overlap(this.player, this.mapLayers.Coins);
+        this.physics.add.overlap(this.flit, this.mapLayers.Coins);
+        this.mapLayers.Coins.setTileIndexCallback(this.switchIds.Collectables, this.collectCoin, this);
 
         //count the collectables
-        if (scene.mapLayers.Coins) {
-            let tiles = scene.mapLayers.Coins.layer.data;
+        if (this.mapLayers.Coins) {
+            let tiles = this.mapLayers.Coins.layer.data;
             for (var i = 0; i < tiles.length; i++) {
                 var tile = tiles[i];
                 for (var j = 0; j < tile.length; j++) {
-                    if (tile[j].index === scene.switchIds.Component.Fly) this.totalFlies++;
-                    if (tile[j].index === scene.switchIds.Component.Shroom) this.totalShrooms++;
+                    if (tile[j].index === this.switchIds.Component.Fly) this.totalFlies++;
+                    if (tile[j].index === this.switchIds.Component.Shroom) this.totalShrooms++;
                 }
             }
         }
@@ -168,7 +167,7 @@ export default class Level{
 
         //scene.sound.playAudioSprite('sfx', 'music_zapsplat_rascals_123', {volume:.5, repeat:true});
         //when a box hits a tile
-        scene.events.on('boxTileCollide', (box, tile) => { 
+        this.events.on('boxTileCollide', (box, tile) => { 
             if (tile.constructor.name === 'InteractionZone') {
                 if (tile.tileType && tile.tileType.isBlockActivated) {
                     tile.process();
@@ -218,24 +217,58 @@ export default class Level{
      * Create Flit and Bob sprite classes
      * @param {PhaserScene} scene The scene to populate
      */
-    createPlayer(scene) {
-        scene.map.findObject('Player', (obj) => {
+    createPlayer() {
+        this.map.findObject('Player', (obj) => {
             // if (scene._NEWGAME && scene._LEVEL === 1) {
                 if (obj.type === 'StartPosition') {
                     if (obj.name === 'Bob') {
-                        scene.player = new Player(scene, obj.x, obj.y);
-                        scene.player.depth = 100;
-                        scene.game.Bob = scene.player;
+                        this.player = new Player(this, obj.x, obj.y);
+                        this.player.depth = 100;
+                        this.game.Bob = this.player;
                     }
                     if (obj.name === 'Flit') {
-                        scene.flit = new Flit(scene, obj.x, obj.y);
-                        scene.flit.depth = 100;
-                        scene.game.Flit = scene.flit;
+                        this.flit = new Flit(this, obj.x, obj.y);
+                        this.flit.depth = 100;
+                        this.game.Flit = this.flit;
                     }
                 }
             // }
         });
-        scene.cameras.main.startFollow(scene.player);
-        scene.registry.set('ActivePlayer', scene.player);
+        this.cameras.main.startFollow(this.player);
+        this.registry.set('ActivePlayer', this.player);
+    }
+    update() {
+        //Switch characters
+        if (Phaser.Input.Keyboard.JustDown(this.shiftKey)) {
+            this.switchCharacter();
+        }
+        //only pass keyboard to player if not switching
+        if (this.registry.list.ActivePlayer && !this.game._ChangingPlayer) {
+            this.registry.list.ActivePlayer.update(this.cursors, this.spaceKey);
+        }
+        //sync the background to the camera
+        Phaser.Actions.Call(this.sky.getChildren(), function (layer) {
+            layer.x = this.cameras.main.scrollX;
+            layer.tilePositionX = this.cameras.main.scrollX ;
+        }, this);
+    }
+    switchCharacter() {
+        let ap = this.registry.list.ActivePlayer;
+        //stop current player activity
+        ap.idle();
+        ap.body.setVelocityX(0);
+        //get the other character
+        this.registry.set('ActivePlayer', ap.is('Bob') ? this.flit : this.player);
+        ap = this.registry.list.ActivePlayer;
+
+        this.game._ChangingPlayer = true;
+        //pan the camera 
+        this.cameras.main.stopFollow();
+        this.cameras.main.pan(ap.x, ap.y, 500, 'Sine.easeInOut', true, (cam, complete, x, y) => {
+            if (complete === 1) {
+                this.cameras.main.startFollow(ap, true, .1, .1);
+                this.game._ChangingPlayer = false;
+            }
+        });
     }
 }

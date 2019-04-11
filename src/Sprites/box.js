@@ -33,19 +33,19 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
         this.lastContact = null;
         this.body.setGravityY(1);
     }
-    preUpdate(a, b) {
-        if (this.debug) {
-            //Debug notes
-            this.note.x = this.x + 10;
-            this.note.y = this.y + 10;
+    // preUpdate(a, b) {
+    //     if (this.debug) {
+    //         //Debug notes
+    //         this.note.x = this.x + 10;
+    //         this.note.y = this.y + 10;
 
-            let n = this.name;
-            if (this.onTopOf) n += `\nA${this.onTopOf.name}`;
-            if (this.underneath) n += `\nB${this.underneath.name}`;
+    //         let n = this.name;
+    //         if (this.onTopOf) n += `\nA${this.onTopOf.name}`;
+    //         if (this.underneath) n += `\nB${this.underneath.name}`;
 
-            this.note.setText(n);
-        }
-    }
+    //         this.note.setText(n);
+    //     }
+    // }
     /**
      * Reset this box and update any boxes under or over it
      */

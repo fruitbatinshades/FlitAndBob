@@ -95,7 +95,8 @@ These are the values for the property in the tiled editor
 | **toggleVisibility** | toggle tile visibility but leave zone |  |
 
 ## Testing Maps
-There is an example map, excitingly called `Example.json` that shows how you can set up these simple properties to create many effects.
+There is an example map, excitingly called `Example.json` that shows how you can set up these simple 
+properties to create many effects. There are steps, bridges, blockers, simple zones, and grouped zones. I'm sure you will find ways to create new features :) 
 
 Copy the `base.tmx` and rename it, then open this in Tiled and have a play. 
 
