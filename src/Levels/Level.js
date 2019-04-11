@@ -89,7 +89,7 @@ export default class Level{
                 case 'dynamic':
                     scene.mapLayers[l.name] = scene.map.createDynamicLayer(l.name, sets, 0, 0);
                     scene.mapLayers[l.name].depth = l.properties.depth || 1;
-                    if (l.name === 'Switches') {
+                    if (l.name === 'InteractionTiles') {
                         //update the ids of the tiles with the gid
                         scene.switchIds = new Enums(scene.mapLayers[l.name].tileset[1].firstgid);
                     }

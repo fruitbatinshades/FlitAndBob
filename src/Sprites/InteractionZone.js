@@ -24,8 +24,7 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
     lookup;
     Active = true;
     State = false;
-    isSwitch = false;
-    isStop = false;
+    tileType;
     constructor(scene, tileObj, interaction, debug) {
         super(scene, tileObj.x + 2, tileObj.y + 2, tileObj.width - 4, tileObj.height - 4);
         
@@ -51,18 +50,8 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
         }
 
         //the tile on the switch layer to see what type it is
-        let a = scene.map.getTileAt(tileObj.x / 64, tileObj.y / 64, false, 'Switches');
-        if (a !== null) {
-            switch (this.scene.switchIds.tileType(a.index)) {
-                case 'switch':
-                    this.isSwitch = true;
-                    break
-                case 'stop':
-                    this.isStop = true;
-                    break;
-            }
-            console.log(this.name, this.isSwitch, this.isStop);
-        }
+        let tile = scene.map.getTileAt(tileObj.x / 64, tileObj.y / 64, false, 'InteractionTiles');
+        if(tile !== null) this.tileType = this.scene.switchIds.tileType(tile.index);
         
         if (tileObj.properties) {
             if (typeof tileObj.properties.GroupKey !== 'undefined')
@@ -114,17 +103,18 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
             this.State = !this.State;
             this.body.debugBodyColor = !this.State ? 0xFF0000 : 0x00FF00;
 
-            if (this.isSwitch) {
-                let switchTile = this.scene.map.getTileAt(this.tileObj.x / 64, this.tileObj.y / 64, false, 'Switches')
+            //If its a switch, change its state
+            if (this.tileType && this.tileType.isSwitch) {
+                let switchTile = this.scene.map.getTileAt(this.tileObj.x / 64, this.tileObj.y / 64, false, 'InteractionTiles')
                 switchTile.index = this.interaction.scene.switchIds.switchState(switchTile.index);
             }
+            //get the target zone
             let target;
             if (this.Target !== null && this.Target.key !== null) {
-                console.log('I have a target');
-                //find the objects that have matching keys and convert to array
                 target = this.interaction.getByKey(this.Target.key);
             }
-            if (this.isSwitch && iterateGroup) {
+            //if its a switch and we need to iterate, process the group
+            if (this.tileType && this.tileType.isSwitch && iterateGroup) {
                 if (this.GroupKey !== null && this.GroupKey.key !== null) {
                     //find the objects that have matching keys and convert to array
                     let group = this.interaction.getGroup(this.GroupKey.key);
@@ -138,9 +128,11 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
                     }
                 } 
             }
+            //if its an action or effect
             if (this.Action !== null || this.Effect !== null) {
                 this.interaction.action(parent || this, player);
-             }
+            }
+            //if it has a transition
             if (target && this.Transition !== null && this.Transition.key !== null) {
                 let tiles = target.getVisibleTiles(this.interaction.scene);
                 if (tiles.length != 0) {
@@ -159,9 +151,9 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
     getVisibleTiles(scene, includeSwitches, tileLayer) {
         //TODO: look for offset tiles (conveyor)
         if (includeSwitches) {
-            return scene.map.getTilesWithinWorldXY(this.x, this.y, this.width, this.height, (t) => { return true; }, scene.cameras.main, tileLayer || 'Switches');
+            return scene.map.getTilesWithinWorldXY(this.x, this.y, this.width, this.height, (t) => { return true; }, scene.cameras.main, tileLayer || 'InteractionTiles');
         } else {
-            return scene.map.getTilesWithinWorldXY(this.x, this.y, this.width, this.height, (t) => { return x => !this.scene.switchIds.contains(t.index) }, scene.cameras.main, tileLayer || 'Switches');
+            return scene.map.getTilesWithinWorldXY(this.x, this.y, this.width, this.height, (t) => { return x => !this.scene.switchIds.contains(t.index) }, scene.cameras.main, tileLayer || 'InteractionTiles');
         }
     }
 }

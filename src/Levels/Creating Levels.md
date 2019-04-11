@@ -25,7 +25,7 @@ Some layers have pre-defined behaviour such as the movable Boxes and switches
 |----------|--|--------|-----------|
 | `Sky` | Object | Adds background images _(walls, clouds)_ |  |
 | `Boxes` | Object |Creates the stackable boxes |  |
-| `Switches` | Tile | Tiles that fire Actions and Effects | Toggle, ShowHide, Injure |
+| `InteractionTiles` | Tile | Tiles that fire Actions and Effects | Toggle, ShowHide, Injure |
 | `Interaction` | Object |Rectangles that define zones for switches | |
 
 #### Sky Images (Object Layer)
@@ -46,8 +46,8 @@ You just need to add a tile and set the `Name:Box` and the type to
 | `Name` | `Box` | A tile with a name of `Box` will be converted to a box object |
 | `Type` | blank, `Flit` or `Bob` | if this is not blank it will create a box that only Flit/Bob can lift |
 
-#### Switches (Tile Layer)
-Switches are the graphical representation of effects and actions. They need to come from the `Components` tileset as we map the tiles to actions in the code. 
+#### InteractionTiles (Tile Layer)
+InteractionTiles are the graphical representation of effects and actions. They need to come from the `Components` tileset as we map the tiles to actions in the code. 
 
 They should have a matching rectangle in the `Interaction` layer. This allows us to create multiple targets and areas that are affected.
 

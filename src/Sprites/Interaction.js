@@ -51,6 +51,10 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                 z.body.setImmovable(true); //do this else you pass through
                 scene.physics.add.collider(scene.player, z, this.blocks, this.preBlock, this);
                 scene.physics.add.collider(scene.flit, z, this.blocks, this.preBlock, this);
+                //if the zone blocks boxes
+                if (z.Blocks.key === 'Box') {
+                    scene.physics.add.collider(z, scene.mapLayers['Boxes'], scene.mapLayers['Boxes'].tileCollide,null, this);
+                }
                 //if properties provided set the relevant one
                 if (z.Blocks.key) {
                     z.body.checkCollision.top = z.Blocks.key.indexOf('T') !== -1;
@@ -61,9 +65,13 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                 if (!current.visible) z.body.enable = false;
             }
             else {
-                //set up overlap for callback
-                scene.physics.add.overlap(scene.player, z, this.overTarget, null, this);
-                scene.physics.add.overlap(scene.flit, z, this.overTarget, null, this);
+                if (z.tileType && z.tileType.isBlockActivated) {
+                    let a = scene.physics.add.collider(z, scene.mapLayers['Boxes'], scene.mapLayers['Boxes'].tileCollide, null, this);
+                } else {
+                    //set up overlap for callback
+                    scene.physics.add.overlap(scene.player, z, this.overTarget, null, this);
+                    scene.physics.add.overlap(scene.flit, z, this.overTarget, null, this);
+                }
             }
             this.lookup[current.name] = z;
         }
@@ -242,7 +250,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                     });
                     targetZone.body.enable = !targetZone.body.enable;
                 }
-            }
+            } 
         }
     }
     toggleZone(triggerZone, player) {

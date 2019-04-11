@@ -63,13 +63,23 @@ export default class Enums {
         return this.Switches;
     }
     tileType(value) {
-        if (this.isSwitch(value)) return 'switch';
-        if (this.isStop(value)) return 'stop';
-        return null;
-        //if (this.isSwitch(value)) return 'switch';
+        return {
+            isSwitch: this.isSwitch(value),
+            isStop: this.isStop(value),
+            //isPressure: this.isPressure(value),
+            isBlockActivated: this.isBlockActivated(value)
+        };
+        // if (this.isBlockActivated(value)) return 'block';
+        // if (this.isSwitch(value)) return 'switch';
+        // if (this.isStop(value)) return 'stop';
+        // return null;
+        
     }
     isSwitch(value) {
         return this.Switches.indexOf(value) !== -1;
+    }
+    isBlockActivated(value) {
+        return value === this.Component.PressureOff || value === this.Component.PressureOn;
     }
     isStop(index) {
         return this.Stops.indexOf(index) !== -1;
