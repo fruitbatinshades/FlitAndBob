@@ -51,18 +51,55 @@ InteractionTiles are the graphical representation of effects and actions. They n
 
 They should have a matching rectangle in the `Interaction` layer. This allows us to create multiple targets and areas that are affected.
 
+The switch tiles are handled differently and are how the player activates/decativates zones.
+
 #### Interaction (Object Layer)
 
-__N.B.__ The interaction layer is tied to the switch layer, when an action is executed it looks at the switch layer for the graphics it should change.
+__N.B.__ The `Interaction` layer is tied to the `InteractionTiles` layer, when an action is executed it looks at the `InteractionTiles` layer for the graphics it should change.
 
 The interaction layer sets up areas that effect a player when they enter it. These are defined in Tiled as  `Rectangle` and have `Custom Properties` that tell the game what to do when a user enters the rectangle or presses space whilst inside it.
 
+##### Properties
+These are the properties you enter in the tiled editor
+
+| General | Description | Parameters |
+|---|---|---|
+| Affect | The player affected by the effect | '','Flit,'Bob' |
+| Blocks | The player cannot pass through | '','Box','TRBL' |
+| GroupKey | Group tiles together for a switch to affect |  |
+| Target | Name of zone the action/effect targets |  |
+| Action | The action for the zone or group |  |
+| Effect | The effect on the player | |
+| Transition | The visual effect on the zone or group | |
+
+##### Values
+These are the values for the property in the tiled editor
+
 | Action | Description | Parameters |
 |---|---|---|
-| Toggle | Toggles the related zone | |
-| ShowHide | Show/Hide related zone | |
-| Injure | Injure player | |
-| Kill | Kill player | |
-| Slow | Slow player movement | |
-| Fast | Speed player movement | |
-| Block | Block player | TRBL |
+| **Toggle** | Toggles the related zone | |
+| **ShowHide** | Show/Hide related zone | |
+
+
+| Effect | Description | Parameters |
+|---|---|---|
+| **Injure** | Injure player | |
+| **Kill** | Kill player | |
+| **Slow** | Slow player movement | |
+| **Fast** | Speed player movement | |
+| **Slippy** | Player slides and can only jump |  |
+
+| Transition | Description | Parameters |
+|---|---|---|
+| **fadeAndDisable** | fades the tiles out and disables the zone |  |
+| **toggleVisibility** | toggle tile visibility but leave zone |  |
+
+## Testing Maps
+There is an example map, excitingly called `Example.json` that shows how you can set up these simple properties to create many effects.
+
+Copy the `base.tmx` and rename it, then open this in Tiled and have a play. 
+
+When you are ready to test it `File > Save` and then `File > Export As` and select the file type `json` and save it to the `Levels` directory.
+
+Run Flit & Bob in your browser and add `?level=YourLevelName` to the url and your map should start up :)
+

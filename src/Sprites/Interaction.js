@@ -228,8 +228,8 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
      * @param {Phaser.GameObjects.Sprite} player
      */
     injure(triggerZone, player) {
-        if (player !== null) {
-            if (triggerZone.Target.key === null || player.is(triggerZone.Target.key)) {
+        if (player !== null && triggerZone.Affect) {
+            if (triggerZone.Affect.key === null || player.is(triggerZone.Affect.key)) {
                 player.injure(triggerZone.Effect.params.health || 5);
             }
         }
@@ -244,6 +244,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
      */
     showHide(triggerZone, player) {
         if (triggerZone.Action.key === 'ShowHide') {
+            
             let found = [];
             let targetZone;
             if (triggerZone.Target) {
@@ -253,10 +254,10 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                 found = targetZone.getVisibleTiles(this.scene);
                 if (found.length > 0) {
                     found.forEach((x) => {
-                        x.visible = !x.visible;
+                        x.visible = !targetZone.isActive;
                     });
                     targetZone.body.enable = !targetZone.body.enable;
-                    targetZone.active = !targetZone.active;
+                    targetZone.isActive = !targetZone.isActive;
                     targetZone.adjustWorld();
                 }
             } 
@@ -266,15 +267,19 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                 if (group.length !== 0) {
                     for (let i = 0; i < group.length; i++) {
                         let g = group[i][1];
-                        let n = g.name;
-                        found = g.getVisibleTiles(this.scene);
-                        if (found.length > 0) {
-                            found.forEach((x) => {
-                                x.visible = !x.visible;
-                            });
-                            g.body.enable = !g.body.enable;
-                            g.active = !g.active;
-                            g.adjustWorld();
+                        if (g.tileType.isSwitch) {
+                            let switchTile = this.scene.map.getTileAt(g.tileObj.x / 64, g.tileObj.y / 64, false, 'InteractionTiles')
+                            switchTile.index = this.scene.switchIds.switchState(switchTile.index);
+                        }else{
+                            found = g.getVisibleTiles(this.scene);
+                            if (found.length > 0) {
+                                found.forEach((x) => {
+                                    x.visible = triggerZone.switchOn;
+                                });
+                                g.body.enable = triggerZone.switchOn;
+                                g.isActive = triggerZone.switchOn;
+                                g.adjustWorld();
+                            }
                         }
                     }
                 }

@@ -133,9 +133,9 @@
   </object>
   <object id="39" name="TargetA" type="ConveyerLeft" x="1792" y="1088" width="192" height="64">
    <properties>
+    <property name="Affect" value=""/>
     <property name="Effect" value="Injure"/>
     <property name="GroupKey" value="Group1"/>
-    <property name="Target" value=""/>
     <property name="ZoneHeight" type="int" value="16"/>
    </properties>
   </object>
@@ -230,9 +230,9 @@
   <object id="75" name="SideSpikes" x="1792" y="1024" width="192" height="64">
    <properties>
     <property name="Action" value="ShowHide"/>
+    <property name="Affect" value=""/>
     <property name="Effect" value="Injure"/>
     <property name="GroupKey" value="Group1"/>
-    <property name="Target" value="SideSpikes"/>
    </properties>
   </object>
   <object id="80" name="GroupPartTwo" x="2048" y="1088" width="64" height="64">
@@ -255,7 +255,6 @@
    <properties>
     <property name="Action" value="ShowHide"/>
     <property name="GroupKey" value="StoneDropA"/>
-    <property name="Target" value="DumbTarget"/>
     <property name="ZoneHeight" type="int" value="20"/>
    </properties>
   </object>
@@ -264,7 +263,11 @@
     <property name="GroupKey" value="StoneDropA"/>
    </properties>
   </object>
-  <object id="90" name="DumbTarget" x="1280" y="768" width="128" height="192"/>
+  <object id="90" name="DumbTarget" x="1280" y="768" width="128" height="192">
+   <properties>
+    <property name="GroupKey" value="StoneDropA"/>
+   </properties>
+  </object>
   <object id="93" name="Bridge2Switch" x="1088" y="192" width="64" height="64">
    <properties>
     <property name="Target" value="Bridge2"/>

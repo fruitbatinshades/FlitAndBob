@@ -263,16 +263,16 @@
                  "name":"TargetA",
                  "properties":
                     {
+                     "Affect":"",
                      "Effect":"Injure",
                      "GroupKey":"Group1",
-                     "Target":"",
                      "ZoneHeight":16
                     },
                  "propertytypes":
                     {
+                     "Affect":"string",
                      "Effect":"string",
                      "GroupKey":"string",
-                     "Target":"string",
                      "ZoneHeight":"int"
                     },
                  "rotation":0,
@@ -582,16 +582,16 @@
                  "properties":
                     {
                      "Action":"ShowHide",
+                     "Affect":"",
                      "Effect":"Injure",
-                     "GroupKey":"Group1",
-                     "Target":"SideSpikes"
+                     "GroupKey":"Group1"
                     },
                  "propertytypes":
                     {
                      "Action":"string",
+                     "Affect":"string",
                      "Effect":"string",
-                     "GroupKey":"string",
-                     "Target":"string"
+                     "GroupKey":"string"
                     },
                  "rotation":0,
                  "type":"",
@@ -667,14 +667,12 @@
                     {
                      "Action":"ShowHide",
                      "GroupKey":"StoneDropA",
-                     "Target":"DumbTarget",
                      "ZoneHeight":20
                     },
                  "propertytypes":
                     {
                      "Action":"string",
                      "GroupKey":"string",
-                     "Target":"string",
                      "ZoneHeight":"int"
                     },
                  "rotation":0,
@@ -707,6 +705,14 @@
                  "height":192,
                  "id":90,
                  "name":"DumbTarget",
+                 "properties":
+                    {
+                     "GroupKey":"StoneDropA"
+                    },
+                 "propertytypes":
+                    {
+                     "GroupKey":"string"
+                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,

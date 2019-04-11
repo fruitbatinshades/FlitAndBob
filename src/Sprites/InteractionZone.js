@@ -18,13 +18,14 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
     name = null;
     //Ref to the tile
     TileObj = null;
+    Affect = null;
     Blocks = null;
     Related;
     Implementation;
     lookup;
-    Active = true;
-    State = false;
     tileType;
+    isActive = true;
+    switchOn = true;
 
     constructor(scene, tileObj, interaction, debug) {
         super(scene, tileObj.x + 2, tileObj.y + 2, tileObj.width - 4, tileObj.height - 4);
@@ -48,6 +49,7 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
         if (!tileObj.visible) {
             this.getVisibleTiles(scene).forEach(x => x.visible = false);
             this.active = false;
+            this.isActive = false;
         }
 
         //the tile on the switch layer to see what type it is
@@ -59,6 +61,8 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
                 this.GroupKey = new InteractionParams(tileObj.properties.GroupKey);
             if (typeof tileObj.properties.Target !== 'undefined')
                 this.Target = new InteractionParams(tileObj.properties.Target);
+            if (typeof tileObj.properties.Affect !== 'undefined')
+                this.Affect = new InteractionParams(tileObj.properties.Affect);
             if (typeof tileObj.properties.Action !== 'undefined')
                 this.Action = new InteractionParams(tileObj.properties.Action);
             if (typeof tileObj.properties.Effect !== 'undefined')
@@ -101,14 +105,15 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
      * @param {bool} iterateGroup Only set this on the trigger zone else you'll get an endless loop and stack overflow
      */
     process(player, iterateGroup, parent) {
-        if (this.active) {
-            this.State = !this.State;
+         if (this.isActive) {
+        //     this.State = !this.State;
             this.body.debugBodyColor = !this.State ? 0xFF0000 : 0x00FF00;
 
             //If its a switch, change its state
             if (this.tileType && this.tileType.isSwitch) {
                 let switchTile = this.scene.map.getTileAt(this.tileObj.x / 64, this.tileObj.y / 64, false, 'InteractionTiles')
                 switchTile.index = this.interaction.scene.switchIds.switchState(switchTile.index);
+                this.switchOn = !this.switchOn;
             }
             //get the target zone
             let target;
