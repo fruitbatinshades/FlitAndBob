@@ -15,7 +15,7 @@ export default class Enums {
             StateOn: 3,
             StateOff: 4,
             PressureOff: 5,
-            PressueOn: 6,
+            PressureOn: 6,
             StopRightL: 7,
             StopRightM: 8,
             StopRightR: 9,
@@ -49,7 +49,7 @@ export default class Enums {
             this.Component.StateOn,
             this.Component.StateOff,
             this.Component.PressureOff,
-            this.Component.PressueOn
+            this.Component.PressureOn
         ];
      
     }

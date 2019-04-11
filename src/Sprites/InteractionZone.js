@@ -40,9 +40,14 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
         this.properties = tileObj.properties;
         this.name = tileObj.name;
         //if ZoneHeight is provided adjust the zone, used to make the zone smaller than the tile
-        if (this.properties.ZoneHeight) {
+        if (this.properties && this.properties.ZoneHeight) {
             this.body.reset(this.body.x, this.body.bottom - this.properties.ZoneHeight);
             this.body.height = this.properties.ZoneHeight;
+        }
+        //hide tiles if the zone not visible
+        if (!tileObj.visible) {
+            this.getVisibleTiles(scene).forEach(x => x.visible = false);
+            this.active = false;
         }
 
         //the tile on the switch layer to see what type it is
@@ -59,21 +64,22 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
             console.log(this.name, this.isSwitch, this.isStop);
         }
         
-        
-        if (typeof tileObj.properties.GroupKey !== 'undefined')
-            this.GroupKey = new InteractionParams(tileObj.properties.GroupKey);
-        if (typeof tileObj.properties.Target !== 'undefined')
-            this.Target = new InteractionParams(tileObj.properties.Target);
-        if (typeof tileObj.properties.Action !== 'undefined')
-            this.Action = new InteractionParams(tileObj.properties.Action);
-        if (typeof tileObj.properties.Effect !== 'undefined')
-            this.Effect = new InteractionParams(tileObj.properties.Effect);
-        if (typeof tileObj.properties.Transition !== 'undefined')
-            this.Transition = new InteractionParams(tileObj.properties.Transition);
-        if (typeof tileObj.properties.Implementation !== 'undefined') 
-            this.Implementation = new InteractionParams(tileObj.properties.Implementation);
-        if (typeof tileObj.properties.Blocks !== 'undefined') {
-            this.Blocks = new InteractionParams(tileObj.properties.Blocks);
+        if (tileObj.properties) {
+            if (typeof tileObj.properties.GroupKey !== 'undefined')
+                this.GroupKey = new InteractionParams(tileObj.properties.GroupKey);
+            if (typeof tileObj.properties.Target !== 'undefined')
+                this.Target = new InteractionParams(tileObj.properties.Target);
+            if (typeof tileObj.properties.Action !== 'undefined')
+                this.Action = new InteractionParams(tileObj.properties.Action);
+            if (typeof tileObj.properties.Effect !== 'undefined')
+                this.Effect = new InteractionParams(tileObj.properties.Effect);
+            if (typeof tileObj.properties.Transition !== 'undefined')
+                this.Transition = new InteractionParams(tileObj.properties.Transition);
+            if (typeof tileObj.properties.Implementation !== 'undefined')
+                this.Implementation = new InteractionParams(tileObj.properties.Implementation);
+            if (typeof tileObj.properties.Blocks !== 'undefined') {
+                this.Blocks = new InteractionParams(tileObj.properties.Blocks);
+            }
         }
         
         //TODO: strip this out on build ???

@@ -21,8 +21,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
     /** Lookup to transitions that process map key: Transition */
     transitions = {
         "fadeAndDisable": this.fadeAndDisable,
-        "toggleVisibility": this.toggleVisibility,
-        "slideOut": this.slideOut
+        "toggleVisibility": this.toggleVisibility
     };
     /**
      * Class that manages interactable objects such as switches
@@ -59,6 +58,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                     z.body.checkCollision.bottom = z.Blocks.key.indexOf('B') !== -1;
                     z.body.checkCollision.left = z.Blocks.key.indexOf('L') !== -1;
                 }
+                if (!current.visible) z.body.enable = false;
             }
             else {
                 //set up overlap for callback
@@ -294,31 +294,4 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             onCompleteParams: [targetZone]
         });
     }
-
-    
-    // slideOut(tiles, zone) {
-    //     let targetX, targetY;
-    //     switch (zone.Transition.params.direction) {
-    //         case 'up':
-    //             targetY = zone.Zone.body.top - tiles[0].height
-    //             break;
-    //         case 'down':
-    //             targetY = zone.Zone.body.bottom;
-    //             break;
-    //     }
-    //     if (targetY) {
-    //         this.scene.tweens.add({
-    //             targets: tiles,
-    //             pixelY: targetY,
-    //             ease: 'Power1',
-    //             duration: 1000,
-    //             onComplete: function (tween, targets, items) {
-    //                 items.forEach((x) => {
-    //                     x.visible = !x.visible;
-    //                 });
-    //             },
-    //             onCompleteParams: [tiles]
-    //         });
-    //     }
-    // }
 }
