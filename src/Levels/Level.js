@@ -32,8 +32,8 @@ export default class Level extends Phaser.Scene {
     }
     //NB: Call from preload
     preload() {
-        this.load.tilemapTiledJSON('map', `assets/Levels/${this.mapName}.json`);
-        this.map = this.make.tilemap({ key: 'map' });
+        this.load.tilemapTiledJSON(this.mapName, `assets/Levels/${this.mapName}.json`);
+        this.map = this.make.tilemap({ key: this.mapName });
         this.mapProperties = this.map.properties;
         //this.map = this.map;
         if (this.map.properties["debug"]) this.debug = this.map.properties["debug"];

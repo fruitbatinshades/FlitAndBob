@@ -37,6 +37,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
         this.tileLayer = interactionLayer;
         this.lookup = {};
         this.spaceKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.inExit = false;
 
         //Create a zone from the tiled object rectangles
         for (let i = 0; i < objectMap.objects.length; i++) {
@@ -115,10 +116,15 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                 zone.process(player, true);
             }
         }
-        if (zone.name === 'Exit') {
+        if (!this.inExit && zone.name === 'Exit') {
             //check both Flit and Bob are here
             if (zone.body.hitTest(this.scene.player.x, this.scene.player.y) && zone.body.hitTest(this.scene.flit.x, this.scene.flit.y)) {
                 //this.scene.sound.playAudioSprite('sfx', 'music_zapsplat_rascals_123', { volume: .5, repeat: true });
+                this.inExit = true;
+                this.scene.scene.pause('Level');
+                this.scene.scene.get('LevelLoader').levelFinished();
+                //this.scene.events.emit('LevelComplete');
+                
             }
         }
     }

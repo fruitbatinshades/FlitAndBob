@@ -4,17 +4,37 @@
         <title>Flit and Bob - Phaser 3</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-        
+        <link rel="preload" as="font" href="/fonts/hvd-comic.woff2" type="font/woff2" crossorigin="anonymous">
+        <link rel="preload" as="font" href="/fonts/hvd-comic.woff" type="font/woff" crossorigin="anonymous">
+        <link rel="preload" as="font" href="/fonts/splurge-webfont.woff2" type="font/woff2" crossorigin="anonymous">
+        <link rel="preload" as="font" href="/fonts/splurge-webfont.woff" type="font/woff" crossorigin="anonymous">
+
         <script type="text/javascript" src="src/general.js"></script>
         <script type="text/javascript" src="src/phaser.3.17.alpha.js"></script>
         <script type="module" src="src/index.js"></script>
         <link rel="shortcut icon" href="ico.ico" type="image/x-icon">
-        <link rel="icon" href="ico.ico" type="image/x-icon">       
+        <link rel="icon" href="ico.ico" type="image/x-icon">
         <style>
+            @font-face {
+                font-family: 'HvdComic';
+                src: url('fonts/hvd-comic.woff2') format('woff2'),
+                    url('fonts/hvd-comic.woff') format('woff');
+                font-weight: normal;
+                font-style: normal;
+            }
+            @font-face {
+                font-family: 'splurge';
+                src: url('fonts/splurge-webfont.woff2') format('woff2'),
+                    url('fonts/splurge-webfont.woff') format('woff');
+                font-weight: normal;
+                font-style: normal;
+            }
             body {
                 padding: 0px;
                 margin: 0px;             
+                font-family:splurge;
             }
+
         </style>
     </head>
     <body>        

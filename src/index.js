@@ -6,7 +6,12 @@ import LevelLoaderScene from './Scenes/LevelLoaderScene.js';
 // import UIScene from './Scenes/UI';
 
 class Game extends Phaser.Game {
-  constructor () {
+  levels = [
+    'Example', 'L1'
+  ];
+  levelIndex = 0;
+  
+  constructor() {
     super(config);
 
     //Create global variables for access across all scene instances
@@ -14,12 +19,21 @@ class Game extends Phaser.Game {
     this.Flit = null; //Flit Character
     this.DebugG = null; //Debug graphics object create in active scene as assigned here
     this._ChangingPlayer = false; //Whether we are currenty changing between players
-
     this.scene.add('Boot', BootScene);
     this.scene.add('LevelLoader', LevelLoaderScene);
     //this.scene.add('UI', UIScene);
     this.scene.start('Boot');
   }
+  preload()
+  {
+    //this.load.plugin('DialogModalPlugin', './dialog_plugin.js');
+    //this.sys.install('DialogModalPlugin');
+    //console.log(this.sys.dialogModal);
+  }
+  create() {
+
+  
+}
   /**
    * Draws Touching, Blocked, CheckCollsion and origin on a sprite/sprite[]
    * @param {Phaser.GameObjects.Sprite} a Sprite or Sprite Array to draw debug on
