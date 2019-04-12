@@ -25,7 +25,7 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
     lookup;
     tileType;
     isActive = true;
-    switchOn = true;
+    switchOn = false;
 
     constructor(scene, tileObj, interaction, debug) {
         super(scene, tileObj.x + 2, tileObj.y + 2, tileObj.width - 4, tileObj.height - 4);
@@ -112,8 +112,7 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
             //If its a switch, change its state
             if (this.tileType && this.tileType.isSwitch) {
                 let switchTile = this.scene.map.getTileAt(this.tileObj.x / 64, this.tileObj.y / 64, false, 'InteractionTiles')
-                switchTile.index = this.interaction.scene.switchIds.switchState(switchTile.index);
-                this.switchOn = !this.switchOn;
+                switchTile.index = this.interaction.scene.switchIds.switchState(switchTile.index, this);
             }
             //get the target zone
             let target;

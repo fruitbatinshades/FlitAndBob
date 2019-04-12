@@ -66,10 +66,12 @@ export default class Enums {
         this.Switches = [
             this.Component.SwitchOff,
             this.Component.SwitchOn,
-            this.Component.StateOn,
-            this.Component.StateOff,
             this.Component.PressureOff,
             this.Component.PressureOn
+        ];
+        this.Lights = [
+            this.Component.StateOn,
+            this.Component.StateOff
         ];
         /** Items that are collectable */
         this.Collectables = [
@@ -92,14 +94,13 @@ export default class Enums {
         return {
             isSwitch: this.isSwitch(value),
             isStop: this.isStop(value),
-            //isPressure: this.isPressure(value),
+            isLight: this.isLight(value),
             isBlockActivated: this.isBlockActivated(value)
         };
-        // if (this.isBlockActivated(value)) return 'block';
-        // if (this.isSwitch(value)) return 'switch';
-        // if (this.isStop(value)) return 'stop';
-        // return null;
         
+    }
+    isLight(value) {
+        return this.Lights.indexOf(value) !== -1;
     }
     isSwitch(value) {
         return this.Switches.indexOf(value) !== -1;
@@ -111,18 +112,26 @@ export default class Enums {
         return this.Stops.indexOf(index) !== -1;
     }
     /** 
-     * Get the next state for the switch
+     * Get the next state for the switch or light
      */
-    switchState(index) {
+    switchState(index, zone) {
         //handle switches
-        if (this.Switches.includes(index)) {
+        let newIndex = index;
+        
+        if (this.isSwitch(index)) {
             if (index === this.Component.SwitchOff || index === this.Component.SwitchOn)
-                return index === this.Component.SwitchOff ? this.Component.SwitchOn : this.Component.SwitchOff;
-            if (index === this.Component.StateOff || index === this.Component.StateOn)
-                return index === this.Component.StateOff ? this.Component.StateOn : this.Component.StateOff;
+                newIndex = (index === this.Component.SwitchOff ? this.Component.SwitchOn : this.Component.SwitchOff);
             if (index === this.Component.PressureOff || index === this.Component.PressureOn)
-                return index === this.Component.PressureOff ? this.Component.PressureOn : this.Component.PressureOff;
+                newIndex  = (index === this.Component.PressureOff ? this.Component.PressureOn : this.Component.PressureOff);
+            
+            if (zone) {
+                zone.switchOn = (newIndex === this.Component.SwitchOn || newIndex === this.Component.StateOn || newIndex === this.Component.PressureOn);
+            }
+        } else if (this.isLight(index)) {
+            if (index === this.Component.StateOff || index === this.Component.StateOn)
+                newIndex = (index === this.Component.StateOff ? this.Component.StateOn : this.Component.StateOff);
         }
-        return index;
+        
+        return newIndex;
     }
 }

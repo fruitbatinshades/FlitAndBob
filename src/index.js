@@ -10,7 +10,7 @@ class Game extends Phaser.Game {
     'Example', 'L1'
   ];
   levelIndex = 0;
-  
+
   constructor() {
     super(config);
 
@@ -24,16 +24,6 @@ class Game extends Phaser.Game {
     //this.scene.add('UI', UIScene);
     this.scene.start('Boot');
   }
-  preload()
-  {
-    //this.load.plugin('DialogModalPlugin', './dialog_plugin.js');
-    //this.sys.install('DialogModalPlugin');
-    //console.log(this.sys.dialogModal);
-  }
-  create() {
-
-  
-}
   /**
    * Draws Touching, Blocked, CheckCollsion and origin on a sprite/sprite[]
    * @param {Phaser.GameObjects.Sprite} a Sprite or Sprite Array to draw debug on

@@ -90,7 +90,7 @@ export default class Level extends Phaser.Scene {
                     this.mapLayers[l.name].depth = l.properties.depth || 1;
                     if (l.name === 'InteractionTiles') {
                         //update the ids of the tiles with the gid
-                        this.switchIds = new Enums(this.mapLayers[l.name].tileset[1].firstgid);
+                        this.switchIds = new Enums(this.mapLayers[l.name].tileset.find(x => x.name == 'components').firstgid);
                     }
                     break;
             }
