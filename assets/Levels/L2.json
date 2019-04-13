@@ -388,14 +388,14 @@
                  "name":"SpikesA",
                  "properties":
                     {
+                     "Affect":"Bob",
                      "Effect":"Injure",
-                     "Target":"Bob",
                      "ZoneHeight":16
                     },
                  "propertytypes":
                     {
+                     "Affect":"string",
                      "Effect":"string",
-                     "Target":"string",
                      "ZoneHeight":"int"
                     },
                  "rotation":0,

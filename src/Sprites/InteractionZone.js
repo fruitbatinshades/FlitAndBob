@@ -119,22 +119,6 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
             if (this.Target !== null && this.Target.key !== null) {
                 target = this.interaction.getByKey(this.Target.key);
             }
-            // //if its a switch and we need to iterate, process the group
-            // if (this.tileType && this.tileType.isSwitch && iterateGroup) {
-            //     if (this.GroupKey !== null && this.GroupKey.key !== null) {
-            //         //find the objects that have matching keys and convert to array
-            //         let group = this.interaction.getGroup(this.GroupKey.key);
-            //         if (group && group.length != 0) {
-            //             for (let i = 0; i < group.length; i++) {
-            //                 if (group[i][1].name !== this.name) {
-            //                     //dont pass in the player for grouped actions
-            //                     group[i][1].process(null, false, this);
-            //                 }
-            //             }
-            //         }
-            //     } 
-            // }
-            
             //if its an action or effect
             if (this.Action !== null || this.Effect !== null) {
                 this.interaction.action(parent || this, player);

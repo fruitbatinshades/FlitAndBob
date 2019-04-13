@@ -10,7 +10,11 @@ export default {
             gravity: {y: 500},
             debug: true
         }
-    }//,
+    },
+    plugins: {
+        global: [NineSlice.Plugin.DefaultCfg]
+    }
+    //,
     // scene: {
     //     key: 'main',
     //     preload: preload,

@@ -55,12 +55,11 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                 //if the zone blocks boxes
                 if (z.Blocks.key === 'Box') {
                     scene.physics.add.collider(scene.mapLayers['Boxes'], z, scene.mapLayers['Boxes'].tileCollide, null, scene.mapLayers['Boxes']);
-                }
-                //if properties provided set the relevant one
-                if (z.Blocks.key) {
-                    z.body.checkCollision.top = z.Blocks.key.indexOf('T') !== -1;
+                } else if (z.Blocks.key) {
+                    //if properties provided set the relevant one
+                    z.body.checkCollision.up = z.Blocks.key.indexOf('T') !== -1;
                     z.body.checkCollision.right = z.Blocks.key.indexOf('R') !== -1;
-                    z.body.checkCollision.bottom = z.Blocks.key.indexOf('B') !== -1;
+                    z.body.checkCollision.down = z.Blocks.key.indexOf('B') !== -1;
                     z.body.checkCollision.left = z.Blocks.key.indexOf('L') !== -1;
                 }
                 if (!current.visible) z.body.enable = false;
@@ -106,25 +105,19 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             let t = this.lookup[zone.name];
             //If its an effect require space key
             if (!t.Effect || t.Effect === null) {
-                if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
-                    //this.action(t, player);
+                if (this.scene.input.keyboard.checkDown(this.spaceKey, 250)) {
                     zone.process(player, true);
                 }
             } else {
                 //else fire constantly
-                //this.action(t, player);
                 zone.process(player, true);
             }
         }
         if (!this.inExit && zone.name === 'Exit') {
             //check both Flit and Bob are here
             if (zone.body.hitTest(this.scene.player.x, this.scene.player.y) && zone.body.hitTest(this.scene.flit.x, this.scene.flit.y)) {
-                //this.scene.sound.playAudioSprite('sfx', 'music_zapsplat_rascals_123', { volume: .5, repeat: true });
                 this.inExit = true;
-                this.scene.scene.pause('Level');
-                this.scene.scene.get('LevelLoader').levelFinished();
-                //this.scene.events.emit('LevelComplete');
-                
+                this.scene.events.emit('levelcomplete');
             }
         }
     }
@@ -196,6 +189,11 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
         }
 
     }
+    /**
+     * Kill the player
+     * @param {InteractionZone} triggerZone
+     * @param {Phaser.GameObjects.Sprite} player
+     */
     kill(triggerZone, player) {
         if (player !== null) {
             if (triggerZone.Target.key === null || player.is(triggerZone.Target.key)) {
@@ -213,6 +211,11 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             player.isFast = true;
         }
     }
+    /**
+     * PLayer slides and cannot turn aroud
+     * @param {InteractionZone} triggerZone
+     * @param {Phaser.GameObjects.Sprite} player
+     */
     slippy(triggerZone, player) {
         if (player !== null) {
             player.effectSpeed = 500;
@@ -320,6 +323,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
         //if showing, make them visible else they will pop in at the end
         if (alphaTarget === 1) {
             tiles.forEach((x) => {
+                x.alpha = 0;
                 x.visible = !x.visible;
             });
         } else {

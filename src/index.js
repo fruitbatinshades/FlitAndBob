@@ -110,6 +110,14 @@ class Game extends Phaser.Game {
       this.DebugG.fillCircle(b.left + (b.width * a.originX), b.top + (b.height * a.originY), 4);
     }
   }
+  cartoonText(txt) {
+    txt.setShadow(3, 3, '#000000', 6, true, false)
+      .setStroke('#1493F5', 6);
+  }
+  shadowText(txt) {
+    txt.setShadow(3, 3, '#000000', 6, true, false)
+      .setStroke('#000000', 2);
+  }
 }
 
 window.game = new Game();

@@ -9,7 +9,7 @@ import Enums from '../Levels/Tilemaps.js';
 export default class LevelLoaderScene extends Phaser.Scene {
 
     switchIds;
-    
+
     startScene = 'LevelLoader';
     startLevel;
 
@@ -27,36 +27,25 @@ export default class LevelLoaderScene extends Phaser.Scene {
         this.progressBar.depth = 11;
         this.progressBox = this.add.graphics();
         this.progressBox.depth = 10;
-        
+
         this.width = this.cameras.main.width;
         this.height = this.cameras.main.height;
         this.scale = splash.width / this.width;
         splash.setScale(this.scale, this.scale);
 
         this.left = this.width / 2 - 200;
-        this.progressBox.lineStyle(6, 0x333333,1);
+        this.progressBox.lineStyle(6, 0x333333, 1);
         this.progressBox.strokeRoundedRect(this.left - 3, 267, 411, 56, 7);
         this.progressBox.fillStyle(0x36B5F5, 1);
         this.progressBox.fillRoundedRect(this.left, 270, 406, 50, 6);
-        
+
 
         //this.add.image(width / 2, 100, 'Logo');
-        this.PlayButton = this.add.image(this.width / 2, 460, 'WoodButton');
+        this.PlayButton = this.add.image(this.width / 2, 490, 'buttons', 'roundButton');
         this.PlayButton.alpha = .5;
         this.PlayButton.setInteractive();
-
-        this.playtext = this.make.text({
-            x: this.PlayButton.x,
-            y: this.PlayButton.y,
-            text: this.startLevel,
-            style: {
-                font: '28px HvdComic',
-                fill: '#ffffff'
-            }
-        }).setOrigin(.5, .5);
-        this.playtext.alpha = .5
-        this.playtext.depth = 12;
-        this.setStroke(this.playtext);
+        let p = this.add.image(this.width / 2, 490, 'buttons', 'play');
+        p.setOrigin(.5, .5);
 
         this.loadingText = this.make.text({
             x: this.width / 2,
@@ -92,21 +81,21 @@ export default class LevelLoaderScene extends Phaser.Scene {
 
         this.assetText.setOrigin(0.5, 0.5);
 
-        this.setStroke(this.loadingText);
-        this.setStroke(this.percentText);
-        this.setStroke(this.assetText);
+        this.game.cartoonText(this.loadingText);
+        this.game.cartoonText(this.percentText);
+        this.game.cartoonText(this.assetText);
 
         this.load.on('progress', function (value) {
             this.percentText.setText(parseInt(value * 100) + '%');
             this.progressBar.clear();
             this.progressBar.fillStyle(0xC6E5FA, 1);
             this.progressBar.fillRoundedRect(this.left + 6, 278, 394 * value, 36, 7);
-        },this);
+        }, this);
 
         this.load.on('fileprogress', function (file) {
             this.assetText.setText('Loading : ' + file.key);
             console.log(file.key);
-        },this);
+        }, this);
 
         this.load.on('complete', function () {
             this.progressBar.destroy();
@@ -114,28 +103,38 @@ export default class LevelLoaderScene extends Phaser.Scene {
             this.loadingText.destroy();
             this.percentText.destroy();
             this.assetText.destroy();
-        },this);
+        }, this);
         this.load.once('filecomplete', this.mapLoaded, this);
-
-           this.load.tilemapTiledJSON(this.startLevel, `assets/Levels/${this.startLevel}.json`);
+        this.load.tilemapTiledJSON(this.startLevel, `assets/Levels/${this.startLevel}.json`);
     }
-    create() { 
+    create() {
         console.log('create');
+        let n = this.make.text({
+            x: this.cameras.main.width / 2,
+            y: 420,
+            text:'Play ' + this.startLevel,
+            style: {
+                font: '28px HvdComic',
+                fill: '#ffffff'
+            }
+        });
+        n.setOrigin(.5);
+        this.game.cartoonText(n);
         this.PlayButton.alpha = 1;
-        this.playtext.alpha = 1;
         this.PlayButton.on('pointerdown', function () {
             let l = new Level('Level', this.startLevel);
             this.scene.add('Level', l, true);
+            this.scene.pause(this);
         }, this);
     }
     levelFinished() {
         this.scene.remove('HUD');
         this.scene.remove('Level');
-        if(this.game.levels.length > this.game.levelIndex + 1 ) this.game.levelIndex++;
+        if (this.game.levels.length > this.game.levelIndex + 1) this.game.levelIndex++;
         this.scene.bringToTop(this);
         this.scene.restart();
     }
-    mapLoaded() { 
+    mapLoaded() {
         this.load.audioSprite('sfx', 'assets/Sound/FlitBob.json', [
             'assets/Sound/FlitBob.ogg',
             'assets/Sound/FlitBob.mp3'
@@ -156,11 +155,5 @@ export default class LevelLoaderScene extends Phaser.Scene {
             this.load.image(b.name);
             console.log(b.name);
         });
-    }
-
-    setStroke(txt) {
-        txt.setShadow(3, 3, '#000000', 6, true, false)
-            .setStroke('#1493F5', 6)
-            .setFontStyle('bold');
     }
 }

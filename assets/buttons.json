@@ -1,0 +1,50 @@
+{
+"frames": {
+	"modal": {
+		"frame": {"x":0, "y":0, "w":128, "h":128},
+		"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+		"sourceSize": {"w":128,"h":128}
+	},
+
+	"next": {
+		"frame": {"x":128, "y":0, "w":64, "h":64},
+		"spriteSourceSize": {"x":128,"y":0,"w":64,"h":64},
+		"sourceSize": {"w":64,"h":64}
+	},
+	"levels": {
+		"frame": {"x":192, "y":0, "w":64, "h":64},
+		"spriteSourceSize": {"x":192,"y":0,"w":64,"h":64},
+		"sourceSize": {"w":64,"h":64}
+	},
+	"play": {
+		"frame": {"x":256, "y":0, "w":64, "h":64},
+		"spriteSourceSize": {"x":256,"y":0,"w":64,"h":64},
+		"sourceSize": {"w":64,"h":64}
+	},
+	"music": {
+		"frame": {"x":128, "y":128, "w":64, "h":64},
+		"spriteSourceSize": {"x":128,"y":129,"w":64,"h":64},
+		"sourceSize": {"w":64,"h":64}
+	},
+	"check": {
+		"frame": {"x":192, "y":128, "w":64, "h":64},
+		"spriteSourceSize": {"x":192,"y":128,"w":64,"h":64},
+		"sourceSize": {"w":64,"h":64}
+	},
+	"roundButton": {
+		"frame": {"x":320, "y":0, "w":128, "h":128},
+		"spriteSourceSize": {"x":320,"y":0,"w":128,"h":128},
+		"sourceSize": {"w":128,"h":128}
+	},
+	"button": {
+		"frame": {"x":448, "y":0, "w":192, "h":64},
+		"spriteSourceSize": {"x":448,"y":0,"w":192,"h":64},
+		"sourceSize": {"w":192,"h":64}
+	}
+},
+"meta": {
+	"image": "buttons.png",
+	"size": {"w": 640, "h": 128},
+	"scale": "1"
+}
+}

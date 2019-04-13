@@ -5,6 +5,7 @@ import Boxes from '../Sprites/Boxes.js';
 import Enums from './Tilemaps.js';
 import Interaction from '../Sprites/Interaction.js';
 import HUD from '../Scenes/HUD.js';
+import Dialog from '../Scenes/Dialog.js';
 /**
  * Class that hold the level specific data and operations
  */
@@ -52,15 +53,32 @@ export default class Level extends Phaser.Scene {
 
         if (this.debug) {
             this.input.on('gameobjectdown', function (pointer, gameObject) {
-                if (gameObject.toolInfo)
+                if (gameObject.toolInfo) {
                     gameObject.toolInfo.visible = !gameObject.toolInfo.visible;
-                console.log(gameObject.toolInfo.visible);
+                    console.log(gameObject.toolInfo.visible);
+                }
             });
         }
     }
     create() { 
         this.buildLevel();
         this.scene.add('HUD', HUD, true, { x: 400, y: 300 });
+        //Level complete so display summary
+        this.events.on('levelcomplete', function () { 
+            let d = new Dialog(this, 400, 300, 'Level Complete', 'Next');
+            d.depth = 1000;
+            this.add.existing(d);
+            //when closed finish level
+            this.events.on('dialogclosed', function () {
+                console.log('closed');
+                this.scene.get('LevelLoader').levelFinished();
+            },this);
+        }, this);
+        //Cjaracter died so restart
+        this.events.on('died', function (player) {
+            this.scene.remove('HUD');
+            this.scene.restart(); 
+        },this);
     }
     /**
      * Crete the maps, player and set up collisions

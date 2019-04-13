@@ -140,8 +140,8 @@
                  "type":"StartPosition",
                  "visible":true,
                  "width":0,
-                 "x":1408,
-                 "y":1088
+                 "x":2048,
+                 "y":384
                 }, 
                 {
                  "height":0,
@@ -152,8 +152,8 @@
                  "type":"StartPosition",
                  "visible":true,
                  "width":0,
-                 "x":1088,
-                 "y":64
+                 "x":1984,
+                 "y":448
                 }],
          "opacity":1,
          "properties":
