@@ -13,7 +13,6 @@ export default class BootScene extends Phaser.Scene {
   // tiles in spritesheet 
     this.load.spritesheet('ComponentSheet', 'assets/Levels/components.png', { frameWidth: 64, frameHeight: 64 }); //Required for icons from the component sheet
     this.load.image('SplashBackground', 'assets/TemporaryBackground-min.png');
-    this.load.image('WoodButton', 'assets/TemporaryWoodButton.png');
     this.load.image('splat', 'assets/splat.png'); //death image
     this.load.image('ui', 'assets/ui.png'); //ui
   //  // player animations

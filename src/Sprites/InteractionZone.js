@@ -4,6 +4,10 @@ import Enums from '../Levels/Tilemaps.js';
  * Class populated from the tilemap Interaction Layer rectangles
  */
 export default class InteractionZone extends Phaser.GameObjects.Zone {
+    //Unique name of the zone
+    name = null;
+    //Ref to the tile
+    TileObj = null;
     //Key to group multiple targets
     GroupKey = null;
     //Single target ID
@@ -14,14 +18,13 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
     Effect = null;
     //The visual effect to use (toggleVisibility, fadeAndDisable)
     Transition = null;
-    //Unique name of the zone
-    name = null;
-    //Ref to the tile
-    TileObj = null;
+    //Class to use for this tile
+    Implementation = null;
+    //What player does it affect
     Affect = null;
+    //Whether it blocks (physics)
     Blocks = null;
-    Related;
-    Implementation;
+
     lookup;
     tileType;
     isActive = true;
@@ -75,7 +78,6 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
                 this.Blocks = new InteractionParams(tileObj.properties.Blocks);
             }
         }
-        
         //TODO: strip this out on build ???
         //Add tooltips on debug to show the properties from Tiled
         if (debug) {
@@ -156,9 +158,13 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
     getVisibleTiles(scene, includeSwitches, tileLayer) {
         //TODO: look for offset tiles (conveyor)
         if (includeSwitches) {
-            return scene.map.getTilesWithinWorldXY(this.x, this.y, this.width, this.height, (t) => { return true; }, scene.cameras.main, tileLayer || 'InteractionTiles');
+            return scene.map.getTilesWithinWorldXY(this.x, this.y, this.width, this.height, (t) => {
+                return true;
+            }, scene.cameras.main, tileLayer || 'InteractionTiles');
         } else {
-            return scene.map.getTilesWithinWorldXY(this.x, this.y, this.width, this.height, (t) => { return x => !this.scene.switchIds.contains(t.index) }, scene.cameras.main, tileLayer || 'InteractionTiles');
+            return scene.map.getTilesWithinWorldXY(this.x, this.y, this.width, this.height, (t) => {
+                return x => !this.scene.switchIds.contains(t.index)
+            }, scene.cameras.main, tileLayer || 'InteractionTiles');
         }
     }
 }

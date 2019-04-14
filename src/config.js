@@ -8,17 +8,10 @@ export default {
         default: 'arcade',
         arcade: {
             gravity: {y: 500},
-            debug: true
+            debug: false
         }
     },
     plugins: {
         global: [NineSlice.Plugin.DefaultCfg]
     }
-    //,
-    // scene: {
-    //     key: 'main',
-    //     preload: preload,
-    //     create: create,
-    //     update: update
-    // }
 };
