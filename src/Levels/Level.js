@@ -61,6 +61,7 @@ export default class Level extends Phaser.Scene {
         }
     }
     create() { 
+        this.cameras.main.setBackgroundColor(0x10ceff);
         this.buildLevel();
         this.scene.add('HUD', HUD, true, { x: 400, y: 300 });
         //Level complete so display summary
@@ -157,7 +158,6 @@ export default class Level extends Phaser.Scene {
                     break;
             }
         });
-        this.cameras.main.setBackgroundColor('#ccccff');
 
         //create player collision
         this.physics.add.collider(this.mapLayers.World , this.player);

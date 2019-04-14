@@ -751,11 +751,15 @@
                  "name":"Bridge2",
                  "properties":
                     {
-                     "Blocks":"Box"
+                     "Blocks":"Box",
+                     "ZoneHeight":8,
+                     "ZoneHeightAt":"T"
                     },
                  "propertytypes":
                     {
-                     "Blocks":"string"
+                     "Blocks":"string",
+                     "ZoneHeight":"int",
+                     "ZoneHeightAt":"string"
                     },
                  "rotation":0,
                  "type":"",

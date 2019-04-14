@@ -278,6 +278,8 @@
   <object id="94" name="Bridge2" x="1344" y="192" width="128" height="64">
    <properties>
     <property name="Blocks" value="Box"/>
+    <property name="ZoneHeight" type="int" value="8"/>
+    <property name="ZoneHeightAt" value="T"/>
    </properties>
   </object>
   <object id="98" name="StairsSwitch" x="1984" y="768" width="64" height="64">
