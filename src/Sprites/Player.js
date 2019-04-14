@@ -32,7 +32,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     // enable physics
     this.scene.physics.world.enable(this);
     this.setScale(.7);
-    //this.body.setSize(this.body.width - 10, this.body.height - 20).setOffset(0, 20);
+    //this.body.setSize(this.body.width - 40, this.body.height).setOffset(0, 0);
 
     this.debugText = '';
 
@@ -153,12 +153,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     } else {
       //process keys
       if (cursors.left.isDown) {
-        this.body.setVelocityX(cursors.up.isDown ? - 100 : 0 - this.activeSpeed);
+        this.body.setVelocityX(cursors.up.isDown ? - 150 : 0 - this.activeSpeed);
         this.anims.play('walk', true); // walk left
         this.flipX = true; // flip the sprite to the left
       }
       else if (cursors.right.isDown) {
-        this.body.setVelocityX(cursors.up.isDown ? 100 : this.activeSpeed);
+        this.body.setVelocityX(cursors.up.isDown ? 150 : this.activeSpeed);
         this.anims.play('walk', true);
         this.flipX = false; // use the original sprite looking to the right
       } else {

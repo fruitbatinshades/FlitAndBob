@@ -371,9 +371,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="324.00579"
-     inkscape:cy="1015.217"
+     inkscape:zoom="11.313709"
+     inkscape:cx="668.54732"
+     inkscape:cy="996.50794"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -583,12 +583,32 @@
        id="path3183"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="czcczc" />
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.97907794;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+       id="rect11764"
+       width="62.020924"
+       height="30.903921"
+       x="640.98956"
+       y="29.4687"
+       rx="5.8710923"
+       ry="6.0041199" />
+    <path
+       style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 665.28031,60.650749 4.22725,6.418544 4.41789,-6.62435 z"
+       id="path11766"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path11771"
+       d="m 664.75756,58.319293 4.625,6.75 5.125,-7 z"
+       style="fill:#ffffff;fill-rule:evenodd;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Grid"
-     style="display:inline"
+     style="display:none"
      sodipodi:insensitive="true">
     <g
        id="g6483">

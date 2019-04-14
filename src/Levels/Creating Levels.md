@@ -71,6 +71,8 @@ These are the properties you enter in the tiled editor
 | Action | The action for the zone or group |  |
 | Effect | The effect on the player | |
 | Transition | The visual effect on the zone or group | |
+| ZoneHeight | Used to adjust the zone height (spikes, bridges etc.) | The height is shrunk to the bottom unless `ZoneHeightAt` is supplied |
+| ZoneHeightAt | The visual effect on the zone or group | If set to `T` the zone is shrunk towards the top |
 
 ##### Values
 These are the values for the property in the tiled editor

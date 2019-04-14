@@ -84,6 +84,10 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
         if (name === null) return null;
         return Object.entries(Object.filter(this.lookup, (z) => z.hasOwnProperty('GroupKey') && z.GroupKey !== null && z.GroupKey.key && z.GroupKey.key === name && z.name != exclude));
     }
+    getGroupSwitches(name,exclude) {
+        if (name === null) return null;
+        return Object.entries(Object.filter(this.lookup, (z) => z.hasOwnProperty('GroupKey') && z.GroupKey !== null && z.GroupKey.key && z.GroupKey.key === name && z.tileType.isSwitch && z.name != exclude));
+    }
     blocks(player, zone) {
         //player is blocked
     }

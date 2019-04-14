@@ -112,7 +112,7 @@ export default class Enums {
         return this.Stops.indexOf(index) !== -1;
     }
     /** 
-     * Get the next state for the switch or light
+     * Get the next state for the switch or light and update the zone switch status
      */
     switchState(index, zone) {
         //handle switches
