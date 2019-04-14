@@ -7,15 +7,47 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
         Player: 2,
         Tile: 3
     }
+    note = '';
+    underneath = null;
+    onTopOf = null;
+    debug = false;
+    //Number of hits before the box self destructs
+    _hits = -1;
+    get hits() {
+        return this._hits;
+    }
+    set hits(value) {
+        this._hits = value;
+        if (this._hits === 0) {
+            console.log('box destructs');
+            this.scene.events.emit('boxdestruct', this);
+        }
+    }
     constructor(sprite) {
         super(sprite.scene, sprite.x, sprite.y, sprite.texture.key, sprite.frame.name);
         this.scene = sprite.scene;
         this.setOrigin(0, 0);
-        this.note = '';
-        this.underneath = null;
-        this.onTopOf = null;
-        this.debug = false;
         this.flipX = Math.random() > 0.5;
+        if (sprite.data != null && sprite.data.list['Hits']) {
+            this._hits = parseInt(sprite.data.list['Hits']) + 1;
+            //add counter
+            this.text = this.scene.make.text({
+                x: 0,
+                y: 0,
+                text: this._hits,
+                style: {
+                    font: '32px HvdComic',
+                    fill: '#ffffff'
+                }
+            });
+            this.text.depth = 20;
+            this.text.setOrigin(.5, .5);
+            this.scene.game.shadowText(this.text);
+        }
+
+        this.on('destroy', function () {
+            this.text.destroy();
+        }, this);
         this.init();
     }
     init() { 
@@ -32,6 +64,13 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
         this.body.allowGravity = true;
         this.lastContact = null;
         this.body.setGravityY(1);
+    }
+    preUpdate() {
+        if (this.text) {
+            this.text.x = Math.floor(this.x + this.width / 2);
+            this.text.y = Math.floor(this.y + this.height / 2);
+            this.text.text = this._hits;
+        }
     }
     // preUpdate(a, b) {
     //     if (this.debug) {
