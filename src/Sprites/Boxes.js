@@ -147,8 +147,10 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
      */
     playerCollide(player, box) {
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
-            this.deActivate(box);
-            player.overBox(box, player);
+            if (box.Affects === null || player.is(box.Affects)) {
+                this.deActivate(box);
+                player.overBox(box, player);
+            }
         }
     }
 
