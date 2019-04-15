@@ -16,7 +16,7 @@ export default class BootScene extends Phaser.Scene {
     this.load.image('splat', 'assets/splat.png'); //death image
     this.load.image('ui', 'assets/ui.png'); //ui
   //  // player animations
-    this.load.atlas('flit', 'assets/Flit/flit.png', 'assets/Flit/flit.json');
+    this.load.atlas('flit', 'assets/Flit/flit2.png', 'assets/Flit/flit2.json');
     this.load.atlas('bob', 'assets/Bob/bob.png', 'assets/Bob/bob.json');
     this.load.atlas('buttons', 'assets/buttons.png', 'assets/buttons.json');
   //   this.load.atlas('clouds', 'assets/clouds.png', 'assets/clouds.json');

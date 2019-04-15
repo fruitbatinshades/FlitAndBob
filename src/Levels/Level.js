@@ -12,8 +12,6 @@ import Dialog from '../Scenes/Dialog.js';
 export default class Level extends Phaser.Scene {
     /** The zones created from the maps interaction layer */
     zones;
-    flies = 0;
-    shrooms = 0;
     fliesCollected = 0;
     shroomsCollected = 0;
     mapIds;
@@ -30,6 +28,12 @@ export default class Level extends Phaser.Scene {
     constructor(handle, mapName) {
         super(handle);
         this.mapName = mapName;
+    }
+    reset() {
+        this.totalShrooms = 0;
+        this.totalFlies = 0;
+        this.fliesCollected = 0;
+        this.shroomsCollected = 0;
     }
     //NB: Call from preload
     preload() {
@@ -63,10 +67,16 @@ export default class Level extends Phaser.Scene {
     create() { 
         this.cameras.main.setBackgroundColor(0x10ceff);
         this.buildLevel();
-        this.scene.add('HUD', HUD, true, { x: 400, y: 300 });
+        if(!this.HUD){
+            this.HUD = this.scene.add('HUD', HUD, true, { x: 400, y: 300 });
+        } else {
+            this.scene.resume('HUD');
+            this.events.emit('updateHUD', this.game.Bob);
+            this.events.emit('updateHUD', this.game.Flit);
+        }
         //Level complete so display summary
         this.events.on('levelcomplete', function () { 
-            let d = new Dialog(this, 400, 300, 'Level Complete', 'Next');
+            let d = new Dialog(this, 400, 200, 'Level Complete', 'Next');
             d.depth = 1000;
             this.add.existing(d);
             //when closed finish level
@@ -75,9 +85,9 @@ export default class Level extends Phaser.Scene {
                 this.scene.get('LevelLoader').levelFinished();
             },this);
         }, this);
-        //Cjaracter died so restart
+        //Character died so restart
         this.events.on('died', function (player) {
-            this.scene.remove('HUD');
+            this.scene.pause('HUD');
             this.scene.restart(); 
         },this);
     }
@@ -86,6 +96,7 @@ export default class Level extends Phaser.Scene {
      * @param {PhaserScene} scene The scene to populate
      */
     buildLevel() {
+        this.reset();
         let sets = [];
         this.map.tilesets.forEach((b) => {
             //console.log(`Added tilesetImage ${b.name}`);

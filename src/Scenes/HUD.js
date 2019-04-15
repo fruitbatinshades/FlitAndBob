@@ -44,11 +44,9 @@ export default class HUD extends Phaser.Scene {
                 this.shroomsCollected.text = player.collected + ' / ' + lvl.totalShrooms;
             }
             else if (player.is('Flit')) {
-                this.flitHealth.text = parseInt((player.health / 75) * 100) + ' %';
+                this.flitHealth.text = parseInt((player.health / 50) * 100) + ' %';
                 this.fliesCollected.text = player.collected + ' / ' + lvl.totalFlies;
             }
-
-
         }, this);
     }
     setStroke(txt) {

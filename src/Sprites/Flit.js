@@ -16,7 +16,7 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     this.speed = 300;
     this.IsSlow = false;
     this.IsFast = false;
-    this.health = 75;
+    this.health = 50;
     this.lastInjure = 0;
     this.collected = 0;
     this.name = 'flit';
@@ -27,12 +27,13 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     this.scene.add.existing(this);
    // create the player sprite    
     //this.setOrigin(0.5);
-    this.setScale(.6);
-    this.setCircle(Math.floor((this.body.width * this.scaleX)/ 2));
-    this.setBounce(0.1,0.1); // our player will bounce from items
+
+    this.setScale(.5);
+    this.setCircle((this.width * this.scaleX) - 20);
+    this.setBounce(0.1, 0.1); // our player will bounce from items
     this.body.setAllowGravity(false);
     this.setCollideWorldBounds(true); // don't go out of the map 
-    this.body.setOffset(Math.floor((this.body.width * this.scaleX) / 2), Math.floor((this.body.height * this.scaleY) / 2));
+    this.body.setOffset((this.body.width * this.scaleX) / 2, (this.body.height * this.scaleY) / 2);
 
     this.splat = this.scene.add.image(0, 0, 'splat');
     this.splat.setDepth(100).visible = false;
@@ -40,22 +41,22 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
 
     // player walk animation
     this.anims.animationManager.create({
-        key: 'flit_fly',
-      frames: this.anims.animationManager.generateFrameNames('flit', { prefix: 'Fly_animtion0_', start: 1, end: 6, suffix: '.png', yoyo: true}),
-        frameRate: 30,
+      key: 'flit_fly',
+      frames: this.anims.animationManager.generateFrameNames('flit', { prefix: 'Fly', start: 1, end: 3, zeroPad: 2, suffix: '.png', yoyo: true }),
+      frameRate: 12,
       repeat: -1
     });
     this.anims.animationManager.create({
       key: 'flit_rush',
-      frames: this.anims.animationManager.generateFrameNames('flit', { prefix: 'Fly_animtion0_', start: 1, end: 6, suffix: '.png', yoyo: true }),
-      frameRate: 40,
+      frames: this.anims.animationManager.generateFrameNames('flit', { prefix: 'Fly', start: 1, end: 3, zeroPad: 2, suffix: '.png', yoyo: true }),
+      frameRate: 20,
       repeat: -1
     });
     this.anims.animationManager.create({
-        key: 'flit_idle',
-      frames: this.anims.animationManager.generateFrameNames('flit', { prefix: 'Fly_animtion0_', start: 1, end: 6, suffix: '.png', yoyo: true}),
-        frameRate: 20,
-        repeat: -1
+      key: 'flit_idle',
+      frames: this.anims.animationManager.generateFrameNames('flit', { prefix: 'Fly', start: 1, end: 3, zeroPad: 2, suffix: '.png', yoyo: true }),
+      frameRate: 6,
+      repeat: -1
     });
     this.idle();
   }
