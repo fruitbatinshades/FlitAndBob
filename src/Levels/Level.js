@@ -23,11 +23,9 @@ export default class Level extends Phaser.Scene {
     debug = false;
     mapProperties;
     loader;
-    mapName;
 
-    constructor(handle, mapName) {
+    constructor(handle) {
         super(handle);
-        this.mapName = mapName;
     }
     reset() {
         this.totalShrooms = 0;
@@ -37,8 +35,8 @@ export default class Level extends Phaser.Scene {
     }
     //NB: Call from preload
     preload() {
-        this.load.tilemapTiledJSON(this.mapName, `assets/Levels/${this.mapName}.json`);
-        this.map = this.make.tilemap({ key: this.mapName });
+        this.load.tilemapTiledJSON(this.registry.get('currentLevel'), `assets/Levels/${this.registry.get('currentLevel')}.json`);
+        this.map = this.make.tilemap({ key: this.registry.get('currentLevel') });
         this.mapProperties = this.map.properties;
         //this.map = this.map;
         if (this.map.properties["debug"]) this.debug = this.map.properties["debug"];
@@ -63,8 +61,31 @@ export default class Level extends Phaser.Scene {
                 }
             });
         }
+        //Level complete so display summary
+        this.events.on('levelcomplete', function () {
+            let d = new Dialog(this, 400, 200, 'Level Complete', 'Next');
+            d.depth = 1000;
+            this.add.existing(d);
+            //when closed finish level
+            this.events.on('dialogclosed', function () {
+                console.log('closed');
+                this.scene.get('LevelLoader').levelFinished();
+            }, this);
+        }, this);
+        //Character died so restart
+        this.events.on('died', function (player) {
+            this.scene.pause('HUD');
+            this.scene.restart();
+        }, this);
+        this.events.once('shutdown', (a, b) => {
+            console.log('shutdown', a, b);
+            this.events.off('levelcomplete');
+            this.events.off('died');
+            this.events.off('gameobjectdown');
+        }, this);
     }
     create() { 
+        console.log('Level create');
         this.cameras.main.setBackgroundColor(0x10ceff);
         this.buildLevel();
         if(!this.HUD){
@@ -74,22 +95,6 @@ export default class Level extends Phaser.Scene {
             this.events.emit('updateHUD', this.game.Bob);
             this.events.emit('updateHUD', this.game.Flit);
         }
-        //Level complete so display summary
-        this.events.on('levelcomplete', function () { 
-            let d = new Dialog(this, 400, 200, 'Level Complete', 'Next');
-            d.depth = 1000;
-            this.add.existing(d);
-            //when closed finish level
-            this.events.on('dialogclosed', function () {
-                console.log('closed');
-                this.scene.get('LevelLoader').levelFinished();
-            },this);
-        }, this);
-        //Character died so restart
-        this.events.on('died', function (player) {
-            this.scene.pause('HUD');
-            this.scene.restart(); 
-        },this);
     }
     /**
      * Crete the maps, player and set up collisions

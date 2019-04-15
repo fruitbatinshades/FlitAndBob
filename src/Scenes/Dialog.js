@@ -43,6 +43,10 @@ export default class Dialog extends Phaser.GameObjects.Container{
         
         this.add([this.assetText, button, play]);
 
+        this.on('destroy', function () {
+            button.off('pointerup');
+            scene.input.keyboard.off('keydown');
+        });
         button.on('pointerup', function (pointer, gameObject) {
             this.scene.events.emit('dialogclosed');
             this.destroy();

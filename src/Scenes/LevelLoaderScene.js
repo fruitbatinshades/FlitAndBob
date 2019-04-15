@@ -11,16 +11,15 @@ export default class LevelLoaderScene extends Phaser.Scene {
     switchIds;
 
     startScene = 'LevelLoader';
-    startLevel;
 
     constructor(key, level) {
         super(key);
     }
     preload() {
-        this.startLevel = this.game.levels[this.game.levelIndex];
+        this.registry.set('currentLevel', this.game.levels[this.game.levelIndex]);
         //get the name of the scene to start from the querystring if there
         let l = getQueryStringValue('level');
-        if (l !== '') this.startLevel = l;
+        if (l !== '') this.registry.set('currentLevel',l);
 
         let splash = this.add.image(0, 0, 'SplashBackground').setOrigin(0, .15);
         this.progressBar = this.add.graphics();
@@ -104,15 +103,25 @@ export default class LevelLoaderScene extends Phaser.Scene {
             this.percentText.destroy();
             this.assetText.destroy();
         }, this);
+        this.PlayButton.on('pointerdown', function () {
+            if (this.scene.get('Level') !== null) {
+                this.scene.get('Level').scene.restart('Level');
+                this.scene.sendToBack(this);
+            } else {
+                this.scene.add('Level', new Level('Level', this.registry.get('currentLevel')), true);
+            }
+            this.scene.pause(this);
+        }, this);
+
         this.load.once('filecomplete', this.mapLoaded, this);
-        this.load.tilemapTiledJSON(this.startLevel, `assets/Levels/${this.startLevel}.json`);
+        this.load.tilemapTiledJSON(this.registry.get('currentLevel'), `assets/Levels/${this.registry.get('currentLevel')}.json`);
     }
     create() {
         console.log('create');
         let n = this.make.text({
             x: this.cameras.main.width / 2,
             y: 420,
-            text:'Play ' + this.startLevel,
+            text: 'Play ' + this.registry.get('currentLevel'),
             style: {
                 font: '28px HvdComic',
                 fill: '#ffffff'
@@ -121,15 +130,10 @@ export default class LevelLoaderScene extends Phaser.Scene {
         n.setOrigin(.5);
         this.game.cartoonText(n);
         this.PlayButton.alpha = 1;
-        this.PlayButton.on('pointerdown', function () {
-            let l = new Level('Level', this.startLevel);
-            this.scene.add('Level', l, true);
-            this.scene.pause(this);
-        }, this);
     }
     levelFinished() {
-        this.scene.remove('HUD');
-        this.scene.remove('Level');
+        this.scene.pause('HUD');
+        this.scene.pause('Level');
         if (this.game.levels.length > this.game.levelIndex + 1) this.game.levelIndex++;
         this.scene.bringToTop(this);
         this.scene.restart();
@@ -141,7 +145,7 @@ export default class LevelLoaderScene extends Phaser.Scene {
         ]);
         console.log('map loaded');
         // create the map in the scene
-        this.map = this.make.tilemap({ key: this.startLevel });
+        this.map = this.make.tilemap({ key: this.registry.get('currentLevel') });
         //load backgrounds from map.properties.Backgrounds (Pipe delimeted filename from tiled)
         this.load.setPath('assets/Levels/Backgrounds/');
         this.map.properties["Backgrounds"].split('|').forEach((b) => {
