@@ -1,5 +1,5 @@
 /// <reference path="../../defs/phaser.d.ts" />
-import Player from '../Sprites/Player.js';
+import Bob from '../Sprites/Bob.js';
 import Flit from '../Sprites/Flit.js';
 import Boxes from '../Sprites/Boxes.js';
 import Enums from './Tilemaps.js';
@@ -240,7 +240,7 @@ export default class Level extends Phaser.Scene {
             // if (scene._NEWGAME && scene._LEVEL === 1) {
                 if (obj.type === 'StartPosition') {
                     if (obj.name === 'Bob') {
-                        this.player = new Player(this, obj.x, obj.y);
+                        this.player = new Bob(this, obj.x, obj.y);
                         this.player.depth = 100;
                         this.game.Bob = this.player;
                     }

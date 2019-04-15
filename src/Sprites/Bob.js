@@ -5,7 +5,7 @@
 //Implement lift
 //Implement push
 
-export default class Player extends Phaser.Physics.Arcade.Sprite {
+export default class Bob extends Phaser.Physics.Arcade.Sprite {
   get activeSpeed() {
     if (this.isSlow) return this.speed / 2;
     if (this.isFast) return this.speed * 1.5;

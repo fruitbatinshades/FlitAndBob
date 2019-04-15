@@ -118,11 +118,7 @@
    </properties>
   </object>
   <object id="97" name="Box" gid="29" x="896" y="832" width="64" height="64"/>
-  <object id="108" name="Box" gid="30" x="2240" y="1152" width="64" height="64">
-   <properties>
-    <property name="Affects" value="bob"/>
-   </properties>
-  </object>
+  <object id="108" name="Box" gid="30" x="2240" y="1152" width="64" height="64"/>
  </objectgroup>
  <layer id="7" name="InteractionTiles" width="40" height="19">
   <properties>
