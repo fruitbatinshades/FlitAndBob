@@ -22,6 +22,7 @@ export default class Enums {
             StopLeftL: 10,
             StopLeftM: 11,
             StopLeftR: 12,
+            Arrow: 16,
             PlantPot1: 25,
             PlantPot2: 26,
             Stone1: 27,

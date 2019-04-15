@@ -137,6 +137,9 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
             if (this.tileType && this.tileType.isSwitch) {
                 let switchTile = this.scene.map.getTileAt(this.tileObj.x / 64, this.tileObj.y / 64, false, 'InteractionTiles')
                 switchTile.index = this.interaction.scene.switchIds.switchState(switchTile.index, this);
+                //TODO: Add arrow that points to target
+                //arrow.rotation = game.physics.arcade.angleBetween(arrow, target);
+
                 // if (this.GroupKey !== null && this.GroupKey.key !== null && this.GroupKey.key !== '') {
                 //     let related = this.interaction.getGroupSwitches(this.GroupKey.key, this.name);
                 //     for (let i = 0; i < related.length; i++){

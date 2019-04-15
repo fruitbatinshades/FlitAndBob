@@ -7,7 +7,7 @@ import LevelLoaderScene from './Scenes/LevelLoaderScene.js';
 
 class Game extends Phaser.Game {
   levels = [
-    'Example', 'L1'
+    'Example', 'L1', 'L2'
   ];
   levelIndex = 0;
 
