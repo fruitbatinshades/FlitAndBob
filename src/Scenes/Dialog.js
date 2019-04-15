@@ -11,16 +11,6 @@ export default class Dialog extends Phaser.GameObjects.Container{
 
         this.dlg = scene.add.nineslice(0,0,w,h,'ui',16);
         this.add(this.dlg);
-        this.close = scene.make.text({
-            x: this.dlg.width - 50,
-            y:  10,
-            text: 'X',
-            style: {
-                font: '34px HvdComic',
-                fill: '#1493F5'
-            }
-        });
-        this.add(this.close);
 
         this.assetText = scene.make.text({
             x: this.dlg.width / 2,
@@ -43,15 +33,15 @@ export default class Dialog extends Phaser.GameObjects.Container{
         
         this.add([this.assetText, button, play]);
 
-        this.on('destroy', function () {
+        this.once('destroy', function () {
             button.off('pointerup');
             scene.input.keyboard.off('keydown');
         });
-        button.on('pointerup', function (pointer, gameObject) {
+        button.once('pointerup', function (pointer, gameObject) {
             this.scene.events.emit('dialogclosed');
             this.destroy();
         }, this);
-        scene.input.keyboard.on('keydown', function (event) {
+        scene.input.keyboard.once('keydown', function (event) {
             this.scene.events.emit('dialogclosed');
             this.destroy();
         },this);

@@ -85,7 +85,7 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
     });
   }
   idle() {
-    //this.body.setVelocityX(0);
+    this.body.setVelocityX(0);
     this.anims.play('idle', true);
   }
   injure(amount) {

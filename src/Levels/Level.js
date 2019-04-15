@@ -23,6 +23,7 @@ export default class Level extends Phaser.Scene {
     debug = false;
     mapProperties;
     loader;
+    modalActive = false;
 
     constructor(handle) {
         super(handle);
@@ -66,6 +67,7 @@ export default class Level extends Phaser.Scene {
             let d = new Dialog(this, 400, 200, 'Level Complete', 'Next');
             d.depth = 1000;
             this.add.existing(d);
+            this.modalActive = true;
             //when closed finish level
             this.events.on('dialogclosed', function () {
                 console.log('closed');
@@ -82,6 +84,7 @@ export default class Level extends Phaser.Scene {
             this.events.off('levelcomplete');
             this.events.off('died');
             this.events.off('gameobjectdown');
+            this.events.off('dialogclosed');
         }, this);
     }
     create() { 
@@ -272,19 +275,24 @@ export default class Level extends Phaser.Scene {
         this.registry.set('ActivePlayer', this.player);
     }
     update() {
-        //Switch characters
-        if (Phaser.Input.Keyboard.JustDown(this.shiftKey)) {
-            this.switchCharacter();
+        if (!this.modalActive) {
+            //Switch characters
+            if (Phaser.Input.Keyboard.JustDown(this.shiftKey)) {
+                this.switchCharacter();
+            }
+            //only pass keyboard to player if not switching
+            if (this.registry.list.ActivePlayer && !this.game._ChangingPlayer) {
+                this.registry.list.ActivePlayer.update(this.cursors, this.spaceKey);
+            }
+            //sync the background to the camera
+            Phaser.Actions.Call(this.sky.getChildren(), function (layer) {
+                layer.x = this.cameras.main.scrollX;
+                layer.tilePositionX = this.cameras.main.scrollX;
+            }, this);
+        } else {
+            this.game.Bob.idle();
+            this.game.Flit.idle();
         }
-        //only pass keyboard to player if not switching
-        if (this.registry.list.ActivePlayer && !this.game._ChangingPlayer) {
-            this.registry.list.ActivePlayer.update(this.cursors, this.spaceKey);
-        }
-        //sync the background to the camera
-        Phaser.Actions.Call(this.sky.getChildren(), function (layer) {
-            layer.x = this.cameras.main.scrollX;
-            layer.tilePositionX = this.cameras.main.scrollX ;
-        }, this);
     }
     switchCharacter() {
         let ap = this.registry.list.ActivePlayer;
