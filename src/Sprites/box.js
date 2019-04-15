@@ -51,7 +51,7 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
         }
 
         this.on('destroy', function () {
-            this.text.destroy();
+            if(this.text) this.text.destroy();
         }, this);
         this.init();
     }

@@ -283,7 +283,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                 if (group.length !== 0) {
                     for (let i = 0; i < group.length; i++) {
                         let g = group[i][1];
-                        if (g.tileType.isLight) {
+                        if (g.tileType && g.tileType.isLight) {
                             let switchTile = this.scene.map.getTileAt(g.tileObj.x / 64, g.tileObj.y / 64, false, 'InteractionTiles')
                             switchTile.index = this.scene.switchIds.switchState(switchTile.index, triggerZone);
                         }else{
