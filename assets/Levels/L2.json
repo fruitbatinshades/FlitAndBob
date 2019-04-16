@@ -42,6 +42,18 @@
                  "width":0,
                  "x":2,
                  "y":384
+                }, 
+                {
+                 "height":0,
+                 "id":119,
+                 "name":"Tools.svg",
+                 "point":true,
+                 "rotation":0,
+                 "type":"Image",
+                 "visible":true,
+                 "width":0,
+                 "x":1408,
+                 "y":832
                 }],
          "opacity":1,
          "properties":
@@ -840,11 +852,11 @@
          "y":0
         }],
  "nextlayerid":17,
- "nextobjectid":119,
+ "nextobjectid":121,
  "orientation":"orthogonal",
  "properties":
     {
-     "Backgrounds":"BrickTile.svg|gnome.svg|WallTile.svg|Clouds.svg",
+     "Backgrounds":"BrickTile.svg|gnome.svg|WallTile.svg|Clouds.svg|Tools.svg",
      "debug":true
     },
  "propertytypes":
