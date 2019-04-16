@@ -1,0 +1,10 @@
+{
+    "liveServer.settings.port": 45001,
+    "liveServer.settings.root": "/",
+    "liveServer.settings.CustomBrowser": "chrome",
+    "liveServer.settings.NoBrowser": false,
+    "liveServer.settings.ignoreFiles": [
+        ".vscode/**",
+        "**/*.tmx"
+    ]
+}

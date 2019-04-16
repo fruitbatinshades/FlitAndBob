@@ -8,7 +8,6 @@ export default class Dialog extends Phaser.GameObjects.Container{
         this.title = title;
         this.text = buttonText;
 
-
         this.dlg = scene.add.nineslice(0,0,w,h,'ui',16);
         this.add(this.dlg);
 
@@ -36,7 +35,8 @@ export default class Dialog extends Phaser.GameObjects.Container{
         this.once('destroy', function () {
             button.off('pointerup');
             scene.input.keyboard.off('keydown');
-        });
+            //delete this;
+        },this);
         button.once('pointerup', function (pointer, gameObject) {
             this.scene.events.emit('dialogclosed');
             this.destroy();

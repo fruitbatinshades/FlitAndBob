@@ -21,7 +21,6 @@ class Game extends Phaser.Game {
     this._ChangingPlayer = false; //Whether we are currenty changing between players
     this.scene.add('Boot', BootScene);
     this.scene.add('LevelLoader', LevelLoaderScene);
-    //this.scene.add('UI', UIScene);
     this.scene.start('Boot');
   }
   /**

@@ -89,6 +89,7 @@ export default class Level extends Phaser.Scene {
     }
     create() { 
         console.log('Level create');
+        this.modalActive = false;
         this.cameras.main.setBackgroundColor(0x10ceff);
         this.buildLevel();
         if(!this.HUD){

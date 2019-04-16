@@ -6,10 +6,6 @@ export default class BootScene extends Phaser.Scene {
   }
 
   preload () {
-    this.levels = {
-      1: 'L1',
-      2: 'L2'
-    };
   // tiles in spritesheet 
     this.load.spritesheet('ComponentSheet', 'assets/Levels/components.png', { frameWidth: 64, frameHeight: 64 }); //Required for icons from the component sheet
     this.load.image('SplashBackground', 'assets/TemporaryBackground-min.png');
