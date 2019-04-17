@@ -10,7 +10,7 @@ The main physics and UI effects are processed here.
 If a zone is marked as `Blocks` or `Blocks=Box` the constructor creates the physics associated with it.
 
 ## InteractionZone.js
-Interaction Zones are used to react when the player or a box enters it. They amp the properties from the tiled map and process themselves.
+Interaction Zones are used to react when the player or a box enters it. They map the properties from the tiled map and process themselves.
 
 ## Level.js
 Processes the map and creates the Phaser objects
