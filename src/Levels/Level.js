@@ -11,18 +11,12 @@ import Dialog from '../Scenes/Dialog.js';
  */
 export default class Level extends Phaser.Scene {
     /** The zones created from the maps interaction layer */
-    zones;
-    fliesCollected = 0;
-    shroomsCollected = 0;
-    mapIds;
-    backgrounds;
+    interactionZones;
     switchIds;
     sky;
     totalShrooms= 0;
     totalFlies = 0;
     debug = false;
-    mapProperties;
-    loader;
     modalActive = false;
 
     constructor(handle) {
@@ -31,15 +25,11 @@ export default class Level extends Phaser.Scene {
     reset() {
         this.totalShrooms = 0;
         this.totalFlies = 0;
-        this.fliesCollected = 0;
-        this.shroomsCollected = 0;
     }
     //NB: Call from preload
     preload() {
         this.load.tilemapTiledJSON(this.registry.get('currentLevel'), `assets/Levels/${this.registry.get('currentLevel')}.json`);
         this.map = this.make.tilemap({ key: this.registry.get('currentLevel') });
-        this.mapProperties = this.map.properties;
-        //this.map = this.map;
         if (this.map.properties["debug"]) this.debug = this.map.properties["debug"];
 
         // set the boundaries of our game world
@@ -115,7 +105,6 @@ export default class Level extends Phaser.Scene {
         
         this.createPlayer();
         this.mapLayers = {};
-        let layerDepth = 1;
         //Tile layers
         this.map.layers.forEach((l) => {
             //console.log(`Created static layer ${l.name}`, l);

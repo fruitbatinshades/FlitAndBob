@@ -17,27 +17,27 @@ When Bob and flit are together, picking up a box gets confused
 ## Graphics
 
 ### World
-~~Drain pipe~~
-Fencing
-Branches
-Washing Pole
-Foliage
+* ~~Drain pipe~~
+* Fencing
+* Branches
+* Washing Pole
+* Foliage
 
 ### Decoration
-Washing Bag
-Fruit Bat
-Shed
-Gnomes
-Fencing
-Trees
-Flowers
-Vegetables
-Cat
-Bird
-Foliage
-~~Trellis~~
-Wheel Barrow
-Compost Bin
+* Washing Bag
+* Fruit Bat
+* Shed
+* Gnomes
+* Fencing
+* Trees
+* Flowers
+* Vegetables
+* Cat
+* Bird
+* Foliage
+* ~~Trellis~~
+* Wheel Barrow
+* Compost Bin
 
 
 ## Bugs

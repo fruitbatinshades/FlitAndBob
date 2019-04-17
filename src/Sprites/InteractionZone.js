@@ -25,7 +25,6 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
     //Whether it blocks (physics)
     Blocks = null;
 
-    lookup;
     tileType;
     isActive = true;
     _switchOn = false;
