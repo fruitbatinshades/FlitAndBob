@@ -50,7 +50,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             //If there is a blocks property set up collision
             if (z.Blocks) {
                 z.body.setImmovable(true); //do this else you pass through
-                scene.physics.add.collider(scene.player, z, this.blocks, this.preBlock, this);
+                scene.physics.add.collider(scene.bob, z, this.blocks, this.preBlock, this);
                 scene.physics.add.collider(scene.flit, z, this.blocks, this.preBlock, this);
                 //if the zone blocks boxes
                 if (z.Blocks.key === 'Box') {
@@ -69,7 +69,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                     let a = scene.physics.add.collider(scene.mapLayers['Boxes'], z, scene.mapLayers['Boxes'].tileCollide, null, scene.mapLayers['Boxes']);
                 } else {
                     //set up overlap for callback
-                    scene.physics.add.overlap(scene.player, z, this.overZone, null, this);
+                    scene.physics.add.overlap(scene.bob, z, this.overZone, null, this);
                     scene.physics.add.overlap(scene.flit, z, this.overZone, null, this);
                 }
             }
@@ -105,7 +105,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
      */
     overZone(player, zone) {
         //check its the active player
-        if (player.is(this.scene.registry.list.ActivePlayer.name)) {
+        if (player.is(this.scene.ActivePlayer.name)) {
             let t = this.lookup[zone.name];
             //If its an effect require space key
             if (t.Effect === null) {
@@ -122,7 +122,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
         }
         if (!this.inExit && zone.name === 'Exit') {
             //check both Flit and Bob are here
-            if (zone.body.hitTest(this.scene.player.x, this.scene.player.y) && zone.body.hitTest(this.scene.flit.x, this.scene.flit.y)) {
+            if (zone.body.hitTest(this.scene.bob.x, this.scene.bob.y) && zone.body.hitTest(this.scene.flit.x, this.scene.flit.y)) {
                 this.inExit = true;
                 this.scene.events.emit('levelcomplete');
             }

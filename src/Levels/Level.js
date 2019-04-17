@@ -18,6 +18,12 @@ export default class Level extends Phaser.Scene {
     totalFlies = 0;
     debug = false;
     modalActive = false;
+    get ActivePlayer() {
+        return this.registry.get('ActivePlayer');
+    }
+    set ActivePlayer(value) {
+        return this.registry.set('ActivePlayer', value);
+    }
 
     constructor(handle) {
         super(handle);
@@ -169,11 +175,11 @@ export default class Level extends Phaser.Scene {
         });
 
         //create player collision
-        this.physics.add.collider(this.mapLayers.World , this.player);
+        this.physics.add.collider(this.mapLayers.World , this.bob);
         this.physics.add.collider(this.mapLayers.World, this.flit);
 
         //Set up the coin layer with overlap and callback
-        this.physics.add.overlap(this.player, this.mapLayers.Coins);
+        this.physics.add.overlap(this.bob, this.mapLayers.Coins);
         this.physics.add.overlap(this.flit, this.mapLayers.Coins);
         this.mapLayers.Coins.setTileIndexCallback(this.switchIds.Collectables, this.collectCoin, this);
 
@@ -242,16 +248,15 @@ export default class Level extends Phaser.Scene {
     }
     /**
      * Create Flit and Bob sprite classes
-     * @param {PhaserScene} scene The scene to populate
      */
     createPlayer() {
         this.map.findObject('Player', (obj) => {
             // if (scene._NEWGAME && scene._LEVEL === 1) {
                 if (obj.type === 'StartPosition') {
                     if (obj.name === 'Bob') {
-                        this.player = new Bob(this, obj.x, obj.y);
-                        this.player.depth = 100;
-                        this.game.Bob = this.player;
+                        this.bob = new Bob(this, obj.x, obj.y);
+                        this.bob.depth = 100;
+                        this.game.Bob = this.bob;
                     }
                     if (obj.name === 'Flit') {
                         this.flit = new Flit(this, obj.x, obj.y);
@@ -261,8 +266,10 @@ export default class Level extends Phaser.Scene {
                 }
             // }
         });
-        this.cameras.main.startFollow(this.player);
-        this.registry.set('ActivePlayer', this.player);
+        if (this.game.Bob) {
+            this.ActivePlayer = this.game.Bob;
+            this.cameras.main.startFollow(this.ActivePlayer);
+        }
     }
     update() {
         if (!this.modalActive) {
@@ -271,8 +278,8 @@ export default class Level extends Phaser.Scene {
                 this.switchCharacter();
             }
             //only pass keyboard to player if not switching
-            if (this.registry.list.ActivePlayer && !this.game._ChangingPlayer) {
-                this.registry.list.ActivePlayer.update(this.cursors, this.spaceKey);
+            if (this.ActivePlayer && !this.game._ChangingPlayer) {
+                this.ActivePlayer.update(this.cursors, this.spaceKey);
             }
             //sync the background to the camera
             Phaser.Actions.Call(this.sky.getChildren(), function (layer) {
@@ -285,20 +292,18 @@ export default class Level extends Phaser.Scene {
         }
     }
     switchCharacter() {
-        let ap = this.registry.list.ActivePlayer;
         //stop current player activity
-        ap.idle();
-        ap.body.setVelocityX(0);
+        this.ActivePlayer.idle();
+        this.ActivePlayer.body.setVelocityX(0);
         //get the other character
-        this.registry.set('ActivePlayer', ap.is('Bob') ? this.flit : this.player);
-        ap = this.registry.list.ActivePlayer;
+        this.ActivePlayer = this.ActivePlayer.is('Bob') ? this.flit : this.bob;
 
         this.game._ChangingPlayer = true;
         //pan the camera 
         this.cameras.main.stopFollow();
-        this.cameras.main.pan(ap.x, ap.y, 500, 'Sine.easeInOut', true, (cam, complete, x, y) => {
+        this.cameras.main.pan(this.ActivePlayer.x, this.ActivePlayer.y, 500, 'Sine.easeInOut', true, (cam, complete, x, y) => {
             if (complete === 1) {
-                this.cameras.main.startFollow(ap, true, .1, .1);
+                this.cameras.main.startFollow(this.ActivePlayer, true, .1, .1);
                 this.game._ChangingPlayer = false;
             }
         });
