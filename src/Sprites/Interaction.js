@@ -76,21 +76,66 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             this.lookup[current.name] = z;
         }
     }
+    /**
+     * Get a zone by it's key
+     * @param {string} name Name of zone
+     * @returns {InteractionZone} The zone if found or null
+     */
     getByKey(name) {
         let f = Object.keys(this.lookup).find(zName => zName === name);
         return this.lookup[f] || null;
     }
+    /**
+     * Get all zones in a group
+     * @param {string} name The GroupKey to get
+     * @param {string} exclude The zone name to exclude
+     */
     getGroup(name, exclude) {
         if (name === null) return null;
         return Object.entries(Object.filter(this.lookup, (z) => z.hasOwnProperty('GroupKey') && z.GroupKey !== null && z.GroupKey.key && z.GroupKey.key === name && z.name != exclude));
     }
+    /**
+     * Get the switches in a group
+     * @param {string} name The GroupKey to get
+     * @param {string} exclude The zone name to exclude
+     */
     getGroupSwitches(name,exclude) {
         if (name === null) return null;
         return Object.entries(Object.filter(this.lookup, (z) => z.hasOwnProperty('GroupKey') && z.GroupKey !== null && z.GroupKey.key && z.GroupKey.key === name && z.tileType.isSwitch && z.name != exclude));
     }
+    /**
+     * Get an average co-ordinate for a group
+     * @param {string} name The GroupKey to get
+     * @param {string} exclude The zone name to exclude
+     * @returns {object} rectangle
+     */
+    getGroupPosition(name, exclude) {
+        let group = this.getGroup(name, exclude);
+        if (group == null) return null;
+        let X = [], Y = [];
+        for (let i = 0; i < group.length; i++){
+            let c = group[i][1]; 
+            X.push(c.x);
+            X.push(c.x + c.width);
+            Y.push(c.y);
+            Y.push(c.y + c.height);
+        }
+        let rect = {
+            x: Math.min(...X),
+            y: Math.min(...Y),
+            width: Math.max(...X) - Math.min(...X),
+            height: Math.max(...Y) - Math.min(...Y)
+        }
+        return rect;
+    }
     blocks(player, zone) {
         //player is blocked
     }
+    /**
+     * Check to see if the zone affects the player
+     * @param {Phaser.GameObjects.Sprite} player The player that has entered the zone
+     * @param {InteractionZone} zone The zone that has been enetered
+     */
     preBlock(player, zone) {
         //Check if specific player set or block either
         if (zone.Affect === null || zone.Affect.key === null || player.is(zone.Affect.key)) {

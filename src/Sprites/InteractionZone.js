@@ -139,12 +139,24 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
                 //TODO: Add arrow that points to target
                 //arrow.rotation = game.physics.arcade.angleBetween(arrow, target);
 
-                // if (this.GroupKey !== null && this.GroupKey.key !== null && this.GroupKey.key !== '') {
-                //     let related = this.interaction.getGroupSwitches(this.GroupKey.key, this.name);
-                //     for (let i = 0; i < related.length; i++){
-                //         related[i][1].process(null, true);
-                //     }
-                // }
+                if (this.GroupKey !== null && this.GroupKey.key !== null && this.GroupKey.key !== '') {
+                    //TEST: camera pan to group
+                    let rect = this.interaction.getGroupPosition(this.GroupKey.key, this.name);
+                    
+                    // //TODO: Nested pan doesn't run second pan callback
+                    // this.scene.cameras.main.stopFollow();
+                    // this.scene.cameras.main.pan(rect.x + rect.width / 2, rect.y + rect.height / 2, 500, 'Sine.easeInOut', false, (cam, complete, x, y) => {
+                    //     if (complete === 1) {
+                    //         this.scene.cameras.main.pan(this.scene.ActivePlayer.x, this.scene.ActivePlayer.y, 500, 'Sine.easeInOut', true, (acam, acomplete, x, y) => {
+                    //             alert('pan back');
+                    //             if (acomplete === 1) {
+                    //                 this.scene.cameras.main.startFollow(this.scene.ActivePlayer, true, .1, .1);
+                    //                 this.scene.game._ChangingPlayer = false;
+                    //             }
+                    //         });
+                    //     }
+                    // });
+                 }
             }
             //get the target zone
             let target;
