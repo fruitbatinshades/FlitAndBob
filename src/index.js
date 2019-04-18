@@ -13,7 +13,7 @@ class Game extends Phaser.Game {
 
   constructor() {
     super(config);
-
+    //this.game.device.desktop
     //Create global variables for access across all scene instances
     this.Bob = null; //Bob Character
     this.Flit = null; //Flit Character

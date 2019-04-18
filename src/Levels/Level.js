@@ -301,9 +301,9 @@ export default class Level extends Phaser.Scene {
         this.game._ChangingPlayer = true;
         //pan the camera 
         this.cameras.main.stopFollow();
-        this.cameras.main.pan(this.ActivePlayer.x, this.ActivePlayer.y, 500, 'Sine.easeInOut', true, (cam, complete, x, y) => {
+        this.cameras.main.pan(this.ActivePlayer.x, this.ActivePlayer.y, 500, 'Sine.easeInOut', false, (cam, complete, x, y) => {
             if (complete === 1) {
-                this.cameras.main.startFollow(this.ActivePlayer, true, .1, .1);
+                this.cameras.main.startFollow(this.ActivePlayer, false, .1, .1);
                 this.game._ChangingPlayer = false;
             }
         });

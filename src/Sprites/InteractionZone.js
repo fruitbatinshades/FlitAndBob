@@ -24,7 +24,8 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
     Affect = null;
     //Whether it blocks (physics)
     Blocks = null;
-
+    //Whether the target has been shown to the camera so it only happens once
+    _groupShown = false;
     tileType;
     isActive = true;
     _switchOn = false;
@@ -136,26 +137,21 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
             if (this.tileType && this.tileType.isSwitch) {
                 let switchTile = this.scene.map.getTileAt(this.tileObj.x / 64, this.tileObj.y / 64, false, 'InteractionTiles')
                 switchTile.index = this.interaction.scene.switchIds.switchState(switchTile.index, this);
-                //TODO: Add arrow that points to target
-                //arrow.rotation = game.physics.arcade.angleBetween(arrow, target);
 
                 if (this.GroupKey !== null && this.GroupKey.key !== null && this.GroupKey.key !== '') {
-                    //TEST: camera pan to group
-                    let rect = this.interaction.getGroupPosition(this.GroupKey.key, this.name);
-                    
-                    // //TODO: Nested pan doesn't run second pan callback
-                    // this.scene.cameras.main.stopFollow();
-                    // this.scene.cameras.main.pan(rect.x + rect.width / 2, rect.y + rect.height / 2, 500, 'Sine.easeInOut', false, (cam, complete, x, y) => {
-                    //     if (complete === 1) {
-                    //         this.scene.cameras.main.pan(this.scene.ActivePlayer.x, this.scene.ActivePlayer.y, 500, 'Sine.easeInOut', true, (acam, acomplete, x, y) => {
-                    //             alert('pan back');
-                    //             if (acomplete === 1) {
-                    //                 this.scene.cameras.main.startFollow(this.scene.ActivePlayer, true, .1, .1);
-                    //                 this.scene.game._ChangingPlayer = false;
-                    //             }
-                    //         });
-                    //     }
-                    // });
+                    if (!this._groupShown) {
+                        //Pan the camera to the target if it's off screen
+                        let rect = this.interaction.getGroupPosition(this.GroupKey.key, this.name);
+                        if (!Phaser.Geom.Rectangle.ContainsRect(this.scene.cameras.main.worldView, rect)) {
+                            this.scene.cameras.main.once('camerapancomplete', () => {
+                                //pan 2 - will be called once when pan 1 completes
+                                this.scene.cameras.main.pan(this.scene.ActivePlayer.x, this.scene.ActivePlayer.y, 1000, 'Sine.easeInOut', true);
+                            });
+                            //pan 1 - pan to target
+                            this.scene.cameras.main.pan(rect.x + rect.width / 2, rect.y + rect.height / 2, 1000, 'Sine.easeInOut', false);
+                        }
+                        this._groupShown = true;
+                    }
                  }
             }
             //get the target zone

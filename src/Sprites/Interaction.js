@@ -120,13 +120,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             Y.push(c.y);
             Y.push(c.y + c.height);
         }
-        let rect = {
-            x: Math.min(...X),
-            y: Math.min(...Y),
-            width: Math.max(...X) - Math.min(...X),
-            height: Math.max(...Y) - Math.min(...Y)
-        }
-        return rect;
+        return new Phaser.Geom.Rectangle(Math.min(...X), Math.min(...Y), Math.max(...X) - Math.min(...X), Math.max(...Y) - Math.min(...Y));
     }
     blocks(player, zone) {
         //player is blocked

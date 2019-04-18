@@ -32,6 +32,7 @@ When Bob and flit are together, picking up a box gets confused
 * Trees
 * Flowers
 * Vegetables
+* Rhubarb
 * Cat
 * Bird
 * Foliage
