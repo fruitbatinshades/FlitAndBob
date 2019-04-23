@@ -7,7 +7,7 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
         Player: 2,
         Tile: 3
     }
-    note = '';
+    note;
 
     //box underneath this one
     underneath = null;
@@ -57,6 +57,10 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
                 this.Affects = sprite.data.list['Affects'];
             };
         }
+        if (this.debug) {
+            this.note = this.scene.add.text(this.x, this.y, '');
+            this.note.depth = 1000;
+        }
 
         this.on('destroy', function () {
             if(this.text) this.text.destroy();
@@ -92,7 +96,6 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
             if (this.onTopOf) n += `\nA${this.onTopOf.name}`;
             if (this.underneath) n += `\nB${this.underneath.name}`;
             this.note.setText(n);
-            
         }
     }
     /**

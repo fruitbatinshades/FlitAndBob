@@ -163,14 +163,6 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     this.isFast = false;
   }
 
-//   loseHealth () {
-//     this.health--;
-//     this.scene.events.emit('loseHealth', this.health);
-//     if (this.health === 0) {
-//       this.scene.loadNextLevel(true);
-//     }
-//   }
-
 //   enemyCollision (player, enemy) {
 //     if (!this.hitDelay) {
 //       this.loseHealth();

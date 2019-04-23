@@ -1,6 +1,7 @@
 /// <reference path="../../defs/phaser.d.ts" />
 import Settings from '../settings.js';
 import Box from './box.js';
+//import utils from '../Utils/Debug.js';
 
 export default class Boxes extends Phaser.Physics.Arcade.Group {
     static State = {
@@ -10,6 +11,8 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         Tile: 3
     }
     static tileWidth = 64;
+    debug = false;
+
     constructor(scene, children, spriteArray) {
         super(scene, children);
 
@@ -30,25 +33,16 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         }, this);
 
         this.spaceKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-
+       
         this.init();
     }
-    // preUpdate(a, b) { 
-    //     this.children.each((b) => {
-    //         b.note.x = b.x + 10;
-    //         b.note.y = b.y + 10;
-
-    //         let n = b.name;
-    //         if (b.onTopOf) n += `\nA${b.onTopOf.name}`;
-    //         if (b.underneath) n += `\nB${b.underneath.name}`;
-
-    //         b.note.setText(n);
-
-    //         // if (box.player) {
-
-    //         // }
-    //     });
-    // }
+    preUpdate(a, b) { 
+        if (this.debug) { 
+            // this.scene.fbisG.clear();
+            // utils.drawCollisionChecks(this.children.entries);
+            this.scene.game.drawCollision(this.scene, this.children.entries);
+        }
+    }
     init() {
         let i = 0;
         //NOTE: This is interesting, when you add a group to a scene it wipes out the child properties

@@ -153,7 +153,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             let t = this.lookup[zone.name];
             //If its an effect require space key
             if (t.Effect === null) {
-                if (this.scene.input.keyboard.checkDown(this.spaceKey, 500)) {
+                if (this.scene.input.keyboard.checkDown(this.spaceKey, 1000)) {
                     //if affect is supplied make sure its our player
                     if (t.Affect === null || (t.Affect !== null && t.Affect.key === player.name)) {
                         zone.process(player, true);

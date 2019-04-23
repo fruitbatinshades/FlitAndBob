@@ -4,11 +4,10 @@
 
 export default class fbisUtils{
     /**
-     * Render the currently active checkCollision settings on a body
+     * Render the currently active checkCollision settings on a body (call clear on the graphics object)
      * @param {Phaser.GameObjects.Body} object The body to draw collision lines on
      */
     static drawCollisionChecks(object) {
-        
         if (!Array.isArray(object)) {
             object = [object];
         }
@@ -31,27 +30,27 @@ export default class fbisUtils{
         
     }
     static drawCollision(object) {
-
-        let g = this.getDebugGraphics(object);
-        if (!g) {
-            console.warn('fbisG found in scene');
-        } else {
-            g.clear();
-            if (object.checkCollision.left) {
-                g.lineStyle(5, 0xff0000, 1);
-                g.lineBetween(object.left, object.top, object.left, object.bottom);
-            }
-            if (object.checkCollision.right) {
-                g.lineStyle(5, 0x00ff00, 1);
-                g.lineBetween(object.right, object.top, object.right, object.bottom);
-            }
-            if (object.checkCollision.up) {
-                g.lineStyle(5, 0x00aaff, 1);
-                g.lineBetween(object.left, object.top, object.left + object.width, object.top);
-            }
-            if (object.checkCollision.down) {
-                g.lineStyle(5, 0xffff00, 1);
-                g.lineBetween(object.left, object.bottom, object.left + object.width, object.bottom);
+        if (object) {
+            let g = this.getDebugGraphics(object);
+            if (!g) {
+                console.warn('fbisG found in scene');
+            } else {
+                if (object.checkCollision.left) {
+                    g.lineStyle(5, 0xff0000, 1);
+                    g.lineBetween(object.left, object.top, object.left, object.bottom);
+                }
+                if (object.checkCollision.right) {
+                    g.lineStyle(5, 0x00ff00, 1);
+                    g.lineBetween(object.right, object.top, object.right, object.bottom);
+                }
+                if (object.checkCollision.up) {
+                    g.lineStyle(5, 0x00aaff, 1);
+                    g.lineBetween(object.left, object.top, object.left + object.width, object.top);
+                }
+                if (object.checkCollision.down) {
+                    g.lineStyle(5, 0xffff00, 1);
+                    g.lineBetween(object.left, object.bottom, object.left + object.width, object.bottom);
+                }
             }
         }
     }
