@@ -8,20 +8,28 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
         Tile: 3
     }
     note = '';
+
+    lastContactLine;
+    //box underneath this one
     underneath = null;
+    //bon on top of this one
     onTopOf = null;
-    debug = false;
+    //ref to the last object we hit
+    lastContact = null;
+    //Player that can interact with the box
     Affects = null;
+    //Is this a Bob only rock
     isRock = false;
     //Number of hits before the box self destructs
     _hits = -1;
+
+    debug = false;
     get hits() {
         return this._hits;
     }
     set hits(value) {
         this._hits = value;
         if (this._hits === 0) {
-            console.log('box destructs');
             this.scene.events.emit('boxdestruct', this);
         }
     }
@@ -49,6 +57,10 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
             } else if (sprite.data.list['Affects']) {
                 this.Affects = sprite.data.list['Affects'];
             };
+            
+            this.lastContactLine = this.scene.add.line(0, 0, 0, 0, 0, 0, 0xFFFFFF);
+            this.lastContactLine.depth = 1000;
+            
         }
 
         this.on('destroy', function () {
@@ -77,6 +89,10 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
             this.text.y = Math.floor(this.y + this.height / 2);
             this.text.text = this._hits;
         }
+        if (this.lastContactLine && this.lastContact !== null) {
+            let isTile = this.lastContact.constructor.name === 'Tile';
+            this.lastContactLine.setTo(this.x, this.y, this.lastContact.x * (isTile ? 64 : 1), this.lastContact.y * (isTile ? 64 : 1));
+        }
         if (this.debug) {
             //Debug notes
             this.note.x = this.x + 10;
@@ -85,6 +101,7 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
             if (this.onTopOf) n += `\nA${this.onTopOf.name}`;
             if (this.underneath) n += `\nB${this.underneath.name}`;
             this.note.setText(n);
+            
         }
     }
     /**

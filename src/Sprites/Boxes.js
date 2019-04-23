@@ -86,7 +86,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
             box = tmp2;
             tile = tmp;
         }
-        if (box.lastContact !== tile) {
+        if (tile !== null && box.lastContact !== tile) {
             this.deActivate(box);
             box.status = Boxes.State.Tile;
             box.lastContact = tile;
@@ -105,7 +105,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         box.body.setGravityY(0);
         box.setVelocity(0, 0);
         box.body.stop();
-        box.body.y--;
+       // box.body.y--;
     }
     onBoxDestruct(box) {
         console.log('box destruct', box);
