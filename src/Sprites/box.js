@@ -9,7 +9,6 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
     }
     note = '';
 
-    lastContactLine;
     //box underneath this one
     underneath = null;
     //bon on top of this one
@@ -57,10 +56,6 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
             } else if (sprite.data.list['Affects']) {
                 this.Affects = sprite.data.list['Affects'];
             };
-            
-            this.lastContactLine = this.scene.add.line(0, 0, 0, 0, 0, 0, 0xFFFFFF);
-            this.lastContactLine.depth = 1000;
-            
         }
 
         this.on('destroy', function () {
@@ -88,10 +83,6 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
             this.text.x = Math.floor(this.x + this.width / 2);
             this.text.y = Math.floor(this.y + this.height / 2);
             this.text.text = this._hits;
-        }
-        if (this.lastContactLine && this.lastContact !== null) {
-            let isTile = this.lastContact.constructor.name === 'Tile';
-            this.lastContactLine.setTo(this.x, this.y, this.lastContact.x * (isTile ? 64 : 1), this.lastContact.y * (isTile ? 64 : 1));
         }
         if (this.debug) {
             //Debug notes
