@@ -12,6 +12,7 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
     onTopOf = null;
     debug = false;
     Affects = null;
+    isRock = false;
     //Number of hits before the box self destructs
     _hits = -1;
     get hits() {
@@ -93,7 +94,7 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
         // console.log(`Box reset: ${this.x}, ${this.y}, ${this.width}, ${this.height}`);
         // this.scene.add.rectangle(this.x - 10, this.y -10, this.width + 20 , this.height + 20, 0xff6699, .2)
 
-        //Update other boxes to remove this box from there references
+        //Update other boxes to remove this box from their references
         this.scene.physics.overlapRect(this.x - 10, this.y - 10, this.width + 20, this.height + 20).forEach((o) => {
             let box = o.gameObject;
              if (box.constructor.name === 'Box') {

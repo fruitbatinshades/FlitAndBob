@@ -131,34 +131,39 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
     process(player, iterateGroup, parent) {
          if (this.isActive) {
         //     this.State = !this.State;
-            this.body.debugBodyColor = !this.State ? 0xFF0000 : 0x00FF00;
+             this.body.debugBodyColor = !this.State ? 0xFF0000 : 0x00FF00;
+             
+             //get the target zone
+             let target;
+             if (this.Target !== null && this.Target.key !== null) {
+                 target = this.interaction.getByKey(this.Target.key);
+             }
 
             //If its a switch, change its state
             if (this.tileType && this.tileType.isSwitch) {
                 let switchTile = this.scene.map.getTileAt(this.tileObj.x / 64, this.tileObj.y / 64, false, 'InteractionTiles')
                 switchTile.index = this.interaction.scene.switchIds.switchState(switchTile.index, this);
-
+                let panRect;
+                //pan if the target or group is off screen
+                if (target) {
+                    if (!this._groupShown) {
+                        panRect  = this.interaction.getTargetRectangle(target.name);
+                    }
+                }
                 if (this.GroupKey !== null && this.GroupKey.key !== null && this.GroupKey.key !== '') {
                     if (!this._groupShown) {
                         //Pan the camera to the target if it's off screen
-                        let rect = this.interaction.getGroupPosition(this.GroupKey.key, this.name);
-                        if (!Phaser.Geom.Rectangle.ContainsRect(this.scene.cameras.main.worldView, rect)) {
-                            this.scene.cameras.main.once('camerapancomplete', () => {
-                                //pan 2 - will be called once when pan 1 completes
-                                this.scene.cameras.main.pan(this.scene.ActivePlayer.x, this.scene.ActivePlayer.y, 1000, 'Sine.easeInOut', true);
-                            });
-                            //pan 1 - pan to target
-                            this.scene.cameras.main.pan(rect.x + rect.width / 2, rect.y + rect.height / 2, 1000, 'Sine.easeInOut', false);
-                        }
-                        this._groupShown = true;
+                        panRect = this.interaction.getGroupRectangle(this.GroupKey.key, this.name);
                     }
-                 }
+                }
+                if (panRect) {
+                    if (!Phaser.Geom.Rectangle.ContainsRect(this.scene.cameras.main.worldView, panRect)) {
+                        this.scene.game.panAndReturn(this.scene, panRect);
+                    }
+                    this._groupShown = true;
+                }
             }
-            //get the target zone
-            let target;
-            if (this.Target !== null && this.Target.key !== null) {
-                target = this.interaction.getByKey(this.Target.key);
-            }
+             
             //if its an action or effect
             if (this.Action !== null || this.Effect !== null) {
                 this.interaction.action(parent || this, player);

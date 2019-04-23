@@ -40,7 +40,7 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
     this.scene.add.existing(this);
 
     // create the player sprite    
-    this.setBounce(0.2); // our player will bounce from items
+    //this.setBounce(0.2); // our player will bounce from items
     this.setCollideWorldBounds(true); // don't go out of the map        
     this.setGravityY(800); //set gravity to control jump height to 1 block
     this.splat = this.scene.add.image(0, 0, 'splat');

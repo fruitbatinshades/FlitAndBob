@@ -109,7 +109,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
      * @param {string} exclude The zone name to exclude
      * @returns {object} rectangle
      */
-    getGroupPosition(name, exclude) {
+    getGroupRectangle(name, exclude) {
         let group = this.getGroup(name, exclude);
         if (group == null) return null;
         let X = [], Y = [];
@@ -121,6 +121,11 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             Y.push(c.y + c.height);
         }
         return new Phaser.Geom.Rectangle(Math.min(...X), Math.min(...Y), Math.max(...X) - Math.min(...X), Math.max(...Y) - Math.min(...Y));
+    }
+    getTargetRectangle(name) {
+        let target = this.getByKey(name);
+        if (target) return new Phaser.Geom.Rectangle(target.x, target.y, target.width, target.height);
+        return;
     }
     blocks(player, zone) {
         //player is blocked

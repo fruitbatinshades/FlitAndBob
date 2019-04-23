@@ -1,4 +1,5 @@
-//import Phaser from './phaser.js';
+/// <reference path="../defs/phaser.d.ts" />
+
 import config from './config.js';
 //import GameScene from './Scenes/Game.js';
 import BootScene from './Scenes/Boot.js';
@@ -22,6 +23,23 @@ class Game extends Phaser.Game {
     this.scene.add('Boot', BootScene);
     this.scene.add('LevelLoader', LevelLoaderScene);
     this.scene.start('Boot');
+  }
+  /**
+   * Pan the camera and then return to player
+   * @param {Phaser.Scene} scene
+   * @param {Phaser.Geom.Rectangle} rect 
+   */
+  panAndReturn(scene, rect) { 
+    if (!Phaser.Geom.Rectangle.ContainsRect(scene.cameras.main.worldView, rect)) {
+      try {
+        scene.cameras.main.once('camerapancomplete', () => {
+          //pan 2 - will be called once when pan 1 completes
+          scene.cameras.main.pan(scene.ActivePlayer.x, scene.ActivePlayer.y, 1000, 'Sine.easeInOut');
+        });
+        //pan 1 - pan to target
+        scene.cameras.main.pan(rect.x + rect.width / 2, rect.y + rect.height / 2, 1000, 'Sine.easeInOut');
+      } catch (e) { }
+    }
   }
   /**
    * Draws Touching, Blocked, CheckCollsion and origin on a sprite/sprite[]

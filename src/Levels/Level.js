@@ -6,6 +6,7 @@ import Enums from './Tilemaps.js';
 import Interaction from '../Sprites/Interaction.js';
 import HUD from '../Scenes/HUD.js';
 import Dialog from '../Scenes/Dialog.js';
+import Tip from '../Utils/Tips.js';
 /**
  * Class that hold the level specific data and operations
  */
