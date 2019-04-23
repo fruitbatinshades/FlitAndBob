@@ -4,25 +4,29 @@
       "start": 0,
       "end": 0.648
     },
-    "FlitMunch": {
+    "break": {
       "start": 0.837542,
-      "end": 1.103458
+      "end": 1.568542
     },
-    "Squeek": {
-      "start": 1.333146,
-      "end": 1.663396
-    },
-    "squelch": {
-      "start": 1.893083,
-      "end": 3.143083
-    },
-    "music_zapsplat_rascals_123": {
-      "start": 3.372771,
-      "end": 170.808375
+    "FlitMunch": {
+      "start": 1.798229,
+      "end": 2.064146
     },
     "jump": {
-      "start": 171.038063,
-      "end": 172.875563
+      "start": 2.293833,
+      "end": 4.131333
+    },
+    "squeak": {
+      "start": 4.361021,
+      "end": 4.530771
+    },
+    "squelch": {
+      "start": 4.760458,
+      "end": 6.010458
+    },
+    "switch": {
+      "start": 6.240146,
+      "end": 6.378354
     }
   },
   "resources": [

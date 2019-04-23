@@ -87,10 +87,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
             tile = tmp;
         }
         if (box.lastContact !== tile) {
-            box.body.immovable = true;
-            box.body.allowGravity = false;
-            box.body.stop();
-            box.body.y--;
+            this.deActivate(box);
             box.status = Boxes.State.Tile;
             box.lastContact = tile;
             box.hits--;
@@ -99,19 +96,20 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
     }
     activate(box) {
         box.body.immovable = false;
-        //box.body.enable = true;
         box.body.moves = true;
         box.body.setGravityY(1);
     }
     deActivate(box) {
-        // box.body.immovable = true;
-        // //box.body.enable = false;
-        // box.body.moves = true;
-        // box.body.setGravityY(0);
+        box.body.immovable = true;
+        box.body.allowGravity = false;
+        box.body.setGravityY(0);
+        box.setVelocity(0, 0);
+        box.body.stop();
+        box.body.y--;
     }
     onBoxDestruct(box) {
         console.log('box destruct', box);
-        
+        this.scene.sound.playAudioSprite('sfx', 'break');
         box.destroy();
     }
     //When a box is taken by a character

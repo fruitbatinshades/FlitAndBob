@@ -94,7 +94,7 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
       this.health -= amount;
       this.scene.events.emit('loseHealth', this);
       this.scene.events.emit('updateHUD', this);
-      this.scene.sound.playAudioSprite('sfx', 'Squeek');
+      this.scene.sound.playAudioSprite('sfx', 'squeak');
       //tint for a brief period
       if (!this.hitDelay) {
         this.hitDelay = true;
@@ -172,6 +172,7 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
     if (cursors.up.isDown) {
       //on floor, just jump
       if (this.body.onFloor()) {
+        this.scene.sound.playAudioSprite('sfx', 'jump', {volume:.1});
         this.body.setVelocityY(-500);
       }
       //check if we are on boxes
@@ -180,7 +181,8 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
         let around = this.scene.physics.overlapRect(this.body.left, this.body.bottom + 2, this.body.width - 3,  3);
         for (let i = 0; i < around.length; i++){
           let go = around[i].gameObject;
-          if (go.constructor.name === 'Box' || (go.constructor.name === 'InteractionZone' && go.Blocks != null )) {
+          if (go.constructor.name === 'Box' || (go.constructor.name === 'InteractionZone' && go.Blocks != null)) {
+            this.scene.sound.playAudioSprite('sfx', 'jump', {volume:.1});
             this.body.setVelocityY(-500);
             break;
           }

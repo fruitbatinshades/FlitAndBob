@@ -143,6 +143,7 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
             if (this.tileType && this.tileType.isSwitch) {
                 let switchTile = this.scene.map.getTileAt(this.tileObj.x / 64, this.tileObj.y / 64, false, 'InteractionTiles')
                 switchTile.index = this.interaction.scene.switchIds.switchState(switchTile.index, this);
+                this.scene.sound.playAudioSprite('sfx', 'switch');
                 let panRect;
                 //pan if the target or group is off screen
                 if (target) {
