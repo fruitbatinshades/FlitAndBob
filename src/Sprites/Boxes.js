@@ -166,6 +166,12 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
 
         bottom.underneath = top;
         top.onTopOf = bottom;
+        
+        //subtract hits
+        if (top.lastContact !== bottom) {
+            top.hits--;
+        }
+        top.lastContact = bottom;
 
         top.body.stop();
         bottom.body.stop();
