@@ -66,8 +66,6 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
     }
     //fix the box in place, turn off physics
     tileCollide(box, tile) {
-        //if (a.boxstatus === Boxes.State.None) {
-        
         //TODO: Objects are passed back to front from zone/box collider, This is probably because I'm using unreleased 3.17 but check after release
         if (box.constructor.name == 'InteractionZone') {
             let tmp = box;

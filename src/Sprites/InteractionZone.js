@@ -198,7 +198,6 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
      * @param {bool} includeSwitches Include the Enum.isSwitch tiles
      */
     getVisibleTiles(scene, includeSwitches, tileLayer) {
-        //TODO: look for offset tiles (conveyor)
         if (includeSwitches) {
             return scene.map.getTilesWithinWorldXY(this.x, this.y, this.width, this.height, (t) => {
                 return true;

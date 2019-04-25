@@ -1,10 +1,4 @@
 /// <reference path="../../defs/phaser.d.ts" />
-//TODO
-//Impliment jump height of one block
-//Implement strength of three
-//Implement lift
-//Implement push
-
 export default class Bob extends Phaser.Physics.Arcade.Sprite {
   get activeSpeed() {
     if (this.isSlow) return this.speed / 2;

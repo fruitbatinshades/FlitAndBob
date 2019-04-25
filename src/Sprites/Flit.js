@@ -84,7 +84,6 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     }
   }
   kill() {
-    //TODO:Add death animation
     console.log('Flit died');
     this.splat.x = this.body.center.x;// - this.body.width / 2;
     this.splat.y = this.body.center.y;// - this.body.height /2;
