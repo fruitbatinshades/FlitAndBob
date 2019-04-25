@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <object name="PaperA" type="FlyPaper" width="64" height="384">
+  <properties>
+   <property name="Blocks" value=""/>
+   <property name="Transition" value="fadeAndDisable"/>
+  </properties>
+ </object>
+</template>

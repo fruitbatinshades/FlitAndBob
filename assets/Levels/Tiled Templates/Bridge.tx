@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <object name="Bridge" width="256" height="64" visible="0">
+  <properties>
+   <property name="Blocks" value="Box"/>
+   <property name="ZoneHeight" value="8"/>
+   <property name="ZoneHeightAt" value="T"/>
+  </properties>
+ </object>
+</template>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <object name="Box" type="Rock" width="128" height="64">
+  <properties>
+   <property name="Rock" value=""/>
+  </properties>
+ </object>
+</template>

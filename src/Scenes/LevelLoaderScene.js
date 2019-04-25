@@ -21,7 +21,6 @@ export default class LevelLoaderScene extends Phaser.Scene {
         let l = getQueryStringValue('level');
         if (l !== '') this.registry.set('currentLevel',l);
 
-        let splash = this.add.image(0, 0, 'SplashBackground').setOrigin(0, .15);
         this.progressBar = this.add.graphics();
         this.progressBar.depth = 11;
         this.progressBox = this.add.graphics();
@@ -29,8 +28,15 @@ export default class LevelLoaderScene extends Phaser.Scene {
 
         this.width = this.cameras.main.width;
         this.height = this.cameras.main.height;
-        this.scale = splash.width / this.width;
-        splash.setScale(this.scale, this.scale);
+
+        //add and resize splash to best fit
+        let splash = this.add.image(0, 0, 'SplashBackground');
+        let size = new Phaser.Structs.Size(this.width, this.height);
+        let splashSize = new Phaser.Structs.Size(splash.width, splash.height, Phaser.Structs.Size.ENVELOP, size)
+        splashSize.setSize(size.width, size.height);
+        splash.setDisplaySize(splashSize.width, splashSize.height);
+        splash.x = this.width / 2;
+        splash.y = this.height / 2;
 
         this.left = this.width / 2 - 200;
         this.progressBox.lineStyle(6, 0x333333, 1);
