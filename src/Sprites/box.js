@@ -20,7 +20,7 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
     //Is this a Bob only rock
     isRock = false;
     //Number of hits before the box self destructs
-    _hits = -1;
+    _hits = 1000;
 
     debug = false;
     get hits() {
@@ -28,7 +28,7 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
     }
     set hits(value) {
         this._hits = value;
-        if (this._hits === 0) {
+        if (this._hits < 0) {
             this.scene.events.emit('boxdestruct', this);
         }
     }
@@ -56,6 +56,11 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
             } else if (sprite.data.list['Affects']) {
                 this.Affects = sprite.data.list['Affects'];
             };
+            if (sprite.data.values.hasOwnProperty('Rock')) {
+                //It's a rock which only Bob can move
+                this.setTexture('rock');
+                this.isRock = true;
+            }
         }
         if (this.debug) {
             this.note = this.scene.add.text(this.x, this.y, '');
@@ -65,28 +70,23 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
         this.on('destroy', function () {
             if(this.text) this.text.destroy();
         }, this);
-        this.init();
-    }
-    init() { 
-        var s = '';
-        //console.log(`Box Create: ${this.x}, ${this.y}, ${this.width}, ${this.height}`);
     }
     /**
-     * Activate this box. Used to re=activate after its been on the ground or a zone
+     * Activate this box. Used to re-activate after its been on the ground or a zone
      */
     activate() {
-        this.body.enable = true;
-        this.body.immovable = false;
-        this.body.moves = true;
-        this.body.allowGravity = true;
-        this.lastContact = null;
-        this.body.setGravityY(1);
+            this.body.enable = true;
+            this.body.immovable = false;
+            this.body.moves = true;
+            this.body.allowGravity = true;
+            this.lastContact = null;
+            this.body.setGravityY(1);
     }
     preUpdate() {
         if (this.text) {
-            this.text.x = Math.floor(this.x + this.width / 2);
-            this.text.y = Math.floor(this.y + this.height / 2);
-            this.text.text = this._hits;
+            this.text.x = this.x + this.width / 2;
+            this.text.y = this.y + this.height / 2;
+            this.text.text = this._hits !== 0 ? this._hits : '!';
         }
         if (this.debug) {
             //Debug notes
@@ -101,22 +101,19 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
     /**
      * Reset this box and update any boxes under or over it
      */
-    reset() { 
-        // console.log(`Box reset: ${this.x}, ${this.y}, ${this.width}, ${this.height}`);
-        // this.scene.add.rectangle(this.x - 10, this.y -10, this.width + 20 , this.height + 20, 0xff6699, .2)
-
+    reset() {
         //Update other boxes to remove this box from their references
         this.scene.physics.overlapRect(this.x - 10, this.y - 10, this.width + 20, this.height + 20).forEach((o) => {
-            let box = o.gameObject;
-             if (box.constructor.name === 'Box') {
-                 //box.alpha = 0.5;
-                 if (box.onTopOf && box.onTopOf.name == this.name) box.onTopOf = null;
-                 if (box.underneath && box.underneath.name == this.name) box.underneath = null;
+            let go = o.gameObject;
+            if (go.constructor.name === 'Box') {
+                //box.alpha = 0.5;
+                if (go.onTopOf && go.onTopOf.name == this.name) go.onTopOf = null;
+                if (go.underneath && go.underneath.name == this.name) go.underneath = null;
             }
-            //
-            if (box.constructor.name === 'InteractionZone') {
-                if (box.tileType && box.tileType.isBlockActivated) {
-                    box.process();
+            //if its a block activated zone process it
+            if (go.constructor.name === 'InteractionZone') {
+                if (go.tileType && go.tileType.isBlockActivated) {
+                    go.process();
                 }
             }
         });
@@ -125,6 +122,6 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
             console.log(Phaser.Math.Distance.DistanceSquared(this.underneath, this.onTopOf));
         }
         this.underneath = null;
-        this.onTopOf = null; 
+        this.onTopOf = null;
     }
 }

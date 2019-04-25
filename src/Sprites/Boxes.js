@@ -11,14 +11,13 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         Tile: 3
     }
     static tileWidth = 64;
-    debug = false;
+    debug = true;
 
     constructor(scene, children, spriteArray) {
         super(scene, children);
 
         //createCallbackHandler errors if this is not set which implies the inheritence is wrong somehow :|
         this.world = scene.physics.world;
-        this._Settings = new Settings(); //shared settings objects
         this.scene = scene;
 
         // add boxes to our group
@@ -28,8 +27,6 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
             this.add(b, true);
             this.scene.physics.world.enable(b);
             box.destroy(); //destroy original tile
-            //b.x = Math.round(b.x / Boxes.tileWidth) * Boxes.tileWidth;
-
         }, this);
 
         this.spaceKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -38,8 +35,6 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
     }
     preUpdate(a, b) { 
         if (this.debug) { 
-            // this.scene.fbisG.clear();
-            // utils.drawCollisionChecks(this.children.entries);
             this.scene.game.drawCollision(this.scene, this.children.entries);
         }
     }
@@ -69,7 +64,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         this.scene.physics.add.collider(this.scene.game.Bob, this, this.playerCollide, null, this);
         this.scene.physics.add.collider(this.scene.game.Flit, this, this.playerCollide, null, this);
     }
-    //fix the box in place, turn of physics
+    //fix the box in place, turn off physics
     tileCollide(box, tile) {
         //if (a.boxstatus === Boxes.State.None) {
         
@@ -80,7 +75,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
             box = tmp2;
             tile = tmp;
         }
-        if (tile !== null && box.lastContact !== tile) {
+        if (tile !== null && box.lastContact !== tile) { // && !box.isRock
             this.deActivate(box);
             box.status = Boxes.State.Tile;
             box.lastContact = tile;
@@ -106,17 +101,27 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         this.scene.sound.playAudioSprite('sfx', 'break');
         box.destroy();
     }
+
     //When a box is taken by a character
+    /**
+     * 
+     * @param {Phaser.GameObjects.Sprite} box 
+     * @param {Phaser.GameObjects.Sprite} player
+     */
     onPickupBox(box, player) {
-        if (!box.underneath) { //only pick up box if there is nothing underneath it
+        if (!box.underneath && !box.isRock) { //only pick up box if there is nothing underneath it
             box.reset();
             player.carrying = box;
             box.player = player;
             box.body.enable = false;
             box.body.allowGravity = false;
+            box.body.onOverlap = true;
             box.lastContact = null;
-            if(this.debug) console.log('event pickup_box', box);
+            if (this.debug) console.log('event pickup_box', box);
         }
+    }
+    tileOverlap(a, b, c){
+        console.log(a, b, c);
     }
     //when a box is dropped by a character
     onDropBox(box, player) {
@@ -138,12 +143,24 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
      * @param {Box} box The box they are colliding with
      */
     playerCollide(player, box) {
-        if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
+        if (!box.isRock && Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
             if (box.Affects === null || player.is(box.Affects)) {
                 this.deActivate(box);
                 this.scene.ActivePlayer.overBox(box);
             }
         }
+        //if it's bob and a rock move it
+        if (box.isRock && player.is('bob')) {
+            box.body.allowGravity = true;
+            box.body.setDrag(5000, 0);//.setMass(5000);
+            let v = 0;
+            if (box.body.touching.right) v = -player.speed;
+            if (box.body.touching.left) v = player.speed;
+            box.body.setVelocityX(v);
+        }
+    }
+    stopVelocity(box) {
+        box.body.setVelocityX(0);
     }
 
     /**
@@ -152,38 +169,40 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
      * @param {Box} b Second Box
      */
     boxCollide(a, b) {
-        a.setVelocityX(0);
-        b.setVelocityX(0);
-        //workout uppermost box
-        let top = a.body.top < b.body.top ? a : b;
-        let bottom = top === a ? b : a;
+        if (!a.isRock && !b.isRock) {
+            a.setVelocityX(0);
+            b.setVelocityX(0);
+            //workout uppermost box
+            let top = a.body.top < b.body.top ? a : b;
+            let bottom = top === a ? b : a;
 
-        bottom.underneath = top;
-        top.onTopOf = bottom;
+            bottom.underneath = top;
+            top.onTopOf = bottom;
         
-        //subtract hits
-        if (top.lastContact !== bottom) {
-            top.hits--;
+            //subtract hits
+            if (top.lastContact !== bottom) {
+                top.hits--;
+            }
+            top.lastContact = bottom;
+
+            top.body.stop();
+            bottom.body.stop();
+
+            //bottom.tint = 0x00FF00;
+            bottom.body.immovable = true;
+            bottom.body.moves = false;
+            bottom.body.enable = true;
+            bottom.body.allowGravity = false;
+
+            //top.tint = 0xFF0000;
+            top.body.immovable = true;
+            top.body.moves = false;
+            top.body.enable = true;
+            top.body.allowGravity = false;
+        
+            //force gap else it is irregular
+            top.y = (bottom.body.top - top.body.height) - 1;
+            if (this.debug) console.log('box colliding');
         }
-        top.lastContact = bottom;
-
-        top.body.stop();
-        bottom.body.stop();
-
-        //bottom.tint = 0x00FF00;
-        bottom.body.immovable = true;
-        bottom.body.moves = false;
-        bottom.body.enable = true;
-        bottom.body.allowGravity = false;
-
-        //top.tint = 0xFF0000;
-        top.body.immovable = true;
-        top.body.moves = false;
-        top.body.enable = true;
-        top.body.allowGravity = false;
-        
-        //force gap else it is irregular
-        top.y = (bottom.body.top - top.body.height) - 1;
-        if (this.debug) console.log('box colliding');
     }
 }

@@ -106,7 +106,7 @@ export default class Level extends Phaser.Scene {
         let sets = [];
         this.map.tilesets.forEach((b) => {
             //console.log(`Added tilesetImage ${b.name}`);
-            this.map.addTilesetImage(b.name, b.name, b.tileWidth, b.tileHeight);
+            this.map.addTilesetImage(b.name, b.name, b.tileWidth, b.tileHeight,1,2);
             sets.push(b.name);
         });
         
@@ -203,7 +203,7 @@ export default class Level extends Phaser.Scene {
         //when a box hits a tile
         this.events.on('boxTileCollide', (box, tile) => { 
             if (tile.constructor.name === 'InteractionZone') {
-                if (tile.tileType && tile.tileType.isBlockActivated) {
+                if (tile.tileType && tile.tileType.isBlockActivated && !box.isRock) {
                     tile.process();
                 }
             }

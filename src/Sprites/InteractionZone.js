@@ -40,7 +40,7 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
     }
 
     constructor(scene, tileObj, interaction, debug) {
-        super(scene, tileObj.x + 2, tileObj.y + 2, tileObj.width - 4, tileObj.height - 4);
+        super(scene, tileObj.x, tileObj.y , tileObj.width , tileObj.height );
         
         if (tileObj.name === null || tileObj.name === '')
             throw `Zone at ${tileObj} does not have a name`;
@@ -146,10 +146,8 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
                 this.scene.sound.playAudioSprite('sfx', 'switch');
                 let panRect;
                 //pan if the target or group is off screen
-                if (target) {
-                    if (!this._groupShown) {
-                        panRect  = this.interaction.getTargetRectangle(target.name);
-                    }
+                if (target && !this._groupShown) {
+                    panRect = this.interaction.getTargetRectangle(target.name);
                 }
                 if (this.GroupKey !== null && this.GroupKey.key !== null && this.GroupKey.key !== '') {
                     if (!this._groupShown) {

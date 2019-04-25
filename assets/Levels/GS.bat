@@ -1,0 +1,1 @@
+tile-extruder -w 64 -h 64 -i GS.png -o GS.png

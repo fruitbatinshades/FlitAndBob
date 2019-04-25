@@ -117,10 +117,6 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
   }
   overBox(item, player) {
     if (this.carrying == null) {
-      console.log('before pickup', item.body);
-      //this.carrying = item;
-       //item.body.enable = false;
-       //item.body.checkCollision.none = true;
       this.scene.events.emit('pickup_box', item, this);
     }
   }
