@@ -3,7 +3,7 @@ import Bob from '../Sprites/Bob.js';
 import Flit from '../Sprites/Flit.js';
 import Boxes from '../Sprites/Boxes.js';
 import Enums from './Tilemaps.js';
-import Interaction from '../Sprites/Interaction.js';
+import Interaction from './Interaction.js';
 import HUD from '../Scenes/HUD.js';
 import Dialog from '../Scenes/Dialog.js';
 import Tip from '../Utils/Tips.js';

@@ -1,28 +1,14 @@
 /// <reference path="../../defs/phaser.d.ts" />
 import Settings from '../settings.js';
-import Enums from '../Levels/Tilemaps.js';
+import Enums from './Tilemaps.js';
 import InteractionZone from './InteractionZone.js';
+import Effects from './Effects.js';
+import Actions from './Actions.js';
+import Transitions from './Transitions.js';
 
 export default class Interaction extends Phaser.Physics.Arcade.Group {
     tileLayer;
-    /** Lookup to functions that process map key: Action */
-    actions = {
-        "ShowHide": this.showHide,
-        "Toggle": this.toggleZone
-    };
-    /** Lookup to effects that process map key: Effect */
-    effects = {
-        "Injure": this.injure,
-        "Fast": this.fast,
-        "Slow": this.slow,
-        "Kill": this.kill,
-        "Slippy": this.slippy
-    };
-    /** Lookup to transitions that process map key: Transition */
-    transitions = {
-        "fadeAndDisable": this.fadeAndDisable,
-        "toggleVisibility": this.toggleVisibility
-    };
+
     /**
      * Class that manages interactable objects such as switches
      * @param {LevelLoaderScene} scene
@@ -32,6 +18,10 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
      */
     constructor(scene, children, interactionLayer, objectMap, debug) {
         super(scene, children);
+
+        this.effects = new Effects();
+        this.actions = new Actions(this);
+        this.transitions = new Transitions();  
 
         this.scene = scene;
         this.tileLayer = interactionLayer;
@@ -54,7 +44,8 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                 scene.physics.add.collider(scene.flit, z, this.blocks, this.preBlock, this);
                 //if the zone blocks boxes
                 if (z.Blocks.key === 'Box') {
-                    scene.physics.add.collider(scene.mapLayers['Boxes'], z, scene.mapLayers['Boxes'].tileCollide, null, scene.mapLayers['Boxes']);
+                    //scene.physics.add.collider(scene.mapLayers['Boxes'], z, scene.mapLayers['Boxes'].tileCollide, null, scene.mapLayers['Boxes']);
+                    scene.physics.add.collider(scene.mapLayers['Boxes'], z, this.zoneCollide, null, scene.mapLayers['Boxes']);
                 } else if (z.Blocks.key) {
                     //if properties provided set the relevant one
                     z.body.checkCollision.up = z.Blocks.key.indexOf('T') !== -1;
@@ -75,6 +66,20 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             }
             this.lookup[current.name] = z;
         }
+    }
+    zoneCollide(zone, box) {
+        if (box.lastContact !== zone) {
+            //hit a new zone so set up rules
+            box.lastContact = zone;
+            box.body.allowGravity = false;
+            box.body.y--;
+            box.body.stop();
+            console.log(`${box.name} hit ${zone.name}`);
+        } else {
+            //on same zone
+            
+        }
+        //console.log('zoneCollide', a, b);
     }
     /**
      * Get a zone by it's key
@@ -192,7 +197,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
      */
     runAction(name, args) {
         if (name !== null) {
-            let instance = this.actions[name];
+            let instance = this.actions.action[name];
             if (instance)
                 try {
                     return instance.apply(this, args);
@@ -210,7 +215,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
     */
     runEffect(name, args) {
         if (name !== null) {
-            let instance = this.effects[name];
+            let instance = this.effects.effect[name];
             if (instance)
                 try {
                     return instance.apply(this, args);
@@ -228,7 +233,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
      */
     runTransition(name, args) {
         if (name !== null) {
-            let instance = this.transitions[name];
+            let instance = this.transitions.transition[name];
             if (instance)
                 try {
                     return instance.apply(this, args);
@@ -240,163 +245,10 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
         }
 
     }
-    /**
-     * Kill the player
-     * @param {InteractionZone} triggerZone
-     * @param {Phaser.GameObjects.Sprite} player
-     */
-    kill(triggerZone, player) {
-        if (player !== null) {
-            if (triggerZone.Affect === null || triggerZone.Affect.key === null || player.is(triggerZone.Affect.key)) {
-                player.kill();
-            }
-        }
-    }
-    /**
-     * Player speeds up
-     * @param {InteractionZone} triggerZone
-     * @param {Phaser.GameObjects.Sprite} player
-     */
-    fast(triggerZone, player) {
-        if (player !== null) {
-            player.isFast = true;
-        }
-    }
-    /**
-     * PLayer slides and cannot turn aroud
-     * @param {InteractionZone} triggerZone
-     * @param {Phaser.GameObjects.Sprite} player
-     */
-    slippy(triggerZone, player) {
-        if (player !== null) {
-            player.effectSpeed = 500;
-        }
-    }
-    /**
-     * Player slows down
-     * @param {InteractionZone} triggerZone
-     * @param {Phaser.GameObjects.Sprite} player
-     */
-    slow(triggerZone, player) {
-        if (player !== null) {
-            player.isSlow = true;
-        }
-    }
-    /**
-     * Player is injured
-     * @param {InteractionZone} triggerZone
-     * @param {Phaser.GameObjects.Sprite} player
-     */
-    injure(triggerZone, player) {
-        if (player !== null && triggerZone.Affect) {
-            if (triggerZone.Affect.key === null || player.is(triggerZone.Affect.key)) {
-                player.injure(triggerZone.Effect.params.health || 10);
-            }
-        }
-    }
     getTargetZone(name) {
         return this.lookup[name];
     }
-    /**
-     * Show/Hides target zone and disables it using a transition
-     * @param {InteractionZone} triggerZone
-     * @param {Phaser.Game.Sprite} player
-     */
-    showHide(triggerZone, player) {
-        if (triggerZone.Action.key === 'ShowHide') {
-            
-            let found = [];
-            let targetZone;
-            if (triggerZone.Target) {
-                targetZone = this.getTargetZone(triggerZone.Target.key);
-            }
-            if (targetZone) {
-                found = targetZone.getVisibleTiles(this.scene);
-                if (found.length > 0) {
-                    found.forEach((x) => {
-                        x.visible = !targetZone.isActive;
-                    });
-                    targetZone.body.enable = !targetZone.body.enable;
-                    targetZone.isActive = !targetZone.isActive;
-                    targetZone.adjustWorld();
-                }
-            } 
-            else if (triggerZone.GroupKey != null){
-                //no target so check group
-                let group = this.getGroup(triggerZone.GroupKey.key, triggerZone.name)
-                if (group.length !== 0) {
-                    for (let i = 0; i < group.length; i++) {
-                        let g = group[i][1];
-                        if (g.tileType && g.tileType.isLight) {
-                            let switchTile = this.scene.map.getTileAt(g.tileObj.x / 64, g.tileObj.y / 64, false, 'InteractionTiles')
-                            switchTile.index = this.scene.switchIds.switchState(switchTile.index, triggerZone);
-                        }else{
-                            found = g.getVisibleTiles(this.scene);
-                            if (found.length > 0) {
-                                found.forEach((x) => {
-                                    x.visible = !x.visible;
-                                });
-                                g.body.enable = !g.body.enable;
-                                g.isActive = !g.isActive;
-                                g.adjustWorld();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+   
     
-    toggleZone(triggerZone, player) {
-        let targetZone = this.getTargetZone(triggerZone.Target.key);
-        if (targetZone) {
-            targetZone.active = !targetZone.active;
-        }
-    }
-    /**
-     * Toggles tile visibilty
-     * @param {Phaser.GameObjects.Tile[]} tiles
-     */
-    toggleVisibility(tiles) {
-        tiles.forEach((x) => {
-            x.visible = !x.visible;
-        });
-    }
-    /**
-     * Fades and disables tiles
-     * @param {Phaser.GameObjects.Tile[]} tiles Tiles that are affected
-     * @param {InteractionZone} zone Zone to process
-     */
-    fadeAndDisable(tiles, zone) {
-        let alphaTarget = tiles[0].visible ? 0 : 1;
-        let targetZone = this.getTargetZone(zone.Target.key);
-
-        //if showing, make them visible else they will pop in at the end
-        if (alphaTarget === 1) {
-            tiles.forEach((x) => {
-                x.alpha = 0;
-                x.visible = !x.visible;
-            });
-        } else {
-            tiles.reverse();
-        }
-        this.scene.tweens.add({
-            targets: tiles,
-            alpha: alphaTarget,
-            ease: 'Power1',
-            duration: 500,
-            delay: function (i, total, target) {
-                return i * 250;
-            },
-            onComplete: function (tween, targets, zone) {
-                targets.forEach((x) => {
-                    x.visible = x.alpha === 1;
-                });
-                zone.body.enable = !zone.body.enable;
-                zone.active = !zone.active;
-                zone.adjustWorld();
-            },
-            onCompleteParams: [targetZone]
-        });
-    }
+   
 }

@@ -1,4 +1,4 @@
-import Enums from '../Levels/Tilemaps.js';
+import Enums from './Tilemaps.js';
 
 /**
  * Class populated from the tilemap Interaction Layer rectangles

@@ -46,6 +46,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         this.getChildren().forEach((box) => {
             box.body.setCollideWorldBounds(true);
             box.name = 'b_' + i++;
+            box.body.setDrag(5000, 0);//.setMass(5000);
             //state to monitor collision states
             box.status = Boxes.State.None;
         });
@@ -149,9 +150,8 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         }
         //if it's bob and a rock move it
         if (box.isRock && player.is('bob')) {
-            box.body.allowGravity = true;
-            box.body.setDrag(5000, 0);//.setMass(5000);
             let v = 0;
+            this.deActivate(box);
             if (box.body.touching.right) v = -player.speed;
             if (box.body.touching.left) v = player.speed;
             box.body.setVelocityX(v);
