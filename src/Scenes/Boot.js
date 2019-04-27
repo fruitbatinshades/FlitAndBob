@@ -23,10 +23,11 @@ export default class BootScene extends Phaser.Scene {
     let startScene = 'LevelLoader';
     let startLevel = 'Example.json';
     //get the name of the scene to start from the querystring
-    let s = getQueryStringValue('scene');
-    let l = getQueryStringValue('level');
-    if (s !== '') startScene = s;
-    if (l !== '') startLevel = l;
+    let l = this.game.urlParams.get('level');
+    let s = this.game.urlParams.get('scene');
+    //let l = getQueryStringValue('level');
+    if (s !== null) startScene = s;
+    if (l !== null) startLevel = l;
 
     this.scene.start(startScene, { level: startLevel, newGame: true, levels: this.levels });
   }

@@ -11,6 +11,7 @@ class Game extends Phaser.Game {
     'Example', 'L1', 'L2'
   ];
   levelIndex = 0;
+  urlParams = new URLSearchParams(window.location.search);
 
   constructor() {
     super(config);

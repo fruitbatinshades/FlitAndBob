@@ -18,7 +18,7 @@ export default class LevelLoaderScene extends Phaser.Scene {
     preload() {
         this.registry.set('currentLevel', this.game.levels[this.game.levelIndex]);
         //get the name of the scene to start from the querystring if there
-        let l = getQueryStringValue('level');
+        let l = this.game.urlParams.get('level');
         if (l !== '') this.registry.set('currentLevel',l);
 
         this.progressBar = this.add.graphics();
