@@ -1,4 +1,5 @@
 /// <reference path="../../defs/phaser.d.ts" />
+/// <reference path="./Boxes.js" />
 
 export default class Box extends Phaser.Physics.Arcade.Sprite {
     static State = {
@@ -14,7 +15,7 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
     //bon on top of this one
     onTopOf = null;
     //ref to the last object we hit
-    lastContact = null;
+    _lastContact = null;
     //Player that can interact with the box
     Affects = null;
     //Is this a Bob only rock
@@ -31,6 +32,13 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
         if (this._hits < 0) {
             this.scene.events.emit('boxdestruct', this);
         }
+    }
+    get lastContact(){ 
+        return this._lastContact;
+    }
+    set lastContact(value) {
+        this._lastContact = value;
+        this.body.allowGravity = this.body.touching.down === false && this.body.blocked.down === false && this.body.onFloor() === false;
     }
     constructor(sprite) {
         super(sprite.scene, sprite.x, sprite.y, sprite.texture.key, sprite.frame.name);
@@ -81,6 +89,14 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
             this.body.allowGravity = true;
             this.lastContact = null;
             this.body.setGravityY(1);
+    }
+    deActivate() {
+        this.body.immovable = true;
+        this.body.allowGravity = false;
+        this.body.setGravityY(0);
+        this.setVelocity(0, 0);
+        this.body.stop();
+       // box.body.y--;
     }
     preUpdate() {
         if (this.text) {

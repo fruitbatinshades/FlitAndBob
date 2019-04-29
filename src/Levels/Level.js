@@ -200,6 +200,7 @@ export default class Level extends Phaser.Scene {
         this._ChangingPlayer = false;
 
         //scene.sound.playAudioSprite('sfx', 'music_zapsplat_rascals_123', {volume:.5, repeat:true});
+
         //when a box hits a tile
         this.events.on('boxTileCollide', (box, tile) => { 
             if (tile.constructor.name === 'InteractionZone') {
@@ -291,6 +292,11 @@ export default class Level extends Phaser.Scene {
             this.game.Bob.idle();
             this.game.Flit.idle();
         }
+        // this.mapLayers.Boxes.getChildren().forEach((x) => {
+        //     if (x.isRock && (x.body.touching.none && !x.body.onFloor() && x.body.blocked.none)) {
+        //         x.body.allowGravity = true;
+        //     }
+        // });
     }
     switchCharacter() {
         //stop current player activity

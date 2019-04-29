@@ -26,7 +26,7 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
     // enable physics
     this.scene.physics.world.enable(this);
     this.setScale(.7);
-    //this.body.setSize(this.body.width - 40, this.body.height).setOffset(0, 0);
+    this.body.setSize(this.body.width * this.scaleX, this.body.height).setOffset(0, 0);
 
     this.debugText = '';
 

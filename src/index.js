@@ -11,10 +11,11 @@ class Game extends Phaser.Game {
     'Example', 'L1', 'L2'
   ];
   levelIndex = 0;
-  urlParams = new URLSearchParams(window.location.search);
+  urlParams;;
 
   constructor() {
     super(config);
+    this.urlParams = new URLSearchParams(window.location.search.toLowerCase());
     //this.game.device.desktop
     //Create global variables for access across all scene instances
     this.Bob = null; //Bob Character
@@ -71,9 +72,9 @@ class Game extends Phaser.Game {
       //color of collision check lines
       let collisionC = 0xFFFFFF;
       //colour of touching triangle
-      let touchingC = 0xFFFFFF;
+      let touchingC = 0xFF00FF;
       //colour of blocked triangle
-      let blockedC = 0xFFFFFF;
+      let blockedC = 0xFFFF00;
 
       //Show lines for collision checks
       if (b.checkCollision.none === false) {

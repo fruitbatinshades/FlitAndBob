@@ -75,25 +75,13 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
             tile = tmp;
         }
         if (tile !== null && box.lastContact !== tile) { // && !box.isRock
-            this.deActivate(box);
+            box.deActivate();
             box.status = Boxes.State.Tile;
             box.lastContact = tile;
             box.hits--;
             this.scene.events.emit('boxTileCollide', box, tile);
+            return true;
         }
-    }
-    activate(box) {
-        box.body.immovable = false;
-        box.body.moves = true;
-        box.body.setGravityY(1);
-    }
-    deActivate(box) {
-        box.body.immovable = true;
-        box.body.allowGravity = false;
-        box.body.setGravityY(0);
-        box.setVelocity(0, 0);
-        box.body.stop();
-       // box.body.y--;
     }
     onBoxDestruct(box) {
         console.log('box destruct', box);
@@ -144,21 +132,18 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
     playerCollide(player, box) {
         if (!box.isRock && Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
             if (box.Affects === null || player.is(box.Affects)) {
-                this.deActivate(box);
+                box.deActivate();
                 this.scene.ActivePlayer.overBox(box);
             }
         }
         //if it's bob and a rock move it
         if (box.isRock && player.is('bob')) {
             let v = 0;
-            this.deActivate(box);
+            box.deActivate();
             if (box.body.touching.right) v = -player.speed;
             if (box.body.touching.left) v = player.speed;
             box.body.setVelocityX(v);
         }
-    }
-    stopVelocity(box) {
-        box.body.setVelocityX(0);
     }
 
     /**
@@ -201,6 +186,8 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
             //force gap else it is irregular
             top.y = (bottom.body.top - top.body.height) - 1;
             if (this.debug) console.log('box colliding');
+
+            return true;
         }
     }
 }
