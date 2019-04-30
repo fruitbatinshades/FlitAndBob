@@ -120,9 +120,14 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
             t.visible = false;
             this.toolInfo = t;
             this.setInteractive();
+
+            this.scene.events.on('preupdate', this.preUpdate, this);
         }
     }
-    
+    preUpdate() {
+        if(this.scene && this.scene.game)
+        this.scene.game.objs.push(this);
+    }
     /**
      * Process this zone and its related ones
      * @param {Player} player player in zone
@@ -186,7 +191,7 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
     adjustWorld() { 
         let around = this.scene.physics.overlapRect(this.x, this.y - 2, this.width, this.height + 2);
         for (let i = 0; i < around.length; i++){
-            if (around[i].gameObject.constructor.name === 'Box') {
+            if (around[i].gameObject.constructor.name === 'Box' || around[i].gameObject.constructor.name === 'Rock') {
                 around[i].gameObject.activate();
             }
         }

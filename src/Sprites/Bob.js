@@ -177,7 +177,7 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
         let around = this.scene.physics.overlapRect(this.body.left, this.body.bottom + 2, this.body.width - 3,  3);
         for (let i = 0; i < around.length; i++){
           let go = around[i].gameObject;
-          if (go.constructor.name === 'Box' || (go.constructor.name === 'InteractionZone' && go.Blocks != null)) {
+          if (go.constructor.name === 'Box' || go.constructor.name === 'Rock' || (go.constructor.name === 'InteractionZone' && go.Blocks != null)) {
             this.scene.sound.playAudioSprite('sfx', 'jump', {volume:.1});
             this.body.setVelocityY(-500);
             break;

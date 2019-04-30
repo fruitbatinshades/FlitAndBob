@@ -83,6 +83,8 @@ export default class Level extends Phaser.Scene {
             this.events.off('gameobjectdown');
             this.events.off('dialogclosed');
         }, this);
+        
+        this.events.on('preupdate', this.preUpdate, this);
     }
     create() { 
         console.log('Level create');
@@ -96,6 +98,11 @@ export default class Level extends Phaser.Scene {
             this.events.emit('updateHUD', this.game.Bob);
             this.events.emit('updateHUD', this.game.Flit);
         }
+    }
+    preUpdate() {
+        this.game.objs.push([this.bob, this.flit]);
+        this.game.drawCollision(this);
+        //this.mapLayers['World'].renderDebug(this.DebugG, { tileColor: 0xff0000 });
     }
     /**
      * Crete the maps, player and set up collisions

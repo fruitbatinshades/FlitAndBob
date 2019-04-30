@@ -11,7 +11,9 @@ class Game extends Phaser.Game {
     'Example', 'L1', 'L2'
   ];
   levelIndex = 0;
-  urlParams;;
+  urlParams;
+  rects = [];
+  objs = [];
 
   constructor() {
     super(config);
@@ -47,7 +49,7 @@ class Game extends Phaser.Game {
    * Draws Touching, Blocked, CheckCollsion and origin on a sprite/sprite[]
    * @param {Phaser.GameObjects.Sprite} a Sprite or Sprite Array to draw debug on
    */
-  drawCollision(scene, a) {
+  drawCollision(scene) {
     if (!scene.DebugG) {
       scene.DebugG = scene.add.graphics();
       scene.DebugG.depth = 1000;
@@ -55,83 +57,102 @@ class Game extends Phaser.Game {
     }
     scene.DebugG.clear();
     let items = [];
-    if (Array.isArray(a)) {
-      items = a;
+    if (Array.isArray(this.objs)) {
+      items = this.objs.flat();
     } else {
-      items = [a];
+      items = [this.objs];
     }
+    //width of collision check line
+    let collisionW = 3;
+    //shorten collision check line by this amount * 2, just to keep the display a bit cleaner
+    let collisionTrim = 10;
+
+    //color of collision check lines
+    let collisionC = 0xFFFFFF;
+    // colour of onFloor
+    let onFloorC = 0xFF0000;
+    //colour of touching triangle
+    let touchingC = 0xFF00FF;
+    //colour of blocked triangle
+    let blockedC = 0xFFFF00;
+    scene.DebugG.alpha = .75;
+
     for (let i = 0; i < items.length; i++) {
       var b = items[i].body;
       let midW = b.left + (b.width / 2); // center of body
       let midH = b.top + (b.height / 2); // center of body
-      //width of collision check line
-      let collisionW = 3;
-      //shorten collision check line by this amount * 2, just to keep the display a bit cleaner
-      let collisionTrim = 10;
+      
+      if (b) {
+        //Show lines for collision checks
+        if (b.checkCollision.none === false) {
+          if (b.checkCollision.left) {
+            scene.DebugG.lineStyle(collisionW, collisionC, 1);
+            scene.DebugG.lineBetween(b.left - collisionW, b.top + collisionTrim, b.left - collisionW, b.bottom - collisionTrim);
+          }
+          if (b.checkCollision.right) {
+            scene.DebugG.lineStyle(collisionW, collisionC, 1);
+            scene.DebugG.lineBetween(b.right + collisionW, b.top + collisionTrim, b.right + collisionW, b.bottom - collisionTrim);
+          }
+          if (b.checkCollision.up) {
+            scene.DebugG.lineStyle(collisionW, collisionC, 1);
+            scene.DebugG.lineBetween(b.left + collisionTrim, b.top - collisionW, (b.left + b.width) - collisionTrim, b.top - collisionW);
+          }
+          if (b.checkCollision.down) {
+            scene.DebugG.lineStyle(collisionW, collisionC, 1);
+            scene.DebugG.lineBetween(b.left + collisionTrim, b.bottom + collisionW, (b.left + b.width) - collisionTrim, b.bottom + collisionW);
+          }
+          if (b.onFloor()) {
+            scene.DebugG.lineStyle(collisionW, onFloorC, 1);
+            scene.DebugG.lineBetween(b.left + collisionTrim, b.bottom + collisionW, (b.left + b.width) - collisionTrim, b.bottom + collisionW);
+          }
+        }
+        //Show a large arrow for touching
+        if (b.touching.none === false) {
+          scene.DebugG.lineStyle(3, touchingC);
+          if (b.touching.down) {
+            scene.DebugG.strokeTriangle(midW - 15, b.bottom - 15, midW + 15, b.bottom - 15, midW, b.bottom)
+          }
+          if (b.touching.up) {
+            scene.DebugG.strokeTriangle(midW - 15, b.top + 15, midW + 15, b.top + 15, midW, b.top)
+          }
+          if (b.touching.left) {
+            scene.DebugG.strokeTriangle(b.left, midH - 15, b.left + 15, midH, b.left, midH + 15);
+          }
+          if (b.touching.right) {
+            scene.DebugG.strokeTriangle(b.right, midH - 15, b.right - 15, midH, b.right, midH + 15);
+          }
+        }
 
-      //color of collision check lines
-      let collisionC = 0xFFFFFF;
-      //colour of touching triangle
-      let touchingC = 0xFF00FF;
-      //colour of blocked triangle
-      let blockedC = 0xFFFF00;
-
-      //Show lines for collision checks
-      if (b.checkCollision.none === false) {
-        if (b.checkCollision.left) {
-          scene.DebugG.lineStyle(collisionW, collisionC, 1);
-          scene.DebugG.lineBetween(b.left - collisionW, b.top + collisionTrim, b.left - collisionW, b.bottom - collisionTrim);
+        //Show a small arrow for blocked
+        if (b.blocked.none === false) {
+          scene.DebugG.lineStyle(3, blockedC);
+          if (b.blocked.up) {
+            scene.DebugG.strokeTriangle(midW - 10, b.top + 10, midW + 10, b.top + 10, midW, b.top)
+          }
+          if (b.blocked.down) {
+            scene.DebugG.strokeTriangle(midW - 10, b.bottom - 10, midW + 10, b.bottom - 10, midW, b.bottom)
+          }
+          if (b.blocked.left) {
+            scene.DebugG.strokeTriangle(b.left, midH - 10, b.left + 10, midH, b.left, midH + 10);
+          }
+          if (b.blocked.right) {
+            scene.DebugG.strokeTriangle(b.right, midH - 10, b.right - 10, midH, b.right, midH + 10);
+          }
         }
-        if (b.checkCollision.right) {
-          scene.DebugG.lineStyle(collisionW, collisionC, 1);
-          scene.DebugG.lineBetween(b.right + collisionW, b.top + collisionTrim, b.right + collisionW, b.bottom - collisionTrim);
-        }
-        if (b.checkCollision.up) {
-          scene.DebugG.lineStyle(collisionW, collisionC, 1);
-          scene.DebugG.lineBetween(b.left + collisionTrim, b.top - collisionW, (b.left + b.width) - collisionTrim, b.top - collisionW);
-        }
-        if (b.checkCollision.down) {
-          scene.DebugG.lineStyle(collisionW, collisionC, 1);
-          scene.DebugG.lineBetween(b.left + collisionTrim, b.bottom + collisionW, (b.left + b.width) - collisionTrim, b.bottom + collisionW);
+        //Show the origin point
+        scene.DebugG.fillStyle(0xFF0000);
+        scene.DebugG.fillCircle(b.left + (b.width * b.originX), b.top + (b.height * b.originY), 4);
+      }
+      
+      if (this.rects.length !== 0) {
+        for (let i = 0; i < this.rects.length; i++) {
+          scene.DebugG.strokeRect(this.rects[i]);
         }
       }
-      //Show a large arrow for touching
-      if (b.touching.none === false) {
-        scene.DebugG.lineStyle(3, touchingC);
-        if (b.touching.down) {
-          scene.DebugG.strokeTriangle(midW - 15, b.bottom - 15, midW + 15, b.bottom - 15, midW, b.bottom)
-        }
-        if (b.touching.up) {
-          scene.DebugG.strokeTriangle(midW - 15, b.top + 15, midW + 15, b.top + 15, midW, b.top)
-        }
-        if (b.touching.left) {
-          scene.DebugG.strokeTriangle(b.left, midH - 15, b.left + 15, midH, b.left, midH + 15);
-        }
-        if (b.touching.right) {
-          scene.DebugG.strokeTriangle(b.right, midH - 15, b.right - 15, midH, b.right, midH + 15);
-        }
-      }
-
-      //Show a small arrow for blocked
-      if (b.blocked.none === false) {
-        scene.DebugG.lineStyle(3, blockedC);
-        if (b.blocked.up) {
-          scene.DebugG.strokeTriangle(midW - 10, b.top + 10, midW + 10, b.top + 10, midW, b.top)
-        }
-        if (b.blocked.down) {
-          scene.DebugG.strokeTriangle(midW - 10, b.bottom - 10, midW + 10, b.bottom - 10, midW, b.bottom)
-        }
-        if (b.blocked.left) {
-          scene.DebugG.strokeTriangle(b.left, midH - 10, b.left + 10, midH, b.left, midH + 10);
-        }
-        if (b.blocked.right) {
-          scene.DebugG.strokeTriangle(b.right, midH - 10, b.right - 10, midH, b.right, midH + 10);
-        }
-      }
-      //Show the origin point
-      scene.DebugG.fillStyle(0xFF0000);
-      scene.DebugG.fillCircle(b.left + (b.width * a.originX), b.top + (b.height * a.originY), 4);
     }
+    //empty array
+    this.rects.length = 0;
+    this.objs.length = 0;
   }
   cartoonText(txt) {
     txt.setShadow(3, 3, '#000000', 6, true, false)
