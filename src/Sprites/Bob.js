@@ -134,11 +134,11 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
     //if we are carrying a box move it to match our position
     if (this.carrying) {
       if (this.direction.left > 0) {
-        this.carrying.x = this.body.left - (this.carrying.width + 5);
+        this.carrying.x = this.body.left - (this.carrying.width + 15);
       } else if (this.direction.right > 0) {
-        this.carrying.x = this.body.right + 5;//(this.carrying.width);
+        this.carrying.x = this.body.right + 15;//(this.carrying.width);
       }
-      this.carrying.y = (this.body.top) - 16;
+      this.carrying.y = (this.body.top) - 24;
     }
 
     //if a speed effect is active ignore keys
@@ -171,7 +171,6 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
         this.scene.sound.playAudioSprite('sfx', 'jump', {volume:.1});
         this.body.setVelocityY(-500);
       }
-      //check if we are on boxes
       if (this.body.touching.down) {
         //Check if Bob is on a box and allow jump
         let around = this.scene.physics.overlapRect(this.body.left, this.body.bottom + 2, this.body.width - 3,  3);

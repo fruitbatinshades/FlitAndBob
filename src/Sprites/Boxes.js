@@ -9,10 +9,11 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         None: 0,
         Sitting: 1,
         Player: 2,
-        Tile: 3
+        Tile: 3,
+        Zone: 4
     }
     static tileWidth = 64;
-    debug = true;
+    debug = false;
 
     constructor(scene, children, spriteArray) {
         super(scene, children);
@@ -33,7 +34,6 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
             b.setOrigin(0, 0);
             this.add(b, true);
             this.scene.physics.world.enable(b);
-            //b.body.customSeparateY = true;
             box.destroy(); //destroy original tile
         }, this);
 

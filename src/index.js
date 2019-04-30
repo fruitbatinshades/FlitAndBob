@@ -36,9 +36,16 @@ class Game extends Phaser.Game {
   panAndReturn(scene, rect) { 
     if (!Phaser.Geom.Rectangle.ContainsRect(scene.cameras.main.worldView, rect)) {
       try {
+        //stop following else the pan X/Y is incorrect
+        scene.cameras.main.stopFollow();
         scene.cameras.main.once('camerapancomplete', () => {
           //pan 2 - will be called once when pan 1 completes
-          scene.cameras.main.pan(scene.ActivePlayer.x, scene.ActivePlayer.y, 1000, 'Sine.easeInOut');
+          scene.cameras.main.pan(scene.ActivePlayer.x, scene.ActivePlayer.y, 1000, 'Sine.easeInOut', false, (camera, progress, scrollX, scrollY) => {
+            if (progress === 1) {
+              //restore follow
+              scene.cameras.main.startFollow(scene.ActivePlayer);
+            }
+          });
         });
         //pan 1 - pan to target
         scene.cameras.main.pan(rect.x + rect.width / 2, rect.y + rect.height / 2, 1000, 'Sine.easeInOut');
