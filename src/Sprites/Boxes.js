@@ -1,6 +1,7 @@
 /// <reference path="../../defs/phaser.d.ts" />
 import Settings from '../settings.js';
 import Box from './box.js';
+import Rock from './Rock.js';
 //import utils from '../Utils/Debug.js';
 
 export default class Boxes extends Phaser.Physics.Arcade.Group {
@@ -8,10 +9,11 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         None: 0,
         Sitting: 1,
         Player: 2,
-        Tile: 3
+        Tile: 3,
+        Zone: 4
     }
     static tileWidth = 64;
-    debug = true;
+    debug = false;
 
     constructor(scene, children, spriteArray) {
         super(scene, children);
@@ -22,7 +24,13 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
 
         // add boxes to our group
         spriteArray.forEach((box) => {
-            var b = new Box(box);
+            let b;
+            if (box.data != null && box.data.values.hasOwnProperty('Rock')) {
+                //its a rock
+                b = new Rock(box);
+            } else {
+                b = new Box(box);
+            }
             b.setOrigin(0, 0);
             this.add(b, true);
             this.scene.physics.world.enable(b);
@@ -30,12 +38,12 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         }, this);
 
         this.spaceKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-       
+        this.scene.events.on('preupdate', this.preUpdate, this);
         this.init();
     }
     preUpdate(a, b) { 
-        if (this.debug) { 
-            this.scene.game.drawCollision(this.scene, this.children.entries);
+        if (this.debug && this.scene && this.scene.game) { 
+            this.scene.game.objs.push(this.children.entries);
         }
     }
     init() {
@@ -45,7 +53,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         this.scene.add.existing(this);
         this.getChildren().forEach((box) => {
             box.body.setCollideWorldBounds(true);
-            box.name = 'b_' + i++;
+            box.name = (box.isRock ? 'rock_' : 'box_') + i++;
             box.body.setDrag(5000, 0);//.setMass(5000);
             //state to monitor collision states
             box.status = Boxes.State.None;
@@ -60,8 +68,14 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
     //ensure map and players exist
     addCollisions() {
         //collider for when boxes hit each other
-        this.scene.physics.add.collider(this, this, this.boxCollide, null, this);
-        this.scene.physics.add.collider(this, this.scene.mapLayers.World , this.tileCollide, null, this);
+        let boxes = this.children.entries.filter((x) => !x.hasOwnProperty('isRock'));
+        this.scene.physics.add.collider(boxes, boxes, this.boxCollide, null, this);
+        this.scene.physics.add.collider(boxes, this.scene.mapLayers.World, this.tileCollide, null, this);
+        
+        let rocks = this.children.entries.filter((x) => x.hasOwnProperty('isRock'));
+        this.scene.physics.add.collider(rocks, this.scene.mapLayers.World, this.tileCollide, null, this);
+        
+        //collider for boxes and rocks with the players
         this.scene.physics.add.collider(this.scene.game.Bob, this, this.playerCollide, null, this);
         this.scene.physics.add.collider(this.scene.game.Flit, this, this.playerCollide, null, this);
     }
@@ -74,7 +88,8 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
             box = tmp2;
             tile = tmp;
         }
-        if (tile !== null && box.lastContact !== tile) { // && !box.isRock
+        //Handle box collision
+        if (tile !== null && !box.isRock && box.lastContact !== tile) {
             box.deActivate();
             box.status = Boxes.State.Tile;
             box.lastContact = tile;
@@ -139,10 +154,15 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         //if it's bob and a rock move it
         if (box.isRock && player.is('bob')) {
             let v = 0;
-            box.deActivate();
             if (box.body.touching.right) v = -player.speed;
             if (box.body.touching.left) v = player.speed;
             box.body.setVelocityX(v);
+            
+            let around = this.scene.physics.overlapRect(box.body.x + 2, box.body.top -2, box.body.width - 4,  box.body.height + 4);
+            //There is only the rock it's got nothing underneath so reactivate
+            if (around.length === 1) {
+                box.activate();
+            } 
         }
     }
 

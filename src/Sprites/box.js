@@ -18,8 +18,6 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
     _lastContact = null;
     //Player that can interact with the box
     Affects = null;
-    //Is this a Bob only rock
-    isRock = false;
     //Number of hits before the box self destructs
     _hits = 1000;
 
@@ -64,11 +62,11 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
             } else if (sprite.data.list['Affects']) {
                 this.Affects = sprite.data.list['Affects'];
             };
-            if (sprite.data.values.hasOwnProperty('Rock')) {
-                //It's a rock which only Bob can move
-                this.setTexture('rock');
-                this.isRock = true;
-            }
+            // if (sprite.data.values.hasOwnProperty('Rock')) {
+            //     //It's a rock which only Bob can move
+            //     this.setTexture('rock');
+            //     this.isRock = true;
+            // }
         }
         if (this.debug) {
             this.note = this.scene.add.text(this.x, this.y, '');

@@ -45,7 +45,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                 //if the zone blocks boxes
                 if (z.Blocks.key === 'Box') {
                     //scene.physics.add.collider(scene.mapLayers['Boxes'], z, scene.mapLayers['Boxes'].tileCollide, null, scene.mapLayers['Boxes']);
-                    scene.physics.add.collider(scene.mapLayers['Boxes'], z, this.zoneCollide, null, scene.mapLayers['Boxes']);
+                    scene.physics.add.collider(scene.mapLayers['Boxes'], z, this.zoneCollide, this.zoneProcess, scene.mapLayers['Boxes']);
                 } else if (z.Blocks.key) {
                     //if properties provided set the relevant one
                     z.body.checkCollision.up = z.Blocks.key.indexOf('T') !== -1;
@@ -67,19 +67,24 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             this.lookup[current.name] = z;
         }
     }
-    zoneCollide(zone, box) {
+    zoneProcess(zone, box) {
         if (box.lastContact !== zone) {
-            //hit a new zone so set up rules
             box.lastContact = zone;
-            box.body.allowGravity = false;
-            box.body.y--;
-            box.body.stop();
             console.log(`${box.name} hit ${zone.name}`);
+            return true;
         } else {
             //on same zone
-            
+            return false;
         }
-        //console.log('zoneCollide', a, b);
+        return true;
+    }
+    zoneCollide(zone, box) {
+        //hit a new zone so set up rules
+        box.body.y--;
+        box.deActivate();
+        //box.body.stop();
+        //box.body.setImmovable(true);
+        //box.body.allowGravity = true;
     }
     /**
      * Get a zone by it's key
@@ -248,7 +253,4 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
     getTargetZone(name) {
         return this.lookup[name];
     }
-   
-    
-   
 }
