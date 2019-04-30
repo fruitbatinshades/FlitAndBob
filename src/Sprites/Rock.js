@@ -38,25 +38,12 @@ export default class Rock extends Phaser.Physics.Arcade.Sprite {
         }, this);
     }
     activate() {
-        this.alpha = 1;
         this.body.allowGravity = true;
         this.body.immovable = false;
     }
     deActivate() {
-        this.alpha = .5;
         this.body.allowGravity = false;
         this.body.immovable = true;
         this.body.stop();
     }
-    // preUpdate() {
-    //     if (!(this.body.blocked.down || this.body.touching.down || this.body.onFloor())) {
-    //         let around = this.scene.physics.overlapRect(this.body.x + 2, this.body.top - 2, this.body.width - 4, this.body.height + 4);
-    //         //There is only the rock it's got nothing underneath so reactivate
-    //         if (around.length === 1) {
-    //             this.activate();
-    //         } else {
-    //             this.deactivate();
-    //         }
-    //     }
-    // }
 }
