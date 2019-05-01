@@ -40,7 +40,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         this.init();
     }
     preUpdate(a, b) { 
-        if (this.scene.game.renderDebug && this.scene && this.scene.game) { 
+        if (this.scene.game.debugOn && this.scene && this.scene.game) { 
             this.scene.game.objs.push(this.children.entries);
         }
     }
@@ -117,7 +117,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
             box.body.allowGravity = false;
             box.body.onOverlap = true;
             box.lastContact = null;
-            if (this.scene.game.renderDebug) console.log('event pickup_box', box);
+            if (this.scene.game.debugOn) console.log('event pickup_box', box);
         }
     }
     tileOverlap(a, b, c){
@@ -135,7 +135,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         box.body.moves = true;
         box.body.allowGravity = true;
         box.lastContact = null;
-        if (this.scene.game.renderDebug) console.log('event drop_box', box);
+        if (this.scene.game.debugOn) console.log('event drop_box', box);
     }
     /**
      * Handle player colliding with box and pick up
@@ -203,7 +203,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         
             //force gap else it is irregular
             top.y = (bottom.body.top - top.body.height) - 1;
-            if (this.scene.game.renderDebug) console.log('box colliding');
+            if (this.scene.game.debugOn) console.log('box colliding');
 
             return true;
         }

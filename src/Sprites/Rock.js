@@ -28,7 +28,7 @@ export default class Rock extends Phaser.Physics.Arcade.Sprite {
                 this.setTexture('rock');
             }
         }
-        if (this.scene.game.renderDebug) {
+        if (this.scene.game.debugOn) {
             this.note = this.scene.add.text(this.x, this.y, '');
             this.note.depth = 1000;
         }

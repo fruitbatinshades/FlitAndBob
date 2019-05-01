@@ -37,7 +37,10 @@ export default class Level extends Phaser.Scene {
     preload() {
         this.load.tilemapTiledJSON(this.registry.get('currentLevel'), `assets/Levels/${this.registry.get('currentLevel')}.json`);
         this.map = this.make.tilemap({ key: this.registry.get('currentLevel') });
-        if (this.map.properties["debug"]) this.game.renderDebug = this.map.properties["debug"];
+        if (this.map.properties["debug"]) {
+            console.warn('debug enabled by map properties');
+            this.game.debugOn = this.map.properties["debug"];
+        }
 
         // set the boundaries of our game world
         this.physics.world.bounds.width = this.map.widthInPixels;
@@ -51,7 +54,7 @@ export default class Level extends Phaser.Scene {
         this.shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         this.ctrlKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
 
-        if (this.game.renderDebug) {
+        if (this.game.debugOn) {
             this.input.on('gameobjectdown', function (pointer, gameObject) {
                 if (gameObject.toolInfo) {
                     gameObject.toolInfo.visible = !gameObject.toolInfo.visible;
@@ -100,7 +103,7 @@ export default class Level extends Phaser.Scene {
         }
     }
     preUpdate() {
-        if (this.game.renderDebug) {
+        if (this.game.debugOn) {
             this.game.objs.push([this.bob, this.flit]);
             this.game.drawCollision(this);
         }
@@ -150,7 +153,7 @@ export default class Level extends Phaser.Scene {
                 case 'Interaction':
                     //Get the rectangles from the map
                     this.mapLayers[l.name]= this.map.getObjectLayer('Interaction');
-                    this.interactionZones = new Interaction(this, [], l, this.mapLayers[l.name], this.game.renderDebug );
+                    this.interactionZones = new Interaction(this, [], l, this.mapLayers[l.name], this.game.debugOn );
                     //scene.mapLayers[l.name].setDepth(l.properties.depth || 1);
                     break;
                 case 'Sky':
