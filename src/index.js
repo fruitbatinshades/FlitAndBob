@@ -19,7 +19,8 @@ class Game extends Phaser.Game {
     return this._debugOn;
   }
   set debugOn(value) {
-    return this._debugOn;
+    this._debugOn = value;
+    this.config.physics.arcade.debug = this._debugOn;
   }
 
   constructor() {

@@ -857,7 +857,7 @@
  "properties":
     {
      "Backgrounds":"BrickTile.svg|gnome.svg|WallTile.svg|Clouds.svg|Tools.svg|Sun.svg",
-     "debug":true
+     "debug":false
     },
  "propertytypes":
     {
