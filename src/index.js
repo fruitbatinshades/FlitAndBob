@@ -14,10 +14,12 @@ class Game extends Phaser.Game {
   urlParams;
   rects = [];
   objs = [];
+  renderdebug = false;
 
   constructor() {
     super(config);
     this.urlParams = new URLSearchParams(window.location.search.toLowerCase());
+    this.renderDebug = this.urlParams.get('debug') === 'true';
     //this.game.device.desktop
     //Create global variables for access across all scene instances
     this.Bob = null; //Bob Character

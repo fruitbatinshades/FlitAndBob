@@ -37,7 +37,7 @@ export default class Level extends Phaser.Scene {
     preload() {
         this.load.tilemapTiledJSON(this.registry.get('currentLevel'), `assets/Levels/${this.registry.get('currentLevel')}.json`);
         this.map = this.make.tilemap({ key: this.registry.get('currentLevel') });
-        if (this.map.properties["debug"]) this.debug = this.map.properties["debug"];
+        if (this.map.properties["debug"]) this.game.renderDebug = this.map.properties["debug"];
 
         // set the boundaries of our game world
         this.physics.world.bounds.width = this.map.widthInPixels;
@@ -51,7 +51,7 @@ export default class Level extends Phaser.Scene {
         this.shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         this.ctrlKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
 
-        if (this.debug) {
+        if (this.game.renderDebug) {
             this.input.on('gameobjectdown', function (pointer, gameObject) {
                 if (gameObject.toolInfo) {
                     gameObject.toolInfo.visible = !gameObject.toolInfo.visible;
@@ -100,9 +100,10 @@ export default class Level extends Phaser.Scene {
         }
     }
     preUpdate() {
-        this.game.objs.push([this.bob, this.flit]);
-        this.game.drawCollision(this);
-        //this.mapLayers['World'].renderDebug(this.DebugG, { tileColor: 0xff0000 });
+        if (this.game.renderDebug) {
+            this.game.objs.push([this.bob, this.flit]);
+            this.game.drawCollision(this);
+        }
     }
     /**
      * Crete the maps, player and set up collisions
@@ -149,7 +150,7 @@ export default class Level extends Phaser.Scene {
                 case 'Interaction':
                     //Get the rectangles from the map
                     this.mapLayers[l.name]= this.map.getObjectLayer('Interaction');
-                    this.interactionZones = new Interaction(this, [], l, this.mapLayers[l.name], this.debug );
+                    this.interactionZones = new Interaction(this, [], l, this.mapLayers[l.name], this.game.renderDebug );
                     //scene.mapLayers[l.name].setDepth(l.properties.depth || 1);
                     break;
                 case 'Sky':

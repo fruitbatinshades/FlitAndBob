@@ -20,8 +20,6 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
     Affects = null;
     //Number of hits before the box self destructs
     _hits = 1000;
-
-    debug = false;
     get hits() {
         return this._hits;
     }
@@ -68,7 +66,7 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
             //     this.isRock = true;
             // }
         }
-        if (this.debug) {
+        if (this.scene.game.renderDebug) {
             this.note = this.scene.add.text(this.x, this.y, '');
             this.note.depth = 1000;
         }
@@ -102,7 +100,7 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
             this.text.y = this.y + this.height / 2;
             this.text.text = this._hits !== 0 ? this._hits : '!';
         }
-        if (this.debug) {
+        if (this.scene.game.renderDebug) {
             //Debug notes
             this.note.x = this.x + 10;
             this.note.y = this.y + 10;
