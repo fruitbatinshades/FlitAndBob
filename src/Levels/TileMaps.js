@@ -22,7 +22,11 @@ export default class Enums {
             StopLeftL: 10,
             StopLeftM: 11,
             StopLeftR: 12,
+            Spikes: 14,
             Arrow: 16,
+            SlowStonesA:20,
+            SaltA: 23,
+            SaltB:24,
             PlantPot1: 25,
             PlantPot2: 26,
             Stone1: 27,
@@ -34,9 +38,10 @@ export default class Enums {
             BigStoneA: 33,
             BigStoneB: 34,
             Honey: 35,
-            Fizz: 36
+            Fizz: 36,
+            Bridge1: 39
         };
-        //annoyinglly this has to come from the spritesheet so do not add firstGid :(
+        //annoyingly this has to come from the spritesheet so do not add firstGid :(
         this.Boxes = [
             this.Component.PlantPot1 - 1,
             this.Component.PlantPot2 - 1,
@@ -81,16 +86,39 @@ export default class Enums {
             this.Component.Honey,
             this.Component.Fizz
         ];
+
+        /** Default zone dimensions for known components */
+        this.ZoneAdjust = {
+            [this.Component.PressureOff]: {h: 23, y: 41},
+            [this.Component.PressureOn]: {h: 18, y: 46},
+            [this.Component.SaltA]: {h: 16, y: 48},
+            [this.Component.SaltB]: { h: 16, y: 48 },
+            [this.Component.SlowStonesA]: { h: 16, y: 48 },
+            [this.Component.Bridge1]: { h: 20}
+        };
     }
+    /**
+     * Whether the named tile is part of the Enum
+     * @param {string} value The name of the tile
+     */
     contains(value) {
         return Object.keys(this.Component).find(key => this.Component[key] === value);
     }
+    /** Tiles that are classified as stops */
     ComponentTilesStops() {
         return this.Stops;
     }
+    /**
+     * Tiles that are classified as switches
+     */
     ComponentTilesSwitches() {
         return this.Switches;
     }
+    /**
+     * The type of tile
+     * @param {string} value 
+     * @returns {object} Object with boolean for each tile type
+     */
     tileType(value) {
         return {
             isSwitch: this.isSwitch(value),
@@ -98,8 +126,11 @@ export default class Enums {
             isLight: this.isLight(value),
             isBlockActivated: this.isBlockActivated(value)
         };
-        
     }
+    /**
+     * 
+     * @param {} value 
+     */
     isLight(value) {
         return this.Lights.indexOf(value) !== -1;
     }

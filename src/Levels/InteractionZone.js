@@ -2,27 +2,28 @@ import Enums from './Tilemaps.js';
 
 /**
  * Class populated from the tilemap Interaction Layer rectangles
+ * @member {int} tileType the type of tile under the zone (tilemaps.js > )
+ * @member {Phaser.Tilemaps.Tile} tileObj Ref to the map obj
+ * @member {InteractionParams} Target Single target ID
+ * @member {InteractionParams} GroupKey Key to group multiple targets
+ * @member {InteractionParams} Action The action to use when client is over the zone and presses space (Show/Hide)
+ * @member {InteractionParams} Effect The effect to use on the player (injure)
+ * @member {InteractionParams} Transition The visual effect to use (toggleVisibility, fadeAndDisable)
+ * @member {InteractionParams} Implementation Class to use for this tile (not implemented)
+ * @member {InteractionParams} Affect What player does it affect (flit, bob)
+ * @member {InteractionParams} Blocks Whether it blocks (physics)
  */
 export default class InteractionZone extends Phaser.GameObjects.Zone {
     //Unique name of the zone
     name = null;
-    //Ref to the tile
-    TileObj = null;
-    //Key to group multiple targets
+    tileObj = null;
     GroupKey = null;
-    //Single target ID
     Target = null;
-    //The action to use when client is over the zone and presses space (Show/Hide)
     Action = null;
-    //The effect to use on the player (injure)
     Effect = null;
-    //The visual effect to use (toggleVisibility, fadeAndDisable)
     Transition = null;
-    //Class to use for this tile
     Implementation = null;
-    //What player does it affect
     Affect = null;
-    //Whether it blocks (physics)
     Blocks = null;
     //Whether the target has been shown to the camera so it only happens once
     _groupShown = false;
@@ -30,7 +31,7 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
     isActive = true;
     _switchOn = false;
 
-    get switchOn(){
+    get switchOn() {
         return this._switchOn;
     }
     set switchOn(value) {
@@ -52,7 +53,9 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
         this.tileObj = tileObj;
         this.properties = tileObj.properties;
         this.name = tileObj.name;
+        this.adjustZone();
         //if ZoneHeight is provided adjust the zone, used to make the zone smaller than the tile (switches, injure)
+        //This will overwrite the defaults if set
         if (this.properties && this.properties.ZoneHeight) {
             if (this.properties.ZoneHeightAt) {
                 switch (this.properties.ZoneHeightAt)
@@ -75,10 +78,6 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
             this.active = false;
             this.isActive = false;
         }
-
-        //the tile on the switch layer to see what type it is
-        let tile = scene.map.getTileAt(tileObj.x / 64, tileObj.y / 64, false, 'InteractionTiles');
-        if(tile !== null) this.tileType = this.scene.switchIds.tileType(tile.index);
         
         //The properties are intially null and only set up if the KV pair is in the properties
         if (tileObj.properties) {
@@ -124,6 +123,27 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
             this.scene.events.on('preupdate', this.preUpdate, this);
         }
     }
+    /** adjust the zones dimensions for the tile state */
+    adjustZone() {
+        //the tile on the switch layer to see what type it is
+        let tile = this.scene.map.getTileAt(this.tileObj.x / 64, this.tileObj.y / 64, false, 'InteractionTiles');
+        if (tile !== null) {
+            this.tileType = this.scene.switchIds.tileType(tile.index);
+            //adjust zone height for component
+            let za = this.scene.switchIds.ZoneAdjust[tile.index];
+            if (za) {
+                console.log(tile.index, za);
+                if (za.hasOwnProperty('h'))
+                    this.body.height = za.h;
+                if (za.hasOwnProperty('w'))
+                    this.body.width = za.w;
+                if (za.hasOwnProperty('y'))
+                    this.body.y = tile.pixelY + za.y;
+
+                this.body.reset(this.body.x, this.body.top);
+            }
+        }
+    }
     preUpdate() {
         if(this.scene && this.scene.game)
         this.scene.game.objs.push(this);
@@ -149,6 +169,7 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
                 let switchTile = this.scene.map.getTileAt(this.tileObj.x / 64, this.tileObj.y / 64, false, 'InteractionTiles')
                 switchTile.index = this.interaction.scene.switchIds.switchState(switchTile.index, this);
                 this.scene.sound.playAudioSprite('sfx', 'switch');
+                this.adjustZone();
                 let panRect;
                 //pan if the target or group is off screen
                 if (target && !this._groupShown) {
@@ -214,17 +235,27 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
         }
     }
 }
-/** Converts the Tiled property to its value and properties (if supplied) */
+/** 
+ * Converts the Tiled property to its value and properties (if supplied) 
+ * */
 class InteractionParams{
     key = null;
     params = {}
     constructor(value) { 
         this.splitMapProperty(value);
     }
+    /**
+     * Whether the object from tiled has a propety named 'name'
+     * @param {string} name the property to check for
+     */
     has(name){
         if(this.params === null) return false;
         return this.params.hasOwnProperty(name);
     }
+    /**
+     * Splits the string property from tiled map
+     * @param {string} value Value from the tiled custom properties
+     */
     splitMapProperty(value) {
         //if the property has a brace, extract json
         if (!value.endsWith('}')) {

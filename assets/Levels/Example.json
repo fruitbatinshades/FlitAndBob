@@ -469,16 +469,14 @@
                      "Action":"",
                      "Effect":"Slow",
                      "Target":"",
-                     "Transition":"",
-                     "ZoneHeight":16
+                     "Transition":""
                     },
                  "propertytypes":
                     {
                      "Action":"string",
                      "Effect":"string",
                      "Target":"string",
-                     "Transition":"string",
-                     "ZoneHeight":"int"
+                     "Transition":"string"
                     },
                  "rotation":0,
                  "type":"",
@@ -640,15 +638,11 @@
                  "name":"Bridge",
                  "properties":
                     {
-                     "Blocks":"Box",
-                     "ZoneHeight":"32",
-                     "ZoneHeightAt":"T"
+                     "Blocks":"Box"
                     },
                  "propertytypes":
                     {
-                     "Blocks":"string",
-                     "ZoneHeight":"string",
-                     "ZoneHeightAt":"string"
+                     "Blocks":"string"
                     },
                  "rotation":0,
                  "type":"",

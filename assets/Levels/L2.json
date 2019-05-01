@@ -317,15 +317,13 @@
                     {
                      "Affect":"",
                      "Effect":"Injure",
-                     "GroupKey":"Group1",
-                     "ZoneHeight":16
+                     "GroupKey":"Group1"
                     },
                  "propertytypes":
                     {
                      "Affect":"string",
                      "Effect":"string",
-                     "GroupKey":"string",
-                     "ZoneHeight":"int"
+                     "GroupKey":"string"
                     },
                  "rotation":0,
                  "type":"ConveyerLeft",
@@ -471,14 +469,12 @@
                  "properties":
                     {
                      "Action":"ShowHide",
-                     "GroupKey":"StoneDropA",
-                     "ZoneHeight":14
+                     "GroupKey":"StoneDropA"
                     },
                  "propertytypes":
                     {
                      "Action":"string",
-                     "GroupKey":"string",
-                     "ZoneHeight":"int"
+                     "GroupKey":"string"
                     },
                  "rotation":0,
                  "type":"",

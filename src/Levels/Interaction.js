@@ -44,7 +44,6 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                 scene.physics.add.collider(scene.flit, z, this.blocks, this.preBlock, this);
                 //if the zone blocks boxes
                 if (z.Blocks.key === 'Box') {
-                    //scene.physics.add.collider(scene.mapLayers['Boxes'], z, scene.mapLayers['Boxes'].tileCollide, null, scene.mapLayers['Boxes']);
                     scene.physics.add.collider(scene.mapLayers['Boxes'], z, this.zoneCollide, this.zoneProcess, scene.mapLayers['Boxes']);
                 } else if (z.Blocks.key) {
                     //if properties provided set the relevant one

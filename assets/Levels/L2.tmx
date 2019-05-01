@@ -2,7 +2,7 @@
 <map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="32" height="19" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#10ceff" nextlayerid="17" nextobjectid="124">
  <properties>
   <property name="Backgrounds" value="BrickTile.svg|gnome.svg|WallTile.svg|Clouds.svg|Tools.svg|Sun.svg"/>
-  <property name="debug" type="bool" value="true"/>
+  <property name="debug" type="bool" value="false"/>
  </properties>
  <tileset firstgid="1" name="components" tilewidth="64" tileheight="64" spacing="2" margin="1" tilecount="48" columns="6">
   <image source="components.png" width="396" height="528"/>
@@ -48,8 +48,8 @@
   <tile id="40" terrain="1,1,,"/>
   <tile id="41" terrain="1,,,"/>
  </tileset>
- <tileset firstgid="91" name="veggies" tilewidth="64" tileheight="64" spacing="2" margin="1" tilecount="256" columns="15">
-  <image source="veggies.png" width="1024" height="1024"/>
+ <tileset firstgid="91" name="veggies" tilewidth="64" tileheight="64" spacing="2" margin="1" tilecount="256" columns="16">
+  <image source="veggies.png" width="1056" height="1056"/>
  </tileset>
  <tileset firstgid="347" name="GardenTilemap" tilewidth="64" tileheight="64" spacing="2" margin="1" tilecount="256" columns="16">
   <image source="GardenTilemap.png" width="1056" height="1056"/>
@@ -148,7 +148,6 @@
     <property name="Affect" value=""/>
     <property name="Effect" value="Injure"/>
     <property name="GroupKey" value="Group1"/>
-    <property name="ZoneHeight" type="int" value="16"/>
    </properties>
   </object>
   <object id="42" name="FlyPaperSwitch" type="PullSwitch" x="960" y="1088" width="64" height="64">
@@ -193,7 +192,6 @@
    <properties>
     <property name="Action" value="ShowHide"/>
     <property name="GroupKey" value="StoneDropA"/>
-    <property name="ZoneHeight" type="int" value="14"/>
    </properties>
   </object>
   <object id="88" name="PressureSwitchLightA" x="832" y="896" width="64" height="64">
