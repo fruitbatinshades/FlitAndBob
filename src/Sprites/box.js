@@ -19,13 +19,13 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
     //Player that can interact with the box
     Affects = null;
     //Number of hits before the box self destructs
-    _hits = 1000;
+    _hits = -2;
     get hits() {
         return this._hits;
     }
     set hits(value) {
         this._hits = value;
-        if (this._hits < 0) {
+        if (this._hits === -1) {
             this.scene.events.emit('boxdestruct', this);
         }
     }

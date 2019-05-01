@@ -70,6 +70,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
     zoneProcess(zone, box) {
         if (box.lastContact !== zone) {
             box.lastContact = zone;
+            if (box.constructor.name === 'Box') box.hits--;
             console.log(`${box.name} hit ${zone.name}`);
             return true;
         } else {
