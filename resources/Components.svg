@@ -269,9 +269,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8284271"
-     inkscape:cx="-108.14451"
-     inkscape:cy="745.23884"
+     inkscape:zoom="0.99999999"
+     inkscape:cx="542.28985"
+     inkscape:cy="610.63764"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -280,7 +280,7 @@
      guidetolerance="2"
      inkscape:window-width="1920"
      inkscape:window-height="1027"
-     inkscape:window-x="491"
+     inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1">
     <inkscape:grid
@@ -2291,7 +2291,7 @@
          style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#5a3600;stroke-width:2;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke;shape-rendering:crispEdges" />
     </g>
     <g
-       transform="matrix(0.35646633,0,0,0.40181706,-69.959825,-23.054251)"
+       transform="matrix(0.36973379,0,0,0.4016377,-76.136822,-22.902988)"
        style="display:inline;shape-rendering:crispEdges"
        id="g8023"
        inkscape:export-filename="C:\Projects\Phaser\FlitAndBob\assets\Levels\Grass_Platform2.png"
@@ -2368,7 +2368,7 @@
     </g>
     <g
        id="g1701"
-       transform="translate(0,-0.75978875)">
+       transform="matrix(1.0361283,0,0,0.99959186,-1.1574137,-0.63055473)">
       <path
          style="fill:#c87137;fill-rule:evenodd;stroke:#000000;stroke-width:1.4192363;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;shape-rendering:crispEdges"
          d="m 6.7321854,296.97025 50.9502246,0.1345 -8.480657,50.30751 -33.520466,-0.004 z"
@@ -3148,7 +3148,7 @@
     </g>
     <g
        id="g1807"
-       transform="translate(0,-0.76046797)">
+       transform="matrix(1.0361156,0,0,0.99959201,-5.7802726,-0.63137238)">
       <g
          id="g1795">
         <path
@@ -3454,7 +3454,7 @@
     </g>
     <g
        id="g2161"
-       transform="translate(190.89798,-0.75978181)">
+       transform="matrix(1.0361283,0,0,0.99959186,190.84259,-0.63054779)">
       <path
          sodipodi:nodetypes="ccccc"
          inkscape:connector-curvature="0"

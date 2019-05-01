@@ -98,6 +98,10 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
     }
     onBoxDestruct(box) {
         console.log('box destruct', box);
+        //check we are not activating anything
+        if (box.lastContact !== null && box.lastContact.constructor.name === 'InteractionZone') {
+            box.lastContact.process(box.lastContact, this.scene.ActivePlayer);
+        }
         this.scene.sound.playAudioSprite('sfx', 'break');
         box.destroy();
     }
@@ -119,9 +123,6 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
             box.lastContact = null;
             if (this.scene.game.debugOn) console.log('event pickup_box', box);
         }
-    }
-    tileOverlap(a, b, c){
-        console.log(a, b, c);
     }
     //when a box is dropped by a character
     onDropBox(box, player) {

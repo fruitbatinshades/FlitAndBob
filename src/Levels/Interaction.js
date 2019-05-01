@@ -77,15 +77,11 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             //on same zone
             return false;
         }
-        return true;
     }
     zoneCollide(zone, box) {
         //hit a new zone so set up rules
         box.body.y--;
         box.deActivate();
-        //box.body.stop();
-        //box.body.setImmovable(true);
-        //box.body.allowGravity = true;
     }
     /**
      * Get a zone by it's key

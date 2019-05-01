@@ -44,7 +44,6 @@ class Game extends Phaser.Game {
    */
   panAndReturn(scene, rect) { 
     if (!Phaser.Geom.Rectangle.ContainsRect(scene.cameras.main.worldView, rect)) {
-      try {
         //stop following else the pan X/Y is incorrect
         scene.cameras.main.stopFollow();
         scene.cameras.main.once('camerapancomplete', () => {
@@ -58,7 +57,6 @@ class Game extends Phaser.Game {
         });
         //pan 1 - pan to target
         scene.cameras.main.pan(rect.x + rect.width / 2, rect.y + rect.height / 2, 1000, 'Sine.easeInOut');
-      } catch (e) { }
     }
   }
   /**
@@ -181,6 +179,3 @@ class Game extends Phaser.Game {
 }
 
 window.game = new Game();
-// window.addEventListener('resize', (event) => {
-//   window.game.resize(window.innerWidth, window.innerHeight);
-// });

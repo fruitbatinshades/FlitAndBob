@@ -90,7 +90,7 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
         this.body.immovable = true;
         this.body.allowGravity = false;
         this.body.setGravityY(0);
-        this.setVelocity(0, 0);
+        this.body.setVelocity(0, 0);
         this.body.stop();
        // box.body.y--;
     }
