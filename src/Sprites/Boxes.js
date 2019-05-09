@@ -12,7 +12,9 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         Tile: 3,
         Zone: 4
     }
+    scene;
     static tileWidth = 64;
+
     constructor(scene, children, spriteArray) {
         super(scene, children);
 
@@ -26,12 +28,15 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
             if (box.data != null && box.data.values.hasOwnProperty('Rock')) {
                 //its a rock
                 b = new Rock(box);
+                b.isRock = true;
             } else {
                 b = new Box(box);
+                b.isBox = true;
             }
             b.setOrigin(0, 0);
             this.add(b, true);
             this.scene.physics.world.enable(b);
+
             box.destroy(); //destroy original tile
         }, this);
 
@@ -39,8 +44,9 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         this.scene.events.on('preupdate', this.preUpdate, this);
         this.init();
     }
-    preUpdate(a, b) { 
-        if (this.scene.game.debugOn && this.scene && this.scene.game) { 
+    preUpdate(a, b, c, d) { 
+        //TODO: after sccene restart, scene is null
+        if (this.scene && this.scene.game && this.scene.game.debugOn) { 
             this.scene.game.objs.push(this.children.entries);
         }
     }
@@ -74,8 +80,8 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         this.scene.physics.add.collider(rocks, this.scene.mapLayers.World, this.tileCollide, null, this);
         
         //collider for boxes and rocks with the players
-        this.scene.physics.add.collider(this.scene.game.Bob, this, this.playerCollide, null, this);
-        this.scene.physics.add.collider(this.scene.game.Flit, this, this.playerCollide, null, this);
+        this.scene.physics.add.collider(this.scene.game.Bob, this, this.playerCollide, this.preCollide, this);
+        this.scene.physics.add.collider(this.scene.game.Flit, this, this.playerCollide, this.preCollide, this);
     }
     //fix the box in place, turn off physics
     tileCollide(box, tile) {
@@ -138,6 +144,27 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         box.lastContact = null;
         if (this.scene.game.debugOn) console.log('event drop_box', box);
     }
+    blockBob = false;
+    preCollide(player, box) {
+        //If it's bob and a rock check the rock can be pushed
+        if (box.isRock && player.is('bob')) {
+            let around = this.scene.game.getBodiesAround(box.body);
+            let blockedRight = around.right !== null && around.right.gameObject.Blocks !== null && around.right.gameObject.isActive;
+            let blockedLeft = around.left !== null && around.left.gameObject.Blocks !== null && around.left.gameObject.isActive;
+            //bobs on top so treat as normal collision
+            if (around.above !== null && around.above.gameObject.constructor.name === 'Bob')
+                return true;
+            
+            if (around.left !== null && around.left.gameObject.constructor.name === 'Bob' && blockedRight) {
+                return false;
+            }
+            else if (around.right !== null && around.right.gameObject.constructor.name === 'Bob' && blockedLeft) {
+                return false;
+            }
+        }
+        this.blockBob = false;
+        return true;
+    }
     /**
      * Handle player colliding with box and pick up
      * @param {Phaser.GameObjects.Sprite} player The active player
@@ -151,17 +178,31 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
             }
         }
         //if it's bob and a rock move it
-        if (box.isRock && player.is('bob')) {
+        if (box.isRock && player.is('bob') && !this.blockBob) {
             let v = 0;
-            if (box.body.touching.right) v = -player.speed;
-            if (box.body.touching.left) v = player.speed;
-            box.body.setVelocityX(v);
-            
-            let around = this.scene.physics.overlapRect(box.body.x + 2, box.body.top -2, box.body.width - 4,  box.body.height + 4);
+            if (player.body.touching.right || player.body.touching.left) {
+                //console.log(box.body.blocked);
+                if (player.body.touching.left) {
+                        v = -player.speed;
+                }
+                else if (player.body.touching.right) {
+                    v = player.speed;
+                }
+                if (v === 0) {
+                    box.body.stop();
+                    player.body.stop();
+                }
+                else {
+                    box.body.setVelocityX(v);
+                }
+            } 
+            let around = this.scene.physics.overlapRect(box.body.x + 2, box.body.top - 2, box.body.width - 4, box.body.height + 4);
             //There is only the rock it's got nothing underneath so reactivate
             if (around.length === 1) {
                 box.activate();
             } 
+        } else {
+            box.deActivate();
         }
     }
 
@@ -208,5 +249,14 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
 
             return true;
         }
+    }
+    getBoxes() {
+        return this.children.entries.filter((b) => b.isBox);
+    }
+    getRocks() {
+        return this.children.entries.filter((b) => b.isRock);
+    }
+    getDeadWeights() {
+        return this.children.entries.filter((b) => b.isDeadWeight);
     }
 }

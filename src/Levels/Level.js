@@ -19,6 +19,7 @@ export default class Level extends Phaser.Scene {
     totalFlies = 0;
     debug = false;
     modalActive = false;
+
     get ActivePlayer() {
         return this.registry.get('ActivePlayer');
     }
@@ -36,7 +37,7 @@ export default class Level extends Phaser.Scene {
     //NB: Call from preload
     preload() {
         this.load.tilemapTiledJSON(this.registry.get('currentLevel'), `assets/Levels/${this.registry.get('currentLevel')}.json`);
-        this.map = this.make.tilemap({ key: this.registry.get('currentLevel') });
+        this.map = this.make.tilemap({ key: this.registry.get('currentLevel'), insertNull: true });
         if (this.map.properties["debug"]) {
             console.warn('debug enabled by map properties');
             this.game.debugOn = this.map.properties["debug"];
@@ -53,12 +54,13 @@ export default class Level extends Phaser.Scene {
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         this.ctrlKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
+        this.dKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
         if (this.game.debugOn) {
             this.input.on('gameobjectdown', function (pointer, gameObject) {
                 if (gameObject.toolInfo) {
                     gameObject.toolInfo.visible = !gameObject.toolInfo.visible;
-                    console.log(gameObject.toolInfo.visible);
+                    //console.log(gameObject.toolInfo.visible);
                 }
             });
         }
@@ -102,7 +104,7 @@ export default class Level extends Phaser.Scene {
             this.events.emit('updateHUD', this.game.Flit);
         }
     }
-    preUpdate() {
+    preUpdate(delta) {
         if (this.game.debugOn) {
             this.game.objs.push([this.bob, this.flit]);
             this.game.drawCollision(this);
@@ -116,16 +118,16 @@ export default class Level extends Phaser.Scene {
         this.reset();
         let sets = [];
         this.map.tilesets.forEach((b) => {
-            //console.log(`Added tilesetImage ${b.name}`);
             this.map.addTilesetImage(b.name, b.name, b.tileWidth, b.tileHeight,1,2);
             sets.push(b.name);
         });
         
         this.createPlayer();
+
+        /** @type {object{Phaser.Tilemaps. DynamicTilemapLayer}} */
         this.mapLayers = {};
         //Tile layers
         this.map.layers.forEach((l) => {
-            //console.log(`Created static layer ${l.name}`, l);
             switch (l.properties.LayerType.toLowerCase()) {
                 case 'static':
                     this.mapLayers[l.name] = this.map.createStaticLayer(l.name, sets, 0, 0).setCollisionByExclusion([-1]);
@@ -143,7 +145,6 @@ export default class Level extends Phaser.Scene {
         });
         //object layers
         this.map.objects.forEach((l) => {
-            //console.log(`Created static layer ${l.name}`, l);
             switch (l.name) {
                 case 'Boxes':
                     var newBoxes = this.map.createFromObjects('Boxes', 'Box', { key: 'ComponentSheet', frame: this.switchIds.Boxes, origin: 0 });
@@ -154,7 +155,6 @@ export default class Level extends Phaser.Scene {
                     //Get the rectangles from the map
                     this.mapLayers[l.name]= this.map.getObjectLayer('Interaction');
                     this.interactionZones = new Interaction(this, [], l, this.mapLayers[l.name], this.game.debugOn );
-                    //scene.mapLayers[l.name].setDepth(l.properties.depth || 1);
                     break;
                 case 'Sky':
                     //Add backgrounds
@@ -171,17 +171,14 @@ export default class Level extends Phaser.Scene {
                                     this.sky.add(o);
                                     o.setOrigin(0, 0);
                                     o.fixedToCamera = true;
-                                    o.setDepth(l.properties.depth || 1);
                                 }
                                 if (b.type == 'Image') {
                                     let o = this.add.image(b.x, b.y - img.height, name);
                                     o.setOrigin(0, 0);
-                                    o.setDepth(l.properties.depth || 1);
                                 }
                             }
                         }
                     });
-                    
                     break;
             }
         });
@@ -201,8 +198,10 @@ export default class Level extends Phaser.Scene {
             for (var i = 0; i < tiles.length; i++) {
                 var tile = tiles[i];
                 for (var j = 0; j < tile.length; j++) {
-                    if (tile[j].index === this.switchIds.Component.Fly) this.totalFlies++;
-                    if (tile[j].index === this.switchIds.Component.Shroom) this.totalShrooms++;
+                    if (tile[j] !== null) {
+                        if (tile[j].index === this.switchIds.Component.Fly) this.totalFlies++;
+                        if (tile[j].index === this.switchIds.Component.Shroom) this.totalShrooms++;
+                    }
                 }
             }
         }
@@ -284,7 +283,13 @@ export default class Level extends Phaser.Scene {
             this.cameras.main.startFollow(this.ActivePlayer);
         }
     }
-    update() {
+    update(time, delta) {
+        //If d is pressed toggle debug
+        if(Phaser.Input.Keyboard.JustDown(this.dKey)){
+            this.game.debugOn = !this.game.debugOn;
+            this.game.drawCollision(this);
+        }
+        //If a modal is not active process input
         if (!this.modalActive) {
             //Switch characters
             if (Phaser.Input.Keyboard.JustDown(this.shiftKey)) {
@@ -304,13 +309,15 @@ export default class Level extends Phaser.Scene {
             this.game.Flit.idle();
         }
     }
+    /**
+     * Switch between Flit and Bob
+     */
     switchCharacter() {
         //stop current player activity
         this.ActivePlayer.idle();
         this.ActivePlayer.body.setVelocityX(0);
         //get the other character
         this.ActivePlayer = this.ActivePlayer.is('Bob') ? this.flit : this.bob;
-
         this.game._ChangingPlayer = true;
         //pan the camera 
         this.cameras.main.stopFollow();

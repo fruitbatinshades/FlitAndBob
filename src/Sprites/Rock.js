@@ -1,6 +1,8 @@
 /// <reference path="../../defs/phaser.d.ts" />
 /// <reference path="./Boxes.js" />
-
+/**
+ * Rocks can only be moved by Bob and break the normal physics rules so are more complicated to handle
+ */
 export default class Rock extends Phaser.Physics.Arcade.Sprite {
     debug = false;
     //ref to the last object we hit

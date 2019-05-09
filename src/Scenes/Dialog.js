@@ -8,7 +8,7 @@ export default class Dialog extends Phaser.GameObjects.Container{
         this.title = title;
         this.text = buttonText;
 
-        this.dlg = scene.add.nineslice(0,0,w,h,'ui',16);
+        this.dlg = scene.add.nineslice(0, 0, w, h, { key: 'UI', frame: 'modal' },32);
         this.add(this.dlg);
 
         this.assetText = scene.make.text({
@@ -21,11 +21,11 @@ export default class Dialog extends Phaser.GameObjects.Container{
             }
         });
         this.assetText.setOrigin(.5, .5);
-        let button = scene.add.image(this.dlg.width / 2, 120, 'buttons','roundButton');
+        let button = scene.add.image(this.dlg.width / 2, 120, 'UI','roundButton');
         button.setOrigin(.5, .5).setScale(.5);
         button.setInteractive();
 
-        let play = scene.add.image(this.dlg.width / 2, 120, 'buttons', 'play');
+        let play = scene.add.image(this.dlg.width / 2, 120, 'UI', 'play');
         play.setOrigin(.5, .5).setScale(.5);
         
         scene.game.cartoonText(this.assetText);

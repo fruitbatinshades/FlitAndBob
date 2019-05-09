@@ -46,10 +46,10 @@ export default class LevelLoaderScene extends Phaser.Scene {
 
 
         //this.add.image(width / 2, 100, 'Logo');
-        this.PlayButton = this.add.image(this.width / 2, 490, 'buttons', 'roundButton');
+        this.PlayButton = this.add.image(this.width / 2, 490, 'UI', 'roundButton');
         this.PlayButton.alpha = .5;
         this.PlayButton.setInteractive();
-        let p = this.add.image(this.width / 2, 490, 'buttons', 'play');
+        let p = this.add.image(this.width / 2, 490, 'UI', 'play');
         p.setOrigin(.5, .5);
 
         this.loadingText = this.make.text({
@@ -99,7 +99,7 @@ export default class LevelLoaderScene extends Phaser.Scene {
 
         this.load.on('fileprogress', function (file) {
             this.assetText.setText('Loading : ' + file.key);
-            console.log(file.key);
+            //console.log(file.key);
         }, this);
 
         this.load.on('complete', function () {
@@ -123,7 +123,6 @@ export default class LevelLoaderScene extends Phaser.Scene {
         this.load.tilemapTiledJSON(this.registry.get('currentLevel'), `assets/Levels/${this.registry.get('currentLevel')}.json`);
     }
     create() {
-        console.log('create');
         let n = this.make.text({
             x: this.cameras.main.width / 2,
             y: 420,
@@ -163,7 +162,7 @@ export default class LevelLoaderScene extends Phaser.Scene {
         this.load.setPath('assets/Levels/');
         this.map.tilesets.forEach((b) => {
             this.load.image(b.name);
-            console.log(b.name);
+            //console.log(b.name);
         });
     }
 }

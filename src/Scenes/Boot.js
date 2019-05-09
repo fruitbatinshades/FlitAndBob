@@ -10,12 +10,13 @@ export default class BootScene extends Phaser.Scene {
     this.load.spritesheet('ComponentSheet', 'assets/Levels/components.png', { frameWidth: 64, frameHeight: 64, margin:1, spacing: 2 }); //Required for icons from the component sheet
     this.load.image('SplashBackground', 'assets/TemporaryBackground-min.png');
     this.load.image('splat', 'assets/splat.png'); //death image
-    this.load.image('ui', 'assets/ui.png'); //ui
-    this.load.image('rock', 'assets/BigStone.png'); //ui
+    // this.load.image('ui', 'assets/ui.png'); //ui
+    this.load.image('rock', 'assets/BigStone.png'); 
+    this.load.image('deadWeight', 'assets/DeadWeight.png'); 
   //  // player animations
     this.load.atlas('flit', 'assets/Flit/flit2.png', 'assets/Flit/flit2.json');
     this.load.atlas('bob', 'assets/Bob/bob.png', 'assets/Bob/bob.json');
-    this.load.atlas('buttons', 'assets/buttons.png', 'assets/buttons.json');
+    this.load.atlas('UI', 'assets/ui.png', 'assets/ui.json');
   //   this.load.atlas('clouds', 'assets/clouds.png', 'assets/clouds.json');
   }
 

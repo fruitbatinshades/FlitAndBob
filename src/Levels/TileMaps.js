@@ -24,6 +24,7 @@ export default class Enums {
             StopLeftR: 12,
             Spikes: 14,
             Arrow: 16,
+            Fan: 17,
             SlowStonesA:20,
             SaltA: 23,
             SaltB:24,

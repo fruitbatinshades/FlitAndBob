@@ -18,8 +18,10 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
     _lastContact = null;
     //Player that can interact with the box
     Affects = null;
-    //Number of hits before the box self destructs
+    /** Number of hits before the box self destructs */
     _hits = -2;
+    isBox = true;
+    
     get hits() {
         return this._hits;
     }
@@ -29,9 +31,11 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
             this.scene.events.emit('boxdestruct', this);
         }
     }
+    /** The last item the box collided with (getter) */
     get lastContact(){ 
         return this._lastContact;
     }
+    /** The last item the box collided with (setter), turns gravity back on if not touching anything */
     set lastContact(value) {
         this._lastContact = value;
         this.body.allowGravity = this.body.touching.down === false && this.body.blocked.down === false && this.body.onFloor() === false;

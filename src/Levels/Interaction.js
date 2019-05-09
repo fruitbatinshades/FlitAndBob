@@ -5,6 +5,7 @@ import InteractionZone from './InteractionZone.js';
 import Effects from './Effects.js';
 import Actions from './Actions.js';
 import Transitions from './Transitions.js';
+import Box from '../Sprites/box.js';
 
 export default class Interaction extends Phaser.Physics.Arcade.Group {
     tileLayer;
@@ -25,6 +26,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
 
         this.scene = scene;
         this.tileLayer = interactionLayer;
+        /** @type [Array{InteractionZone}] */
         this.lookup = {};
         this.spaceKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.inExit = false;
@@ -40,13 +42,14 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             //If there is a blocks property set up collision
             if (z.Blocks) {
                 z.body.setImmovable(true); //do this else you pass through
-                scene.physics.add.collider(scene.bob, z, this.blocks, this.preBlock, this);
                 scene.physics.add.collider(scene.flit, z, this.blocks, this.preBlock, this);
+                scene.physics.add.collider(scene.bob, z, this.blocks, this.preBlock, this);
                 //if the zone blocks boxes
                 if (z.Blocks.key === 'Box') {
-                    scene.physics.add.collider(scene.mapLayers['Boxes'], z, this.zoneCollide, this.zoneProcess, scene.mapLayers['Boxes']);
+                    //Block boxes, rocks and deadweights
+                    scene.physics.add.collider(scene.mapLayers['Boxes'], z, this.zoneCollide, this.zoneProcess);
                 } else if (z.Blocks.key) {
-                    //if properties provided set the relevant one
+                    //if properties provided set the relevant one else leave alone so all are checked
                     z.body.checkCollision.up = z.Blocks.key.indexOf('T') !== -1;
                     z.body.checkCollision.right = z.Blocks.key.indexOf('R') !== -1;
                     z.body.checkCollision.down = z.Blocks.key.indexOf('B') !== -1;
@@ -56,20 +59,64 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             }
             else {
                 if (z.tileType && z.tileType.isBlockActivated) {
-                    let a = scene.physics.add.collider(scene.mapLayers['Boxes'], z, scene.mapLayers['Boxes'].tileCollide, null, scene.mapLayers['Boxes']);
+                    let a = scene.physics.add.collider(scene.mapLayers['Boxes'].getBoxes(), z, scene.mapLayers['Boxes'].tileCollide, null, this);
                 } else {
-                    //set up overlap for callback
+                    //set up overlap for for player interaction
                     scene.physics.add.overlap(scene.bob, z, this.overZone, null, this);
                     scene.physics.add.overlap(scene.flit, z, this.overZone, null, this);
                 }
             }
+            if (z.DeadWeight) {
+                //only collide with rocks
+                scene.physics.add.collider(z, scene.mapLayers['Boxes'].getRocks(), this.deadWeightCollide);
+                scene.physics.add.collider(z, scene.mapLayers['World'], this.deadWeightCollide);
+                scene.physics.add.collider(z, scene.bob, this.deadWeightCollide);
+                scene.physics.add.collider(z, scene.flit, this.deadWeightCollide);
+
+                z.body.allowGravity = true;
+                z.body.enable = true;
+                z.body.moves = true;
+            }
             this.lookup[current.name] = z;
         }
     }
+    deadWeightCollide(s1,s2){
+        switch (s2.constructor.name) {
+            case 'Tile':
+                s1.body.stop();
+                s1.body.allowGravity = false;
+                s1.body.moves = false;
+                s1.body.setImmovable(true);
+                break;
+            case 'Bob':
+            case 'Flit':
+                s2.body.stop();
+                s1.body.setImmovable(true);
+                s1.body.stop();
+                break;
+            case 'Rock':
+                var b1 = s1.body;
+                var b2 = s2.body;
+                if (b1.y > b2.y) {
+                    b2.y += (b1.top - b2.bottom);
+                    b2.stop();
+                }
+                else {
+                    b1.y += (b2.top - b1.bottom);
+                    b1.stop();
+                }
+                break;
+        }
+    }
+    /**
+     * Process the box hitting a zone 
+     * @param {InteractionZone} zone 
+     * @param {Box} box 
+     */
     zoneProcess(zone, box) {
         if (box.lastContact !== zone) {
             box.lastContact = zone;
-            if (box.constructor.name === 'Box') box.hits--;
+            if (box.isBox) box.hits--;
             console.log(`${box.name} hit ${zone.name}`);
             return true;
         } else {
@@ -77,6 +124,11 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             return false;
         }
     }
+    /**
+     * 
+     * @param {InteractionZone} zone
+     * @param {Box} box
+     */
     zoneCollide(zone, box) {
         //hit a new zone so set up rules
         box.body.y--;
@@ -128,6 +180,11 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
         }
         return new Phaser.Geom.Rectangle(Math.min(...X), Math.min(...Y), Math.max(...X) - Math.min(...X), Math.max(...Y) - Math.min(...Y));
     }
+    /**
+     * Get the rectangle containg the zone
+     * @param {string} name Name of the zone
+     * @returns {Phaser.Geom.Rectangle} The rectangle containing the InteractionZone
+     */
     getTargetRectangle(name) {
         let target = this.getByKey(name);
         if (target) return new Phaser.Geom.Rectangle(target.x, target.y, target.width, target.height);
@@ -139,7 +196,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
     /**
      * Check to see if the zone affects the player
      * @param {Phaser.GameObjects.Sprite} player The player that has entered the zone
-     * @param {InteractionZone} zone The zone that has been enetered
+     * @param {InteractionZone} zone The zone that has been entered
      */
     preBlock(player, zone) {
         //Check if specific player set or block either

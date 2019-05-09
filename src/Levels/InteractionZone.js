@@ -25,6 +25,7 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
     Implementation = null;
     Affect = null;
     Blocks = null;
+    DeadWeight = null;
     //Whether the target has been shown to the camera so it only happens once
     _groupShown = false;
     tileType;
@@ -95,9 +96,10 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
                 this.Transition = new InteractionParams(tileObj.properties.Transition);
             if (typeof tileObj.properties.Implementation !== 'undefined')
                 this.Implementation = new InteractionParams(tileObj.properties.Implementation);
-            if (typeof tileObj.properties.Blocks !== 'undefined') {
+            if (typeof tileObj.properties.Blocks !== 'undefined') 
                 this.Blocks = new InteractionParams(tileObj.properties.Blocks);
-            }
+            if (typeof tileObj.properties.DeadWeight !== 'undefined')
+                this.DeadWeight = new InteractionParams(tileObj.properties.DeadWeight);
         }
         //TODO: strip this out on build ???
         //Add tooltips on debug to show the properties from Tiled
@@ -132,7 +134,7 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
             //adjust zone height for component
             let za = this.scene.switchIds.ZoneAdjust[tile.index];
             if (za) {
-                console.log(tile.index, za);
+                //console.log(tile.index, za);
                 if (za.hasOwnProperty('h'))
                     this.body.height = za.h;
                 if (za.hasOwnProperty('w'))
@@ -145,7 +147,7 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
         }
     }
     preUpdate() {
-        if(this.scene && this.scene.game)
+        if(this.scene && this.scene.game && this.scene.game.debugOn)
         this.scene.game.objs.push(this);
     }
     /**
@@ -166,7 +168,7 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
 
             //If its a switch, change its state
             if (this.tileType && this.tileType.isSwitch) {
-                let switchTile = this.scene.map.getTileAt(this.tileObj.x / 64, this.tileObj.y / 64, false, 'InteractionTiles')
+                let switchTile = this.scene.map.getTileAt(this.tileObj.x / 64, this.tileObj.y / 64, false, 'InteractionTiles');
                 switchTile.index = this.interaction.scene.switchIds.switchState(switchTile.index, this);
                 this.scene.sound.playAudioSprite('sfx', 'switch');
                 this.adjustZone();
@@ -210,7 +212,7 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
     }
     //When a zone's behaviour has changed update the things around it
     adjustWorld() { 
-        let around = this.scene.physics.overlapRect(this.x, this.y - 2, this.width, this.height + 2);
+        let around = this.scene.physics.overlapRect(this.body.x, this.body.y - 2, this.body.width, this.body.height + 2);
         for (let i = 0; i < around.length; i++){
             if (around[i].gameObject.constructor.name === 'Box' || around[i].gameObject.constructor.name === 'Rock') {
                 around[i].gameObject.activate();
