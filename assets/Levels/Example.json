@@ -348,6 +348,75 @@
                  "width":128,
                  "x":1408,
                  "y":576
+                }, 
+                {
+                 "height":128,
+                 "id":121,
+                 "name":"Box",
+                 "properties":
+                    {
+                     "DeadWeight":""
+                    },
+                 "propertytypes":
+                    {
+                     "DeadWeight":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":1408,
+                 "y":384
+                }, 
+                {
+                 "height":128,
+                 "id":119,
+                 "name":"Box",
+                 "properties":
+                    {
+                     "DeadWeight":""
+                    },
+                 "propertytypes":
+                    {
+                     "DeadWeight":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":896,
+                 "y":384
+                }, 
+                {
+                 "height":128,
+                 "id":131,
+                 "name":"Box",
+                 "properties":
+                    {
+                     "DeadWeight":""
+                    },
+                 "propertytypes":
+                    {
+                     "DeadWeight":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":896,
+                 "y":256
+                }, 
+                {
+                 "gid":29,
+                 "height":64,
+                 "id":132,
+                 "name":"Box",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":704,
+                 "y":576
                 }],
          "opacity":1,
          "properties":
@@ -942,44 +1011,6 @@
                  "width":192,
                  "x":512,
                  "y":512
-                }, 
-                {
-                 "height":128,
-                 "id":119,
-                 "name":"DropBlock",
-                 "properties":
-                    {
-                     "DeadWeight":""
-                    },
-                 "propertytypes":
-                    {
-                     "DeadWeight":"string"
-                    },
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":64,
-                 "x":896,
-                 "y":384
-                }, 
-                {
-                 "height":128,
-                 "id":121,
-                 "name":"DropBlock",
-                 "properties":
-                    {
-                     "DeadWeight":""
-                    },
-                 "propertytypes":
-                    {
-                     "DeadWeight":"string"
-                    },
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":64,
-                 "x":1408,
-                 "y":384
                 }],
          "opacity":1,
          "properties":
@@ -1042,7 +1073,7 @@
          "y":0
         }],
  "nextlayerid":12,
- "nextobjectid":131,
+ "nextobjectid":133,
  "orientation":"orthogonal",
  "properties":
     {

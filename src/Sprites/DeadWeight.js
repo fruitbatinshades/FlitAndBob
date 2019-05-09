@@ -11,14 +11,17 @@ export default class DeadWeight extends Phaser.Physics.Arcade.Sprite {
         this.scene = sprite.scene;
         this.setOrigin(0, 0);
         this.setTexture('deadWeight');
-        this.height = this.texture.height;
-        this.width = this.texture.width;
+        this.scene.physics.world.enable(this);
+
+        this.body.allowGravity = true;
+        this.body.enable = true;
+        this.body.moves = true;      
+        this.body.setFriction(0,0);
     }
     create() {
-        this.sprite.scene.addExisting(this);
-        this.scene.physics.world.enable(this);        
-        z.body.allowGravity = true;
-        z.body.enable = true;
-        z.body.moves = true;        
+        
+        
     }
+    deActivate() { }
+    activate() { };
 }

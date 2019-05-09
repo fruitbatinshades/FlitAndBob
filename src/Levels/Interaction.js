@@ -66,46 +66,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                     scene.physics.add.overlap(scene.flit, z, this.overZone, null, this);
                 }
             }
-            if (z.DeadWeight) {
-                //only collide with rocks
-                scene.physics.add.collider(z, scene.mapLayers['Boxes'].getRocks(), this.deadWeightCollide);
-                scene.physics.add.collider(z, scene.mapLayers['World'], this.deadWeightCollide);
-                scene.physics.add.collider(z, scene.bob, this.deadWeightCollide);
-                scene.physics.add.collider(z, scene.flit, this.deadWeightCollide);
-
-                z.body.allowGravity = true;
-                z.body.enable = true;
-                z.body.moves = true;
-            }
             this.lookup[current.name] = z;
-        }
-    }
-    deadWeightCollide(s1,s2){
-        switch (s2.constructor.name) {
-            case 'Tile':
-                s1.body.stop();
-                s1.body.allowGravity = false;
-                s1.body.moves = false;
-                s1.body.setImmovable(true);
-                break;
-            case 'Bob':
-            case 'Flit':
-                s2.body.stop();
-                s1.body.setImmovable(true);
-                s1.body.stop();
-                break;
-            case 'Rock':
-                var b1 = s1.body;
-                var b2 = s2.body;
-                if (b1.y > b2.y) {
-                    b2.y += (b1.top - b2.bottom);
-                    b2.stop();
-                }
-                else {
-                    b1.y += (b2.top - b1.bottom);
-                    b1.stop();
-                }
-                break;
         }
     }
     /**

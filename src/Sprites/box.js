@@ -44,7 +44,7 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
         super(sprite.scene, sprite.x, sprite.y, sprite.texture.key, sprite.frame.name);
         this.scene = sprite.scene;
         this.setOrigin(0, 0);
-        this.flipX = Math.random() > 0.5;
+        //this.flipX = Math.random() > 0.5;
         if (sprite.data != null) {
             if (sprite.data.list['Counter']) {
                 this._hits = parseInt(sprite.data.list['Counter']) + 1;

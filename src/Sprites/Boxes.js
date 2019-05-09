@@ -2,6 +2,7 @@
 import Settings from '../settings.js';
 import Box from './box.js';
 import Rock from './Rock.js';
+import DeadWeight from './DeadWeight.js';
 //import utils from '../Utils/Debug.js';
 
 export default class Boxes extends Phaser.Physics.Arcade.Group {
@@ -28,10 +29,10 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
             if (box.data != null && box.data.values.hasOwnProperty('Rock')) {
                 //its a rock
                 b = new Rock(box);
-                b.isRock = true;
+            } else if (box.data != null && box.data.values.hasOwnProperty('DeadWeight')) {
+                b = new DeadWeight(box);
             } else {
                 b = new Box(box);
-                b.isBox = true;
             }
             b.setOrigin(0, 0);
             this.add(b, true);
@@ -72,18 +73,61 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
     //ensure map and players exist
     addCollisions() {
         //collider for when boxes hit each other
-        let boxes = this.children.entries.filter((x) => !x.hasOwnProperty('isRock'));
-        this.scene.physics.add.collider(boxes, boxes, this.boxCollide, null, this);
+        let boxes = this.getBoxes();
+        this.scene.physics.add.collider(boxes, boxes, this.boxOnBoxCollide, null, this);
         this.scene.physics.add.collider(boxes, this.scene.mapLayers.World, this.tileCollide, null, this);
         
-        let rocks = this.children.entries.filter((x) => x.hasOwnProperty('isRock'));
+        let rocks = this.getRocks();
         this.scene.physics.add.collider(rocks, this.scene.mapLayers.World, this.tileCollide, null, this);
+
+        let deadWeights = this.getDeadWeights();
+        this.scene.physics.add.collider(deadWeights, deadWeights, this.deadWeightCollide);
+        this.scene.physics.add.collider(deadWeights, rocks, this.deadWeightCollide);
+        this.scene.physics.add.collider(deadWeights, this.scene.mapLayers['World'], this.deadWeightCollide);
+        this.scene.physics.add.collider(deadWeights, this.scene.bob, this.deadWeightCollide);
+        this.scene.physics.add.collider(deadWeights, this.scene.flit, this.deadWeightCollide);
         
         //collider for boxes and rocks with the players
-        this.scene.physics.add.collider(this.scene.game.Bob, this, this.playerCollide, this.preCollide, this);
-        this.scene.physics.add.collider(this.scene.game.Flit, this, this.playerCollide, this.preCollide, this);
+        this.scene.physics.add.collider(this.scene.game.Bob, this, this.boxPlayerCollide, this.boxPlayerPreCollide, this);
+        this.scene.physics.add.collider(this.scene.game.Flit, this, this.boxPlayerCollide, this.boxPlayerPreCollide, this);
     }
-    //fix the box in place, turn off physics
+    /**
+     * Handle dead weights colliding with multiple object types
+     * @param {object} s1 
+     * @param {object} s2 
+     */
+    deadWeightCollide(s1, s2) {
+        switch (s2.constructor.name) {
+            case 'Tile':
+                //hits tile so it stays there
+                s1.body.stop();
+                s1.body.allowGravity = false;
+                s1.body.moves = false;
+                s1.body.setImmovable(true);
+                break;
+            case 'Bob':
+            case 'Flit':
+            case 'Rock':
+            case 'DeadWeight':
+                //keep it vertically separated
+                var b1 = s1.body;
+                var b2 = s2.body;
+                if (b1.y > b2.y) {
+                    b2.y += (b1.top - b2.bottom);
+                    b2.stop();
+                }
+                else {
+                    b1.y += (b2.top - b1.bottom);
+                    b1.stop();
+                }
+                break;
+        }
+    }
+    /**
+     * fix the box in place, turn off physics
+     * @param {Box} box 
+     * @param {Phaser.Tilemaps.Tile} tile 
+     */
     tileCollide(box, tile) {
         //TODO: Objects are passed back to front from zone/box collider, This is probably because I'm using unreleased 3.17 but check after release
         if (box.constructor.name == 'InteractionZone') {
@@ -112,10 +156,9 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         box.destroy();
     }
 
-    //When a box is taken by a character
     /**
-     * 
-     * @param {Phaser.GameObjects.Sprite} box 
+     * When a box is taken by a character
+     * @param {Box} box 
      * @param {Phaser.GameObjects.Sprite} player
      */
     onPickupBox(box, player) {
@@ -130,7 +173,12 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
             if (this.scene.game.debugOn) console.log('event pickup_box', box);
         }
     }
-    //when a box is dropped by a character
+
+    /**
+    * when a box is dropped by a character
+    * @param {Box} box
+    * @param {Phaser.GameObjects.Sprite} player
+    */
     onDropBox(box, player) {
         player.carrying = null;
 
@@ -146,12 +194,12 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
     }
     blockBob = false;
     /**
-     * 
+     * Process when a box is about to contact the player
      * @param {Phaser.GameObjects.Sprite} player 
      * @param {Phaser.GameObjects.Sprite} box
      */
-    preCollide(player, box) {
-        //if box is falling don;t collide with player
+    boxPlayerPreCollide(player, box) {
+        //if box is falling don't collide with player
         if (box.body.velocity.y > 1)
             return false;
         //If it's bob and a rock check the rock can be pushed
@@ -178,7 +226,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
      * @param {Phaser.GameObjects.Sprite} player The active player
      * @param {Box} box The box they are colliding with
      */
-    playerCollide(player, box) {
+    boxPlayerCollide(player, box) {
         if (!box.isRock && Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
             if (box.Affects === null || player.is(box.Affects)) {
                 box.deActivate();
@@ -219,7 +267,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
      * @param {Box} a First Box
      * @param {Box} b Second Box
      */
-    boxCollide(a, b) {
+    boxOnBoxCollide(a, b) {
         if (!a.isRock && !b.isRock) {
             a.setVelocityX(0);
             b.setVelocityX(0);
