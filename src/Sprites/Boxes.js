@@ -145,7 +145,15 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         if (this.scene.game.debugOn) console.log('event drop_box', box);
     }
     blockBob = false;
+    /**
+     * 
+     * @param {Phaser.GameObjects.Sprite} player 
+     * @param {Phaser.GameObjects.Sprite} box
+     */
     preCollide(player, box) {
+        //if box is falling don;t collide with player
+        if (box.body.velocity.y > 1)
+            return false;
         //If it's bob and a rock check the rock can be pushed
         if (box.isRock && player.is('bob')) {
             let around = this.scene.game.getBodiesAround(box.body);
