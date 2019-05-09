@@ -38,10 +38,10 @@ export default class Level extends Phaser.Scene {
     preload() {
         this.load.tilemapTiledJSON(this.registry.get('currentLevel'), `assets/Levels/${this.registry.get('currentLevel')}.json`);
         this.map = this.make.tilemap({ key: this.registry.get('currentLevel'), insertNull: true });
-        if (this.map.properties["debug"]) {
-            console.warn('debug enabled by map properties');
-            this.game.debugOn = this.map.properties["debug"];
-        }
+        // if (this.map.properties["debug"]) {
+        //     console.warn('debug enabled by map properties');
+        //     this.game.debugOn = this.map.properties["debug"];
+        // }
 
         // set the boundaries of our game world
         this.physics.world.bounds.width = this.map.widthInPixels;

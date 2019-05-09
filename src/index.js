@@ -14,7 +14,7 @@ class Game extends Phaser.Game {
   urlParams;
   rects = [];
   objs = [];
-  _debugOn = false;
+  _debugOn = true;
   get debugOn() {
     return this._debugOn;
   }
@@ -26,7 +26,7 @@ class Game extends Phaser.Game {
   constructor() {
     super(config);
     this.urlParams = new URLSearchParams(window.location.search.toLowerCase());
-    this.debugOn = this.urlParams.has('debug');
+    //this.debugOn = this.urlParams.has('debug');
     //this.game.device.desktop
     //Create global variables for access across all scene instances
     this.Bob = null; //Bob Character
