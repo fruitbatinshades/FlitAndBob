@@ -4,13 +4,12 @@
  * DeadWeights fall once then cannot be moved
  */
 export default class DeadWeight extends Phaser.Physics.Arcade.Sprite {
-    isDeadWeight = true;
-    isRock = false;
-    scene;
-    originalX;
     constructor(sprite) {
-        //BUG: If there is no texture in the map, the y coord is incorrect :/
         super(sprite.scene, sprite.x, sprite.y);
+
+        this.isDeadWeight = true;
+        this.isRock = false;
+
         this.scene = sprite.scene;
         this.setOrigin(0, 0);
         this.setTexture('deadWeight');
@@ -26,19 +25,15 @@ export default class DeadWeight extends Phaser.Physics.Arcade.Sprite {
     }
 
     preUpdate() {
+        //Do not allow x movement
         this.x = this.originalX;
-        //this.body.setImmovable(true);
-        if (this.body.touching.down || this.body.blocked.down || this.scene.game.getUnder(this.body).length > 0) {
+        //if there is noting underneath allow movement
+        if (this.body.touching.down || this.body.blocked.down || this.scene.game.getUnder(this.body).length !== 0) {
             this.body.moves = false;
-            // this.y--;
         } else {
             this.body.moves = true;
         }
     }
-    update() {
-
-    }
     deActivate() { }
     activate() { };
-
 }

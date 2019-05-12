@@ -86,8 +86,8 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         this.scene.physics.add.collider(deadWeights, deadWeights, this.deadWeightCollide, null, this);
         this.scene.physics.add.collider(deadWeights, rocks, this.deadWeightCollide, null, this);
         this.scene.physics.add.collider(deadWeights, this.scene.mapLayers['World'], this.deadWeightCollide, null, this);
-        this.scene.physics.add.collider(deadWeights, this.scene.bob, this.playerDWCollide, null, this);
-        this.scene.physics.add.collider(deadWeights, this.scene.flit, this.playerDWCollide, null, this);
+        this.scene.physics.add.collider(deadWeights, this.scene.bob);//, this.playerDWCollide, null, this);
+        this.scene.physics.add.collider(deadWeights, this.scene.flit);//, this.playerDWCollide, null, this);
         
         //collider for boxes and rocks with the players
         this.scene.physics.add.collider(this.scene.game.Bob, this, this.scene.game.Bob.boxPlayerCollide, this.scene.game.Bob.boxPlayerPreCollide, this);
@@ -107,21 +107,11 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
                 s1.body.moves = false;
                 s1.body.setImmovable(true);
                 break;
-            // case 'Bob':
-            // case 'Flit':
-            //     if (s2.body.touching.up) this.separateDw(s1, s2);
-            //     break;
             case 'Rock':
             case 'DeadWeight':
                 this.separateDw(s1, s2);
                 break;
         }
-    }
-    playerDWCollide(player, dw) {
-        // dw.body.setImmovable(true);
-        // if (player.body.touching.up) this.separateDw(player, dw);
-        // if (player.body.touching.left) player.x = player.x + 1;
-        // if (player.body.touching.right) player.x = player.x - 1;
     }
     separateDw(s1,s2) {
         //keep it vertically separated

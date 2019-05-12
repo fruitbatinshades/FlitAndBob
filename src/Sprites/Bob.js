@@ -174,7 +174,7 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
       }
       if (this.body.touching.down || this.body.blocked.down) {
         //Check if Bob is on a box and allow jump
-        let agrid = this.scene.game.getBodiesAround(this.body, [], {top:true, right:true, left:true});
+        let agrid = this.scene.game.getBodiesAround(this.body, [], {bottom:true, right:true, left:true});
         Object.values(agrid).forEach((o) => {
           if (o && o !== null && o.gameObject) {
             let go = o.gameObject;
