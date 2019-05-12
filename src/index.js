@@ -7,14 +7,6 @@ import LevelLoaderScene from './Scenes/LevelLoaderScene.js';
 // import UIScene from './Scenes/UI';
 
 class Game extends Phaser.Game {
-  levels = [
-    'Example', 'L1', 'L2'
-  ];
-  levelIndex = 0;
-  urlParams;
-  rects = [];
-  objs = [];
-  _debugOn = true;
   get debugOn() {
     return this._debugOn;
   }
@@ -25,6 +17,16 @@ class Game extends Phaser.Game {
 
   constructor() {
     super(config);
+
+    this.levels = [
+      'Example', 'L1', 'L2'
+    ];
+    this.levelIndex = 0;
+    this.urlParams;
+    this.rects = [];
+    this.objs = [];
+    this._debugOn = true;
+
     this.urlParams = new URLSearchParams(window.location.search.toLowerCase());
     //this.debugOn = this.urlParams.has('debug');
     //this.game.device.desktop
@@ -179,7 +181,10 @@ class Game extends Phaser.Game {
    * @param {number} margin The distance to look
    * @param {gridsize} gridSize divides position by gridSize pixels so small differences in height/Y/X don't push into wrong section of the grid
    */
-  getBodiesAround(body, ignore, margin = 5, gridSize = 16) {
+  getBodiesAround(body, ignore, directions, margin = 5, gridSize = 16) {
+    if (!directions || directions === null) {
+      directions = {topLeft:true, top:true, topRight:true, left:true, right: true, bottomLeft: true, bottom:true, bottomRight: true};
+    }
     ignore = ignore || [];
     let around = body.gameObject.scene.physics.overlapRect(body.x - margin, body.y - margin, body.width + (margin * 2), body.height + (margin * 2));
     let range = new Phaser.Geom.Rectangle(body.x - margin, body.y - margin, body.width + (margin * 2), body.height + (margin * 2));
@@ -205,14 +210,14 @@ class Game extends Phaser.Game {
         let oRect = new Phaser.Geom.Rectangle(o.x + 1, o.y + 1, o.width -2, o.height -2);
         
         if (!Phaser.Geom.Rectangle.ContainsRect(range, oRect)) { //ignore anything we are overlapping
-          if (Phaser.Geom.Intersects.RectangleToRectangle(tl, oRect)) { grid.aboveLeft = o; tl.color = 0xFF0000; }
-          if (Phaser.Geom.Intersects.RectangleToRectangle(tc, oRect)) { grid.above = o; tc.color = 0xFF0000; }
-          if (Phaser.Geom.Intersects.RectangleToRectangle(tr, oRect)) { grid.aboveRight = o; tr.color = 0xFF0000; }
-          if (Phaser.Geom.Intersects.RectangleToRectangle(cl, oRect)) { grid.left = o; cl.color = 0xFF0000; }
-          if (Phaser.Geom.Intersects.RectangleToRectangle(cr, oRect)) { grid.right = o; cr.color = 0xFF0000; }
-          if (Phaser.Geom.Intersects.RectangleToRectangle(bl, oRect)) { grid.belowLeft = o; bl.color = 0xFF0000; }
-          if (Phaser.Geom.Intersects.RectangleToRectangle(bc, oRect)) { grid.below = o; bc.color = 0xFF0000; }
-          if (Phaser.Geom.Intersects.RectangleToRectangle(br, oRect)) { grid.belowLeft = o; br.color = 0xFF0000; }
+          if (directions.topLeft && Phaser.Geom.Intersects.RectangleToRectangle(tl, oRect)) { grid.upLeft = o; tl.color = 0xFF0000; }
+          if (directions.top && Phaser.Geom.Intersects.RectangleToRectangle(tc, oRect)) { grid.up = o; tc.color = 0xFF0000; }
+          if (directions.topRight && Phaser.Geom.Intersects.RectangleToRectangle(tr, oRect)) { grid.upRight = o; tr.color = 0xFF0000; }
+          if (directions.left && Phaser.Geom.Intersects.RectangleToRectangle(cl, oRect)) { grid.left = o; cl.color = 0xFF0000; }
+          if (directions.right && Phaser.Geom.Intersects.RectangleToRectangle(cr, oRect)) { grid.right = o; cr.color = 0xFF0000; }
+          if (directions.bottomLeft && Phaser.Geom.Intersects.RectangleToRectangle(bl, oRect)) { grid.downLeft = o; bl.color = 0xFF0000; }
+          if (directions.bottom && Phaser.Geom.Intersects.RectangleToRectangle(bc, oRect)) { grid.down = o; bc.color = 0xFF0000; }
+          if (directions.bottomRight && Phaser.Geom.Intersects.RectangleToRectangle(br, oRect)) { grid.downLeft = o; br.color = 0xFF0000; }
         }
       }
       
@@ -233,7 +238,9 @@ class Game extends Phaser.Game {
   }
 
   getUnder(body, margin = 5) {
-    return body.gameObject.scene.physics.overlapRect(body.x + margin, body.y, body.width - margin, body.height + margin);
+    let f = body.gameObject.scene.physics.overlapRect(body.x + margin, body.bottom, body.width - margin, margin);
+    //remove the requesting body
+    return f.filter((o) => o !== body); 
   }
   cartoonText(txt) {
     txt.setShadow(3, 3, '#000000', 6, true, false)
@@ -246,16 +253,19 @@ class Game extends Phaser.Game {
 }
 /** Grid of objects - returned from getBodiesAround() */
 class aroundGrid{
-  _last = '';
-  aboveLeft = null;
-  above = null;
-  aboveRight = null;
-  left = null;
-  center = null;
-  right = null;
-  belowLeft = null;
-  below = null;
-  belowRight = null;
+  constructor() {
+    this._last = '';
+    this.upLeft = null;
+    this.up = null;
+    this.upRight = null;
+    this.left = null;
+    this.center = null;
+    this.right = null;
+    this.downLeft = null;
+    this.down = null;
+    this.downRight = null;
+  }
+
   debug() {
     let output = '';
     Object.entries(this).forEach(([key, value]) => {

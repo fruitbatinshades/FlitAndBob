@@ -350,8 +350,41 @@
                  "y":576
                 }, 
                 {
+                 "gid":29,
+                 "height":64,
+                 "id":132,
+                 "name":"Box",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":704,
+                 "y":576
+                }, 
+                {
+                 "gid":42,
                  "height":128,
-                 "id":121,
+                 "id":135,
+                 "name":"Box",
+                 "properties":
+                    {
+                     "DeadWeight":""
+                    },
+                 "propertytypes":
+                    {
+                     "DeadWeight":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":896,
+                 "y":512
+                }, 
+                {
+                 "gid":42,
+                 "height":128,
+                 "id":136,
                  "name":"Box",
                  "properties":
                     {
@@ -366,57 +399,7 @@
                  "visible":true,
                  "width":64,
                  "x":1408,
-                 "y":384
-                }, 
-                {
-                 "height":128,
-                 "id":119,
-                 "name":"Box",
-                 "properties":
-                    {
-                     "DeadWeight":""
-                    },
-                 "propertytypes":
-                    {
-                     "DeadWeight":"string"
-                    },
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":64,
-                 "x":896,
-                 "y":384
-                }, 
-                {
-                 "height":128,
-                 "id":131,
-                 "name":"Box",
-                 "properties":
-                    {
-                     "DeadWeight":""
-                    },
-                 "propertytypes":
-                    {
-                     "DeadWeight":"string"
-                    },
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":64,
-                 "x":896,
-                 "y":256
-                }, 
-                {
-                 "gid":29,
-                 "height":64,
-                 "id":132,
-                 "name":"Box",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":64,
-                 "x":704,
-                 "y":576
+                 "y":512
                 }],
          "opacity":1,
          "properties":
@@ -1073,7 +1056,7 @@
          "y":0
         }],
  "nextlayerid":12,
- "nextobjectid":133,
+ "nextobjectid":137,
  "orientation":"orthogonal",
  "properties":
     {

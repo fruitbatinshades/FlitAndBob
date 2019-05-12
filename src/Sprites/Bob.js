@@ -1,4 +1,5 @@
 /// <reference path="../../defs/phaser.d.ts" />
+/// <reference path="../index.js" />
 export default class Bob extends Phaser.Physics.Arcade.Sprite {
   get activeSpeed() {
     if (this.isSlow) return this.speed / 2;
@@ -167,21 +168,25 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
     // jump 
     if (cursors.up.isDown) {
       //on floor, just jump
-      if (this.body.onFloor()) {
+      if (this.body.onFloor() && !this.body.touching.up && !this.body.blocked.up) {
         this.scene.sound.playAudioSprite('sfx', 'jump', {volume:.1});
         this.body.setVelocityY(-500);
       }
-      if (this.body.touching.down) {
+      if (this.body.touching.down || this.body.blocked.down) {
         //Check if Bob is on a box and allow jump
-        let around = this.scene.physics.overlapRect(this.body.left, this.body.bottom + 2, this.body.width - 3,  3);
-        for (let i = 0; i < around.length; i++){
-          let go = around[i].gameObject;
-          if (go.constructor.name === 'Box' || go.constructor.name === 'Rock' || (go.constructor.name === 'InteractionZone' && go.Blocks != null)) {
-            this.scene.sound.playAudioSprite('sfx', 'jump', {volume:.1});
-            this.body.setVelocityY(-500);
-            break;
+        let agrid = this.scene.game.getBodiesAround(this.body, [], {top:true, right:true, left:true});
+        Object.values(agrid).forEach((o) => {
+          if (o && o !== null && o.gameObject) {
+            let go = o.gameObject;
+            if (go.constructor.name === 'Box' || go.constructor.name === 'Rock' || (go.constructor.name === 'InteractionZone' && go.Blocks != null)) {
+              //stop jump if dead weight above
+              if (go.constructor.name !== 'DeadWeight') {
+                this.scene.sound.playAudioSprite('sfx', 'jump', { volume: .1 });
+                this.body.setVelocityY(-500);
+              }
+            }
           }
-        };
+        });
       }
     }
 
@@ -189,5 +194,71 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
     this.isSlow = false;
     this.isFast = false;
     this.effectSpeed = 0;
+  }
+  /**
+     * Process when a box is about to contact the player
+     * @param {Phaser.GameObjects.Sprite} player 
+     * @param {Phaser.GameObjects.Sprite} box
+     */
+  boxPlayerPreCollide(player, box) {
+    //if box is falling don't collide with player
+    if (box.body.velocity.y > 1)
+      return false;
+
+    //If it's bob and a rock check the rock can be pushed
+    if (box.isRock) {
+      let around = this.scene.game.getBodiesAround(box.body, [], { up:true, down:true, left:true, right:true});
+      let blockedRight = around.right !== null && around.right.gameObject.Blocks !== null && around.right.gameObject.isActive;
+      let blockedLeft = around.left !== null && around.left.gameObject.Blocks !== null && around.left.gameObject.isActive;
+      //bobs on top so treat as normal collision
+      if (around.up !== null && around.up.gameObject.constructor.name === 'Bob')
+        return true;
+
+      if (around.left !== null && around.left.gameObject.constructor.name === 'Bob' && blockedRight) {
+        return false;
+      }
+      else if (around.right !== null && around.right.gameObject.constructor.name === 'Bob' && blockedLeft) {
+        return false;
+      }
+    }
+    return true;
+  }
+  /**
+   * Handle player colliding with box and pick up
+   * @param {Phaser.GameObjects.Sprite} player The active player
+   * @param {Box} box The box they are colliding with
+   */
+  boxPlayerCollide(player, box) {
+    if (!box.isRock && Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
+      if (box.Affects === null || player.is(box.Affects)) {
+        box.deActivate();
+        this.scene.ActivePlayer.overBox(box);
+      }
+    }
+    //if it's bob and a rock move it
+    if (box.isRock) {
+      let v = 0;
+      if (player.body.touching.right || player.body.touching.left) {
+        //console.log(box.body.blocked);
+        if (player.body.touching.left) {
+          v = -player.speed;
+        }
+        else if (player.body.touching.right) {
+          v = player.speed;
+        }
+        if (v === 0) {
+          box.body.stop();
+          player.body.stop();
+        }
+        else {
+          box.body.setVelocityX(v);
+        }
+      }
+      let around = this.scene.physics.overlapRect(box.body.x + 2, box.body.top - 2, box.body.width - 4, box.body.height + 4);
+      //There is only the rock it's got nothing underneath so reactivate
+      if (around.length === 1) {
+        box.activate();
+      }
+    } 
   }
 }

@@ -19,6 +19,7 @@ export default class Rock extends Phaser.Physics.Arcade.Sprite {
     }
     constructor(sprite) {
         super(sprite.scene, sprite.x, sprite.y, sprite.texture.key, sprite.frame.name);
+        
         this.scene = sprite.scene;
         this.setOrigin(0, 0);
         if (sprite.data != null) {

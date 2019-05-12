@@ -37,7 +37,7 @@ export default class HUD extends Phaser.Scene {
         this.setStroke(this.shroomsCollected);
 
         //menu icon
-        this.add.image(990, 30, 'UI', 'menu').setScale(.5);
+        this.add.image(990, 30, 'UI', 'restart').setScale(.5);
 
         //  Listen for events from it
         lvl.events.on('updateHUD', function (player) {

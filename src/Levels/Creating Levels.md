@@ -40,7 +40,6 @@ Add a Tiled `point` where the `Name` is the filename of the image and the type i
 Boxes block players and must be moved so that Flit or Bob can access areas by climbing on them. Dead weights fall and block players, Rocks can only be pushed by Bob
 
 You just need to add a tile and set the `Name:Box` and `Affects` to '', 'flit','bob'
-The type should be blank for boxes, Rock for rocks and DeadWeight for dead weights
 
 ##### Box properties
 Only boxes read properties, rocks and dead weights do not use these
@@ -49,6 +48,8 @@ Only boxes read properties, rocks and dead weights do not use these
 | `Name` | `Box` | A tile with a name of `Box` will be converted to a box object |
 | `Affect` | '', `Flit` or `Bob` | if this is not blank it will create a box that only Flit/Bob can lift |
 | `Counter` | integer | Number of times the box can be dropped before it disappears (Box only) |
+| `DeadWeight` |string| Create a dead weight (should be 1x2 squares)|
+| `Rock` |string| Create a rock|
 
 #### InteractionTiles (Tile Layer)
 InteractionTiles are the graphical representation of effects and actions. They need to come from the `Components` tileset as we map the tiles to actions in the code. 
