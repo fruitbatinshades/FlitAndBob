@@ -80,7 +80,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         
         let rocks = this.getRocks();
         this.scene.physics.add.collider(rocks, this.scene.mapLayers.World, this.tileCollide, null, this);
-        this.scene.physics.add.collider(rocks, rocks);
+        this.scene.physics.add.collider(rocks, rocks, Rock.separate, null, this);
 
         let deadWeights = this.getDeadWeights();
         this.scene.physics.add.collider(deadWeights, deadWeights, this.deadWeightCollide, null, this);

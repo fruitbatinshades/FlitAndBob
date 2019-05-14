@@ -51,6 +51,7 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
         this.setOrigin(0);
         scene.physics.world.enable(this);
         this.body.setAllowGravity(false).moves = false;
+        this.body.immovable = true;
         this.tileObj = tileObj;
         this.properties = tileObj.properties;
         this.name = tileObj.name;

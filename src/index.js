@@ -1,3 +1,4 @@
+"use strict"
 /// <reference path="../defs/phaser.d.ts" />
 
 import config from './config.js';
@@ -5,6 +6,15 @@ import config from './config.js';
 import BootScene from './Scenes/Boot.js';
 import LevelLoaderScene from './Scenes/LevelLoaderScene.js';
 // import UIScene from './Scenes/UI';
+
+class enums{
+  static checkDirection = {
+    up: 1,
+    right: 2,
+    down: 3,
+    left: 4
+  }
+}
 
 class Game extends Phaser.Game {
   get debugOn() {
@@ -25,7 +35,7 @@ class Game extends Phaser.Game {
     this.urlParams;
     this.rects = [];
     this.objs = [];
-    this._debugOn = true;
+    this._debugOn = false;
 
     this.urlParams = new URLSearchParams(window.location.search.toLowerCase());
     //this.debugOn = this.urlParams.has('debug');
@@ -114,12 +124,8 @@ class Game extends Phaser.Game {
               scene.DebugG.lineStyle(collisionW, collisionC, 1);
               scene.DebugG.lineBetween(b.left + collisionTrim, b.top - collisionW, (b.left + b.width) - collisionTrim, b.top - collisionW);
             }
-            if (b.checkCollision.down) {
-              scene.DebugG.lineStyle(collisionW, collisionC, 1);
-              scene.DebugG.lineBetween(b.left + collisionTrim, b.bottom + collisionW, (b.left + b.width) - collisionTrim, b.bottom + collisionW);
-            }
-            if (b.onFloor()) {
-              scene.DebugG.lineStyle(collisionW, onFloorC, 1);
+            if (b.checkCollision.down || b.onFloor()) {
+              scene.DebugG.lineStyle(collisionW, b.onFloor() ? onFloorC : collisionC, 1);
               scene.DebugG.lineBetween(b.left + collisionTrim, b.bottom + collisionW, (b.left + b.width) - collisionTrim, b.bottom + collisionW);
             }
           }
@@ -237,11 +243,23 @@ class Game extends Phaser.Game {
     return grid;
   }
 
-  getUnder(body, margin = 5) {
-    let f = body.gameObject.scene.physics.overlapRect(body.x + margin, body.bottom, body.width - margin, margin);
+  getUnder(body,typeString = null, margin = 5) {
+    let f = body.gameObject.scene.physics.overlapRect(body.x + margin, body.bottom, body.width - (margin * 2), margin);
     //remove the requesting body
-    return f.filter((o) => o !== body); 
+    var filtered = f.filter((o) => (typeString === null || o.gameObject.constructor.name === typeString) && o !== body); 
+    return filtered;
   }
+  getRight(body, typeString = null, margin = 5) {
+    let f = body.gameObject.scene.physics.overlapRect(body.right + margin, body.top + margin, margin, body.height - (margin * 2));
+    //remove the requesting body
+    return f.filter((o) => (typeString === null || o.gameObject.constructor.name === typeString) && o !== body);
+  }
+  getLeft(body, typeString = null, margin = 5) {
+    let f = body.gameObject.scene.physics.overlapRect(body.left - (margin + 1), body.top + margin, margin, body.height - (margin * 2));
+    //remove the requesting body
+    return f.filter((o) => (typeString === null || o.gameObject.constructor.name === typeString) && o !== body);
+  }
+
   cartoonText(txt) {
     txt.setShadow(3, 3, '#000000', 6, true, false)
       .setStroke('#1493F5', 6);

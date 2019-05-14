@@ -214,10 +214,10 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
       if (around.up !== null && around.up.gameObject.constructor.name === 'Bob')
         return true;
 
-      if (around.left !== null && around.left.gameObject.constructor.name === 'Bob' && blockedRight) {
+      if (box.body.blocked.right || (around.left !== null && around.left.gameObject.constructor.name === 'Bob' && blockedRight)) {
         return false;
       }
-      else if (around.right !== null && around.right.gameObject.constructor.name === 'Bob' && blockedLeft) {
+      else if (box.body.blocked.left || (around.right !== null && around.right.gameObject.constructor.name === 'Bob' && blockedLeft)) {
         return false;
       }
     }
