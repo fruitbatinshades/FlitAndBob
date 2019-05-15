@@ -213,13 +213,6 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
       //bobs on top so treat as normal collision
       if (around.up !== null && around.up.gameObject.constructor.name === 'Bob')
         return true;
-
-      if (box.body.blocked.right || (around.left !== null && around.left.gameObject.constructor.name === 'Bob' && blockedRight)) {
-        return false;
-      }
-      else if (box.body.blocked.left || (around.right !== null && around.right.gameObject.constructor.name === 'Bob' && blockedLeft)) {
-        return false;
-      }
     }
     return true;
   }
@@ -238,27 +231,35 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
     //if it's bob and a rock move it
     if (box.isRock) {
       let v = 0;
-      if (player.body.touching.right || player.body.touching.left) {
-        //console.log(box.body.blocked);
-        if (player.body.touching.left) {
-          v = -player.speed;
+      let above = this.scene.game.getAbove(box.body);
+      let bobOnTop = above.length !== 0 && above[0].gameObject.constructor.name === 'Bob';
+      if (!bobOnTop) {
+        if (player.body.touching.right || player.body.touching.left) {
+          //let next = this.scene.game.getRight(box.body);
+          box.body.immovable = false;
+          //console.log(box.body.blocked);
+          if (player.body.touching.left) {
+            v = -player.speed;
+          }
+          else if (player.body.touching.right) {
+            v = player.speed;
+          }
+          if (v === 0) {
+            box.body.stop();
+            player.body.stop();
+          }
+          else {
+            box.body.setVelocityX(v);
+          }
+        } else {
+          box.body.immovable = true;
         }
-        else if (player.body.touching.right) {
-          v = player.speed;
-        }
-        if (v === 0) {
-          box.body.stop();
-          player.body.stop();
-        }
-        else {
-          box.body.setVelocityX(v);
+        let below = this.scene.game.getUnder(box.body);
+        //There is only the rock it's got nothing underneath so reactivate
+        if (below.length === 0) {
+          box.activate();
         }
       }
-      let around = this.scene.physics.overlapRect(box.body.x + 2, box.body.top - 2, box.body.width - 4, box.body.height + 4);
-      //There is only the rock it's got nothing underneath so reactivate
-      if (around.length === 1) {
-        box.activate();
-      }
-    } 
+    }
   }
 }

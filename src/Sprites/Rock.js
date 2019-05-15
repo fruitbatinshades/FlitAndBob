@@ -23,19 +23,14 @@ export default class Rock extends Phaser.Physics.Arcade.Sprite {
         
         this.scene = sprite.scene;
         this.setOrigin(0, 0);
+        this.setTexture('rock');
         if (sprite.data != null) {
             if (sprite.data.list['Affects']) {
                 this.Affects = sprite.data.list['Affects'];
             };
-            if (sprite.data.values.hasOwnProperty('Rock')) {
-                //It's a rock which only Bob can move
-                this.setTexture('rock');
-            }
         }
+
         this.scene.events.on('update', this.checkOn, this);
-    }
-    create() {
-        
     }
     checkOn() {
         let b = this.body;

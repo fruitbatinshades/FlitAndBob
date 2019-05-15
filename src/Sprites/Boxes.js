@@ -37,6 +37,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
             b.setOrigin(0, 0);
             this.add(b, true);
             this.scene.physics.world.enable(b);
+            b.body.immovable = true;
 
             box.destroy(); //destroy original tile
         }, this);
@@ -83,48 +84,15 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         this.scene.physics.add.collider(rocks, rocks, Rock.separate, null, this);
 
         let deadWeights = this.getDeadWeights();
-        this.scene.physics.add.collider(deadWeights, deadWeights, this.deadWeightCollide, null, this);
-        this.scene.physics.add.collider(deadWeights, rocks, this.deadWeightCollide, null, this);
-        this.scene.physics.add.collider(deadWeights, this.scene.mapLayers['World'], this.deadWeightCollide, null, this);
+        this.scene.physics.add.collider(deadWeights, deadWeights, DeadWeight.deadWeightCollide, null, this);
+        this.scene.physics.add.collider(deadWeights, rocks, DeadWeight.deadWeightCollide, null, this);
+        this.scene.physics.add.collider(deadWeights, this.scene.mapLayers['World'], DeadWeight.deadWeightCollide, null, this);
         this.scene.physics.add.collider(deadWeights, this.scene.bob);//, this.playerDWCollide, null, this);
         this.scene.physics.add.collider(deadWeights, this.scene.flit);//, this.playerDWCollide, null, this);
         
         //collider for boxes and rocks with the players
         this.scene.physics.add.collider(this.scene.game.Bob, this, this.scene.game.Bob.boxPlayerCollide, this.scene.game.Bob.boxPlayerPreCollide, this);
         this.scene.physics.add.collider(this.scene.game.Flit, this, this.boxPlayerCollide, this.boxPlayerPreCollide, this);
-    }
-    /**
-     * Handle dead weights colliding with multiple object types
-     * @param {object} s1 
-     * @param {object} s2 
-     */
-    deadWeightCollide(s1, s2) {
-        switch (s2.constructor.name) {
-            case 'Tile':
-                //hits tile so it stays there
-                s1.body.stop();
-                s1.body.allowGravity = false;
-                s1.body.moves = false;
-                s1.body.setImmovable(true);
-                break;
-            case 'Rock':
-            case 'DeadWeight':
-                this.separateDw(s1, s2);
-                break;
-        }
-    }
-    separateDw(s1,s2) {
-        //keep it vertically separated
-        var b1 = s1.body;
-        var b2 = s2.body;
-        if (b1.y > b2.y) {
-            b2.y += (b1.top - b2.bottom);
-            b2.stop();
-        }
-        else {
-            b1.y += (b2.top - b1.bottom);
-            b1.stop();
-        }
     }
     /**
      * fix the box in place, turn off physics
@@ -212,12 +180,21 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
      * @param {Box} box The box they are colliding with
      */
     boxPlayerCollide(player, box) {
-        if (!box.isRock && Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
+        if (!box.isRock && !box.isDeadWeight && Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
             if (box.Affects === null || player.is(box.Affects)) {
                 box.deActivate();
                 this.scene.ActivePlayer.overBox(box);
             }
         }
+        // if (box.isRock && player.is('flit'))
+        // {
+        //     box.body.immovable = true;
+        //     box.body.stop();
+        // }
+        // if (box.isDeadWeight) {
+        //     box.body.immovable = true;
+        //     box.body.stop();
+        // }
     }
 
     /**

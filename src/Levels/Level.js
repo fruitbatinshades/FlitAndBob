@@ -80,7 +80,7 @@ export default class Level extends Phaser.Scene {
         this.events.on('died', function (player) {
             this.scene.pause('HUD');
             this.scene.stop();
-            this.scene.restart();
+            this.scene.start();
         }, this);
         this.events.once('shutdown', (a, b) => {
             console.log('shutdown', a, b);

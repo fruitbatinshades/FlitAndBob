@@ -243,6 +243,12 @@ class Game extends Phaser.Game {
     return grid;
   }
 
+  getAbove(body, typeString = null, margin = 5) {
+    let f = body.gameObject.scene.physics.overlapRect(body.x + margin, body.top - (margin + 1), body.width - (margin * 2), margin);
+    //remove the requesting body
+    var filtered = f.filter((o) => (typeString === null || o.gameObject.constructor.name === typeString) && o !== body);
+    return filtered;
+  }
   getUnder(body,typeString = null, margin = 5) {
     let f = body.gameObject.scene.physics.overlapRect(body.x + margin, body.bottom, body.width - (margin * 2), margin);
     //remove the requesting body
