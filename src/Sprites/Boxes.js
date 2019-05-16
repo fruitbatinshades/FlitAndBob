@@ -76,11 +76,11 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
     addCollisions() {
         //collider for when boxes hit each other
         let boxes = this.getBoxes();
-        this.scene.physics.add.collider(boxes, boxes, this.boxOnBoxCollide, null, this);
-        this.scene.physics.add.collider(boxes, this.scene.mapLayers.World, this.tileCollide, null, this);
+        this.scene.physics.add.collider(boxes, boxes, Box.boxOnBoxCollide, null, this);
+        this.scene.physics.add.collider(boxes, this.scene.mapLayers.World, Box.tileCollide, null, this);
         
         let rocks = this.getRocks();
-        this.scene.physics.add.collider(rocks, this.scene.mapLayers.World, this.tileCollide, null, this);
+        this.scene.physics.add.collider(rocks, this.scene.mapLayers.World, Rock.tileCollide, null, this);
         this.scene.physics.add.collider(rocks, rocks, Rock.separate, null, this);
 
         let deadWeights = this.getDeadWeights();
@@ -94,29 +94,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         this.scene.physics.add.collider(this.scene.game.Bob, this, this.scene.game.Bob.boxPlayerCollide, this.scene.game.Bob.boxPlayerPreCollide, this);
         this.scene.physics.add.collider(this.scene.game.Flit, this, this.boxPlayerCollide, this.boxPlayerPreCollide, this);
     }
-    /**
-     * fix the box in place, turn off physics
-     * @param {Box} box 
-     * @param {Phaser.Tilemaps.Tile} tile 
-     */
-    tileCollide(box, tile) {
-        //TODO: Objects are passed back to front from zone/box collider, This is probably because I'm using unreleased 3.17 but check after release
-        if (box.constructor.name == 'InteractionZone') {
-            let tmp = box;
-            let tmp2 = tile;
-            box = tmp2;
-            tile = tmp;
-        }
-        //Handle box collision
-        if (tile !== null && !box.isRock && box.lastContact !== tile) {
-            box.deActivate();
-            box.status = Boxes.State.Tile;
-            box.lastContact = tile;
-            box.hits--;
-            this.scene.events.emit('boxTileCollide', box, tile);
-            return true;
-        }
-    }
+
     onBoxDestruct(box) {
         console.log('box destruct', box);
         //check we are not activating anything
@@ -197,50 +175,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         // }
     }
 
-    /**
-     * Change the physics so boxes become static when they collide
-     * @param {Box} a First Box
-     * @param {Box} b Second Box
-     */
-    boxOnBoxCollide(a, b) {
-        if (!a.isRock && !b.isRock) {
-            a.setVelocityX(0);
-            b.setVelocityX(0);
-            //workout uppermost box
-            let top = a.body.top < b.body.top ? a : b;
-            let bottom = top === a ? b : a;
-
-            bottom.underneath = top;
-            top.onTopOf = bottom;
-        
-            //subtract hits
-            if (top.lastContact !== bottom) {
-                top.hits--;
-            }
-            top.lastContact = bottom;
-
-            top.body.stop();
-            bottom.body.stop();
-
-            //bottom.tint = 0x00FF00;
-            bottom.body.immovable = true;
-            bottom.body.moves = false;
-            bottom.body.enable = true;
-            bottom.body.allowGravity = false;
-
-            //top.tint = 0xFF0000;
-            top.body.immovable = true;
-            top.body.moves = false;
-            top.body.enable = true;
-            top.body.allowGravity = false;
-        
-            //force gap else it is irregular
-            top.y = (bottom.body.top - top.body.height) - 1;
-            if (this.scene.game.debugOn) console.log('box colliding');
-
-            return true;
-        }
-    }
+ 
     getBoxes() {
         return this.children.entries.filter((b) => b.isBox);
     }

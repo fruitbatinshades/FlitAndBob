@@ -16,9 +16,7 @@ export default class DeadWeight extends Phaser.Physics.Arcade.Sprite {
 
         this.scene.physics.world.enable(this);
 
-        this.body.allowGravity = true;
-        this.body.enable = true;
-        this.body.moves = true;
+        this.activate();
         this.originalX = this.x;
         
         this.body.setImmovable(true);
@@ -27,13 +25,7 @@ export default class DeadWeight extends Phaser.Physics.Arcade.Sprite {
     }
 
     checkOn() {
-        let b = this.body;
-        if (b) {
-            let reallyTouching = b.touching.down || b.blocked.down || b.onFloor() || this.scene.game.getUnder(this.body).length !== 0;
-            if (!reallyTouching) {
-                b.allowGravity = true;
-            }
-        }
+        if (this.scene.game.nothingUnder(this)) this.activate();
     }
     preUpdate() {
         //Do not allow x movement
@@ -45,8 +37,15 @@ export default class DeadWeight extends Phaser.Physics.Arcade.Sprite {
             this.body.moves = true;
         }
     }
-    deActivate() { }
-    activate() { };
+    deActivate() { 
+        this.body.allowGravity = false;
+        this.body.moves = false;
+    }
+    activate() { 
+        this.body.allowGravity = true;
+        this.body.enable = true;
+        this.body.moves = true;
+    };
 
     /**
      * Handle dead weights colliding with multiple object types
@@ -58,9 +57,7 @@ export default class DeadWeight extends Phaser.Physics.Arcade.Sprite {
             case 'Tile':
                 //hits tile so it stays there
                 s1.body.stop();
-                s1.body.allowGravity = false;
-                s1.body.moves = false;
-                s1.body.setImmovable(true);
+                s1.deActivate();
                 break;
             case 'Rock':
                 break;

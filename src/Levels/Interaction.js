@@ -47,7 +47,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
                 //if the zone blocks boxes
                 if (z.Blocks.key === 'Box') {
                     //Block boxes, rocks and deadweights
-                    scene.physics.add.collider(scene.mapLayers['Boxes'], z, this.zoneCollide, this.zoneProcess);
+                    scene.physics.add.collider(z, scene.mapLayers['Boxes'], this.zoneCollide, this.zoneProcess);
                 } else if (z.Blocks.key) {
                     //if properties provided set the relevant one else leave alone so all are checked
                     z.body.checkCollision.up = z.Blocks.key.indexOf('T') !== -1;
@@ -59,7 +59,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             }
             else {
                 if (z.tileType && z.tileType.isBlockActivated) {
-                    let a = scene.physics.add.collider(scene.mapLayers['Boxes'].getBoxes(), z, scene.mapLayers['Boxes'].tileCollide, null, this);
+                    let a = scene.physics.add.collider(z, scene.mapLayers['Boxes'].getBoxes(), this.zoneProcess, null, this);
                 } else {
                     //set up overlap for for player interaction
                     scene.physics.add.overlap(scene.bob, z, this.overZone, null, this);
@@ -77,8 +77,10 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
     zoneProcess(zone, box) {
         if (box.lastContact !== zone) {
             box.lastContact = zone;
+            box.deActivate();
             if (box.isBox) box.hits--;
             console.log(`${box.name} hit ${zone.name}`);
+            if (zone.tileType && zone.tileType.isBlockActivated) zone.process(this.scene.game.ActivePlayer);
             return true;
         } else {
             //on same zone

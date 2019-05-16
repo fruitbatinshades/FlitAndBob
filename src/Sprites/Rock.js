@@ -10,13 +10,6 @@ export default class Rock extends Phaser.Physics.Arcade.Sprite {
     //Player that can interact with the box
     Affects = null;
     isRock = true;
-    get lastContact() {
-        return this._lastContact;
-    }
-    set lastContact(value) {
-        this._lastContact = value;
-        this.body.allowGravity = this.body.touching.down === false && this.body.blocked.down === false && this.body.onFloor() === false;
-    }
 
     constructor(sprite) {
         super(sprite.scene, sprite.x, sprite.y, sprite.texture.key, sprite.frame.name);
@@ -33,19 +26,23 @@ export default class Rock extends Phaser.Physics.Arcade.Sprite {
         this.scene.events.on('update', this.checkOn, this);
     }
     checkOn() {
-        let b = this.body;
-        if (b) {
-            let reallyTouching = b.touching.down || b.blocked.down || b.onFloor() || this.scene.game.getUnder(this.body).length !== 0;
-            if (!reallyTouching)
-                b.allowGravity = true;
-        }
+        if (this.scene.game.nothingUnder(this))
+            this.activate();
+    }
+    /**
+     * fix the box in place, turn off physics
+     * @param {Box} box 
+     * @param {Phaser.Tilemaps.Tile} tile 
+     */
+    static tileCollide(box, tile) {
+        if (box.isRock) box.deActivate();
     }
     activate() {
         this.body.enable = true;
         this.body.immovable = false;
         this.body.moves = true;
         this.body.allowGravity = true;
-        this.lastContact = null;
+        //this.lastContact = null;
         this.body.setGravityY(1);
     }
     deActivate() {

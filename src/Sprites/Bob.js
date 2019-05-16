@@ -266,11 +266,11 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
         } else {
           box.body.immovable = true;
         }
-        let below = this.scene.game.getUnder(box.body);
-        //There is only the rock it's got nothing underneath so reactivate
-        if (below.length === 0) {
-          box.activate();
-        }
+        // let below = this.scene.game.getUnder(box.body);
+        // //There is only the rock it's got nothing underneath so reactivate
+        // if (!box.body.onFloor() && below.length === 0) {
+        //   box.activate();
+        // }
       }
     }
   }

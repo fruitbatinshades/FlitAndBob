@@ -64,12 +64,10 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
             } else if (sprite.data.list['Affects']) {
                 this.Affects = sprite.data.list['Affects'];
             };
-            // if (sprite.data.values.hasOwnProperty('Rock')) {
-            //     //It's a rock which only Bob can move
-            //     this.setTexture('rock');
-            //     this.isRock = true;
-            // }
         }
+
+        this.scene.events.on('update', this.checkOn, this);
+
         if (this.scene.game.debugOn) {
             this.note = this.scene.add.text(this.x, this.y, '');
             this.note.depth = 1000;
@@ -78,6 +76,10 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
         this.on('destroy', function () {
             if(this.text) this.text.destroy();
         }, this);
+    }
+    checkOn() {
+        if (this.scene.game.nothingUnder(this))
+            this.activate();
     }
     /**
      * Activate this box. Used to re-activate after its been on the ground or a zone
@@ -139,5 +141,65 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
         }
         this.underneath = null;
         this.onTopOf = null;
+    }
+    /**
+     * fix the box in place, turn off physics
+     * @param {Box} box 
+     * @param {Phaser.Tilemaps.Tile} tile 
+     */
+    static tileCollide(box, tile) {
+        //Handle box collision
+        if (tile !== null && !box.isRock && box.lastContact !== tile) {
+            box.deActivate();
+            box.lastContact = tile;
+            box.hits--;
+            box.scene.events.emit('boxTileCollide', box, tile);
+            return true;
+        }
+        if (box.isRock) box.deActivate();
+    }
+    /**
+  * Change the physics so boxes become static when they collide
+  * @param {Box} a First Box
+  * @param {Box} b Second Box
+  */
+    static boxOnBoxCollide(a, b) {
+        if (!a.isRock && !b.isRock) {
+            a.setVelocityX(0);
+            b.setVelocityX(0);
+            //workout uppermost box
+            let top = a.body.top < b.body.top ? a : b;
+            let bottom = top === a ? b : a;
+
+            bottom.underneath = top;
+            top.onTopOf = bottom;
+
+            //subtract hits
+            if (top.lastContact !== bottom) {
+                top.hits--;
+            }
+            top.lastContact = bottom;
+
+            top.body.stop();
+            bottom.body.stop();
+
+            //bottom.tint = 0x00FF00;
+            bottom.body.immovable = true;
+            bottom.body.moves = false;
+            bottom.body.enable = true;
+            bottom.body.allowGravity = false;
+
+            //top.tint = 0xFF0000;
+            top.body.immovable = true;
+            top.body.moves = false;
+            top.body.enable = true;
+            top.body.allowGravity = false;
+
+            //force gap else it is irregular
+            top.y = (bottom.body.top - top.body.height) - 1;
+            if (a.scene.game.debugOn) console.log('box colliding');
+
+            return true;
+        }
     }
 }

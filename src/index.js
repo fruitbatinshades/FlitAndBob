@@ -266,6 +266,29 @@ class Game extends Phaser.Game {
     return f.filter((o) => (typeString === null || o.gameObject.constructor.name === typeString) && o !== body);
   }
 
+  /**
+   * Check if an object is in physics contact, has any objects or colliding tiles under it
+   * @param {Phaser.GameObjects.Sprite} gameObject The game object to check
+   * @param {number} margin margin overlap to use
+   */
+  nothingUnder(gameObject, margin = 5) {
+    //return as soon as the first one is true to save processing
+    
+    //check normal physics
+    let b = gameObject.body;
+    if (b.touching.down || b.blocked.down || b.onFloor()) return false;
+    
+    //check for other objects
+    let u = this.getUnder(gameObject.body, null, margin);
+    if (u.length !== 0 && u.filter((x)=> x.enable == true).length !== 0) return false;
+
+    //check world tiles
+    let tr = new Phaser.Geom.Rectangle(b.x + margin, b.bottom, b.width - (margin * 2), margin);
+    let tu = gameObject.scene.map.getTilesWithinShape(tr, { isColliding: true }, gameObject.scene.cameras.main, gameObject.scene.mapLayers.World );
+    
+    return tu.length === 0;
+  }
+
   cartoonText(txt) {
     txt.setShadow(3, 3, '#000000', 6, true, false)
       .setStroke('#1493F5', 6);
