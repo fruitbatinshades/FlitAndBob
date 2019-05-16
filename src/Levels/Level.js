@@ -57,6 +57,7 @@ export default class Level extends Phaser.Scene {
         this.shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         this.ctrlKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
         this.dKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        this.rKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         if (this.game.debugOn) {
             this.input.on('gameobjectdown', function (pointer, gameObject) {
@@ -84,6 +85,7 @@ export default class Level extends Phaser.Scene {
         }, this);
         this.events.once('shutdown', (a, b) => {
             console.log('shutdown', a, b);
+            this.events.off('preupdate');
             this.events.off('sceneUpdate');
             this.events.off('levelcomplete');
             this.events.off('died');
@@ -296,6 +298,9 @@ export default class Level extends Phaser.Scene {
         if(Phaser.Input.Keyboard.JustDown(this.dKey)){
             this.game.debugOn = !this.game.debugOn;
             this.game.drawCollision(this);
+        }
+        if (Phaser.Input.Keyboard.JustDown(this.rKey)) {
+            this.restartLevel();
         }
         this.events.emit('sceneUpdate');
         //If a modal is not active process input
