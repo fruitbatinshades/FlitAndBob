@@ -24,11 +24,13 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
     this.isSlow = false;
     this.isFast = false;
     this.name = 'bob';
+    this.zoneInControl = false;
+    this.zoneValue = 0;
     // enable physics
     this.scene.physics.world.enable(this);
     this.setScale(.7);
     this.body.setSize(this.body.width * this.scaleX, this.body.height).setOffset(0, 0);
-
+    this.body.setMaxVelocity(500, 1000);
     this.debugText = '';
 
     // add our player to the scene
@@ -189,10 +191,20 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
         });
       }
     }
+    if (this.zoneInControl) {
+      if (this.zoneValue && typeof this.zoneValue === 'object') {
+        if(this.zoneValue.x)
+          this.body.setVelocityX(this.zoneValue.x);
+        if (this.zoneValue.y)
+          this.body.setVelocityY(this.zoneValue.y);
+      }
+    }
 
     //reset Effects after update
     this.isSlow = false;
     this.isFast = false;
+    this.zoneInControl = false;
+    this.zoneValue = 0;
     this.effectSpeed = 0;
   }
   /**

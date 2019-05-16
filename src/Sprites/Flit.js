@@ -34,7 +34,8 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     this.body.setAllowGravity(false);
     this.setCollideWorldBounds(true); // don't go out of the map 
     this.body.setOffset((this.body.width * this.scaleX) / 2, (this.body.height * this.scaleY) / 2);
-
+    this.body.setMaxVelocity(500, 1000);
+    
     this.splat = this.scene.add.image(0, 0, 'splat');
     this.splat.setDepth(100).visible = false;
     this.splat.setOrigin(0.5);
@@ -152,8 +153,18 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
       //no keys so stop
       if (!cursors.left.isDown && !cursors.right.isDown && !cursors.up.isDown && !cursors.down.isDown) {
         this.idle();
+    }
+    
+    if (this.zoneInControl) {
+      if (this.zoneValue && typeof this.zoneValue === 'object') {
+        if (this.zoneValue.x)
+          this.body.setVelocityX(this.zoneValue.x);
+        if (this.zoneValue.y)
+          this.body.setVelocityY(this.zoneValue.y);
       }
-
+    }
+    this.zoneInControl = false;
+    this.zoneValue = 0;
     this.isSlow = false;
     this.isFast = false;
   }

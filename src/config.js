@@ -10,6 +10,7 @@ export default {
             gravity: {y: 500},
             debug: false,
             overlapBias: 8,
+            tileBias:16,
             debug: true
         }
     },

@@ -5,7 +5,8 @@ export default class Effects {
         "Injure": this.injure,
         "Kill": this.kill,
         "Slippy": this.slippy,
-        "Slow": this.slow
+        "Slow": this.slow,
+        "Push": this.push
     };
     /**
      * Player speeds up
@@ -61,5 +62,12 @@ export default class Effects {
             player.isSlow = true;
         }
     }
-
+    push(z, player) {
+        if (player !== null) {
+            if (z.Affect === null || z.Affect.key === null || player.is(z.Affect.key)) {
+                player.zoneInControl = true;
+                player.zoneValue = z.Effect.params;
+            }
+        }
+    }
 }

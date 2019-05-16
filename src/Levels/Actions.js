@@ -62,7 +62,8 @@ export default class Actions{
     toggleZone(triggerZone, player) {
         let targetZone = this.getTargetZone(triggerZone.Target.key);
         if (targetZone) {
-            targetZone.active = !targetZone.active;
+            targetZone.isActive = !targetZone.isActive;
+            targetZone.body.enable = targetZone.isActive;
         }
     }
 }

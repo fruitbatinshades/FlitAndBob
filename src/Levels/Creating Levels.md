@@ -92,6 +92,7 @@ These are the values for the property in the tiled editor
 | `Slow` | Slow player movement | | `Affect` |
 | `Fast` | Speed player movement | | `Affect` |
 | `Slippy` | Player slides and can only jump |  | `Affect` |
+| `Push` | Player is forced in direction (fan) | {"x":0, "y":0} negative y is up, negative x is left  | `Affect` |
 
 | Transition | Description | Parameters | Target |
 |---|---|---|---|
