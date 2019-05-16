@@ -138,10 +138,11 @@ export default class LevelLoaderScene extends Phaser.Scene {
     }
     levelFinished() {
         this.scene.pause('HUD');
-        this.scene.pause('Level');
+        //this.scene.pause('Level');
         if (this.game.levels.length > this.game.levelIndex + 1) this.game.levelIndex++;
         this.scene.bringToTop(this);
-        this.scene.restart();
+        this.scene.stop('Level');
+        this.scene.start();
     }
     mapLoaded() {
         this.load.audioSprite('sfx', 'assets/Sound/FlitBob.json', [

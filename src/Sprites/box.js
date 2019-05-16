@@ -1,7 +1,7 @@
 /// <reference path="../../defs/phaser.d.ts" />
 /// <reference path="./Boxes.js" />
 
-export default class Box extends Phaser.Physics.Arcade.Sprite {
+export default class Box extends Phaser.GameObjects.Sprite {
     static State = {
         None: 0,
         Sitting: 1,
@@ -66,7 +66,7 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
             };
         }
 
-        this.scene.events.on('update', this.checkOn, this);
+        this.scene.events.on('sceneUpdate', this.checkOn, this);
 
         if (this.scene.game.debugOn) {
             this.note = this.scene.add.text(this.x, this.y, '');
@@ -74,11 +74,12 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
         }
 
         this.on('destroy', function () {
-            if(this.text) this.text.destroy();
+            if (this.text) this.text.destroy();
+            this.scene.events.off('sceneUpdate');
         }, this);
     }
     checkOn() {
-        if (this.scene.game.nothingUnder(this))
+        if (this.scene && this.scene.game.nothingUnder(this))
             this.activate();
     }
     /**
@@ -165,8 +166,8 @@ export default class Box extends Phaser.Physics.Arcade.Sprite {
   */
     static boxOnBoxCollide(a, b) {
         if (!a.isRock && !b.isRock) {
-            a.setVelocityX(0);
-            b.setVelocityX(0);
+            a.body.setVelocityX(0);
+            b.body.setVelocityX(0);
             //workout uppermost box
             let top = a.body.top < b.body.top ? a : b;
             let bottom = top === a ? b : a;

@@ -33,6 +33,8 @@ export default class Level extends Phaser.Scene {
     reset() {
         this.totalShrooms = 0;
         this.totalFlies = 0;
+        this.mapLayers = null;
+        this.interactionZones = null;
     }
     //NB: Call from preload
     preload() {
@@ -78,12 +80,11 @@ export default class Level extends Phaser.Scene {
         }, this);
         //Character died so restart
         this.events.on('died', function (player) {
-            this.scene.pause('HUD');
-            this.scene.stop();
-            this.scene.start();
+            this.restartLevel();
         }, this);
         this.events.once('shutdown', (a, b) => {
             console.log('shutdown', a, b);
+            this.events.off('sceneUpdate');
             this.events.off('levelcomplete');
             this.events.off('died');
             this.events.off('gameobjectdown');
@@ -91,6 +92,12 @@ export default class Level extends Phaser.Scene {
         }, this);
         
         this.events.on('preupdate', this.preUpdate, this);
+    }
+    restartLevel() {
+        this.scene.pause('HUD');
+        this.scene.stop();
+        //this.scene.start();
+        this.scene.restart();
     }
     create() { 
         console.log('Level create');
@@ -290,6 +297,7 @@ export default class Level extends Phaser.Scene {
             this.game.debugOn = !this.game.debugOn;
             this.game.drawCollision(this);
         }
+        this.events.emit('sceneUpdate');
         //If a modal is not active process input
         if (!this.modalActive) {
             //Switch characters

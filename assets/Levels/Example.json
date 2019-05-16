@@ -1103,6 +1103,17 @@
                  "width":192,
                  "x":576,
                  "y":128
+                }, 
+                {
+                 "height":128,
+                 "id":141,
+                 "name":"Exit",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":128,
+                 "x":768,
+                 "y":448
                 }],
          "opacity":1,
          "properties":
@@ -1165,7 +1176,7 @@
          "y":0
         }],
  "nextlayerid":12,
- "nextobjectid":141,
+ "nextobjectid":142,
  "orientation":"orthogonal",
  "properties":
     {
