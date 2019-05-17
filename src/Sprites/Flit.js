@@ -158,9 +158,9 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     if (this.zoneInControl) {
       if (this.zoneValue && typeof this.zoneValue === 'object') {
         if (this.zoneValue.x)
-          this.body.setVelocityX(this.zoneValue.x);
+          this.body.setVelocityX(this.zoneValue.x + this.body.velocity.x);
         if (this.zoneValue.y)
-          this.body.setVelocityY(this.zoneValue.y);
+          this.body.setVelocityY(this.zoneValue.y + this.body.velocity.y);
       }
     }
     this.zoneInControl = false;

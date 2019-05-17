@@ -222,6 +222,7 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
       let around = this.scene.game.getBodiesAround(box.body, [], { up:true, down:true, left:true, right:true});
       let blockedRight = around.right !== null && around.right.gameObject.Blocks !== null && around.right.gameObject.isActive;
       let blockedLeft = around.left !== null && around.left.gameObject.Blocks !== null && around.left.gameObject.isActive;
+
       //bobs on top so treat as normal collision
       if (around.up !== null && around.up.gameObject.constructor.name === 'Bob')
         return true;
@@ -243,9 +244,11 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
     //if it's bob and a rock move it
     if (box.isRock) {
       let v = 0;
-      let above = this.scene.game.getAbove(box.body);
-      let bobOnTop = above.length !== 0 && above[0].gameObject.constructor.name === 'Bob';
-      if (!bobOnTop) {
+      let around = this.scene.game.getBodiesAround(box.body);
+      let bobOnTop = around.up !== null && around.up.gameObject.constructor.name === 'Bob';
+      let blockedRight = around.right !== null && around.right.gameObject.Blocks !== null && around.right.gameObject.isActive;
+      let blockedLeft = around.left !== null && around.left.gameObject.Blocks !== null && around.left.gameObject.isActive;
+      if (!bobOnTop && !blockedLeft && !blockedRight) {
         if (player.body.touching.right || player.body.touching.left) {
           //let next = this.scene.game.getRight(box.body);
           box.body.immovable = false;

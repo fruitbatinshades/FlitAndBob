@@ -183,13 +183,13 @@ class Game extends Phaser.Game {
    * Get the bodies surrounding the body passed in (Phaser 3.17.*)
    * N.B. The last item found will be the one set as earlier ones are overwritten
    * @param {Phaser.Physics.Arcade.Body} body The body to look around
-   * @param {Array} ignore Items to ignore when checking
+   * @param {Array} ignore Bodies to ignore when checking
+   * @param {object} directions Object with boolean directions to check, default = {top, left,right, bottom} (topLeft, top, topRight, left, right, bottomLeft, bottom, bottomRight)
    * @param {number} margin The distance to look
-   * @param {gridsize} gridSize divides position by gridSize pixels so small differences in height/Y/X don't push into wrong section of the grid
    */
-  getBodiesAround(body, ignore, directions, margin = 5, gridSize = 16) {
+  getBodiesAround(body, ignore, directions, margin = 5) {
     if (!directions || directions === null) {
-      directions = {topLeft:true, top:true, topRight:true, left:true, right: true, bottomLeft: true, bottom:true, bottomRight: true};
+      directions = {topLeft:false, top:true, topRight:false, left:true, right: true, bottomLeft: false, bottom:true, bottomRight: false};
     }
     ignore = ignore || [];
     let around = body.gameObject.scene.physics.overlapRect(body.x - margin, body.y - margin, body.width + (margin * 2), body.height + (margin * 2));
