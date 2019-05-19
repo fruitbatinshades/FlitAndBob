@@ -38,3 +38,16 @@ function separate (immovableGameObj, movableGameObj) {
   }
 }
 ```
+
+## Grid Align??
+```javascript
+Phaser.Actions.GridAlign(gameObjects, {
+    width: -1,
+    height: -1,
+    cellWidth: 1,
+    cellHeight: 1,
+    position: Phaser.Display.Align.TOP_LEFT,
+    x: 0,
+    y: 0
+});
+```

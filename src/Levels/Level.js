@@ -30,11 +30,28 @@ export default class Level extends Phaser.Scene {
     constructor(handle) {
         super(handle);
     }
+    create() {
+        console.log('Level create', this.physics.world);
+        this.modalActive = false;
+        this.cameras.main.setBackgroundColor(0x10ceff);
+        this.buildLevel();
+        if (!this.HUD) {
+            this.HUD = this.scene.add('HUD', HUD, true, { x: 400, y: 300 });
+        } else {
+            this.scene.resume('HUD');
+            this.events.emit('updateHUD', this.game.Bob);
+            this.events.emit('updateHUD', this.game.Flit);
+        }
+        this.events.emit('updateHUD', this.ActivePlayer);
+    }
+
     reset() {
+        this.physics.world.colliders.destroy();
         this.totalShrooms = 0;
         this.totalFlies = 0;
         this.mapLayers = null;
         this.interactionZones = null;
+        
     }
     //NB: Call from preload
     preload() {
@@ -83,6 +100,9 @@ export default class Level extends Phaser.Scene {
         this.events.on('died', function (player) {
             this.restartLevel();
         }, this);
+        this.events.once('destroy', (a, b) => {
+            console.log('destroy')
+        });
         this.events.once('shutdown', (a, b) => {
             console.log('shutdown', a, b);
             this.events.off('preupdate');
@@ -97,22 +117,9 @@ export default class Level extends Phaser.Scene {
     }
     restartLevel() {
         this.scene.pause('HUD');
-        this.scene.stop();
+        this.reset();
         //this.scene.start();
         this.scene.restart();
-    }
-    create() { 
-        console.log('Level create');
-        this.modalActive = false;
-        this.cameras.main.setBackgroundColor(0x10ceff);
-        this.buildLevel();
-        if(!this.HUD){
-            this.HUD = this.scene.add('HUD', HUD, true, { x: 400, y: 300 });
-        } else {
-            this.scene.resume('HUD');
-            this.events.emit('updateHUD', this.game.Bob);
-            this.events.emit('updateHUD', this.game.Flit);
-        }
     }
     preUpdate(delta) {
         if (this.game.debugOn) {
@@ -229,6 +236,7 @@ export default class Level extends Phaser.Scene {
                 }
             }
         });
+        console.log(this.physics.world.colliders);
     }
 
     /**
@@ -339,6 +347,7 @@ export default class Level extends Phaser.Scene {
             if (complete === 1) {
                 this.cameras.main.startFollow(this.ActivePlayer, false, .1, .1);
                 this.game._ChangingPlayer = false;
+                this.events.emit('updateHUD', this.ActivePlayer);
             }
         });
     }

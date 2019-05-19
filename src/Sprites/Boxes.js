@@ -22,7 +22,8 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         //createCallbackHandler errors if this is not set which implies the inheritence is wrong somehow :|
         this.world = scene.physics.world;
         this.scene = scene;
-        console.log('boxes.js', this);
+        console.log(`o:${this.constructor.name} s:${this.scene.constructor.name}`);
+        //console.log('boxes.js', this);
         // add boxes to our group
         spriteArray.forEach((box) => {
             let b;
@@ -111,7 +112,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
      * @param {Phaser.GameObjects.Sprite} player
      */
     onPickupBox(box, player) {
-        if (!box.underneath && !box.isRock) { //only pick up box if there is nothing underneath it
+        if (!box.underneath && !box.isRock) { //only pick up box if there is not another box on top of it
             box.reset();
             player.carrying = box;
             box.player = player;

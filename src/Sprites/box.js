@@ -43,6 +43,7 @@ export default class Box extends Phaser.GameObjects.Sprite {
     constructor(sprite) {
         super(sprite.scene, sprite.x, sprite.y, sprite.texture.key, sprite.frame.name);
         this.scene = sprite.scene;
+        console.log(`o:${this.constructor.name} s:${this.scene.constructor.name}`);
         this.setOrigin(0, 0);
         //this.flipX = Math.random() > 0.5;
         if (sprite.data != null) {

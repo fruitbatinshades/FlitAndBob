@@ -7,13 +7,10 @@ import Enums from '../Levels/Tilemaps.js';
  * Scene that loads a level with a progress bar.
  */
 export default class LevelLoaderScene extends Phaser.Scene {
-
     switchIds;
 
-    startScene = 'LevelLoader';
-
     constructor(key, level) {
-        super(key);
+        super('LevelLoaderScene');
     }
     preload() {
         this.registry.set('currentLevel', this.game.levels[this.game.levelIndex]);
