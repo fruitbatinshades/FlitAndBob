@@ -23,7 +23,7 @@ class Game extends Phaser.Game {
     super(config);
 
     this.levels = [
-      'Example', 'L1', 'L2', 'Lee1'
+      'Example','T1','T2', 'L1', 'L2', 'Lee1'
     ];
     this.registry.set('levels', this.levels);
     
@@ -46,7 +46,28 @@ class Game extends Phaser.Game {
     this.scene.add('LevelLoader', LevelLoaderScene);
     this.scene.start('Boot');
   }
-
+  /**
+   * Pan the camera and then return to player
+   * @param {Phaser.Scene} scene
+   * @param {Phaser.Geom.Rectangle} rect 
+   */
+  panAndReturn(scene, rect) {
+    if (!Phaser.Geom.Rectangle.ContainsRect(scene.cameras.main.worldView, rect)) {
+      //stop following else the pan X/Y is incorrect
+      scene.cameras.main.stopFollow();
+      scene.cameras.main.once('camerapancomplete', () => {
+        //pan 2 - will be called once when pan 1 completes
+        scene.cameras.main.pan(scene.ActivePlayer.x, scene.ActivePlayer.y, 1000, 'Sine.easeInOut', false, (camera, progress, scrollX, scrollY) => {
+          if (progress === 1) {
+            //restore follow
+            scene.cameras.main.startFollow(scene.ActivePlayer);
+          }
+        });
+      });
+      //pan 1 - pan to target
+      scene.cameras.main.pan(rect.x + rect.width / 2, rect.y + rect.height / 2, 1000, 'Sine.easeInOut');
+    }
+  }
   /**
    * Draws Touching, Blocked, CheckCollsion and origin on a sprite/sprite[]
    * @param {Phaser.GameObjects.Sprite} a Sprite or Sprite Array to draw debug on

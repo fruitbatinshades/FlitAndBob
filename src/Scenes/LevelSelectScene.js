@@ -48,7 +48,7 @@ export default class LevelSelectScene extends Phaser.Scene {
             s.on('pointerup', (p) => {
                 this.game.levelIndex = i;//this.startLevel(s)
                 this.scene.pause();
-                this.scene.start('LevelLoaderScene');
+                this.scene.start('LevelLoader');
             });
             let t = this.add.text(32, 32, i + 1, {
                 font: '30px HvdComic',

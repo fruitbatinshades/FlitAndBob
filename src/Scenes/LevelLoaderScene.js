@@ -10,7 +10,7 @@ export default class LevelLoaderScene extends Phaser.Scene {
     switchIds;
 
     constructor(key, level) {
-        super('LevelLoaderScene');
+        super('LevelLoader');
     }
     preload() {
         this.registry.set('currentLevel', this.game.levels[this.game.levelIndex]);

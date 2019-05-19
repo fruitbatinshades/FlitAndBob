@@ -26,6 +26,8 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
     Affect = null;
     Blocks = null;
     DeadWeight = null;
+    Tutorial = null;
+    TutorialShown = false;
     //Whether the target has been shown to the camera so it only happens once
     _groupShown = false;
     tileType;
@@ -101,6 +103,8 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
                 this.Blocks = new InteractionParams(tileObj.properties.Blocks);
             if (typeof tileObj.properties.DeadWeight !== 'undefined')
                 this.DeadWeight = new InteractionParams(tileObj.properties.DeadWeight);
+            if (typeof tileObj.properties.Tutorial !== 'undefined')
+                this.Tutorial = new InteractionParams(tileObj.properties.Tutorial);
         }
         //TODO: strip this out on build ???
         //Add tooltips on debug to show the properties from Tiled
@@ -206,7 +210,7 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
                 if (tiles.length != 0) {
                     this.interaction.runTransition(this.Transition.key,[tiles, this]);
                 }
-            }
+             }
             // if (this.Implementation !== null) {
             // }
         }
