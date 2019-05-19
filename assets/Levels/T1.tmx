@@ -58,7 +58,7 @@
   <properties>
    <property name="depth" type="int" value="1"/>
   </properties>
-  <object id="146" name="WallTile.svg" type="TileSprite" x="128" y="512">
+  <object id="146" name="BrickTile.svg" type="TileSprite" x="128" y="512">
    <point/>
   </object>
   <object id="149" name="Bushes.svg" type="TileSprite" x="128" y="512">
@@ -109,6 +109,9 @@
    <property name="depth" type="int" value="5"/>
   </properties>
   <object id="142" name="Flit" type="StartPosition" x="320" y="384">
+   <properties>
+    <property name="Start" value=""/>
+   </properties>
    <point/>
   </object>
   <object id="143" name="Bob" type="StartPosition" x="192" y="448">

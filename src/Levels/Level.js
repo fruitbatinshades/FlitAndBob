@@ -280,6 +280,7 @@ export default class Level extends Phaser.Scene {
      * Create Flit and Bob sprite classes
      */
     createPlayer() {
+        let startWithBob = true;
         this.map.findObject('Player', (obj) => {
             // if (scene._NEWGAME && scene._LEVEL === 1) {
                 if (obj.type === 'StartPosition') {
@@ -292,14 +293,15 @@ export default class Level extends Phaser.Scene {
                         this.flit = new Flit(this, obj.x, obj.y);
                         this.flit.depth = 100;
                         this.game.Flit = this.flit;
+                        if (obj.properties.hasOwnProperty('Start')) startWithBob = false;
                     }
                 }
             // }
         });
-        if (this.game.Bob) {
-            this.ActivePlayer = this.game.Bob;
-            this.cameras.main.startFollow(this.ActivePlayer);
-        }
+        
+        this.ActivePlayer = startWithBob ? this.game.Bob : this.game.Flit;
+        this.cameras.main.startFollow(this.ActivePlayer);
+        
     }
     update(time, delta) {
         //If d is pressed toggle debug

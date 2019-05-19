@@ -157,6 +157,14 @@
                  "id":142,
                  "name":"Flit",
                  "point":true,
+                 "properties":
+                    {
+                     "Start":""
+                    },
+                 "propertytypes":
+                    {
+                     "Start":"string"
+                    },
                  "rotation":0,
                  "type":"StartPosition",
                  "visible":true,
