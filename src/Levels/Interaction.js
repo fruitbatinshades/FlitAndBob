@@ -211,7 +211,6 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
         });
         t.setOrigin(0);
 
-        
         g.fillStyle(0x0, .5);
         g.fillRoundedRect(6, 6, 306, t.height + 26, 10);
         g.fillStyle(0xFFFFFF, 1);
@@ -226,7 +225,6 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
         zone.TutorialShown = true;
 
         this.scene.time.delayedCall(5000, (t, g) => { t.destroy(); g.destroy(); }, [t, g], this);
-        
     }
     /**
      * Process the action from the zone

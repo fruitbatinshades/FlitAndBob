@@ -282,6 +282,25 @@
                  "width":128,
                  "x":128,
                  "y":384
+                }, 
+                {
+                 "height":128,
+                 "id":155,
+                 "name":"TutZone1",
+                 "properties":
+                    {
+                     "Tutorial":"Bob can't jump this high! But he can climb on a pot."
+                    },
+                 "propertytypes":
+                    {
+                     "Tutorial":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":128,
+                 "x":640,
+                 "y":384
                 }],
          "opacity":1,
          "properties":
@@ -344,7 +363,7 @@
          "y":0
         }],
  "nextlayerid":19,
- "nextobjectid":155,
+ "nextobjectid":156,
  "orientation":"orthogonal",
  "properties":
     {

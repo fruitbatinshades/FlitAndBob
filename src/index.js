@@ -213,14 +213,14 @@ class Game extends Phaser.Game {
         let oRect = new Phaser.Geom.Rectangle(o.x + 1, o.y + 1, o.width -2, o.height -2);
         
         if (!Phaser.Geom.Rectangle.ContainsRect(range, oRect)) { //ignore anything we are overlapping
-          if (directions.topLeft && Phaser.Geom.Intersects.RectangleToRectangle(tl, oRect)) { grid.upLeft = o; tl.color = 0xFF0000; }
-          if (directions.top && Phaser.Geom.Intersects.RectangleToRectangle(tc, oRect)) { grid.up = o; tc.color = 0xFF0000; }
-          if (directions.topRight && Phaser.Geom.Intersects.RectangleToRectangle(tr, oRect)) { grid.upRight = o; tr.color = 0xFF0000; }
-          if (directions.left && Phaser.Geom.Intersects.RectangleToRectangle(cl, oRect)) { grid.left = o; cl.color = 0xFF0000; }
-          if (directions.right && Phaser.Geom.Intersects.RectangleToRectangle(cr, oRect)) { grid.right = o; cr.color = 0xFF0000; }
-          if (directions.bottomLeft && Phaser.Geom.Intersects.RectangleToRectangle(bl, oRect)) { grid.downLeft = o; bl.color = 0xFF0000; }
-          if (directions.bottom && Phaser.Geom.Intersects.RectangleToRectangle(bc, oRect)) { grid.down = o; bc.color = 0xFF0000; }
-          if (directions.bottomRight && Phaser.Geom.Intersects.RectangleToRectangle(br, oRect)) { grid.downLeft = o; br.color = 0xFF0000; }
+          if (directions.topLeft && Phaser.Geom.Intersects.RectangleToRectangle(tl, oRect)) { grid.upLeft.push(o); tl.color = 0xFF0000; }
+          if (directions.top && Phaser.Geom.Intersects.RectangleToRectangle(tc, oRect)) { grid.up.push(o); tc.color = 0xFF0000; }
+          if (directions.topRight && Phaser.Geom.Intersects.RectangleToRectangle(tr, oRect)) { grid.upRight.push(o); tr.color = 0xFF0000; }
+          if (directions.left && Phaser.Geom.Intersects.RectangleToRectangle(cl, oRect)) { grid.left.push(o); cl.color = 0xFF0000; }
+          if (directions.right && Phaser.Geom.Intersects.RectangleToRectangle(cr, oRect)) { grid.right.push(o); cr.color = 0xFF0000; }
+          if (directions.bottomLeft && Phaser.Geom.Intersects.RectangleToRectangle(bl, oRect)) { grid.downLeft.push(o); bl.color = 0xFF0000; }
+          if (directions.bottom && Phaser.Geom.Intersects.RectangleToRectangle(bc, oRect)) { grid.down.push(o); bc.color = 0xFF0000; }
+          if (directions.bottomRight && Phaser.Geom.Intersects.RectangleToRectangle(br, oRect)) { grid.downLeft.push(o); br.color = 0xFF0000; }
         }
       }
       
@@ -230,7 +230,6 @@ class Game extends Phaser.Game {
         this.rects.push(tc);
         this.rects.push(tr);
         this.rects.push(cl);
-        //this.rects.push(cc);
         this.rects.push(cr);
         this.rects.push(bl);
         this.rects.push(bc);
@@ -299,28 +298,34 @@ class Game extends Phaser.Game {
 class aroundGrid{
   constructor() {
     this._last = '';
-    this.upLeft = null;
-    this.up = null;
-    this.upRight = null;
-    this.left = null;
-    this.center = null;
-    this.right = null;
-    this.downLeft = null;
-    this.down = null;
-    this.downRight = null;
+    this.upLeft = [];
+    this.up = [];
+    this.upRight = [];
+    this.left = [];
+    this.center = [];
+    this.right = [];
+    this.downLeft = [];
+    this.down = [];
+    this.downRight = [];
   }
-
-  debug() {
-    let output = '';
-    Object.entries(this).forEach(([key, value]) => {
-      if (value && value !== null)
-        output += `${key}: ${value.gameObject.name}\n`;
-    });
-    if (output !== this._last) {
-      this._last = output;
-      console.log(this._last)
+  any(prop, check) {
+    if (prop.length === 0) return false;
+    for (let i = 0; i < prop.length; i++){
+      if (check(prop[i])) return true;
     }
+    return false;
   }
+  // debug() {
+  //   let output = '';
+  //   Object.entries(this).forEach(([key, value]) => {
+  //     if (value && value !== null)
+  //       output += `${key}: ${value.gameObject.name}\n`;
+  //   });
+  //   if (output !== this._last) {
+  //     this._last = output;
+  //     console.log(this._last)
+  //   }
+  // }
 }
 
 window.game = new Game();
