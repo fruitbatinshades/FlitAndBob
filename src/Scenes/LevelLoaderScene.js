@@ -35,6 +35,8 @@ export default class LevelLoaderScene extends Phaser.Scene {
         splash.x = this.width / 2;
         splash.y = this.height / 2;
 
+        let logo = this.add.image(this.width / 2, this.height / 2, 'Logo');
+
         this.left = this.width / 2 - 200;
         this.progressBox.lineStyle(6, 0x333333, 1);
         this.progressBox.strokeRoundedRect(this.left - 3, 267, 411, 56, 7);

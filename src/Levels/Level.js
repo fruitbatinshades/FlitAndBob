@@ -357,7 +357,7 @@ export default class Level extends Phaser.Scene {
                 //Flash active player
                 this.ActivePlayer.blendMode = Phaser.BlendModes.SCREEN;
                 this.time.addEvent({
-                    delay: 250,
+                    delay: 150,
                     callback: () => {
                         this.ActivePlayer.blendMode = 0;
                     },
