@@ -9,6 +9,18 @@
          "objects":[
                 {
                  "height":0,
+                 "id":156,
+                 "name":"Clouds.svg",
+                 "point":true,
+                 "rotation":0,
+                 "type":"TileSprite",
+                 "visible":true,
+                 "width":0,
+                 "x":128,
+                 "y":320
+                }, 
+                {
+                 "height":0,
                  "id":146,
                  "name":"BrickTile.svg",
                  "point":true,
@@ -17,7 +29,7 @@
                  "visible":true,
                  "width":0,
                  "x":128,
-                 "y":512
+                 "y":700
                 }, 
                 {
                  "height":0,
@@ -363,7 +375,7 @@
          "y":0
         }],
  "nextlayerid":19,
- "nextobjectid":156,
+ "nextobjectid":157,
  "orientation":"orthogonal",
  "properties":
     {
