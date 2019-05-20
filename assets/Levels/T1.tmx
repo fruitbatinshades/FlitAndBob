@@ -108,10 +108,7 @@
    <property name="LayerType" value="Objects"/>
    <property name="depth" type="int" value="5"/>
   </properties>
-  <object id="142" name="Flit" type="StartPosition" x="320" y="384">
-   <properties>
-    <property name="Start" value=""/>
-   </properties>
+  <object id="142" name="Flit" type="StartPosition" x="320" y="448">
    <point/>
   </object>
   <object id="143" name="Bob" type="StartPosition" x="192" y="448">
@@ -141,7 +138,7 @@
   <object id="145" name="Exit" x="1024" y="384" width="128" height="128"/>
   <object id="154" name="TutZone1" x="128" y="384" width="128" height="128">
    <properties>
-    <property name="Tutorial" value="See if you can both get to the gate and escape the garden"/>
+    <property name="Tutorial" value="Get Bob &amp; Flit to the gate and escape the garden"/>
    </properties>
   </object>
   <object id="155" name="TutZone1" x="640" y="384" width="128" height="128">

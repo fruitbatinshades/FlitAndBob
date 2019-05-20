@@ -86,7 +86,7 @@ export default class Level extends Phaser.Scene {
         }
         //Level complete so display summary
         this.events.on('levelcomplete', function () {
-            let d = new Dialog(this, 400, 200, 'Level Complete', 'Next');
+            let d = new Dialog(this, 360, 160, 'Level Complete', 'Next');
             d.depth = 1000;
             this.add.existing(d);
             this.modalActive = true;
@@ -282,26 +282,23 @@ export default class Level extends Phaser.Scene {
     createPlayer() {
         let startWithBob = true;
         this.map.findObject('Player', (obj) => {
-            // if (scene._NEWGAME && scene._LEVEL === 1) {
-                if (obj.type === 'StartPosition') {
-                    if (obj.name === 'Bob') {
-                        this.bob = new Bob(this, obj.x, obj.y);
-                        this.bob.depth = 100;
-                        this.game.Bob = this.bob;
-                    }
-                    if (obj.name === 'Flit') {
-                        this.flit = new Flit(this, obj.x, obj.y);
-                        this.flit.depth = 100;
-                        this.game.Flit = this.flit;
-                        if (obj.properties.hasOwnProperty('Start')) startWithBob = false;
-                    }
+            if (obj.type === 'StartPosition') {
+                if (obj.properties && obj.properties.hasOwnProperty('Start')) startWithBob = false;
+                if (obj.name === 'Bob') {
+                    this.bob = new Bob(this, obj.x, obj.y);
+                    this.bob.depth = 100;
+                    this.game.Bob = this.bob;
                 }
-            // }
-        });
+                if (obj.name === 'Flit') {
+                    this.flit = new Flit(this, obj.x, obj.y);
+                    this.flit.depth = 100;
+                    this.game.Flit = this.flit;
+                }
+            }
+       });
         
         this.ActivePlayer = startWithBob ? this.game.Bob : this.game.Flit;
         this.cameras.main.startFollow(this.ActivePlayer);
-        
     }
     update(time, delta) {
         //If d is pressed toggle debug

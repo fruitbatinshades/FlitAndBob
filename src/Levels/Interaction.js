@@ -203,7 +203,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
 
     showTooltip(zone) {
         let p = this.scene.ActivePlayer;
-        let g = this.scene.add.graphics({x:0, y:0}).setDepth(p.depth -1);
+        //let g = this.scene.add.graphics({x:0, y:0}).setDepth(p.depth -1);
         let t = this.scene.add.text(0, 0, zone.Tutorial.key, {
             font: '14px Arial',
             fill: '#666666',
@@ -211,13 +211,8 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
         });
         t.setOrigin(0);
 
-        g.fillStyle(0x0, .5);
-        g.fillRoundedRect(6, 6, 306, t.height + 26, 10);
-        g.fillStyle(0xFFFFFF, 1);
-        g.fillRoundedRect(0, 0, 300, t.height + 20, 10);
-        g.lineStyle(3, 0xAACCFF, 1.0);
-        g.strokeRoundedRect(0, 0, 300, t.height + 20, 10);
-
+        let g = this.scene.game.cartoonBox(this.scene, 0, 0, 300, t.height);
+        g.setDepth(p.depth - 1);
         t.setPosition(p.body.left + 10, ((p.body.top - p.displayHeight) + 10), 300, t.height + 20);
         t.depth = g.depth + 1;
         g.setPosition(p.body.left, (p.body.top - p.displayHeight), 300, t.height + 20);

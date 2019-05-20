@@ -27,8 +27,8 @@ export default class LevelSelectScene extends Phaser.Scene {
 
         let lvls = this.registry.get('levels');
         let select = this.add.container(0, 0);
-        let b = this.add.rectangle(0, 0, 320, 300, 0xFFFFFF, .95);
-        select.add(b);
+        // let b = this.add.rectangle(0, 0, 320, 300, 0xFFFFFF, .95);
+        select.add(this.game.cartoonBox(this, -160, -160, 320, 300));
         let title = this.add.text(0, -120, 'Select level', {
             font: '30px HvdComic',
             fill: '#fffdff'
@@ -36,8 +36,6 @@ export default class LevelSelectScene extends Phaser.Scene {
         this.game.cartoonText(title);
         title.setOrigin(.5, .5);
         select.add(title);
-        // select.width = this.width;
-        // select.height = this.height;
 
         for (let i = 0; i < lvls.length; i++) {
             let c = this.add.container();
@@ -63,16 +61,16 @@ export default class LevelSelectScene extends Phaser.Scene {
         Phaser.Actions.GridAlign(this.tiles.getChildren(), {
             width: 4,
             height: 4,
-            cellWidth: 64,
-            cellHeight: 64,
+            cellWidth: 70,
+            cellHeight: 70,
             position: Phaser.Display.Align.CENTER,
-            x: -130, y: -90
+            x: -135, y: -90
         });
 
         select.add(this.tiles.getChildren());
         //Phaser.Display.Align.In.Center(select, splash, 0, 0);
         select.x = (this.width / 2) ;
-        select.y = (this.height / 2) ;
+        select.y = (this.height / 2);
     }
     startLevel(pointer) {
         alert(this.name);

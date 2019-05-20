@@ -13,8 +13,5 @@ export default {
             tileBias:16,
             debug: true
         }
-    },
-    plugins: {
-        global: [NineSlice.Plugin.DefaultCfg]
     }
 };

@@ -8,11 +8,10 @@ export default class Dialog extends Phaser.GameObjects.Container{
         this.title = title;
         this.text = buttonText;
 
-        this.dlg = scene.add.nineslice(0, 0, w, h, { key: 'UI', frame: 'modal' },32);
-        this.add(this.dlg);
+        this.dlg = scene.game.cartoonBox(scene, 0, 0, w, h);
 
         this.assetText = scene.make.text({
-            x: this.dlg.width / 2,
+            x: w / 2,
             y: 50,
             text: this.title,
             style: {
@@ -20,17 +19,17 @@ export default class Dialog extends Phaser.GameObjects.Container{
                 fill: '#ffffff'
             }
         });
-        this.assetText.setOrigin(.5, .5);
-        let button = scene.add.image(this.dlg.width / 2, 120, 'UI','roundButton');
+        this.assetText.setOrigin(.5, .5).setDepth(2);
+        let button = scene.add.image(w / 2, 120, 'UI','roundButton');
         button.setOrigin(.5, .5).setScale(.5);
         button.setInteractive();
 
-        let play = scene.add.image(this.dlg.width / 2, 120, 'UI', 'play');
+        let play = scene.add.image(w / 2, 120, 'UI', 'play');
         play.setOrigin(.5, .5).setScale(.5);
         
         scene.game.cartoonText(this.assetText);
         
-        this.add([this.assetText, button, play]);
+        this.add([this.dlg,this.assetText, button, play]);
 
         this.once('destroy', function () {
             button.off('pointerup');

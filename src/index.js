@@ -23,7 +23,7 @@ class Game extends Phaser.Game {
     super(config);
 
     this.levels = [
-      'Example','T1','T2', 'L1', 'L2', 'Lee1'
+      'T1', 'T2', 'L1', 'L2', 'Lee1', 'Example'
     ];
     this.registry.set('levels', this.levels);
     
@@ -292,6 +292,21 @@ class Game extends Phaser.Game {
   shadowText(txt) {
     txt.setShadow(3, 3, '#000000', 6, true, false)
       .setStroke('#000000', 2);
+  } 
+  cartoonBox(scene,x,y,w,h) {
+    let g = scene.add.graphics({ x: x, y: y });
+    g.displayOriginX = 0;
+
+    g.fillStyle(0x0, .5);
+    g.fillRoundedRect(4, 4, w + 4, h + 24, 10);
+    g.fillStyle(0xFFFFFF, 1);
+    g.fillRoundedRect(0, 0, w, h + 20, 10);
+    g.lineStyle(6, 0xAACCFF, 1.0);
+    g.strokeRoundedRect(0, 0, w, h + 20, 10);
+    g.lineStyle(1, 0x0, 1);
+    g.strokeRoundedRect(-2, -2, w + 4, h + 24, 10);
+
+    return g;
   }
 }
 /** Grid of objects - returned from getBodiesAround() */
@@ -307,13 +322,6 @@ class aroundGrid{
     this.downLeft = [];
     this.down = [];
     this.downRight = [];
-  }
-  any(prop, check) {
-    if (prop.length === 0) return false;
-    for (let i = 0; i < prop.length; i++){
-      if (check(prop[i])) return true;
-    }
-    return false;
   }
   // debug() {
   //   let output = '';
