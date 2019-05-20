@@ -130,17 +130,18 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
     * @param {Phaser.GameObjects.Sprite} player
     */
     onDropBox(box, player) {
-        player.carrying = null;
+        if (this.scene.game.nothingBehind(box.body)) {
+            player.carrying = null;
+            //move to tile grid
+            box.x = Math.round(box.x / Boxes.tileWidth) * Boxes.tileWidth;
 
-        //move to tile grid
-        box.x = Math.round(box.x / Boxes.tileWidth) * Boxes.tileWidth;
-
-        box.body.enable = true;
-        box.body.immovable = false;
-        box.body.moves = true;
-        box.body.allowGravity = true;
-        box.lastContact = null;
-        if (this.scene.game.debugOn) console.log('event drop_box', box);
+            box.body.enable = true;
+            box.body.immovable = false;
+            box.body.moves = true;
+            box.body.allowGravity = true;
+            box.lastContact = null;
+            if (this.scene.game.debugOn) console.log('event drop_box', box);
+        }
     }
     /**
      * Process when a box is about to contact the player

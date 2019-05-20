@@ -41,7 +41,7 @@ export default class HUD extends Phaser.Scene {
         this.restartIcon.setInteractive();
         this.restartIcon.on('pointerdown', function (pointer) {
             if (this.lvl) this.lvl.restartLevel();
-        });
+        },this);
         this.menuIcon = this.add.image(930, 30, 'UI', 'levels').setScale(.5);
         this.menuIcon.setInteractive();
         this.menuIcon.on('pointerdown', (p) => {

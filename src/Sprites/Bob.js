@@ -134,16 +134,6 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
       this.drop(this.carrying);
     }
 
-    //if we are carrying a box move it to match our position
-    if (this.carrying) {
-      if (this.direction.left > 0) {
-        this.carrying.x = this.body.left - (this.carrying.width + 15);
-      } else if (this.direction.right > 0) {
-        this.carrying.x = this.body.right + 15;//(this.carrying.width);
-      }
-      this.carrying.y = (this.body.top) - 24;
-    }
-
     //if a speed effect is active ignore keys
     if (this.effectSpeed !== 0) {
       this.body.setVelocityX(this.direction.left ? -this.effectSpeed : this.effectSpeed);
@@ -199,6 +189,19 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
           this.body.setVelocityX(this.zoneValue.x);
         if (this.zoneValue.y)
           this.body.setVelocityY(this.zoneValue.y);
+      }
+    }
+
+    //if we are carrying a box move it to match our position
+    if (this.carrying) {
+      this.carrying.deActivate();
+      if (this.direction.left > 0) {
+        this.carrying.body.reset(this.body.left - (this.carrying.width + 15), (this.body.top) - 24);
+      } else if (this.direction.right > 0) {
+        this.carrying.body.reset(this.body.right + 15, (this.body.top) - 24);
+        console.log(this.body.left - (this.carrying.width + 15), (this.body.top) - 24);
+      } else if (this.direction.up > 0 || this.direction.down > 0) {
+        this.carrying.body.reset(this.carrying.body.x, (this.body.top) - 24);
       }
     }
 

@@ -7,7 +7,7 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     return this.speed;
   }
 
-  constructor (scene, x, y) {
+  constructor(scene, x, y) {
     super(scene, x, y, 'flit');
     this.scene = scene;
     this.health = 3;
@@ -25,7 +25,7 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     this.scene.physics.world.enable(this);
     // add our player to the scene
     this.scene.add.existing(this);
-   // create the player sprite    
+    // create the player sprite    
     //this.setOrigin(0.5);
 
     this.setScale(.5);
@@ -35,7 +35,7 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     this.setCollideWorldBounds(true); // don't go out of the map 
     this.body.setOffset((this.body.width * this.scaleX) / 2, (this.body.height * this.scaleY) / 2);
     this.body.setMaxVelocity(500, 1000);
-    
+
     this.splat = this.scene.add.image(0, 0, 'splat');
     this.splat.setDepth(100).visible = false;
     this.splat.setOrigin(0.5);
@@ -107,7 +107,7 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
       onCompleteParams: [this]
     });
   }
-  idle(){
+  idle() {
     this.body.setVelocityX(0);
     this.body.setVelocityY(0);
     this.anims.play('flit_idle', true);
@@ -125,36 +125,35 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
   }
 
   update(cursors, space) {
-      if (this.carrying != null && Phaser.Input.Keyboard.JustDown(space)) {
-        this.drop(this.carrying);
-      }
-      //if we are carrying a box move it to match our position
-      if (this.carrying) {
-        this.carrying.x = this.body.x;
-        this.carrying.y = this.body.bottom + 5;
-      }
-
-      if (cursors.left.isDown) {
-        this.body.setVelocityX(0 - this.activeSpeed);
-        this.anims.play('flit_fly', true); // walk left
-        this.flipX = true; // flip the sprite to the left
-      }
-      if (cursors.right.isDown) {
-        this.body.setVelocityX(this.activeSpeed);
-        this.anims.play('flit_fly', true);
-        this.flipX = false; // use the original sprite looking to the right
-      }
-      if (cursors.up.isDown) {
-        this.body.setVelocityY(-200);
-      }
-      if (cursors.down.isDown) {
-        this.body.setVelocityY(200);
-      }
-      //no keys so stop
-      if (!cursors.left.isDown && !cursors.right.isDown && !cursors.up.isDown && !cursors.down.isDown) {
-        this.idle();
+    if (this.carrying != null && Phaser.Input.Keyboard.JustDown(space)) {
+      this.drop(this.carrying);
     }
-    
+    //if we are carrying a box move it to match our position
+    if (this.carrying) {
+      this.carrying.body.reset(this.body.x, this.body.bottom + 5);
+    }
+
+    if (cursors.left.isDown) {
+      this.body.setVelocityX(0 - this.activeSpeed);
+      this.anims.play('flit_fly', true); // walk left
+      this.flipX = true; // flip the sprite to the left
+    }
+    if (cursors.right.isDown) {
+      this.body.setVelocityX(this.activeSpeed);
+      this.anims.play('flit_fly', true);
+      this.flipX = false; // use the original sprite looking to the right
+    }
+    if (cursors.up.isDown) {
+      this.body.setVelocityY(-200);
+    }
+    if (cursors.down.isDown) {
+      this.body.setVelocityY(200);
+    }
+    //no keys so stop
+    if (!cursors.left.isDown && !cursors.right.isDown && !cursors.up.isDown && !cursors.down.isDown) {
+      this.idle();
+    }
+
     if (this.zoneInControl) {
       if (this.zoneValue && typeof this.zoneValue === 'object') {
         if (this.zoneValue.x)
@@ -168,20 +167,4 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     this.isSlow = false;
     this.isFast = false;
   }
-
-//   enemyCollision (player, enemy) {
-//     if (!this.hitDelay) {
-//       this.loseHealth();
-//       this.hitDelay = true;
-//       this.tint = 0xff0000;
-//       this.scene.time.addEvent({
-//         delay: 1200,
-//         callback: () => {
-//           this.hitDelay = false;
-//           this.tint = 0xffffff;
-//         },
-//         callbackScope: this
-//       });
-//     }
-//   }
 }

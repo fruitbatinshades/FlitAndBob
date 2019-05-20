@@ -83,6 +83,10 @@ export default class Box extends Phaser.GameObjects.Sprite {
         if (this.scene && this.scene.game.nothingUnder(this))
             this.activate();
     }
+    gridX(){
+        //move to tile grid
+        return Math.round(box.x / 64) * 64;
+    }
     /**
      * Activate this box. Used to re-activate after its been on the ground or a zone
      */

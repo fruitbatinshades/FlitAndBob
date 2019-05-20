@@ -261,7 +261,21 @@ class Game extends Phaser.Game {
     //remove the requesting body
     return f.filter((o) => (typeString === null || o.gameObject.constructor.name === typeString) && o !== body);
   }
+  /**
+   * Get Bodies and World Tiles in the same place as the body
+   * @param {Phaser.Physics.Arcade.Body} body 
+   */
+  nothingBehind(body, typeString = null) {
+    let go = body.gameObject;
+    if (go.embedded) return true;
 
+    let f = body.gameObject.scene.physics.overlapRect(body.left, body.top, body.width, body.height);
+    let w = go.scene.map.getTilesWithinShape(new Phaser.Geom.Rectangle(body.left, body.top, body.width, body.height), { isColliding: true }, go.scene.cameras.main, go.scene.mapLayers.World);
+    //remove the requesting body
+    f = f.filter((o) => (o !== body && (typeString === null || o.gameObject.constructor.name === typeString)));
+
+    return f.length === 0 && w.length === 0;
+  }
   /**
    * Check if an object is in physics contact, has any objects or colliding tiles under it
    * @param {Phaser.GameObjects.Sprite} gameObject The game object to check

@@ -206,7 +206,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
         //let g = this.scene.add.graphics({x:0, y:0}).setDepth(p.depth -1);
         let t = this.scene.add.text(0, 0, zone.Tutorial.key, {
             font: '14px Arial',
-            fill: '#666666',
+            fill: '#000000',
             wordWrap: { width: 280 }
         });
         t.setOrigin(0);
