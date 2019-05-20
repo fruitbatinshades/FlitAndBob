@@ -15,7 +15,7 @@ export default class Level extends Phaser.Scene {
     interactionZones;
     switchIds;
     sky;
-    totalShrooms= 0;
+    totalShrooms = 0;
     totalFlies = 0;
     debug = false;
     modalActive = false;
@@ -51,7 +51,7 @@ export default class Level extends Phaser.Scene {
         this.totalFlies = 0;
         this.mapLayers = null;
         this.interactionZones = null;
-        
+
     }
     //NB: Call from preload
     preload() {
@@ -112,7 +112,7 @@ export default class Level extends Phaser.Scene {
             this.events.off('gameobjectdown');
             this.events.off('dialogclosed');
         }, this);
-        
+
         this.events.on('preupdate', this.preUpdate, this);
     }
     restartLevel() {
@@ -135,10 +135,10 @@ export default class Level extends Phaser.Scene {
         this.reset();
         let sets = [];
         this.map.tilesets.forEach((b) => {
-            this.map.addTilesetImage(b.name, b.name, b.tileWidth, b.tileHeight,1,2);
+            this.map.addTilesetImage(b.name, b.name, b.tileWidth, b.tileHeight, 1, 2);
             sets.push(b.name);
         });
-        
+
         this.createPlayer();
 
         /** @type {object{Phaser.Tilemaps. DynamicTilemapLayer}} */
@@ -149,7 +149,7 @@ export default class Level extends Phaser.Scene {
                 case 'static':
                     this.mapLayers[l.name] = this.map.createStaticLayer(l.name, sets, 0, 0).setCollisionByExclusion([-1]);
                     this.mapLayers[l.name].setDepth(l.properties.depth || 1);
-                      break;
+                    break;
                 case 'dynamic':
                     this.mapLayers[l.name] = this.map.createDynamicLayer(l.name, sets, 0, 0);
                     this.mapLayers[l.name].depth = l.properties.depth || 1;
@@ -170,8 +170,8 @@ export default class Level extends Phaser.Scene {
                     break;
                 case 'Interaction':
                     //Get the rectangles from the map
-                    this.mapLayers[l.name]= this.map.getObjectLayer('Interaction');
-                    this.interactionZones = new Interaction(this, [], l, this.mapLayers[l.name], this.game.debugOn );
+                    this.mapLayers[l.name] = this.map.getObjectLayer('Interaction');
+                    this.interactionZones = new Interaction(this, [], l, this.mapLayers[l.name], this.game.debugOn);
                     break;
                 case 'Sky':
                     //Add backgrounds
@@ -188,10 +188,16 @@ export default class Level extends Phaser.Scene {
                                     this.sky.add(o);
                                     o.setOrigin(0, 0);
                                     o.fixedToCamera = true;
+                                    if (b.properties && b.properties.depth) {
+                                        o.depth = parseInt(b.properties.depth);
+                                    }
                                 }
                                 if (b.type == 'Image') {
                                     let o = this.add.image(b.x, b.y - img.height, name);
                                     o.setOrigin(0, 0);
+                                    if (b.properties && b.properties.depth) {
+                                        o.depth = parseInt(b.properties.depth);
+                                    }
                                 }
                             }
                         }
@@ -201,7 +207,7 @@ export default class Level extends Phaser.Scene {
         });
 
         //create player collision
-        this.physics.add.collider(this.mapLayers.World , this.bob);
+        this.physics.add.collider(this.mapLayers.World, this.bob);
         this.physics.add.collider(this.mapLayers.World, this.flit);
 
         //Set up the coin layer with overlap and callback
@@ -222,14 +228,14 @@ export default class Level extends Phaser.Scene {
                 }
             }
         }
-        
+
         //set changing player after loader has finished so player keyboard is used
         this._ChangingPlayer = false;
 
         //scene.sound.playAudioSprite('sfx', 'music_zapsplat_rascals_123', {volume:.5, repeat:true});
 
         //when a box hits a tile
-        this.events.on('boxTileCollide', (box, tile) => { 
+        this.events.on('boxTileCollide', (box, tile) => {
             if (tile.constructor.name === 'InteractionZone') {
                 if (tile.tileType && tile.tileType.isBlockActivated && !box.isRock) {
                     tile.process();
@@ -295,14 +301,14 @@ export default class Level extends Phaser.Scene {
                     this.game.Flit = this.flit;
                 }
             }
-       });
-        
+        });
+
         this.ActivePlayer = startWithBob ? this.game.Bob : this.game.Flit;
         this.cameras.main.startFollow(this.ActivePlayer);
     }
     update(time, delta) {
         //If d is pressed toggle debug
-        if(Phaser.Input.Keyboard.JustDown(this.dKey)){
+        if (Phaser.Input.Keyboard.JustDown(this.dKey)) {
             this.game.debugOn = !this.game.debugOn;
             this.game.drawCollision(this);
         }
