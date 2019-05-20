@@ -65,6 +65,9 @@
    <point/>
   </object>
   <object id="148" name="PotBush2.svg" type="Image" x="832" y="448">
+   <properties>
+    <property name="depth" value="2"/>
+   </properties>
    <point/>
   </object>
  </objectgroup>

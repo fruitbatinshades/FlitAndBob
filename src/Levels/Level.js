@@ -348,11 +348,22 @@ export default class Level extends Phaser.Scene {
         this.game._ChangingPlayer = true;
         //pan the camera 
         this.cameras.main.stopFollow();
+        
         this.cameras.main.pan(this.ActivePlayer.x, this.ActivePlayer.y, 500, 'Sine.easeInOut', false, (cam, complete, x, y) => {
             if (complete === 1) {
                 this.cameras.main.startFollow(this.ActivePlayer, false, .1, .1);
                 this.game._ChangingPlayer = false;
                 this.events.emit('updateHUD', this.ActivePlayer);
+                //Flash active player
+                this.ActivePlayer.blendMode = Phaser.BlendModes.SCREEN;
+                this.time.addEvent({
+                    delay: 250,
+                    callback: () => {
+                        this.ActivePlayer.blendMode = 0;
+                    },
+                    callbackScope: this
+                });
+                
             }
         });
     }
