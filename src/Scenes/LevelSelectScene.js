@@ -47,7 +47,7 @@ export default class LevelSelectScene extends Phaser.Scene {
             s.setScale(.5).setOrigin(0).setInteractive();
             c.add(s);
             s.on('pointerup', (p) => {
-                this.game.levelIndex = i;//this.startLevel(s)
+                this.game.levelIndex = i;
                 this.scene.pause();
                 this.scene.start('LevelLoader');
             });
@@ -74,11 +74,5 @@ export default class LevelSelectScene extends Phaser.Scene {
         //Phaser.Display.Align.In.Center(select, splash, 0, 0);
         select.x = (this.width / 2) ;
         select.y = (this.height / 2);
-    }
-    startLevel(pointer) {
-        alert(this.name);
-    }
-    update() {
-        let s = '';
     }
 }

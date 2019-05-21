@@ -217,13 +217,13 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
     }
     //When a zone's behaviour has changed update the things around it
     adjustWorld() { 
-        // let around = this.scene.physics.overlapRect(this.body.x, this.body.y - 2, this.body.width, this.body.height + 2);
-        // for (let i = 0; i < around.length; i++){
-        //     if (around[i].gameObject.constructor.name === 'Box' || around[i].gameObject.constructor.name === 'Rock') {
-        //         around[i].gameObject.activate();
-        //     }
-        // }
-        // console.log('adjust world', around);
+        let around = this.scene.physics.overlapRect(this.body.x, this.body.y - 2, this.body.width, this.body.height + 2);
+        for (let i = 0; i < around.length; i++){
+            if (around[i].gameObject.constructor.name === 'Box' || around[i].gameObject.constructor.name === 'Rock') {
+                around[i].gameObject.activate();
+            }
+        }
+        console.log('adjust world', around);
     }
     /**
      * Get the tiles from the InteractionTiles layer
