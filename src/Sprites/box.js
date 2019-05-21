@@ -28,7 +28,7 @@ export default class Box extends Phaser.GameObjects.Sprite {
     set hits(value) {
         this._hits = value;
         if (this._hits === -1) {
-            this.scene.events.emit('boxdestruct', this);
+            this.scene.levelEvents.emit('boxdestruct', this);
         }
     }
     /** The last item the box collided with (getter) */
@@ -159,7 +159,7 @@ export default class Box extends Phaser.GameObjects.Sprite {
             box.deActivate();
             box.lastContact = tile;
             box.hits--;
-            box.scene.events.emit('boxTileCollide', box, tile);
+            box.scene.levelEvents.emit('boxTileCollide', box, tile);
             return true;
         }
         if (box.isRock) box.deActivate();

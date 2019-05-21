@@ -51,3 +51,26 @@ Phaser.Actions.GridAlign(gameObjects, {
     y: 0
 });
 ```
+
+## change random tile
+
+```javascript
+getRandomMatrixItem(arr) {
+    var random1 = Math.floor((Math.random() * (arr.length)));
+    return arr[random1][Math.floor((Math.random() * (arr[random1].length)))];
+}
+
+let randomTile;
+let changedTile = false;
+do {
+    //get a random tile
+    randomTile = this.getRandomMatrixItem(this.mapLayers.World.layer.data);
+    //check its empty, else keep going
+    if (randomTile.index === -1) {
+        randomTile.index = this.switchIds.Component.Fly;
+        //we found an empoty tile and changed it
+        changedTile = true;
+        break;
+    }
+} while(!changedTile)
+```

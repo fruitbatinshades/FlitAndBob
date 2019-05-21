@@ -37,11 +37,11 @@ export default class Dialog extends Phaser.GameObjects.Container{
             //delete this;
         },this);
         button.once('pointerup', function (pointer, gameObject) {
-            this.scene.events.emit('dialogclosed');
+            this.scene.levelEvents.emit('dialogclosed');
             this.destroy();
         }, this);
         scene.input.keyboard.once('keydown', function (event) {
-            this.scene.events.emit('dialogclosed');
+            this.scene.levelEvents.emit('dialogclosed');
             this.destroy();
         },this);
     }

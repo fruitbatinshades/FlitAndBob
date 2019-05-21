@@ -65,8 +65,8 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     if (this.lastInjure + 500 < this.scene.game.loop.lastTime) {
       this.lastInjure = this.scene.game.loop.lastTime;
       this.health -= amount;
-      this.scene.events.emit('loseHealth', this);
-      this.scene.events.emit('updateHUD', this);
+      this.scene.levelEvents.emit('loseHealth', this);
+      this.scene.levelEvents.emit('updateHUD', this);
       this.scene.sound.playAudioSprite('sfx', 'squeak');
       //tint for a brief period
       if (!this.hitDelay) {
@@ -102,7 +102,7 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
       ease: 'Power1',
       duration: 1000,
       onComplete: function (tween, targets, items) {
-        targets[0].scene.events.emit('died', this);
+        targets[0].scene.levelEvents.emit('died', this);
       },
       onCompleteParams: [this]
     });
@@ -117,11 +117,11 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
   }
   overBox(item, player) {
     if (this.carrying == null) {
-      this.scene.events.emit('pickup_box', item, this);
+      this.scene.levelEvents.emit('pickup_box', item, this);
     }
   }
   drop(item) {
-    this.scene.events.emit('drop_box', item, this);
+    this.scene.levelEvents.emit('drop_box', item, this);
   }
 
   update(cursors, space) {

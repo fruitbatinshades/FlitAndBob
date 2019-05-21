@@ -67,9 +67,9 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
             box.status = Boxes.State.None;
         });
         //bind when a box is picked up
-        this.scene.events.on('pickup_box', this.onPickupBox, this);
-        this.scene.events.on('drop_box', this.onDropBox, this);
-        this.scene.events.on('boxdestruct', this.onBoxDestruct, this);
+        this.scene.levelEvents.on('pickup_box', this.onPickupBox, this);
+        this.scene.levelEvents.on('drop_box', this.onDropBox, this);
+        this.scene.levelEvents.on('boxdestruct', this.onBoxDestruct, this);
 
         this.addCollisions();
     }

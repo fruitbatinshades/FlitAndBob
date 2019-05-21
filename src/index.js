@@ -267,10 +267,15 @@ class Game extends Phaser.Game {
    */
   nothingBehind(body, onlyBlocking = true, typeString = null) {
     let go = body.gameObject;
+    let w = ['dummy'];
     if (go.embedded) return true;
 
     let f = body.gameObject.scene.physics.overlapRect(body.left, body.top, body.width, body.height);
-    let w = go.scene.map.getTilesWithinShape(new Phaser.Geom.Rectangle(body.left, body.top, body.width, body.height), { isColliding: true }, go.scene.cameras.main, go.scene.mapLayers.World);
+
+    //check world tiles
+    if (go.scene.mapLayers && go.scene.mapLayers.World) {
+      w = go.scene.map.getTilesWithinShape(new Phaser.Geom.Rectangle(body.left, body.top, body.width, body.height), { isColliding: true }, go.scene.cameras.main, go.scene.mapLayers.World);
+    }
     //remove the requesting body
     f = f.filter((o) => (o !== body && (typeString === null || o.gameObject.constructor.name === typeString)));
     if (onlyBlocking) {
@@ -286,7 +291,6 @@ class Game extends Phaser.Game {
    */
   nothingUnder(gameObject, margin = 5) {
     //return as soon as the first one is true to save processing
-    
     //check normal physics
     let b = gameObject.body;
     if (b.touching.down || b.blocked.down || b.onFloor()) return false;
@@ -296,10 +300,13 @@ class Game extends Phaser.Game {
     if (u.length !== 0 && u.filter((x)=> x.enable == true).length !== 0) return false;
 
     //check world tiles
-    let tr = new Phaser.Geom.Rectangle(b.x + margin, b.bottom, b.width - (margin * 2), margin);
-    let tu = gameObject.scene.map.getTilesWithinShape(tr, { isColliding: true }, gameObject.scene.cameras.main, gameObject.scene.mapLayers.World );
+    if (gameObject.scene.mapLayers && gameObject.scene.mapLayers.World) {
+      let tr = new Phaser.Geom.Rectangle(b.x + margin, b.bottom, b.width - (margin * 2), margin);
+      let tu = gameObject.scene.map.getTilesWithinShape(tr, { isColliding: true }, gameObject.scene.cameras.main, gameObject.scene.mapLayers.World);
     
-    return tu.length === 0;
+      return tu.length === 0;
+    }
+    return true;
   }
 
   cartoonText(txt) {

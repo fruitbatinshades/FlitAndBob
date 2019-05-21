@@ -136,8 +136,7 @@ export default class LevelLoaderScene extends Phaser.Scene {
         this.PlayButton.alpha = 1;
     }
     levelFinished() {
-        this.scene.pause('HUD');
-        //this.scene.pause('Level');
+        this.scene.stop('HUD');
         if (this.game.levels.length > this.game.levelIndex + 1) this.game.levelIndex++;
         this.scene.bringToTop(this);
         this.scene.stop('Level');

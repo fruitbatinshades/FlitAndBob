@@ -7,7 +7,9 @@ export default class HUD extends Phaser.Scene {
     constructor() {
         super({ key: 'HUD', active: true });
     }
-
+    resume() {
+        
+    }
     create() {
         //  Grab a reference to the Game Scene
         this.lvl = this.scene.get('Level');
@@ -51,8 +53,9 @@ export default class HUD extends Phaser.Scene {
             this.scene.start('LevelSelectScene');
         });
         //  Listen for events from it
-        this.lvl.events.on('updateHUD', this.updateHUD, this);
+        this.lvl.levelEvents.on('updateHUD', this.updateHUD, this);
     }
+    
     updateHUD(player) {
         this.flitImage.clearTint();
         this.bobImage.clearTint();

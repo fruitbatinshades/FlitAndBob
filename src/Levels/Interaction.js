@@ -195,7 +195,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             //check both Flit and Bob are here
             if (zone.body.hitTest(this.scene.bob.x, this.scene.bob.y) && zone.body.hitTest(this.scene.flit.x, this.scene.flit.y)) {
                 this.inExit = true;
-                this.scene.events.emit('levelcomplete');
+                this.scene.levelEvents.emit('levelcomplete');
             }
         }
         if (!zone.TutorialShown && zone.Tutorial != null) this.showTooltip(zone);

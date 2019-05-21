@@ -32,31 +32,61 @@ export default class Level extends Phaser.Scene {
     }
     create() {
         console.log('Level create', this.physics.world);
+
+        this.levelEvents = new Phaser.Events.EventEmitter();
+
         this.modalActive = false;
         this.cameras.main.setBackgroundColor(0x10ceff);
         this.buildLevel();
-        if (!this.HUD) {
-            this.HUD = this.scene.add('HUD', HUD, true, { x: 400, y: 300 });
-        } else {
-            this.scene.resume('HUD');
-            this.events.emit('updateHUD', this.game.Bob);
-            this.events.emit('updateHUD', this.game.Flit);
-        }
-        this.events.emit('updateHUD', this.ActivePlayer);
+        this.bindEvents();
+
+        this.HUD = this.scene.add('HUD', HUD, true, { x: 400, y: 300 });
+        this.scene.bringToTop('HUD');
     }
 
+    bindEvents() {
+        //Level complete so display summary
+        this.levelEvents.on('levelcomplete', function () {
+            let d = new Dialog(this, 360, 160, 'Level Complete', 'Next');
+            d.depth = 1000;
+            this.add.existing(d);
+            this.modalActive = true;
+            //when closed finish level
+            this.levelEvents.on('dialogclosed', function () {
+                console.log('closed');
+                this.scene.get('LevelLoader').levelFinished();
+            }, this);
+        }, this);
+        //Character died so restart
+        this.levelEvents.on('died', function (player) {
+            this.restartLevel();
+        }, this);
+
+        this.levelEvents.emit('updateHUD', this.ActivePlayer);
+        this.events.once('shutdown', (a, b) => {
+            console.log('shutdown', a, b);
+            this.levelEvents.removeAllListeners();
+            this.scene.remove('HUD');
+            this.HUD = null;
+            this.events.off('preupdate');
+            this.events.off('sceneUpdate');
+            this.events.off('gameobjectdown');
+        }, this);
+
+        this.sys.events.on('preupdate', this.preUpdate, this);
+    }
     reset() {
         this.physics.world.colliders.destroy();
         this.totalShrooms = 0;
         this.totalFlies = 0;
         this.mapLayers = null;
         this.interactionZones = null;
-
     }
     //NB: Call from preload
     preload() {
+        console.log('Level preload');
         this.load.tilemapTiledJSON(this.registry.get('currentLevel'), `assets/Levels/${this.registry.get('currentLevel')}.json`);
-        this.map = this.make.tilemap({ key: this.registry.get('currentLevel'), insertNull: true });
+        this.map = this.make.tilemap({ key: this.registry.get('currentLevel'), insertNull: false });
         // if (this.map.properties["debug"]) {
         //     console.warn('debug enabled by map properties');
         //     this.game.debugOn = this.map.properties["debug"];
@@ -84,39 +114,9 @@ export default class Level extends Phaser.Scene {
                 }
             });
         }
-        //Level complete so display summary
-        this.events.on('levelcomplete', function () {
-            let d = new Dialog(this, 360, 160, 'Level Complete', 'Next');
-            d.depth = 1000;
-            this.add.existing(d);
-            this.modalActive = true;
-            //when closed finish level
-            this.events.on('dialogclosed', function () {
-                console.log('closed');
-                this.scene.get('LevelLoader').levelFinished();
-            }, this);
-        }, this);
-        //Character died so restart
-        this.events.on('died', function (player) {
-            this.restartLevel();
-        }, this);
-        this.events.once('destroy', (a, b) => {
-            console.log('destroy')
-        });
-        this.events.once('shutdown', (a, b) => {
-            console.log('shutdown', a, b);
-            this.events.off('preupdate');
-            this.events.off('sceneUpdate');
-            this.events.off('levelcomplete');
-            this.events.off('died');
-            this.events.off('gameobjectdown');
-            this.events.off('dialogclosed');
-        }, this);
-
-        this.events.on('preupdate', this.preUpdate, this);
     }
     restartLevel() {
-        this.scene.pause('HUD');
+        this.scene.stop('HUD');
         this.reset();
         //this.scene.start();
         this.scene.restart();
@@ -127,11 +127,13 @@ export default class Level extends Phaser.Scene {
             this.game.drawCollision(this);
         }
     }
+
     /**
      * Crete the maps, player and set up collisions
      * @param {PhaserScene} scene The scene to populate
      */
     buildLevel() {
+        console.log('Level buildLevel');
         this.reset();
         let sets = [];
         this.map.tilesets.forEach((b) => {
@@ -235,14 +237,13 @@ export default class Level extends Phaser.Scene {
         //scene.sound.playAudioSprite('sfx', 'music_zapsplat_rascals_123', {volume:.5, repeat:true});
 
         //when a box hits a tile
-        this.events.on('boxTileCollide', (box, tile) => {
+        this.levelEvents.on('boxTileCollide', (box, tile) => {
             if (tile.constructor.name === 'InteractionZone') {
                 if (tile.tileType && tile.tileType.isBlockActivated && !box.isRock) {
                     tile.process();
                 }
             }
         });
-        console.log(this.physics.world.colliders);
     }
 
     /**
@@ -279,7 +280,7 @@ export default class Level extends Phaser.Scene {
             }
         }
         if (collected) this.mapLayers.Coins.removeTileAt(tile.x, tile.y);
-        this.events.emit('updateHUD', player);
+        this.levelEvents.emit('updateHUD', player);
         return false;
     }
     /**
@@ -315,7 +316,7 @@ export default class Level extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(this.rKey)) {
             this.restartLevel();
         }
-        this.events.emit('sceneUpdate');
+        this.levelEvents.emit('sceneUpdate');
         //If a modal is not active process input
         if (!this.modalActive) {
             //Switch characters
@@ -353,7 +354,7 @@ export default class Level extends Phaser.Scene {
             if (complete === 1) {
                 this.cameras.main.startFollow(this.ActivePlayer, false, .1, .1);
                 this.game._ChangingPlayer = false;
-                this.events.emit('updateHUD', this.ActivePlayer);
+                this.levelEvents.emit('updateHUD', this.ActivePlayer);
                 //Flash active player
                 this.ActivePlayer.blendMode = Phaser.BlendModes.SCREEN;
                 this.time.addEvent({
