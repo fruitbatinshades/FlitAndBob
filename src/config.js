@@ -13,5 +13,6 @@ export default {
             tileBias:16,
             debug: true
         }
-    }
+    },
+    version:0.1
 };

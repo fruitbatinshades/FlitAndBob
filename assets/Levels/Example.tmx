@@ -165,16 +165,6 @@
     <property name="DeadWeight" value=""/>
    </properties>
   </object>
-  <object id="132" name="Box" type="Rock" gid="33" x="640" y="576" width="128" height="64">
-   <properties>
-    <property name="Rock" value=""/>
-   </properties>
-  </object>
-  <object id="133" name="Box" type="Rock" gid="33" x="640" y="512" width="128" height="64">
-   <properties>
-    <property name="Rock" value=""/>
-   </properties>
-  </object>
   <object id="139" name="Box" gid="29" x="512" y="448" width="64" height="64"/>
   <object id="140" name="Box" gid="29" x="512" y="576" width="64" height="64"/>
  </objectgroup>

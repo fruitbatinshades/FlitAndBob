@@ -60,6 +60,12 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
       repeat: -1
     });
     this.idle();
+
+    this.scene.levelEvents.on('sceneUpdate', this.sceneUpdate, this);
+    this.on('destroy', function () {
+      if (this.text) this.text.destroy();
+      this.scene.levelEvents.off('sceneUpdate');
+    }, this);
   }
   injure(amount) {
     if (this.lastInjure + 500 < this.scene.game.loop.lastTime) {
@@ -115,23 +121,42 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
   is(name) {
     return name.toLowerCase() == 'flit';
   }
-  overBox(item, player) {
-    if (this.carrying == null) {
-      this.scene.levelEvents.emit('pickup_box', item, this);
-    }
-  }
+  // overBox(item, player) {
+  //   // if (this.carrying == null) {
+  //   //   this.scene.levelEvents.emit('pickup_box', item, this);
+  //   // }
+  // }
   drop(item) {
     this.scene.levelEvents.emit('drop_box', item, this);
   }
-
-  update(cursors, space) {
-    if (this.carrying != null && Phaser.Input.Keyboard.JustDown(space)) {
-      this.drop(this.carrying);
-    }
+  sceneUpdate() {
     //if we are carrying a box move it to match our position
     if (this.carrying) {
+      this.carrying.deActivate();
       this.carrying.body.reset(this.body.x, this.body.bottom + 5);
     }
+    if (this.scene.ActivePlayer.is('Flit')) {
+      if (this.scene.input.keyboard.checkDown(this.scene.spaceKey, 500)) {
+        if (this.carrying == null) {
+          //get the closest box
+          let b = this.scene.game.closestOfType(this.body, 'Box', 74);
+          if (b !== null && b.gameObject !== this.scene.game.Bob.carrying) {
+            this.scene.levelEvents.emit('pickup_box', b.gameObject, this);
+          }
+        } else {
+          this.drop(this.carrying);
+        }
+      }
+    }
+  }
+  update(cursors, space) {
+    // if (this.carrying != null && Phaser.Input.Keyboard.JustDown(space)) {
+    //   this.drop(this.carrying);
+    // }
+    // //if we are carrying a box move it to match our position
+    // if (this.carrying) {
+    //   this.carrying.body.reset(this.body.x, this.body.bottom + 5);
+    // }
 
     if (cursors.left.isDown) {
       this.body.setVelocityX(0 - this.activeSpeed);

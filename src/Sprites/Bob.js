@@ -7,13 +7,23 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
     if (this.effectSpeed) return this.effectSpeed;
     return this.speed;
   }
+  get direction() {
+    //get the direction from the velocity
+    return {
+      left: this.body.velocity.x < -2 ? Phaser.Physics.Arcade.FACING_LEFT : 0,
+      right: this.body.velocity.x > 2 ? Phaser.Physics.Arcade.FACING_RIGHT : 0,
+      up: this.body.velocity.y < -2 ? Phaser.Physics.Arcade.FACING_UP : 0,
+      down: this.body.velocity.y > 2 ? Phaser.Physics.Arcade.FACING_DOWN : 0,
+      stationary: this.body.velocity.x === 0 && this.body.velocity.y === 0
+    };
+  }
 
   constructor(scene, x, y) {
     super(scene, x, y, 'bob');
+
     this.scene = scene;
     this.health = 3;
     this.hitDelay = false;
-    this.direction = 'up';
     this.carrying = null;
     this.currently = null;
     this.speed = 200;
@@ -57,6 +67,12 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
       frameRate: 6,
     });
     this.idle();
+
+    this.scene.levelEvents.on('sceneUpdate', this.sceneUpdate, this);
+    this.on('destroy', function () {
+      if (this.text) this.text.destroy();
+      this.scene.levelEvents.off('sceneUpdate');
+    }, this);
   }
   kill() {
     console.log('Flit died');
@@ -108,12 +124,12 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
       if (this.health <= 0) this.kill();
     }
   }
-  overBox(item) {
-    if (this.carrying == null) {
-      this.scene.levelEvents.emit('pickup_box', item, this);
-      console.log('pickup box');
-    }
-  }
+  // overBox(item) {
+  //   // if (this.carrying == null) {
+  //   //   this.scene.levelEvents.emit('pickup_box', item, this);
+  //   //   console.log('pickup box');
+  //   // }
+  // }
   drop(item) {
     this.scene.levelEvents.emit('drop_box', item, this);
     console.log('drop box');
@@ -121,18 +137,31 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
   is(name) {
     return name.toLowerCase() == 'bob';
   }
-  update(cursors, space) {
-    //get the direction from the velocity
-    this.direction = {
-      left: this.body.velocity.x < -2 ? Phaser.Physics.Arcade.FACING_LEFT : 0,
-      right: this.body.velocity.x > 2 ? Phaser.Physics.Arcade.FACING_RIGHT : 0,
-      up: this.body.velocity.y < -2 ? Phaser.Physics.Arcade.FACING_UP : 0,
-      down: this.body.velocity.y > 2 ? Phaser.Physics.Arcade.FACING_DOWN : 0
-    };
-    //drop a box
-    if (this.carrying != null && Phaser.Input.Keyboard.JustDown(space)) {
-      this.drop(this.carrying);
+  sceneUpdate() {
+    //if we are carrying a box move it to match our position
+    if (this.carrying) {
+      this.carrying.deActivate();
+      if (this.flipX) {
+        this.carrying.body.reset(this.body.left - (this.carrying.width + 15), (this.body.top) - 24);
+      } else {
+        this.carrying.body.reset(this.body.right + 15, (this.body.top) - 24);
+      }
     }
+    if (this.scene.ActivePlayer.is('Bob')) {
+      if (this.scene.input.keyboard.checkDown(this.scene.spaceKey, 500)) {
+        if (this.carrying == null) {
+          //get the closest box
+          let b = this.scene.game.closestOfType(this.body, 'Box', 74);
+          if (b !== null && b.gameObject !== this.scene.game.Flit.carrying) {
+            this.scene.levelEvents.emit('pickup_box', b.gameObject, this);
+          }
+        } else {
+          this.drop(this.carrying);
+        }
+      }
+    }
+  }
+  update(cursors, space) {
 
     //if a speed effect is active ignore keys
     if (this.effectSpeed !== 0) {
@@ -166,7 +195,7 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
       }
       if (this.body.touching.down || this.body.blocked.down) {
         //Check if Bob is on a box and allow jump
-        let agrid = this.scene.game.getBodiesAround(this.body, [], {bottom:true, right:true, left:true});
+        let agrid = this.scene.game.getBodiesAround(this.body, [], null, {bottom:true, right:true, left:true});
         Object.values(agrid).forEach((o) => {
           if (o && o.length > 0) {
             for (let i = 0; i < o.length; i++) {
@@ -192,18 +221,6 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
       }
     }
 
-    //if we are carrying a box move it to match our position
-    if (this.carrying) {
-      this.carrying.deActivate();
-      if (this.direction.left > 0) {
-        this.carrying.body.reset(this.body.left - (this.carrying.width + 15), (this.body.top) - 24);
-      } else if (this.direction.right > 0) {
-        this.carrying.body.reset(this.body.right + 15, (this.body.top) - 24);
-      } else if (this.direction.up > 0 || this.direction.down > 0) {
-        this.carrying.body.reset(this.carrying.body.x, (this.body.top) - 24);
-      }
-    }
-
     //reset Effects after update
     this.isSlow = false;
     this.isFast = false;
@@ -223,7 +240,7 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
 
     //If it's bob and a rock check the rock can be pushed
     if (box.isRock) {
-      let around = this.scene.game.getBodiesAround(box.body, [], { up: true, down: true, left: true, right: true });
+      let around = this.scene.game.getBodiesAround(box.body, [], null, { up: true, down: true, left: true, right: true });
       let blockedRight = around.right.some((o) => {return o.gameObject.Blocks !== null && o.gameObject.isActive;});
       let blockedLeft = around.left.some((o) => {return o.gameObject.Blocks !== null && o.gameObject.isActive;});
 
@@ -238,12 +255,6 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
    * @param {Box} box The box they are colliding with
    */
   boxPlayerCollide(player, box) {
-    if (!box.isRock && Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
-      if (box.Affects === null || player.is(box.Affects)) {
-        box.deActivate();
-        this.scene.ActivePlayer.overBox(box);
-      }
-    }
     //if it's bob and a rock move it
     if (box.isRock) {
       let v = 0;
@@ -273,11 +284,6 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
         } else {
           box.body.immovable = true;
         }
-        // let below = this.scene.game.getUnder(box.body);
-        // //There is only the rock it's got nothing underneath so reactivate
-        // if (!box.body.onFloor() && below.length === 0) {
-        //   box.activate();
-        // }
       }
     }
   }

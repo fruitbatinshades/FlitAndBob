@@ -184,7 +184,7 @@ class Game extends Phaser.Game {
    * @param {object} directions Object with boolean directions to check, default = {top, left,right, bottom} (topLeft, top, topRight, left, right, bottomLeft, bottom, bottomRight)
    * @param {number} margin The distance to look
    */
-  getBodiesAround(body, ignore, directions, margin = 5) {
+  getBodiesAround(body, ignore, typeString = null, directions, margin = 5) {
     if (!directions || directions === null) {
       directions = {topLeft:false, top:true, topRight:false, left:true, right: true, bottomLeft: false, bottom:true, bottomRight: false};
     }
@@ -211,16 +211,17 @@ class Game extends Phaser.Game {
     around.forEach((o) => {
       if (o !== body && !ignore.includes(o)) {
         let oRect = new Phaser.Geom.Rectangle(o.x + 1, o.y + 1, o.width -2, o.height -2);
-        
-        if (!Phaser.Geom.Rectangle.ContainsRect(range, oRect)) { //ignore anything we are overlapping
-          if (directions.topLeft && Phaser.Geom.Intersects.RectangleToRectangle(tl, oRect)) { grid.upLeft.push(o); tl.color = 0xFF0000; }
-          if (directions.top && Phaser.Geom.Intersects.RectangleToRectangle(tc, oRect)) { grid.up.push(o); tc.color = 0xFF0000; }
-          if (directions.topRight && Phaser.Geom.Intersects.RectangleToRectangle(tr, oRect)) { grid.upRight.push(o); tr.color = 0xFF0000; }
-          if (directions.left && Phaser.Geom.Intersects.RectangleToRectangle(cl, oRect)) { grid.left.push(o); cl.color = 0xFF0000; }
-          if (directions.right && Phaser.Geom.Intersects.RectangleToRectangle(cr, oRect)) { grid.right.push(o); cr.color = 0xFF0000; }
-          if (directions.bottomLeft && Phaser.Geom.Intersects.RectangleToRectangle(bl, oRect)) { grid.downLeft.push(o); bl.color = 0xFF0000; }
-          if (directions.bottom && Phaser.Geom.Intersects.RectangleToRectangle(bc, oRect)) { grid.down.push(o); bc.color = 0xFF0000; }
-          if (directions.bottomRight && Phaser.Geom.Intersects.RectangleToRectangle(br, oRect)) { grid.downLeft.push(o); br.color = 0xFF0000; }
+        if (typeString === null || o.gameObject.constructor.name === typeString) {
+          if (!Phaser.Geom.Rectangle.ContainsRect(range, oRect)) { //ignore anything we are overlapping
+            if (directions.topLeft && Phaser.Geom.Intersects.RectangleToRectangle(tl, oRect)) { grid.upLeft.push(o); tl.color = 0xFF0000; }
+            if (directions.top && Phaser.Geom.Intersects.RectangleToRectangle(tc, oRect)) { grid.up.push(o); tc.color = 0xFF0000; }
+            if (directions.topRight && Phaser.Geom.Intersects.RectangleToRectangle(tr, oRect)) { grid.upRight.push(o); tr.color = 0xFF0000; }
+            if (directions.left && Phaser.Geom.Intersects.RectangleToRectangle(cl, oRect)) { grid.left.push(o); cl.color = 0xFF0000; }
+            if (directions.right && Phaser.Geom.Intersects.RectangleToRectangle(cr, oRect)) { grid.right.push(o); cr.color = 0xFF0000; }
+            if (directions.bottomLeft && Phaser.Geom.Intersects.RectangleToRectangle(bl, oRect)) { grid.downLeft.push(o); bl.color = 0xFF0000; }
+            if (directions.bottom && Phaser.Geom.Intersects.RectangleToRectangle(bc, oRect)) { grid.down.push(o); bc.color = 0xFF0000; }
+            if (directions.bottomRight && Phaser.Geom.Intersects.RectangleToRectangle(br, oRect)) { grid.downLeft.push(o); br.color = 0xFF0000; }
+          }
         }
       }
       
@@ -265,16 +266,16 @@ class Game extends Phaser.Game {
    * Get Bodies and World Tiles in the same place as the body
    * @param {Phaser.Physics.Arcade.Body} body 
    */
-  nothingBehind(body, onlyBlocking = true, typeString = null) {
+  nothingBehind(body, margin = 2, onlyBlocking = true, typeString = null) {
     let go = body.gameObject;
     let w = ['dummy'];
     if (go.embedded) return true;
 
-    let f = body.gameObject.scene.physics.overlapRect(body.left, body.top, body.width, body.height);
+    let f = body.gameObject.scene.physics.overlapRect(body.left + margin, body.top + margin, body.width - (margin * 2), body.height - (margin * 2));
 
     //check world tiles
     if (go.scene.mapLayers && go.scene.mapLayers.World) {
-      w = go.scene.map.getTilesWithinShape(new Phaser.Geom.Rectangle(body.left, body.top, body.width, body.height), { isColliding: true }, go.scene.cameras.main, go.scene.mapLayers.World);
+      w = go.scene.map.getTilesWithinShape(new Phaser.Geom.Rectangle(body.left + margin, body.top + margin, body.width - (margin * 2), body.height - (margin * 2)), { isColliding: true }, go.scene.cameras.main, go.scene.mapLayers.World);
     }
     //remove the requesting body
     f = f.filter((o) => (o !== body && (typeString === null || o.gameObject.constructor.name === typeString)));
@@ -308,6 +309,27 @@ class Game extends Phaser.Game {
     }
     return true;
   }
+  closestOfType(source, typeString, maxDistance = 1000) {
+    var bodies = source.world.bodies.entries.filter((b) => b.gameObject.constructor.name === typeString);
+
+    var min = Number.MAX_VALUE;
+    var closest = null;
+    var x = source.x;
+    var y = source.y;
+
+    bodies.forEach(function (target) {
+      var distance = Phaser.Math.Distance.Between(x, y, target.x, target.y);
+      if (distance <= maxDistance) {
+        if (distance < min) {
+          closest = target;
+          min = distance;
+        }
+      }
+    });
+
+    return closest;
+  }
+
 
   cartoonText(txt) {
     txt.setShadow(3, 3, '#000000', 6, true, false)
@@ -336,7 +358,7 @@ class Game extends Phaser.Game {
 /** Grid of objects - returned from getBodiesAround() */
 class aroundGrid{
   constructor() {
-    this._last = '';
+    //this._last = '';
     this.upLeft = [];
     this.up = [];
     this.upRight = [];
@@ -346,6 +368,16 @@ class aroundGrid{
     this.downLeft = [];
     this.down = [];
     this.downRight = [];
+  }
+  getFirst(typeString) {
+    for (var property in this) {
+      if (this.hasOwnProperty(property) && this[property] !== null) {
+        for (let i = 0; i < this[property].length; i++) {
+          if (this[property][i].gameObject.constructor.name === typeString)
+            return this[property][i];
+        }
+      }
+    }
   }
   // debug() {
   //   let output = '';

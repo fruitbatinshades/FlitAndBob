@@ -23,10 +23,10 @@ export default class Rock extends Phaser.Physics.Arcade.Sprite {
             };
         }
 
-        this.scene.events.on('sceneUpdate', this.checkOn, this);
+        this.scene.levelEvents.on('sceneUpdate', this.checkOn, this);
 
         this.on('destroy', function () {
-            this.scene.events.off('sceneUpdate');
+            this.scene.levelEvents.off('sceneUpdate');
         }, this);
     }
     checkOn() {

@@ -112,7 +112,8 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
      * @param {Phaser.GameObjects.Sprite} player
      */
     onPickupBox(box, player) {
-        if (!box.underneath && !box.isRock) { //only pick up box if there is not another box on top of it
+        let boxes = box.getRelatives();
+        if (!box.isRock && boxes.up.length === 0) { //only pick up box if there is not another box on top of it
             box.reset();
             player.carrying = box;
             box.player = player;
@@ -130,6 +131,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
     * @param {Phaser.GameObjects.Sprite} player
     */
     onDropBox(box, player) {
+        box.underneath = null;
         if (this.scene.game.nothingBehind(box.body)) {
             player.carrying = null;
             //move to tile grid
@@ -160,20 +162,11 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
      * @param {Box} box The box they are colliding with
      */
     boxPlayerCollide(player, box) {
-        if (!box.isRock && !box.isDeadWeight && Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
-            if (box.Affects === null || player.is(box.Affects)) {
-                box.deActivate();
-                this.scene.ActivePlayer.overBox(box);
-            }
-        }
-        // if (box.isRock && player.is('flit'))
-        // {
-        //     box.body.immovable = true;
-        //     box.body.stop();
-        // }
-        // if (box.isDeadWeight) {
-        //     box.body.immovable = true;
-        //     box.body.stop();
+        // if (!box.isRock && !box.isDeadWeight && Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
+        //     if (box.Affects === null || player.is(box.Affects)) {
+        //         box.deActivate();
+        //         player.overBox(box);
+        //     }
         // }
     }
 

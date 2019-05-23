@@ -256,7 +256,7 @@
              "depth":"int"
             },
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -386,46 +386,6 @@
                  "width":64,
                  "x":1472,
                  "y":384
-                }, 
-                {
-                 "gid":33,
-                 "height":64,
-                 "id":132,
-                 "name":"Box",
-                 "properties":
-                    {
-                     "Rock":""
-                    },
-                 "propertytypes":
-                    {
-                     "Rock":"string"
-                    },
-                 "rotation":0,
-                 "type":"Rock",
-                 "visible":true,
-                 "width":128,
-                 "x":640,
-                 "y":576
-                }, 
-                {
-                 "gid":33,
-                 "height":64,
-                 "id":133,
-                 "name":"Box",
-                 "properties":
-                    {
-                     "Rock":""
-                    },
-                 "propertytypes":
-                    {
-                     "Rock":"string"
-                    },
-                 "rotation":0,
-                 "type":"Rock",
-                 "visible":true,
-                 "width":128,
-                 "x":640,
-                 "y":512
                 }, 
                 {
                  "gid":29,

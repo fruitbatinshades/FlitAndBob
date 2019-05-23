@@ -28,7 +28,8 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
         this.tileLayer = interactionLayer;
         /** @type [Array{InteractionZone}] */
         this.lookup = {};
-        this.spaceKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        //Used for monitoring last tiome space was pressed as phaser function only keeps one timer
+        this.lastPress = 0;
         this.inExit = false;
 
         //Create a zone from the tiled object rectangles
@@ -180,7 +181,8 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             let t = this.lookup[zone.name];
             //If its an effect require space key
             if (t.Effect === null) {
-                if (this.scene.input.keyboard.checkDown(this.spaceKey, 1000)) {
+                if (this.lastPress + 1000 < this.scene.game.loop.lastTime && this.scene.spaceKey.isDown) {
+                    this.lastPress = this.scene.game.loop.lastTime;
                     //if affect is supplied make sure its our player
                     if (t.Affect === null || (t.Affect !== null && t.Affect.key === player.name)) {
                         zone.process(player, true);

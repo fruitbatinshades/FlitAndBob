@@ -21,7 +21,7 @@ export default class Box extends Phaser.GameObjects.Sprite {
     /** Number of hits before the box self destructs */
     _hits = -2;
     isBox = true;
-    
+
     get hits() {
         return this._hits;
     }
@@ -32,7 +32,7 @@ export default class Box extends Phaser.GameObjects.Sprite {
         }
     }
     /** The last item the box collided with (getter) */
-    get lastContact(){ 
+    get lastContact() {
         return this._lastContact;
     }
     /** The last item the box collided with (setter), turns gravity back on if not touching anything */
@@ -67,7 +67,7 @@ export default class Box extends Phaser.GameObjects.Sprite {
             };
         }
 
-        this.scene.events.on('sceneUpdate', this.checkOn, this);
+        this.scene.levelEvents.on('sceneUpdate', this.checkOn, this);
 
         if (this.scene.game.debugOn) {
             this.note = this.scene.add.text(this.x, this.y, '');
@@ -76,14 +76,14 @@ export default class Box extends Phaser.GameObjects.Sprite {
 
         this.on('destroy', function () {
             if (this.text) this.text.destroy();
-            this.scene.events.off('sceneUpdate');
+            this.scene.levelEvents.off('sceneUpdate');
         }, this);
     }
     checkOn() {
         if (this.scene && this.scene.game.nothingUnder(this))
             this.activate();
     }
-    gridX(){
+    gridX() {
         //move to tile grid
         return Math.round(box.x / 64) * 64;
     }
@@ -91,12 +91,12 @@ export default class Box extends Phaser.GameObjects.Sprite {
      * Activate this box. Used to re-activate after its been on the ground or a zone
      */
     activate() {
-            this.body.enable = true;
-            this.body.immovable = false;
-            this.body.moves = true;
-            this.body.allowGravity = true;
-            this.lastContact = null;
-            this.body.setGravityY(1);
+        //this.body.enable = true;
+        this.body.immovable = false;
+        this.body.moves = true;
+        this.body.allowGravity = true;
+        this.lastContact = null;
+        this.body.setGravityY(1);
     }
     deActivate() {
         this.body.immovable = true;
@@ -104,7 +104,7 @@ export default class Box extends Phaser.GameObjects.Sprite {
         this.body.setGravityY(0);
         this.body.setVelocity(0, 0);
         this.body.stop();
-       // box.body.y--;
+        // box.body.y--;
     }
     preUpdate() {
         if (this.text) {
@@ -123,28 +123,31 @@ export default class Box extends Phaser.GameObjects.Sprite {
         }
     }
     /**
+     * Get boxes above and below
+     */
+    getRelatives() {
+        return this.scene.game.getBodiesAround(this.body, [this], 'Box', {top:true,bottom:true }, 10);
+    }
+    /**
      * Reset this box and update any boxes under or over it
      */
     reset() {
-        //Update other boxes to remove this box from their references
-        this.scene.physics.overlapRect(this.x - 10, this.y - 10, this.width + 20, this.height + 20).forEach((o) => {
-            let go = o.gameObject;
-            if (go.constructor.name === 'Box') {
-                //box.alpha = 0.5;
-                if (go.onTopOf && go.onTopOf.name == this.name) go.onTopOf = null;
-                if (go.underneath && go.underneath.name == this.name) go.underneath = null;
-            }
-            //if its a block activated zone process it
-            if (go.constructor.name === 'InteractionZone') {
+        let boxes = this.getRelatives();
+        if (boxes.down.length !== 0) {
+            boxes.down[0].gameObject.underneath = null;
+        }
+
+        //check for block activated zones and process
+        let under = this.scene.game.getUnder(this.body, 'InteractionZone', 5);
+        if (under.length !== 0) {
+            for (let i = 0; i < under.length; i++) {
+                let go = under[i].gameObject;
                 if (go.tileType && go.tileType.isBlockActivated) {
                     go.process();
                 }
             }
-        });
-
-        if (this.underneath != null) {
-            console.log(Phaser.Math.Distance.DistanceSquared(this.underneath, this.onTopOf));
         }
+
         this.underneath = null;
         this.onTopOf = null;
     }
@@ -189,17 +192,11 @@ export default class Box extends Phaser.GameObjects.Sprite {
             top.body.stop();
             bottom.body.stop();
 
-            //bottom.tint = 0x00FF00;
-            bottom.body.immovable = true;
-            bottom.body.moves = false;
-            bottom.body.enable = true;
-            bottom.body.allowGravity = false;
+            bottom.tint = 0x00FF00;
+            bottom.deActivate();
 
-            //top.tint = 0xFF0000;
-            top.body.immovable = true;
-            top.body.moves = false;
-            top.body.enable = true;
-            top.body.allowGravity = false;
+            top.tint = 0xFF0000;
+            top.deActivate();
 
             //force gap else it is irregular
             top.y = (bottom.body.top - top.body.height) - 1;

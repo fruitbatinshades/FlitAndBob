@@ -21,10 +21,10 @@ export default class DeadWeight extends Phaser.Physics.Arcade.Sprite {
         
         this.body.setImmovable(true);
 
-        this.scene.events.on('sceneUpdate', this.checkOn, this);
+        this.scene.levelEvents.on('sceneUpdate', this.checkOn, this);
         
         this.on('destroy', function () {
-            this.scene.events.off('sceneUpdate');
+            this.scene.levelEvents.off('sceneUpdate');
         }, this);
     }
 
