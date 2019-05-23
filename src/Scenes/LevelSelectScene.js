@@ -4,10 +4,9 @@ import config from '../config.js';
 export default class LevelSelectScene extends Phaser.Scene {
     constructor() {
         super("LevelSelectScene");
-
     }
 
-    create() {
+    create(level,newGame) {
         this.cameras.main.setBackgroundColor(0xaaaaaa);
 
         this.width = this.cameras.main.width;
@@ -74,5 +73,11 @@ export default class LevelSelectScene extends Phaser.Scene {
         //Phaser.Display.Align.In.Center(select, splash, 0, 0);
         select.x = (this.width / 2) ;
         select.y = (this.height / 2);
+
+        //if level is passed skip this scene
+        if (level) {
+            this.scene.pause();
+            this.scene.start('LevelLoader');
+        }
     }
 }
