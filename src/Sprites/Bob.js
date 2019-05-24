@@ -200,7 +200,7 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
           if (o && o.length > 0) {
             for (let i = 0; i < o.length; i++) {
               let go = o[i].gameObject;
-              if (go.constructor.name === 'Box' || go.constructor.name === 'Rock' || (go.constructor.name === 'InteractionZone' && go.Blocks != null)) {
+              if (o[i].enable && (go.constructor.name === 'Box' || go.constructor.name === 'Rock' || (go.constructor.name === 'InteractionZone' && go.Blocks != null))) {
                 //stop jump if dead weight above
                 if (go.constructor.name !== 'DeadWeight') {
                   this.scene.sound.playAudioSprite('sfx', 'jump', { volume: .1 });
