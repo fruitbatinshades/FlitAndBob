@@ -51,7 +51,7 @@ class Game extends Phaser.Game {
    * @param {Phaser.Scene} scene
    * @param {Phaser.Geom.Rectangle} rect 
    */
-  panAndReturn(scene, rect) {
+  panAndReturn(scene, rect, complete) {
     if (!Phaser.Geom.Rectangle.ContainsRect(scene.cameras.main.worldView, rect)) {
       //stop following else the pan X/Y is incorrect
       scene.cameras.main.stopFollow();
@@ -61,6 +61,7 @@ class Game extends Phaser.Game {
           if (progress === 1) {
             //restore follow
             scene.cameras.main.startFollow(scene.ActivePlayer);
+            if (complete) complete();
           }
         });
       });

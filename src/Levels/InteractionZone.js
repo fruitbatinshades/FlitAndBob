@@ -190,7 +190,8 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
                 }
                 if (panRect) {
                     if (!Phaser.Geom.Rectangle.ContainsRect(this.scene.cameras.main.worldView, panRect)) {
-                        this.scene.game.panAndReturn(this.scene, panRect);
+                        this.scene.shiftKey.enabled = false;
+                        this.scene.game.panAndReturn(this.scene, panRect, () => { this.scene.shiftKey.enabled = true });
                     }
                     this._groupShown = true;
                 }
