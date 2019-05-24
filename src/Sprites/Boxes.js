@@ -103,7 +103,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
             box.lastContact.process(box.lastContact, this.scene.ActivePlayer);
         }
         this.scene.sound.playAudioSprite('sfx', 'break');
-        box.destroy();
+        box.destroy(true);
     }
 
     /**
