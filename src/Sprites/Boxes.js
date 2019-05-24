@@ -132,7 +132,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
     */
     onDropBox(box, player) {
         box.underneath = null;
-        if (this.scene.game.nothingBehind(box.body)) {
+        if (this.scene.game.nothingBehind(box.body,5,true)) {
             player.carrying = null;
             //move to tile grid
             box.x = Math.round(box.x / Boxes.tileWidth) * Boxes.tileWidth;

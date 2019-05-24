@@ -280,7 +280,7 @@ class Game extends Phaser.Game {
     //remove the requesting body
     f = f.filter((o) => (o !== body && (typeString === null || o.gameObject.constructor.name === typeString)));
     if (onlyBlocking) {
-      f = f.filter((o) => o.gameObject.hasOwnProperty('Blocks') && o.gameObject.Blocks !== null);
+      f = f.filter((o) => o.enabled && o.gameObject.hasOwnProperty('Blocks') && o.gameObject.Blocks !== null);
     }
 
     return f.length === 0 && w.length === 0;
