@@ -38,7 +38,9 @@ export default class Box extends Phaser.GameObjects.Sprite {
     /** The last item the box collided with (setter), turns gravity back on if not touching anything */
     set lastContact(value) {
         this._lastContact = value;
-        this.body.allowGravity = this.body.touching.down === false && this.body.blocked.down === false && this.body.onFloor() === false;
+        if (this.body) {
+            this.body.allowGravity = this.body.touching.down === false && this.body.blocked.down === false && this.body.onFloor() === false;
+        }
     }
     constructor(sprite) {
         super(sprite.scene, sprite.x, sprite.y, sprite.texture.key, sprite.frame.name);
@@ -76,7 +78,7 @@ export default class Box extends Phaser.GameObjects.Sprite {
 
         this.on('destroy', function () {
             if (this.text) this.text.destroy();
-            this.scene.levelEvents.off('sceneUpdate');
+            //this.scene.levelEvents.off('sceneUpdate');
         }, this);
     }
     checkOn() {
@@ -161,8 +163,8 @@ export default class Box extends Phaser.GameObjects.Sprite {
         if (tile !== null && !box.isRock && box.lastContact !== tile) {
             box.deActivate();
             box.lastContact = tile;
-            box.hits--;
             box.scene.levelEvents.emit('boxTileCollide', box, tile);
+            box.hits--;
             return true;
         }
         if (box.isRock) box.deActivate();

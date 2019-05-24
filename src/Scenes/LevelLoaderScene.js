@@ -9,14 +9,16 @@ import Enums from '../Levels/Tilemaps.js';
 export default class LevelLoaderScene extends Phaser.Scene {
     switchIds;
 
-    constructor(key, level) {
+    constructor() {
         super('LevelLoader');
     }
     preload() {
-        this.registry.set('currentLevel', this.game.levels[this.game.levelIndex]);
         //get the name of the scene to start from the querystring if there
-        let l = this.game.urlParams.get('level');
-        if (l !== null) this.registry.set('currentLevel',l);
+        if (this.registry.has('urlLevel') && this.registry.get('urlLevel') !== null) {
+            this.registry.set('currentLevel', this.registry.get('urlLevel'));
+        } else {
+            this.registry.set('currentLevel', this.game.levels[this.game.levelIndex]);
+        }
 
         this.progressBar = this.add.graphics();
         this.progressBar.depth = 11;
