@@ -1,4 +1,5 @@
 /// <reference path="../../defs/phaser.d.ts" />
+import Utils from '../Utils/Utils.js'
 /**
  * thE hEADS UP DISPLAY FOR HEALTH AND SCORE
  */
@@ -52,23 +53,32 @@ export default class HUD extends Phaser.Scene {
             this.scene.bringToTop('LevelSelectScene');
             this.scene.start('LevelSelectScene');
         });
-        //  Listen for events from it
-        this.lvl.levelEvents.on('updateHUD', this.updateHUD, this);
+        this.registry.events.on('changedata', this.updateHUD, this);        
+        this.events.on('start', this.attachRegistry, this);
+        this.events.on('resume', this.attachRegistry, this);
+        this.events.on('wake', this.attachRegistry, this);
+        this.events.on('sleep', this.detachRegistry,this);
+        this.events.on('shutdown', this.detachRegistry,this);
     }
-    
-    updateHUD(player) {
-        this.flitImage.clearTint();
-        this.bobImage.clearTint();
-        if (player.is('Bob')) {
-            this.bobImage.setTint(0xaaccff);
-            this.bobHealth.text = parseInt((player.health / 100) * 100) + ' %';
-            this.shroomsCollected.text = player.collected + ' / ' + this.lvl.totalShrooms;
-        }
-        else if (player.is('Flit')) {
-            this.flitImage.setTint(0xaaccff);
-            this.flitHealth.text = parseInt((player.health / 50) * 100) + ' %';
-            this.fliesCollected.text = player.collected + ' / ' + this.lvl.totalFlies;
-        }
+    attachRegistry() {
+        this.registry.events.on('changedata', this.updateHUD, this);        
+    }
+    detachRegistry() {
+        this.registry.events.off('changedata');
+    }
+
+    updateHUD() {
+            this.flitImage.clearTint();
+            this.bobImage.clearTint();
+            if (this.lvl.registry.get('ActivePlayer').is('Bob')) {
+                this.bobImage.setTint(0xaaccff);
+            } else {
+                this.flitImage.setTint(0xaaccff);
+            }
+            this.flitHealth.text = parseInt((this.lvl.registry.get('flitHealth') / 50) * 100) + ' %';
+            this.fliesCollected.text = this.lvl.registry.get('flitCollected') + ' / ' + this.lvl.totalFlies;
+            this.bobHealth.text = parseInt((this.lvl.registry.get('bobHealth') / 100) * 100) + ' %';
+            this.shroomsCollected.text = this.lvl.registry.get('bobCollected') + ' / ' + this.lvl.totalShrooms;
     }
     setStroke(txt) {
         txt.setShadow(2, 2, '#333333', 2, true, false)

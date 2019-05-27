@@ -31,7 +31,6 @@ export default class Actions{
                     });
                     targetZone.body.enable = !targetZone.body.enable;
                     targetZone.isActive = !targetZone.isActive;
-                    //targetZone.adjustWorld();
                 }
             }
             else if (triggerZone.GroupKey != null) {
@@ -51,7 +50,6 @@ export default class Actions{
                                 });
                                 g.body.enable = !g.body.enable;
                                 g.isActive = !g.isActive;
-                                //g.adjustWorld();
                             }
                         }
                     }

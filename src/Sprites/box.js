@@ -1,5 +1,6 @@
 /// <reference path="../../defs/phaser.d.ts" />
 /// <reference path="./Boxes.js" />
+import Utils from '../Utils/Utils.js'
 
 export default class Box extends Phaser.GameObjects.Sprite {
     static State = {
@@ -82,7 +83,7 @@ export default class Box extends Phaser.GameObjects.Sprite {
         }, this);
     }
     checkOn() {
-        if (this.scene && this.scene.game.nothingUnder(this))
+        if (this.scene && Utils.nothingUnder(this))
             this.activate();
     }
     gridX() {
@@ -128,7 +129,7 @@ export default class Box extends Phaser.GameObjects.Sprite {
      * Get boxes above and below
      */
     getRelatives() {
-        return this.scene.game.getBodiesAround(this.body, [this], 'Box', {top:true,bottom:true }, 10);
+        return Utils.getBodiesAround(this.body, [this], 'Box', {top:true,bottom:true }, 10);
     }
     /**
      * Reset this box and update any boxes under or over it
@@ -140,7 +141,7 @@ export default class Box extends Phaser.GameObjects.Sprite {
         }
 
         //check for block activated zones and process
-        let under = this.scene.game.getUnder(this.body, 'InteractionZone', 5);
+        let under = Utils.getUnder(this.body, 'InteractionZone', 5);
         if (under.length !== 0) {
             for (let i = 0; i < under.length; i++) {
                 let go = under[i].gameObject;

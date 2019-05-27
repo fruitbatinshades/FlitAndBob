@@ -1,5 +1,6 @@
 /// <reference path="../../defs/phaser.d.ts" />
 /// <reference path="./Boxes.js" />
+import Utils from '../Utils/Utils.js'
 /**
  * DeadWeights fall once then cannot be moved
  */
@@ -29,13 +30,13 @@ export default class DeadWeight extends Phaser.Physics.Arcade.Sprite {
     }
 
     checkOn() {
-        if (this.scene.game.nothingUnder(this)) this.activate();
+        if (Utils.nothingUnder(this)) this.activate();
     }
     preUpdate() {
         //Do not allow x movement
         this.x = this.originalX;
         //if there is nothing underneath allow movement
-        if (this.body.touching.down || this.body.blocked.down || this.scene.game.getUnder(this.body).length !== 0) {
+        if (this.body.touching.down || this.body.blocked.down || Utils.getUnder(this.body).length !== 0) {
             this.body.moves = false;
         } else {
             this.body.moves = true;

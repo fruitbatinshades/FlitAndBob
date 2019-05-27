@@ -62,7 +62,6 @@ export default class Level extends Phaser.Scene {
             this.restartLevel();
         }, this);
 
-        this.levelEvents.emit('updateHUD', this.ActivePlayer);
         this.events.once('shutdown', (a, b) => {
             console.log('shutdown', a, b);
             this.levelEvents.removeAllListeners();
@@ -279,7 +278,6 @@ export default class Level extends Phaser.Scene {
             }
         }
         if (collected) this.mapLayers.Coins.removeTileAt(tile.x, tile.y);
-        this.levelEvents.emit('updateHUD', player);
         return false;
     }
     /**
@@ -353,7 +351,6 @@ export default class Level extends Phaser.Scene {
             if (complete === 1) {
                 this.cameras.main.startFollow(this.ActivePlayer, false, .1, .1);
                 this.game._ChangingPlayer = false;
-                this.levelEvents.emit('updateHUD', this.ActivePlayer);
                 //Flash active player
                 this.ActivePlayer.blendMode = Phaser.BlendModes.SCREEN;
                 this.time.addEvent({

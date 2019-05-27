@@ -51,7 +51,6 @@ export default class Transitions{
                 });
                 zone.body.enable = !zone.body.enable;
                 zone.active = !zone.active;
-                //zone.adjustWorld();
             },
             onCompleteParams: [targetZone]
         });

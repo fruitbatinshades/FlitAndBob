@@ -80,7 +80,7 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
             box.lastContact = zone;
             box.deActivate();
             if (box.isBox) box.hits--;
-            console.log(`${box.name} hit ${zone.name}`);
+            //console.log(`${box.name} hit ${zone.name}`);
             if (zone.tileType && zone.tileType.isBlockActivated) zone.process(this.scene.game.ActivePlayer);
             return true;
         } else {
@@ -94,9 +94,11 @@ export default class Interaction extends Phaser.Physics.Arcade.Group {
      * @param {Box} box
      */
     zoneCollide(zone, box) {
-        //hit a new zone so set up rules
-        box.body.y--;
-        box.deActivate();
+        if (box.body) {
+            //hit a new zone so set up rules
+            box.body.y--;
+            box.deActivate();
+        }
     }
     /**
      * Get a zone by it's key

@@ -1,5 +1,5 @@
 /// <reference path="../../defs/phaser.d.ts" />
-
+import Utils from '../Utils/Utils.js'
 export default class Flit extends Phaser.Physics.Arcade.Sprite {
   get activeSpeed() {
     if (this.isSlow) return this.speed / 2;
@@ -7,10 +7,22 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
     return this.speed;
   }
 
+  get health() {
+    return this.scene.registry.get('flitHealth');
+  }
+  set health(value) {
+    this.scene.registry.set('flitHealth', value);
+  }
+  get collected() {
+    return this.scene.registry.get('flitCollected');
+  }
+  set collected(value) {
+    this.scene.registry.set('flitCollected', value);
+  }
+
   constructor(scene, x, y) {
     super(scene, x, y, 'flit');
     this.scene = scene;
-    this.health = 3;
     this.hitDelay = false;
     this.direction = 'up';
     this.speed = 300;
@@ -72,7 +84,6 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
       this.lastInjure = this.scene.game.loop.lastTime;
       this.health -= amount;
       this.scene.levelEvents.emit('loseHealth', this);
-      this.scene.levelEvents.emit('updateHUD', this);
       this.scene.sound.playAudioSprite('sfx', 'squeak');
       //tint for a brief period
       if (!this.hitDelay) {
@@ -139,7 +150,7 @@ export default class Flit extends Phaser.Physics.Arcade.Sprite {
       if (this.scene.input.keyboard.checkDown(this.scene.spaceKey, 500)) {
         if (this.carrying == null) {
           //get the closest box
-          let b = this.scene.game.closestOfType(this.body, 'Box', 74);
+          let b = Utils.closestOfType(this.body, 'Box', 74);
           if (b !== null && b.gameObject !== this.scene.game.Bob.carrying) {
             this.scene.levelEvents.emit('pickup_box', b.gameObject, this);
           }

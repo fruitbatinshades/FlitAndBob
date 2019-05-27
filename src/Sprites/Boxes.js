@@ -1,5 +1,6 @@
 /// <reference path="../../defs/phaser.d.ts" />
 import Settings from '../settings.js';
+import Utils from '../Utils/Utils.js'
 import Box from './box.js';
 import Rock from './Rock.js';
 import DeadWeight from './DeadWeight.js';
@@ -132,7 +133,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
     */
     onDropBox(box, player) {
         box.underneath = null;
-        if (this.scene.game.nothingBehind(box.body,5,true)) {
+        if (Utils.nothingBehind(box.body,5,true)) {
             player.carrying = null;
             //move to tile grid
             box.x = Math.round(box.x / Boxes.tileWidth) * Boxes.tileWidth;

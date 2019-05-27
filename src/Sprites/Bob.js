@@ -1,5 +1,6 @@
 /// <reference path="../../defs/phaser.d.ts" />
 /// <reference path="../index.js" />
+import Utils from '../Utils/Utils.js'
 export default class Bob extends Phaser.Physics.Arcade.Sprite {
   get activeSpeed() {
     if (this.isSlow) return this.speed / 2;
@@ -16,6 +17,18 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
       down: this.body.velocity.y > 2 ? Phaser.Physics.Arcade.FACING_DOWN : 0,
       stationary: this.body.velocity.x === 0 && this.body.velocity.y === 0
     };
+  }
+  get health() {
+    return this.scene.registry.get('bobHealth');
+  }
+  set health(value) {
+    this.scene.registry.set('bobHealth', value);
+  }
+  get collected() {
+    return this.scene.registry.get('bobCollected');
+  }
+  set collected(value) {
+    this.scene.registry.set('bobCollected', value);
   }
 
   constructor(scene, x, y) {
@@ -106,7 +119,6 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
       this.lastInjure = this.scene.game.loop.lastTime;
       this.health -= amount;
       this.scene.levelEvents.emit('loseHealth', this);
-      this.scene.levelEvents.emit('updateHUD', this);
       this.scene.sound.playAudioSprite('sfx', 'squeak');
       //tint for a brief period
       if (!this.hitDelay) {
@@ -151,7 +163,7 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
       if (this.scene.input.keyboard.checkDown(this.scene.spaceKey, 500)) {
         if (this.carrying == null) {
           //get the closest box
-          let b = this.scene.game.closestOfType(this.body, 'Box', 74);
+          let b = Utils.closestOfType(this.body, 'Box', 74);
           if (b !== null && b.gameObject !== this.scene.game.Flit.carrying) {
             this.scene.levelEvents.emit('pickup_box', b.gameObject, this);
           }
@@ -195,7 +207,7 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
       }
       if (this.body.touching.down || this.body.blocked.down) {
         //Check if Bob is on a box and allow jump
-        let agrid = this.scene.game.getBodiesAround(this.body, [], null, {bottom:true, right:true, left:true});
+        let agrid = Utils.getBodiesAround(this.body, [], null, {bottom:true, right:true, left:true});
         Object.values(agrid).forEach((o) => {
           if (o && o.length > 0) {
             for (let i = 0; i < o.length; i++) {
@@ -240,7 +252,7 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
 
     //If it's bob and a rock check the rock can be pushed
     if (box.isRock) {
-      let around = this.scene.game.getBodiesAround(box.body, [], null, { up: true, down: true, left: true, right: true });
+      let around = Utils.getBodiesAround(box.body, [], null, { up: true, down: true, left: true, right: true });
       let blockedRight = around.right.some((o) => {return o.gameObject.Blocks !== null && o.gameObject.isActive;});
       let blockedLeft = around.left.some((o) => {return o.gameObject.Blocks !== null && o.gameObject.isActive;});
 
@@ -258,14 +270,13 @@ export default class Bob extends Phaser.Physics.Arcade.Sprite {
     //if it's bob and a rock move it
     if (box.isRock) {
       let v = 0;
-      let around = this.scene.game.getBodiesAround(box.body);
+      let around = Utils.getBodiesAround(box.body);
       let bobOnTop = around.up.some((o) => { return o.gameObject.constructor.name === 'Bob'; });
       let blockedRight = around.right.some((o) => { return o.gameObject.Blocks !== null && o.gameObject.isActive; });
       let blockedLeft = around.left.some((o) => { return o.gameObject.Blocks !== null && o.gameObject.isActive; });
 
       if (!bobOnTop && !blockedLeft && !blockedRight) {
         if (player.body.touching.right || player.body.touching.left) {
-          //let next = this.scene.game.getRight(box.body);
           box.body.immovable = false;
           //console.log(box.body.blocked);
           if (player.body.touching.left) {

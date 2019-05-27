@@ -1,5 +1,6 @@
 /// <reference path="../../defs/phaser.d.ts" />
 /// <reference path="./Boxes.js" />
+import Utils from '../Utils/Utils.js'
 /**
  * Rocks can only be moved by Bob and break the normal physics rules so are more complicated to handle
  */
@@ -30,7 +31,7 @@ export default class Rock extends Phaser.Physics.Arcade.Sprite {
         }, this);
     }
     checkOn() {
-        if (this.scene.game.nothingUnder(this))
+        if (Utils.nothingUnder(this))
             this.activate();
     }
     /**
@@ -77,8 +78,8 @@ export default class Rock extends Phaser.Physics.Arcade.Sprite {
         var minY = Math.min(dy1, dy2);
         var minX = Math.min(dx1, dx2);
 
-        let under = b.scene.game.getUnder(b1, 'Rock')[0];
-        let right = b.scene.game.getRight(b1, 'Rock')[0];
+        let under = Utils.getUnder(b1, 'Rock')[0];
+        let right = Utils.getRight(b1, 'Rock')[0];
 
         if (under === b2) {
             if (dy1 === minY) {
