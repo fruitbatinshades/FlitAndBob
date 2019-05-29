@@ -184,7 +184,7 @@ export default class Level extends Phaser.Scene {
                             let img = this.game.textures.get(name).source[0];
                             if (img !== null) {
                                 if (b.type == 'TileSprite') {
-                                    let o = this.add.tileSprite(b.x, b.y - img.height, this.game.canvas.clientWidth, img.width, name);
+                                    let o = this.add.tileSprite(b.x, b.y - img.height, this.game.canvas.clientWidth, img.height, name);
                                     this.sky.add(o);
                                     o.setOrigin(0, 0);
                                     o.fixedToCamera = true;

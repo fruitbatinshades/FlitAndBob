@@ -84,13 +84,14 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         let rocks = this.getRocks();
         this.scene.physics.add.collider(rocks, this.scene.mapLayers.World, Rock.tileCollide, null, this);
         this.scene.physics.add.collider(rocks, rocks, Rock.separate, null, this);
+        this.scene.physics.add.collider(rocks, this.scene.flit);//stop flit on rocks
 
         let deadWeights = this.getDeadWeights();
         this.scene.physics.add.collider(deadWeights, deadWeights, DeadWeight.deadWeightCollide, null, this);
         this.scene.physics.add.collider(deadWeights, rocks, DeadWeight.deadWeightCollide, null, this);
         this.scene.physics.add.collider(deadWeights, this.scene.mapLayers['World'], DeadWeight.deadWeightCollide, null, this);
-        this.scene.physics.add.collider(deadWeights, this.scene.bob);//, this.playerDWCollide, null, this);
-        this.scene.physics.add.collider(deadWeights, this.scene.flit);//, this.playerDWCollide, null, this);
+        this.scene.physics.add.collider(deadWeights, this.scene.bob);
+        this.scene.physics.add.collider(deadWeights, this.scene.flit);
         
         //collider for boxes and rocks with the players
         this.scene.physics.add.collider(this.scene.game.Bob, this, this.scene.game.Bob.boxPlayerCollide, this.scene.game.Bob.boxPlayerPreCollide, this);

@@ -194,11 +194,7 @@ export default class Box extends Phaser.GameObjects.Sprite {
 
             top.body.stop();
             bottom.body.stop();
-
-            bottom.tint = 0x00FF00;
             bottom.deActivate();
-
-            top.tint = 0xFF0000;
             top.deActivate();
 
             //force gap else it is irregular
