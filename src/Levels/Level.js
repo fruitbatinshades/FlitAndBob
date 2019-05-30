@@ -156,6 +156,8 @@ export default class Level extends Phaser.Scene {
                     if (l.name === 'InteractionTiles') {
                         //update the ids of the tiles with the gid
                         this.switchIds = new Enums(this.mapLayers[l.name].tileset.find(x => x.name == 'components').firstgid);
+                        //set up normal tile collision
+                        this.mapLayers[l.name].setCollision([this.switchIds.Component.WebL, this.switchIds.Component.WebT]); 
                     }
                     break;
             }
@@ -207,8 +209,10 @@ export default class Level extends Phaser.Scene {
         });
 
         //create player collision
-        this.physics.add.collider(this.mapLayers.World, this.bob);
-        this.physics.add.collider(this.mapLayers.World, this.flit);
+        this.physics.add.collider(this.mapLayers.World, this.bob, this.worldTileCollide, null, this);
+        this.physics.add.collider(this.mapLayers.World, this.flit, this.worldTileCollide, null, this);
+        this.physics.add.collider(this.mapLayers.InteractionTiles, this.flit, this.specialCollision, null, this);
+        this.physics.add.collider(this.mapLayers.InteractionTiles, this.bob, this.specialCollision, null, this);
 
         //Set up the coin layer with overlap and callback
         this.physics.add.overlap(this.bob, this.mapLayers.Coins);
@@ -243,7 +247,25 @@ export default class Level extends Phaser.Scene {
             }
         });
     }
-
+    worldTileCollide(player, tile) {
+        player.lastTile != tile;
+    }
+    /**
+     * Track special collisions, currentlt used for collapsible items
+     * @param {Phaser.GameObjects.Sprite} player 
+     * @param {Phaser.Tilemaps.Tile} tile 
+     */
+    specialCollision(player, tile) {
+        if (!tile.collapse) tile.collapse = 3;
+        if (!player.lastTile || player.lastTile != tile) {
+            player.lastTile = tile;
+            tile.alpha -= tile.collapse / 10;
+            tile.collapse--;
+        }
+        if (tile.collapse < 1) {
+            this.mapLayers.InteractionTiles.removeTileAt(tile.x, tile.y);
+        }
+    }
     /**
      * Collect items depending on the player
      * @param {Phaser.GameObjects.Sprite} sprite The sprite that hit a coin

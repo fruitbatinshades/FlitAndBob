@@ -40,7 +40,9 @@ export default class Enums {
             BigStoneB: 34,
             Honey: 35,
             Fizz: 36,
-            Bridge1: 39
+            Bridge1: 39,
+            WebL: 49,
+            WebT: 50
         };
         //annoyingly this has to come from the spritesheet so do not add firstGid :(
         this.Boxes = [
@@ -95,7 +97,9 @@ export default class Enums {
             [this.Component.SaltA]: {h: 16, y: 48},
             [this.Component.SaltB]: { h: 16, y: 48 },
             [this.Component.SlowStonesA]: { h: 16, y: 48 },
-            [this.Component.Bridge1]: { h: 20}
+            [this.Component.Bridge1]: { h: 20 },
+            [this.Component.WebL]: { h: 20 },
+            [this.Component.WebT]: { h: 20 }
         };
     }
     /**
@@ -125,7 +129,8 @@ export default class Enums {
             isSwitch: this.isSwitch(value),
             isStop: this.isStop(value),
             isLight: this.isLight(value),
-            isBlockActivated: this.isBlockActivated(value)
+            isBlockActivated: this.isBlockActivated(value),
+            isCollapsible: this.isCollapsible(value)
         };
     }
     /**
@@ -140,6 +145,9 @@ export default class Enums {
     }
     isBlockActivated(value) {
         return value === this.Component.PressureOff || value === this.Component.PressureOn;
+    }
+    isCollapsible(value) {
+        return value === this.Component.WebL || value === this.Component.WebT;
     }
     isStop(index) {
         return this.Stops.indexOf(index) !== -1;
