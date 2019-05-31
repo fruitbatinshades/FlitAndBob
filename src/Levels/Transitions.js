@@ -1,7 +1,7 @@
 /**
  * Transitions for the interactions N.B. interaction is passed to each method as 'this'
  */
-export default class Transitions{
+export class Transitions{
     constructor() {
         /** Lookup to transitions that process map key: Transition */
         this.transition = {

@@ -1,28 +1,8 @@
 /// <reference path="../../defs/phaser.d.ts" />
 /// <reference path="./Boxes.js" />
-import Utils from '../Utils/Utils.js'
+import { Utils } from '../Utils/Utils.js'
 
-export default class Box extends Phaser.GameObjects.Sprite {
-    static State = {
-        None: 0,
-        Sitting: 1,
-        Player: 2,
-        Tile: 3
-    }
-    note;
-
-    //box underneath this one
-    underneath = null;
-    //bon on top of this one
-    onTopOf = null;
-    //ref to the last object we hit
-    _lastContact = null;
-    //Player that can interact with the box
-    Affects = null;
-    /** Number of hits before the box self destructs */
-    _hits = -2;
-    isBox = true;
-
+export class Box extends Phaser.GameObjects.Sprite {
     get hits() {
         return this._hits;
     }
@@ -46,6 +26,19 @@ export default class Box extends Phaser.GameObjects.Sprite {
     constructor(sprite) {
         super(sprite.scene, sprite.x, sprite.y, sprite.texture.key, sprite.frame.name);
         this.scene = sprite.scene;
+
+        //box underneath this one
+        this.underneath = null;
+        //bon on top of this one
+        this.onTopOf = null;
+        //ref to the last object we hit
+        this._lastContact = null;
+        //Player that can interact with the box
+        this.Affects = null;
+        /** Number of hits before the box self destructs */
+        this._hits = -2;
+        this.isBox = true;
+
         console.log(`o:${this.constructor.name} s:${this.scene.constructor.name}`);
         this.setOrigin(0, 0);
         //this.flipX = Math.random() > 0.5;

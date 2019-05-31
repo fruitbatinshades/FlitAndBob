@@ -1,12 +1,10 @@
 /// <reference path="../../defs/phaser.d.ts" />
 
-export default class Dialog extends Phaser.GameObjects.Container{
-    title = '';
-    text = '';
+export class Dialog extends Phaser.GameObjects.Container{
     constructor(scene,w, h, title, buttonText, image) {
         super(scene, scene.cameras.main.scrollX + (scene.cameras.main.centerX - w / 2), scene.cameras.main.scrollY + (scene.cameras.main.centerY - h / 2));
-        this.title = title;
-        this.text = buttonText;
+        this.title = title || '';
+        this.text = buttonText || '';
 
         this.dlg = scene.game.cartoonBox(scene, 0, 0, w, h);
 

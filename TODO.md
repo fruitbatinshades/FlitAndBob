@@ -1,10 +1,10 @@
 # TODO
 
 ## BUGS
-When Bob and flit are together, picking up a box gets confused
+~~When Bob and flit are together, picking up a box gets confused~~
 
 ## Features
-1. Add Big stones for bob
+1. ~~Add Big stones for bob~~
 2. Add push only objects
 3. ~~Split Loader from Play Level~~
 4. More Flit specific stuff?
@@ -42,5 +42,5 @@ When Bob and flit are together, picking up a box gets confused
 
 
 ## Bugs
-1. When standing on a box, space goes a bit wierd
-2. When both Flit and Bob are by the same box, Bob always seems to pick it up even if flit presses space
+1. ~~When standing on a box, space goes a bit wierd~~
+2. ~~When both Flit and Bob are by the same box, Bob always seems to pick it up even if flit presses space~~

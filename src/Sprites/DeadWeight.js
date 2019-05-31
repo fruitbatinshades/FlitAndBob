@@ -1,10 +1,10 @@
 /// <reference path="../../defs/phaser.d.ts" />
 /// <reference path="./Boxes.js" />
-import Utils from '../Utils/Utils.js'
+import { Utils } from '../Utils/Utils.js'
 /**
  * DeadWeights fall once then cannot be moved
  */
-export default class DeadWeight extends Phaser.Physics.Arcade.Sprite {
+export class DeadWeight extends Phaser.Physics.Arcade.Sprite {
     constructor(sprite) {
         super(sprite.scene, sprite.x, sprite.y);
 

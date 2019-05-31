@@ -1,21 +1,12 @@
 /// <reference path="../../defs/phaser.d.ts" />
-import Settings from '../settings.js';
-import Utils from '../Utils/Utils.js'
-import Box from './box.js';
-import Rock from './Rock.js';
-import DeadWeight from './DeadWeight.js';
-//import utils from '../Utils/Debug.js';
 
-export default class Boxes extends Phaser.Physics.Arcade.Group {
-    static State = {
-        None: 0,
-        Sitting: 1,
-        Player: 2,
-        Tile: 3,
-        Zone: 4
-    }
-    scene;
-    static tileWidth = 64;
+import {Utils} from '../Utils/Utils.js'
+import {Box} from './box.js';
+import {Rock} from './Rock.js';
+import {DeadWeight} from './DeadWeight.js';
+
+export class Boxes extends Phaser.Physics.Arcade.Group {
+    static get tileWidth() { return 64 };
 
     constructor(scene, children, spriteArray) {
         super(scene, children);
@@ -23,8 +14,7 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         //createCallbackHandler errors if this is not set which implies the inheritence is wrong somehow :|
         this.world = scene.physics.world;
         this.scene = scene;
-        console.log(`o:${this.constructor.name} s:${this.scene.constructor.name}`);
-        //console.log('boxes.js', this);
+
         // add boxes to our group
         spriteArray.forEach((box) => {
             let b;
@@ -49,7 +39,6 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
         this.init();
     }
     preUpdate(a, b, c, d) { 
-        //TODO: after sccene restart, scene is null
         if (this.scene && this.scene.game && this.scene.game.debugOn) { 
             this.scene.game.objs.push(this.children.entries);
         }
@@ -64,8 +53,6 @@ export default class Boxes extends Phaser.Physics.Arcade.Group {
             box.body.setCollideWorldBounds(true);
             box.name = (box.isRock ? 'rock_' : 'box_') + i++;
             box.body.setDrag(5000, 0);//.setMass(5000);
-            //state to monitor collision states
-            box.status = Boxes.State.None;
         });
         //bind when a box is picked up
         this.scene.levelEvents.on('pickup_box', this.onPickupBox, this);

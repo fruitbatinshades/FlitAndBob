@@ -1,7 +1,7 @@
 /// <reference path="../../defs/phaser.d.ts" />
-import config from '../config.js';
+//import { config } from '../config.js';
 
-export default class LevelSelectScene extends Phaser.Scene {
+export class LevelSelectScene extends Phaser.Scene {
     constructor() {
         super("LevelSelectScene");
         this.firstStart = true;

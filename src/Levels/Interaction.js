@@ -1,15 +1,12 @@
 /// <reference path="../../defs/phaser.d.ts" />
-import Settings from '../settings.js';
-import Enums from './Tilemaps.js';
-import InteractionZone from './InteractionZone.js';
-import Effects from './Effects.js';
-import Actions from './Actions.js';
-import Transitions from './Transitions.js';
-import Box from '../Sprites/box.js';
 
-export default class Interaction extends Phaser.Physics.Arcade.Group {
-    tileLayer;
+import {InteractionZone} from './InteractionZone.js';
+import {Effects} from './Effects.js';
+import {Actions} from './Actions.js';
+import {Transitions} from './Transitions.js';
+import {Box} from '../Sprites/box.js';
 
+export class Interaction extends Phaser.Physics.Arcade.Group {
     /**
      * Class that manages interactable objects such as switches
      * @param {LevelLoaderScene} scene

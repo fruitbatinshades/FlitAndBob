@@ -2,9 +2,9 @@
  * This class holds named mappings and grouping for the tiled tilesets
  */
 
-export default class Enums {
-    isPopulated = false;
+export class Enums {
     constructor(firstgid) {
+        this.isPopulated = false;
         if (firstgid) this.isPopulated = true;
         /**
  * The tiles in the component set

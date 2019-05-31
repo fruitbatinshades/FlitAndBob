@@ -1,5 +1,4 @@
-import Enums from './Tilemaps.js';
-import Utils from '../Utils/Utils.js'
+import { Utils } from '../Utils/Utils.js'
 
 /**
  * Class populated from the tilemap Interaction Layer rectangles
@@ -14,34 +13,13 @@ import Utils from '../Utils/Utils.js'
  * @member {InteractionParams} Affect What player does it affect (flit, bob)
  * @member {InteractionParams} Blocks Whether it blocks (physics)
  */
-export default class InteractionZone extends Phaser.GameObjects.Zone {
-    //Unique name of the zone
-    name = null;
-    tileObj = null;
-    GroupKey = null;
-    Target = null;
-    Action = null;
-    Effect = null;
-    Transition = null;
-    Implementation = null;
-    Affect = null;
-    Blocks = null;
-    DeadWeight = null;
-    Tutorial = null;
-    TutorialShown = false;
-    //Whether the target has been shown to the camera so it only happens once
-    _groupShown = false;
-    tileType;
-    isActive = true;
-    _switchOn = false;
-
+export class InteractionZone extends Phaser.GameObjects.Zone {
     get switchOn() {
         return this._switchOn;
     }
     set switchOn(value) {
         this._switchOn = value;
         //chain related switches
-        
     }
 
     constructor(scene, tileObj, interaction, debug) {
@@ -49,6 +27,25 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
         
         if (tileObj.name === null || tileObj.name === '')
             throw `Zone at ${tileObj} does not have a name`;
+
+        //Unique name of the zone
+        this.tileObj = null;
+        this.GroupKey = null;
+        this.Target = null;
+        this.Action = null;
+        this.Effect = null;
+        this.Transition = null;
+        this.Implementation = null;
+        this.Affect = null;
+        this.Blocks = null;
+        this.DeadWeight = null;
+        this.Tutorial = null;
+        this.TutorialShown = false;
+        //Whether the target has been shown to the camera so it only happens once
+        this._groupShown = false;
+        this.tileType;
+        this.isActive = true;
+        this._switchOn = false;
 
         this.interaction = interaction;
         this.setOrigin(0);
@@ -237,10 +234,10 @@ export default class InteractionZone extends Phaser.GameObjects.Zone {
 /** 
  * Converts the Tiled property to its value and properties (if supplied) 
  * */
-class InteractionParams{
-    key = null;
-    params = {}
+export class InteractionParams{
     constructor(value) { 
+        this.has.key = null;
+        this.params = {};
         this.splitMapProperty(value);
     }
     /**

@@ -1,7 +1,7 @@
 /**
  * Actions for the interactions N.B. Interaction.js is passed to each method as 'this'
  */
-export default class Actions{
+export class Actions{
     constructor() {
         /* Lookup to functions that process map key: Action */
         this.action = {

@@ -1,7 +1,7 @@
 /// <reference path="../../defs/phaser.d.ts" />
 /// <reference path="../index.js" />
-import Utils from '../Utils/Utils.js'
-export default class Bob extends Phaser.Physics.Arcade.Sprite {
+import { Utils } from '../Utils/Utils.js'
+export class Bob extends Phaser.Physics.Arcade.Sprite {
   get activeSpeed() {
     if (this.isSlow) return this.speed / 2;
     if (this.isFast) return this.speed * 1.5;

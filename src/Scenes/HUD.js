@@ -1,10 +1,8 @@
 /// <reference path="../../defs/phaser.d.ts" />
-import Utils from '../Utils/Utils.js'
 /**
  * thE hEADS UP DISPLAY FOR HEALTH AND SCORE
  */
-export default class HUD extends Phaser.Scene {
-    containingScene = null;
+export class HUD extends Phaser.Scene {
     constructor() {
         super({ key: 'HUD', active: true });
     }

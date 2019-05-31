@@ -1,26 +1,17 @@
 /// <reference path="../../defs/phaser.d.ts" />
-import Bob from '../Sprites/Bob.js';
-import Flit from '../Sprites/Flit.js';
-import Boxes from '../Sprites/Boxes.js';
-import Enums from './Tilemaps.js';
-import Interaction from './Interaction.js';
-import HUD from '../Scenes/HUD.js';
-import Dialog from '../Scenes/Dialog.js';
-import Tip from '../Utils/Tips.js';
-import Spitter from '../Sprites/Spitter.js';
+import { Bob } from '../Sprites/Bob.js';
+import {Flit} from '../Sprites/Flit.js';
+import {Boxes} from '../Sprites/Boxes.js';
+import {Enums} from './Tilemaps.js';
+import {Interaction} from './Interaction.js';
+import {HUD} from '../Scenes/HUD.js';
+import {Dialog} from '../Scenes/Dialog.js';
+import {Tip} from '../Utils/Tips.js';
+import {Spitter} from '../Sprites/Spitter.js';
 /**
  * Class that hold the level specific data and operations
  */
-export default class Level extends Phaser.Scene {
-    /** The zones created from the maps interaction layer */
-    interactionZones;
-    switchIds;
-    sky;
-    totalShrooms = 0;
-    totalFlies = 0;
-    debug = false;
-    modalActive = false;
-
+export class Level extends Phaser.Scene {
     get ActivePlayer() {
         return this.registry.get('ActivePlayer');
     }
@@ -30,6 +21,15 @@ export default class Level extends Phaser.Scene {
 
     constructor(handle) {
         super(handle);
+
+        /** The zones created from the maps interaction layer */
+        this.interactionZones;
+        this.switchIds;
+        this.sky;
+        this.totalShrooms = 0;
+        this.totalFlies = 0;
+        this.debug = false;
+        this.modalActive = false;
     }
     create() {
         console.log('Level create', this.physics.world);

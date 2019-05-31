@@ -1,6 +1,6 @@
 /// <reference path="../../defs/phaser.d.ts" />
-import Utils from '../Utils/Utils.js'
-export default class Flit extends Phaser.Physics.Arcade.Sprite {
+import { Utils } from '../Utils/Utils.js'
+export class Flit extends Phaser.Physics.Arcade.Sprite {
   get activeSpeed() {
     if (this.isSlow) return this.speed / 2;
     if (this.isFast) return this.speed * 1.5;

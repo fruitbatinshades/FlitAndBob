@@ -1,12 +1,10 @@
 "use strict"
 /// <reference path="../defs/phaser.d.ts" />
 
-import config from './config.js';
-//import GameScene from './Scenes/Game.js';
-import BootScene from './Scenes/Boot.js';
-import LevelLoaderScene from './Scenes/LevelLoaderScene.js';
-import LevelSelectScene from './Scenes/LevelSelectScene.js';
-// import UIScene from './Scenes/UI';
+import { config } from './config.js';
+import { BootScene } from './Scenes/Boot.js';
+import { LevelLoaderScene } from './Scenes/LevelLoaderScene.js';
+import { LevelSelectScene } from './Scenes/LevelSelectScene.js';
 
 
 

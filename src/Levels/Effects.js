@@ -1,13 +1,15 @@
-export default class Effects {
-    /** Lookup to effects that process map key: Effect */
-    effect = {
-        "Fast": this.fast,
-        "Injure": this.injure,
-        "Kill": this.kill,
-        "Slippy": this.slippy,
-        "Slow": this.slow,
-        "Push": this.push
-    };
+export class Effects {
+    constructor() {
+        /** Lookup to effects that process map key: Effect */
+        this.effect = {
+            "Fast": this.fast,
+            "Injure": this.injure,
+            "Kill": this.kill,
+            "Slippy": this.slippy,
+            "Slow": this.slow,
+            "Push": this.push
+        };
+    }
     /**
      * Player speeds up
      * @param {InteractionZone} triggerZone

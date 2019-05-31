@@ -1,6 +1,4 @@
-//import Phaser from './phaser.js';
-
-export default {
+export const config  = {
     type: Phaser.AUTO,
     width: 1024,
     height: 600,

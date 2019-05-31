@@ -1,21 +1,21 @@
 /// <reference path="../../defs/phaser.d.ts" />
 /// <reference path="./Boxes.js" />
-import Utils from '../Utils/Utils.js'
+import { Utils } from '../Utils/Utils.js'
 /**
  * Rocks can only be moved by Bob and break the normal physics rules so are more complicated to handle
  */
-export default class Rock extends Phaser.Physics.Arcade.Sprite {
-    debug = false;
-    //ref to the last object we hit
-    _lastContact = null;
-    //Player that can interact with the box
-    Affects = null;
-    isRock = true;
-
+export class Rock extends Phaser.Physics.Arcade.Sprite {
     constructor(sprite) {
         super(sprite.scene, sprite.x, sprite.y, sprite.texture.key, sprite.frame.name);
-        
         this.scene = sprite.scene;
+
+        this.debug = false;
+        //ref to the last object we hit
+        this._lastContact = null;
+        //Player that can interact with the box
+        this.Affects = null;
+        this.isRock = true;
+
         this.setOrigin(0, 0);
         this.setTexture('rock');
         if (sprite.data != null) {

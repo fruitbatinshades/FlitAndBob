@@ -6,7 +6,7 @@
 /**
  * Create a cartoon speech bubble by the target
  */
-export default class Tip extends Phaser.GameObjects.Container{
+export class Tip extends Phaser.GameObjects.Container{
     constructor(scene,target, text, width) {
         super(scene, target.x + target.displayWidth, target.y );
         

@@ -1,4 +1,4 @@
-export default class Utils{
+export class Utils{
     /**
  * Pan the camera and then return to player
  * @param {Phaser.Scene} scene
