@@ -1,0 +1,75 @@
+{
+"frames": {
+	"A_00.png": {
+		"frame": {"x":96, "y":148, "w":95, "h":147},
+		"spriteSourceSize": {"x":0,"y":0,"w":95,"h":147},
+		"sourceSize": {"w":95,"h":147}
+	},
+	"A_01.png": {
+		"frame": {"x":96, "y":148, "w":95, "h":147},
+		"spriteSourceSize": {"x":0,"y":0,"w":95,"h":147},
+		"sourceSize": {"w":95,"h":147}
+	},
+	"A_02.png": {
+		"frame": {"x":96, "y":148, "w":95, "h":147},
+		"spriteSourceSize": {"x":0,"y":0,"w":95,"h":147},
+		"sourceSize": {"w":95,"h":147}
+	},
+	"A_03.png": {
+		"frame": {"x":96, "y":148, "w":95, "h":147},
+		"spriteSourceSize": {"x":0,"y":0,"w":95,"h":147},
+		"sourceSize": {"w":95,"h":147}
+	},
+	"A_04.png": {
+		"frame": {"x":192, "y":296, "w":95, "h":147},
+		"spriteSourceSize": {"x":0,"y":0,"w":95,"h":147},
+		"sourceSize": {"w":95,"h":147}
+	},
+	"A_05.png": {
+		"frame": {"x":192, "y":148, "w":95, "h":147},
+		"spriteSourceSize": {"x":0,"y":0,"w":95,"h":147},
+		"sourceSize": {"w":95,"h":147}
+	},
+	"A_06.png": {
+		"frame": {"x":192, "y":0, "w":95, "h":147},
+		"spriteSourceSize": {"x":0,"y":0,"w":95,"h":147},
+		"sourceSize": {"w":95,"h":147}
+	},
+	"A_07.png": {
+		"frame": {"x":96, "y":296, "w":95, "h":147},
+		"spriteSourceSize": {"x":0,"y":0,"w":95,"h":147},
+		"sourceSize": {"w":95,"h":147}
+	},
+	"A_08.png": {
+		"frame": {"x":288, "y":0, "w":95, "h":147},
+		"spriteSourceSize": {"x":0,"y":0,"w":95,"h":147},
+		"sourceSize": {"w":95,"h":147}
+	},
+	"A_09.png": {
+		"frame": {"x":96, "y":0, "w":95, "h":147},
+		"spriteSourceSize": {"x":0,"y":0,"w":95,"h":147},
+		"sourceSize": {"w":95,"h":147}
+	},
+	"A_10.png": {
+		"frame": {"x":0, "y":296, "w":95, "h":147},
+		"spriteSourceSize": {"x":0,"y":0,"w":95,"h":147},
+		"sourceSize": {"w":95,"h":147}
+	},
+	"A_11.png": {
+		"frame": {"x":0, "y":148, "w":95, "h":147},
+		"spriteSourceSize": {"x":0,"y":0,"w":95,"h":147},
+		"sourceSize": {"w":95,"h":147}
+	},
+	"A_12.png": {
+		"frame": {"x":0, "y":0, "w":95, "h":147},
+		"spriteSourceSize": {"x":0,"y":0,"w":95,"h":147},
+		"sourceSize": {"w":95,"h":147}
+	}
+
+},
+"meta": {
+	"image": "spitter.png",
+	"size": {"w": 384, "h": 444},
+	"scale": "1"
+}
+}

@@ -419,6 +419,39 @@
         }, 
         {
          "draworder":"topdown",
+         "id":12,
+         "name":"Baddies",
+         "objects":[
+                {
+                 "height":0,
+                 "id":170,
+                 "name":"Baddie",
+                 "point":true,
+                 "properties":
+                    {
+                     "Timer":"5000",
+                     "TimerAction":"Shoot"
+                    },
+                 "propertytypes":
+                    {
+                     "Timer":"string",
+                     "TimerAction":"string"
+                    },
+                 "rotation":0,
+                 "type":"Spitter",
+                 "visible":true,
+                 "width":0,
+                 "x":1024,
+                 "y":960
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "id":8,
          "name":"Interaction",
          "objects":[
@@ -638,8 +671,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":12,
- "nextobjectid":170,
+ "nextlayerid":13,
+ "nextobjectid":171,
  "orientation":"orthogonal",
  "properties":
     {

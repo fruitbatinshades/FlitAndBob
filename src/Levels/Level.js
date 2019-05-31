@@ -7,6 +7,7 @@ import Interaction from './Interaction.js';
 import HUD from '../Scenes/HUD.js';
 import Dialog from '../Scenes/Dialog.js';
 import Tip from '../Utils/Tips.js';
+import Spitter from '../Sprites/Spitter.js';
 /**
  * Class that hold the level specific data and operations
  */
@@ -166,7 +167,7 @@ export default class Level extends Phaser.Scene {
         this.map.objects.forEach((l) => {
             switch (l.name) {
                 case 'Boxes':
-                    var newBoxes = this.map.createFromObjects('Boxes', 'Box', { key: 'ComponentSheet', frame: this.switchIds.Boxes, origin: 0 });
+                    let newBoxes = this.map.createFromObjects('Boxes', 'Box', { key: 'ComponentSheet', frame: this.switchIds.Boxes, origin: 0 });
                     this.mapLayers[l.name] = new Boxes(this, [], newBoxes);
                     this.mapLayers[l.name].setDepth(l.properties.depth || 1);
                     break;
@@ -174,6 +175,16 @@ export default class Level extends Phaser.Scene {
                     //Get the rectangles from the map
                     this.mapLayers[l.name] = this.map.getObjectLayer('Interaction');
                     this.interactionZones = new Interaction(this, [], l, this.mapLayers[l.name], this.game.debugOn);
+                    break;
+                case 'Baddies':
+                    let baddies = this.map.createFromObjects('Baddies', 'Baddie');
+                    for (let i = 0; i < baddies.length; i++){
+                        let b = baddies[i];
+                        new Spitter(this, b.x, b.y);
+                        b.destroy();
+                    }
+                    
+                    //this.mapLayers[l.name] = this.map.getObjectLayer('Baddies');
                     break;
                 case 'Sky':
                     //Add backgrounds
