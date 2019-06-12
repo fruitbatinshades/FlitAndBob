@@ -114,23 +114,26 @@ export class Utils{
      * @param {Phaser.Physics.Arcade.Body} body the body to look behind
      * @param {integer} margin No of pixels to overlap
      * @param {boolean} onlyBlocking Only return blocking objects
+     * @param {Phaser.Geom.Rectangle} customRect If supplied this rectangle is checked rather than the body and margin
      * @param {string} typeString  Only return objects of this type
      */
-    static nothingBehind(body, margin = 2, onlyBlocking = true, typeString = null) {
+    static nothingBehind(body, margin = 2, onlyBlocking = true, customRect = null, typeString = null) {
         let go = body.gameObject;
         let w = ['dummy'];
         if (go.embedded) return true;
 
-        let f = body.gameObject.scene.physics.overlapRect(body.left + margin, body.top + margin, body.width - (margin * 2), body.height - (margin * 2));
+        let rect = new Phaser.Geom.Rectangle(body.left + margin, body.top + margin, body.width - (margin * 2), body.height - (margin * 2));
+        if (customRect) rect = customRect;
+        let f = body.gameObject.scene.physics.overlapRect(rect.x, rect.y, rect.width, rect.height);
 
         //check world tiles
         if (go.scene.mapLayers && go.scene.mapLayers.World) {
-            w = go.scene.map.getTilesWithinShape(new Phaser.Geom.Rectangle(body.left + margin, body.top + margin, body.width - (margin * 2), body.height - (margin * 2)), { isColliding: true }, go.scene.cameras.main, go.scene.mapLayers.World);
+            w = go.scene.map.getTilesWithinShape(rect, { isColliding: true }, go.scene.cameras.main, go.scene.mapLayers.World);
         }
         //remove the requesting body
         f = f.filter((o) => (o !== body && (typeString === null || o.gameObject.constructor.name === typeString)));
         if (onlyBlocking) {
-            f = f.filter((o) => o.enabled && o.gameObject.hasOwnProperty('Blocks') && o.gameObject.Blocks !== null);
+            f = f.filter((o) => o.enable && o.gameObject.hasOwnProperty('Blocks') && o.gameObject.Blocks !== null);
         }
 
         return f.length === 0 && w.length === 0;

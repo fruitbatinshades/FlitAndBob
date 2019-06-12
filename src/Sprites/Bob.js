@@ -181,13 +181,13 @@ export class Bob extends Phaser.Physics.Arcade.Sprite {
     } else {
       //process keys
       if (cursors.left.isDown) {
-        this.body.setVelocityX(cursors.up.isDown ? - 150 : 0 - this.activeSpeed);
+        this.body.setVelocityX(cursors.up.isDown ? - 175 : 0 - this.activeSpeed);
         this.anims.play('walk', true); // walk left
         this.flipX = true; // flip the sprite to the left
         this.body.setOffset(40, 0); //flip the collision
       }
       else if (cursors.right.isDown) {
-        this.body.setVelocityX(cursors.up.isDown ? 150 : this.activeSpeed);
+        this.body.setVelocityX(cursors.up.isDown ? 175 : this.activeSpeed);
         this.anims.play('walk', true);
         this.flipX = false; // use the original sprite looking to the right
         this.body.setOffset(0, 0);

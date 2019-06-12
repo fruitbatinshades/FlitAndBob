@@ -22,9 +22,11 @@ export class Enums {
             StopLeftL: 10,
             StopLeftM: 11,
             StopLeftR: 12,
+            AntiFly: 13,
             Spikes: 14,
             Arrow: 16,
             Fan: 17,
+            FlyPaper: 19,
             SlowStonesA:20,
             SaltA: 23,
             SaltB:24,
@@ -99,7 +101,9 @@ export class Enums {
             [this.Component.SlowStonesA]: { h: 16, y: 48 },
             [this.Component.Bridge1]: { h: 20 },
             [this.Component.WebL]: { h: 20 },
-            [this.Component.WebT]: { h: 20 }
+            [this.Component.WebT]: { h: 20 },
+            [this.Component.FlyPaper]: { w: 32, x: 14 },
+            [this.Component.AntiFly]: { w: 32, x: 14 }
         };
     }
     /**

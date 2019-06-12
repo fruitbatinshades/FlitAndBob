@@ -121,15 +121,21 @@ export class Boxes extends Phaser.Physics.Arcade.Group {
     */
     onDropBox(box, player) {
         box.underneath = null;
-        if (Utils.nothingBehind(box.body,5,true)) {
+        let b = box.body;
+
+        //adjust the boc to the grid 
+        let adjustedX = Math.round(b.x / Boxes.tileWidth) * Boxes.tileWidth;
+        //create adjusted position rather than the bodies current position before behind check
+        let tr = new Phaser.Geom.Rectangle(adjustedX + 1, b.y + 1, b.width - 2, b.height - 2);
+        if (Utils.nothingBehind(b, 5,true,tr)) {
             player.carrying = null;
             //move to tile grid
             box.x = Math.round(box.x / Boxes.tileWidth) * Boxes.tileWidth;
 
-            box.body.enable = true;
-            box.body.immovable = false;
-            box.body.moves = true;
-            box.body.allowGravity = true;
+            b.enable = true;
+            b.immovable = false;
+            b.moves = true;
+            b.allowGravity = true;
             box.lastContact = null;
             if (this.scene.game.debugOn) console.log('event drop_box', box);
         }

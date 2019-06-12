@@ -144,7 +144,8 @@ export class InteractionZone extends Phaser.GameObjects.Zone {
                     this.body.width = za.w;
                 if (za.hasOwnProperty('y'))
                     this.body.y = tile.pixelY + za.y;
-
+                if (za.hasOwnProperty('x'))
+                    this.body.x = tile.pixelX + za.x;
                 this.body.reset(this.body.x, this.body.top);
             }
         }
